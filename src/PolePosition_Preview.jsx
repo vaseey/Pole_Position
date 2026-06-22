@@ -286,48 +286,83 @@ function ScoreRing({score,size=52,light=false}){
 // ── Navbar ───────────────────────────────────────────────────────
 function Navbar({page,setPage,user,setUser,setShowLogin,isAdmin,onGoAdmin}){
   const [menuOpen,setMenuOpen]=useState(false);
+  const [userMenuOpen,setUserMenuOpen]=useState(false);
+  const [isMobile,setIsMobile]=useState(()=>window.innerWidth<=768);
+  useEffect(()=>{
+    const handler=()=>setIsMobile(window.innerWidth<=768);
+    window.addEventListener("resize",handler);
+    return()=>window.removeEventListener("resize",handler);
+  },[]);
   const links=[["home","Home"],["browse","Browse"],["blog","Blog"],["forum","Community"]];
   return(
-    <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:200,background:"rgba(255,255,255,0.97)",backdropFilter:"blur(20px)",borderBottom:"1px solid rgba(0,0,0,0.06)",height:64,display:"flex",alignItems:"center",padding:"0 32px",gap:0}}>
-      <button onClick={()=>setPage("home")} style={{display:"flex",alignItems:"center",gap:8,background:"none",border:"none",cursor:"pointer",marginRight:40}}>
+    <>
+    <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:200,background:"rgba(255,255,255,0.97)",backdropFilter:"blur(20px)",borderBottom:"1px solid rgba(0,0,0,0.06)",height:64,display:"flex",alignItems:"center",padding:"0 20px",gap:0}}>
+      <button onClick={()=>setPage("home")} style={{display:"flex",alignItems:"center",gap:8,background:"none",border:"none",cursor:"pointer",marginRight:"auto"}}>
         <div style={{width:32,height:32,background:"#DC2626",borderRadius:9,display:"flex",alignItems:"center",justifyContent:"center"}}><Car size={17} color="#fff"/></div>
         <span style={{fontWeight:900,fontSize:17,letterSpacing:"-0.04em",fontFamily:"Outfit,sans-serif"}}>Pole<span style={{color:"#DC2626"}}>Position</span></span>
       </button>
-      <div style={{display:"flex",gap:4,flex:1}}>
-        {links.map(([p,l])=>(
-          <button key={p} onClick={()=>setPage(p)} style={{padding:"7px 14px",borderRadius:9,border:"none",cursor:"pointer",background:page===p?"#FEF2F2":"transparent",color:page===p?"#DC2626":"#475569",fontWeight:600,fontSize:13.5}}>
-            {l}
-          </button>
-        ))}
-      </div>
-      {user
-        ?<div style={{position:"relative"}}>
-            <button onClick={()=>setMenuOpen(m=>!m)} style={{display:"flex",alignItems:"center",gap:6,background:"none",border:"none",cursor:"pointer",padding:"6px 10px",borderRadius:9}}>
-              <span style={{fontSize:13.5,fontWeight:600,color:"#475569"}}>Hi, {user}</span>
-              <ChevronDown size={14} color="#94A3B8"/>
+      {!isMobile&&(
+        <>
+        <div style={{display:"flex",gap:4,flex:1,justifyContent:"center"}}>
+          {links.map(([p,l])=>(
+            <button key={p} onClick={()=>setPage(p)} style={{padding:"7px 14px",borderRadius:9,border:"none",cursor:"pointer",background:page===p?"#FEF2F2":"transparent",color:page===p?"#DC2626":"#475569",fontWeight:600,fontSize:13.5}}>
+              {l}
             </button>
-            {menuOpen&&(
-              <div style={{position:"absolute",top:"100%",right:0,marginTop:8,background:"#fff",borderRadius:12,boxShadow:"0 12px 32px rgba(0,0,0,0.12)",border:"1px solid #E2E8F0",minWidth:210,overflow:"hidden",zIndex:300}}>
-                {isAdmin&&(
-                  <button onClick={onGoAdmin} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"#0F172A",display:"flex",alignItems:"center",gap:9,borderBottom:"1px solid #F1F5F9"}}>
-                    <Shield size={14} color="#DC2626"/> View Admin Dashboard
-                  </button>
-                )}
-                <button onClick={()=>{setPage("favorites");setMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"#0F172A",display:"flex",alignItems:"center",gap:9,borderBottom:"1px solid #F1F5F9"}}>
-                  <Heart size={14} color="#DC2626"/> My Favourites
-                </button>
-                <button onClick={()=>{setUser(null);setMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"#64748B",display:"flex",alignItems:"center",gap:9}}>
-                  <LogOut size={14}/> Sign Out
-                </button>
-              </div>
+          ))}
+        </div>
+        {user
+          ?<div style={{position:"relative"}}>
+              <button onClick={()=>setUserMenuOpen(m=>!m)} style={{display:"flex",alignItems:"center",gap:6,background:"none",border:"none",cursor:"pointer",padding:"6px 10px",borderRadius:9}}>
+                <span style={{fontSize:13.5,fontWeight:600,color:"#475569"}}>Hi, {user}</span>
+                <ChevronDown size={14} color="#94A3B8"/>
+              </button>
+              {userMenuOpen&&(
+                <div style={{position:"absolute",top:"100%",right:0,marginTop:8,background:"#fff",borderRadius:12,boxShadow:"0 12px 32px rgba(0,0,0,0.12)",border:"1px solid #E2E8F0",minWidth:210,overflow:"hidden",zIndex:300}}>
+                  {isAdmin&&<button onClick={onGoAdmin} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"#0F172A",display:"flex",alignItems:"center",gap:9,borderBottom:"1px solid #F1F5F9"}}><Shield size={14} color="#DC2626"/> View Admin Dashboard</button>}
+                  <button onClick={()=>{setPage("favorites");setUserMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"#0F172A",display:"flex",alignItems:"center",gap:9,borderBottom:"1px solid #F1F5F9"}}><Heart size={14} color="#DC2626"/> My Favourites</button>
+                  <button onClick={()=>{setUser(null);setUserMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"#64748B",display:"flex",alignItems:"center",gap:9}}><LogOut size={14}/> Sign Out</button>
+                </div>
+              )}
+            </div>
+          :<div style={{display:"flex",alignItems:"center",gap:14}}>
+              <button onClick={onGoAdmin} style={{fontSize:12.5,color:"#94A3B8",fontWeight:600,background:"none",border:"none",cursor:"pointer",padding:0,fontFamily:"Outfit,sans-serif"}}>Login as Admin</button>
+              <button onClick={()=>setShowLogin(true)} className="btn-red" style={{padding:"8px 18px",borderRadius:10,fontSize:13.5}}>Sign In</button>
+            </div>
+        }
+        </>
+      )}
+      {isMobile&&(
+        <button onClick={()=>setMenuOpen(m=>!m)} style={{background:"none",border:"none",cursor:"pointer",padding:"8px",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,color:"#0F172A"}}>
+          {menuOpen?"✕":"☰"}
+        </button>
+      )}
+    </nav>
+    {isMobile&&menuOpen&&(
+      <div style={{position:"fixed",inset:0,zIndex:190,background:"rgba(15,23,42,0.5)"}} onClick={()=>setMenuOpen(false)}>
+        <div style={{position:"absolute",top:64,left:0,right:0,background:"#fff",boxShadow:"0 12px 40px rgba(0,0,0,0.15)",padding:"16px 20px",display:"flex",flexDirection:"column",gap:4}} onClick={e=>e.stopPropagation()}>
+          {links.map(([p,l])=>(
+            <button key={p} onClick={()=>{setPage(p);setMenuOpen(false);}} style={{padding:"12px 16px",borderRadius:10,border:"none",cursor:"pointer",background:page===p?"#FEF2F2":"transparent",color:page===p?"#DC2626":"#0F172A",fontWeight:600,fontSize:15,textAlign:"left",fontFamily:"Outfit,sans-serif"}}>
+              {l}
+            </button>
+          ))}
+          <div style={{borderTop:"1px solid #F1F5F9",marginTop:8,paddingTop:8}}>
+            {user?(
+              <>
+                {isAdmin&&<button onClick={()=>{onGoAdmin();setMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",borderRadius:10,border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:600,color:"#0F172A",display:"flex",alignItems:"center",gap:9,fontFamily:"Outfit,sans-serif"}}><Shield size={14} color="#DC2626"/> Admin Dashboard</button>}
+                <button onClick={()=>{setPage("favorites");setMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",borderRadius:10,border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:600,color:"#0F172A",display:"flex",alignItems:"center",gap:9,fontFamily:"Outfit,sans-serif"}}><Heart size={14} color="#DC2626"/> My Favourites</button>
+                <button onClick={()=>{setUser(null);setMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",borderRadius:10,border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:600,color:"#64748B",display:"flex",alignItems:"center",gap:9,fontFamily:"Outfit,sans-serif"}}><LogOut size={14}/> Sign Out</button>
+              </>
+            ):(
+              <>
+                <button onClick={()=>{onGoAdmin();setMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",borderRadius:10,border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:500,color:"#94A3B8",fontFamily:"Outfit,sans-serif"}}>Login as Admin</button>
+                <button onClick={()=>{setShowLogin(true);setMenuOpen(false);}} className="btn-red" style={{width:"100%",padding:"12px 16px",borderRadius:10,fontSize:15,marginTop:4}}>Sign In</button>
+              </>
             )}
           </div>
-        :<div style={{display:"flex",alignItems:"center",gap:14}}>
-            <button onClick={onGoAdmin} style={{fontSize:12.5,color:"#94A3B8",fontWeight:600,background:"none",border:"none",cursor:"pointer",padding:0,fontFamily:"Outfit,sans-serif"}}>Login as Admin</button>
-            <button onClick={()=>setShowLogin(true)} className="btn-red" style={{padding:"8px 18px",borderRadius:10,fontSize:13.5}}>Sign In</button>
-          </div>
-      }
-    </nav>
+        </div>
+      </div>
+    )}
+    </>
   );
 }
 
