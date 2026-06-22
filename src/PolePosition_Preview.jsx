@@ -1498,6 +1498,7 @@ function Listings({cars,setCars}){
       const imgs=(edit.images&&edit.images.length?edit.images:(edit.img?[edit.img]:[])).map((url,i)=>({id:"img"+i,type:"image",url}));
       const vid=edit.video?[{id:"vid0",type:"video",url:edit.video}]:[];
       setMedia([...imgs,...vid]);
+      setCoverId(imgs[0]?.id||null);
       setCustomMake(!MAKE_MODELS[edit.make]);
       setCustomModel(!!(edit.make&&MAKE_MODELS[edit.make]&&!MAKE_MODELS[edit.make].includes(edit.model)));
       setCustomVariant(false);
@@ -1506,6 +1507,7 @@ function Listings({cars,setCars}){
     }else{
       setForm(empty);
       setMedia([]);
+      setCoverId(null);
       setCustomMake(false);
       setCustomModel(false);
       setCustomVariant(false);
