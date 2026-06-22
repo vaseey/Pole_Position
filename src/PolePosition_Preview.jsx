@@ -1821,7 +1821,7 @@ function Listings({cars,setCars}){
             <td style={{padding:"11px 16px",color:"#94A3B8",fontSize:13}}>{c.year}</td>
             <td style={{padding:"11px 16px",fontWeight:600,fontSize:13}}>{fmt(c.price)}</td>
             <td style={{padding:"11px 16px"}}>{c.score>0?<span style={{background:`${rc(c.score)}22`,color:rc(c.score),fontWeight:700,fontSize:12,padding:"3px 10px",borderRadius:20}}>{c.score}</span>:<span style={{color:"#334155",fontSize:12}}>—</span>}</td>
-            <td style={{padding:"11px 16px"}}><div style={{display:"flex",gap:6}}><Btn small onClick={()=>setEdit(c)}><Edit2 size={11}/> Edit</Btn><Btn small danger onClick={()=>setCars(cars.filter(x=>x.id!==c.id))}><Trash2 size={11}/> Del</Btn></div></td>
+            <td style={{padding:"11px 16px"}}><div style={{display:"flex",gap:6}}><Btn small onClick={()=>setEdit(c)}><Edit2 size={11}/> Edit</Btn><Btn small danger onClick={async()=>{await supabase.from("cars").delete().eq("id",c.id);setCars(cars.filter(x=>x.id!==c.id));}}><Trash2 size={11}/> Del</Btn></div></td>
           </tr>)}</tbody>
         </table>
       </Card>
