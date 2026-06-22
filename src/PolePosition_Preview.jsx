@@ -2153,13 +2153,17 @@ function PublicSite({cars,blog,threads,onGoAdmin}){
     setFavs(f=>f.includes(id)?f.filter(x=>x!==id):[...f,id]);
   };
 
+  const carSlug=(c)=>`${c.make}-${c.model}`.toLowerCase().replace(/\s+/g,"-").replace(/[^a-z0-9-]/g,"")+`-${c.id}`;
+
   // Hash-based routing for shareable car URLs
   useEffect(()=>{
     const onHash=()=>{
       const hash=window.location.hash;
-      const m=hash.match(/^#\/car\/(\d+)$/);
+      const m=hash.match(/^#\/car\/(.+)$/);
       if(m){
-        const found=cars.find(c=>String(c.id)===m[1]);
+        const slug=m[1];
+        const idFromSlug=slug.split("-").pop();
+        const found=cars.find(c=>String(c.id)===idFromSlug);
         if(found){setCar(found);setPage("detail");return;}
       }
       if(hash===""||hash==="#/")setPage("home");
@@ -2170,7 +2174,7 @@ function PublicSite({cars,blog,threads,onGoAdmin}){
   },[cars]);
 
   const navTo=(p,c=null)=>{
-    if(p==="detail"&&c){window.location.hash=`#/car/${c.id}`;}
+    if(p==="detail"&&c){window.location.hash=`#/car/${carSlug(c)}`;}
     else{window.location.hash=p==="home"?"":"#/"+p;}
     setPage(p);if(c)setCar(c);
   };
