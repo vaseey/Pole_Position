@@ -1706,7 +1706,7 @@ function Listings({cars,setCars}){
       </div>
 
       {/* Photos & Video — first thing, most prominent */}
-      <FormSection title="Photos & Video" subtitle="Add a few clear shots — the first one becomes the cover photo">
+      <FormSection title="Photos & Video">
         <input ref={fileInputRef} type="file" accept="image/png,image/jpeg,image/jpg,video/mp4,video/webm,video/quicktime" multiple style={{display:"none"}} onChange={e=>{handleFiles(e.target.files);e.target.value="";}}/>
         <div onClick={()=>fileInputRef.current?.click()}
           onDragOver={e=>e.preventDefault()}
