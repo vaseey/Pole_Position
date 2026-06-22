@@ -382,11 +382,22 @@ function LoginCard({mode="user",onClose,onSubmit,error}){
 
 function LoginModal({onClose,onLogin}){
   const [err,setErr]=useState("");
+  const [loading,setLoading]=useState(false);
   return(
     <div style={{position:"fixed",inset:0,zIndex:500,background:"rgba(15,23,42,0.55)",backdropFilter:"blur(6px)",display:"flex",alignItems:"center",justifyContent:"center"}} onClick={onClose}>
-      <LoginCard mode="user" onClose={onClose} error={err} onSubmit={({name,email})=>{
-        setErr("");
-        onLogin({name:name||email.split("@")[0]||"User",email});
+      <LoginCard mode="user" onClose={onClose} error={err} loading={loading} onSubmit={async({tab,name,email,pass})=>{
+        setErr("");setLoading(true);
+        if(tab==="signup"){
+          const {data,error}=await supabase.auth.signUp({email,password:pass,options:{data:{name}}});
+          if(error){setErr(error.message);setLoading(false);return;}
+          onLogin({name:name||email.split("@")[0]||"User",email,id:data.user?.id});
+        } else {
+          const {data,error}=await supabase.auth.signInWithPassword({email,password:pass});
+          if(error){setErr(error.message);setLoading(false);return;}
+          const n=data.user?.user_metadata?.name||email.split("@")[0]||"User";
+          onLogin({name:n,email,id:data.user?.id});
+        }
+        setLoading(false);
       }}/>
     </div>
   );
