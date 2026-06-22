@@ -537,7 +537,7 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
           <div style={{width:28,height:28,background:"#DC2626",borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center"}}><Car size={14} color="#fff"/></div>
           <span style={{color:"#fff",fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:15}}>Pole<span style={{color:"#DC2626"}}>Position</span></span>
         </div>
-        <p style={{color:"rgba(255,255,255,0.3)",fontSize:13}}>© 2025 Pole Position. Hyderabad's trusted used car marketplace.</p>
+        <p style={{color:"rgba(255,255,255,0.3)",fontSize:13}}>© 2025 Pole Position. Hyderabad's #1 trusted used car marketplace.</p>
       </div>
     </div>
   );
