@@ -1837,7 +1837,7 @@ function Listings({cars,setCars}){
           </div>
         </div>
       </FormSection>
-      <FormSection title="History" subtitle="Usage, ownership, and service records">
+      <FormSection title="History">
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:16}}>
           <FormInput label="KM Driven" value={form.km} onChange={v=>setForm({...form,km:v})} type="number" ph="e.g. 25000"/>
           <div><Label>Owners</Label><select value={form.owners||1} onChange={e=>setForm({...form,owners:Number(e.target.value)})}>{[1,2,3,4].map(o=><option key={o} value={o}>{o===4?"4+":o===1?"1st owner":o===2?"2nd owner":"3rd owner"}</option>)}</select></div>
