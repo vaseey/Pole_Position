@@ -1923,7 +1923,7 @@ function Listings({cars,setCars}){
       </FormSection>
 
       {/* Description */}
-      <FormSection title="Description" subtitle="A longer write-up buyers see on the listing page">
+      <FormSection title="Description">
         <textarea value={form.description||""} onChange={e=>setForm({...form,description:e.target.value})} rows={5} placeholder="Service history, condition notes, what makes this car worth a look…"/>
       </FormSection>
 
