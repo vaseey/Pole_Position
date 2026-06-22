@@ -1610,18 +1610,21 @@ function Listings({cars,setCars}){
         </div>
         {media.length>0&&(
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(110px,1fr))",gap:10,marginTop:14}}>
-            {media.map((m,i)=>(
-              <div key={m.id} style={{position:"relative",borderRadius:10,overflow:"hidden",aspectRatio:"4/3",background:"#0F172A",border:i===0&&m.type==="image"?"2px solid #DC2626":"1px solid rgba(255,255,255,0.08)"}}>
+            {media.map((m)=>{
+              const isCover=(coverId?m.id===coverId:media.filter(x=>x.type==="image")[0]?.id===m.id)&&m.type==="image";
+              return(
+              <div key={m.id} style={{position:"relative",borderRadius:10,overflow:"hidden",aspectRatio:"4/3",background:"#0F172A",border:isCover?"2px solid #DC2626":"1px solid rgba(255,255,255,0.08)"}}>
                 {m.type==="video"?(
                   <video src={m.url} style={{width:"100%",height:"100%",objectFit:"cover"}} muted/>
                 ):(
                   <img src={m.url} alt="" style={{width:"100%",height:"100%",objectFit:"cover"}}/>
                 )}
                 {m.type==="video"&&<div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",background:"rgba(0,0,0,0.25)",pointerEvents:"none"}}><Play size={18} color="#fff" fill="#fff"/></div>}
-                {i===0&&m.type==="image"&&<span style={{position:"absolute",bottom:5,left:5,background:"#DC2626",color:"#fff",fontSize:9,fontWeight:700,padding:"2px 7px",borderRadius:20}}>Cover</span>}
-                <button onClick={()=>removeMedia(m.id)} style={{position:"absolute",top:5,right:5,width:22,height:22,borderRadius:"50%",border:"none",background:"rgba(0,0,0,0.6)",color:"#fff",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><X size={12}/></button>
+                {isCover&&<span style={{position:"absolute",bottom:5,left:5,background:"#DC2626",color:"#fff",fontSize:9,fontWeight:700,padding:"2px 7px",borderRadius:20}}>Cover</span>}
+                {m.type==="image"&&!isCover&&<button onClick={()=>setCoverId(m.id)} style={{position:"absolute",bottom:5,left:5,background:"rgba(0,0,0,0.6)",color:"#fff",fontSize:9,fontWeight:700,padding:"2px 7px",borderRadius:20,border:"none",cursor:"pointer"}}>Set cover</button>}
+                <button onClick={()=>{removeMedia(m.id);if(coverId===m.id)setCoverId(null);}} style={{position:"absolute",top:5,right:5,width:22,height:22,borderRadius:"50%",border:"none",background:"rgba(0,0,0,0.6)",color:"#fff",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><X size={12}/></button>
               </div>
-            ))}
+            )})}
           </div>
         )}
       </FormSection>
