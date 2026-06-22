@@ -905,14 +905,14 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
         </div>
       )}
       {/* Gallery + summary panel */}
-      <div style={{maxWidth:1100,margin:"0 auto",padding:isMobile?"60px 16px 0":"24px 28px 0"}}>
+      <div style={{maxWidth:1100,margin:"0 auto",padding:isMobile?"60px 12px 0":"24px 28px 0",boxSizing:"border-box",width:"100%"}}>
         {!isMobile&&<button onClick={()=>setPage("browse")} style={{display:"flex",alignItems:"center",gap:6,background:"none",border:"none",cursor:"pointer",color:"#64748B",fontSize:13,fontWeight:600,marginBottom:18}}>
           <ChevronLeft size={15}/> Back to results
         </button>}
         <div style={{display:"grid",gridTemplateColumns:isMobile?"1fr":"1fr 360px",gap:30,alignItems:"flex-start"}}>
           {/* LEFT — gallery */}
           <div>
-            <div style={{position:"relative",borderRadius:20,overflow:"hidden",aspectRatio:"16/10",background:"#0F172A"}}>
+            <div style={{position:"relative",borderRadius:isMobile?12:20,overflow:"hidden",aspectRatio:isMobile?"4/3":"16/10",background:"#0F172A"}}>
               {gallery[activeImg]?.type==="video"?(
                 <video src={gallery[activeImg].url} controls style={{width:"100%",height:"100%",objectFit:"cover"}}/>
               ):(
