@@ -968,7 +968,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
               <span style={{fontSize:12.5,color:"#475569",fontWeight:600}}>EMI from ₹{emi.toLocaleString("en-IN")}/month</span>
             </div>
 
-            <button onClick={()=>{if(!user){setShowLogin(true);return;}setEnquired(true);setTimeout(()=>setEnquired(false),3000);}} className="btn-red" style={{width:"100%",padding:"13px",borderRadius:12,fontSize:15,marginBottom:enquired?10:22}}>{enquired?"Enquiry Sent ✓":"Enquire Now"}</button>
+            <button onClick={()=>{if(!user){setShowLogin(true);return;}setShowEnquiryModal(true);}} className="btn-red" style={{width:"100%",padding:"13px",borderRadius:12,fontSize:15,marginBottom:enquired?10:22}}>{enquired?"Enquiry Sent ✓":"Enquire Now"}</button>
             {enquired&&<p style={{color:"#10B981",fontSize:12,textAlign:"center",marginBottom:22}}>Our team will reach out within 24 hours.</p>}
 
             <div style={{fontWeight:700,fontSize:13,marginBottom:11}}>Inspection Snapshot</div>
