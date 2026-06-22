@@ -28,10 +28,10 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Upload dist to Supabase Storage (bucket: site)
+      - name: "Upload dist to Supabase Storage (bucket: site)"
         env:
-          SUPABASE_URL: https://tozzhpyvromigzhtzlvc.supabase.co
-          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          SUPABASE_URL: "https://tozzhpyvromigzhtzlvc.supabase.co"
+          SUPABASE_SERVICE_KEY: "${{ secrets.SUPABASE_SERVICE_KEY }}"
         run: |
           find dist -type f | while read file; do
             REMOTE_PATH="${file#dist/}"
