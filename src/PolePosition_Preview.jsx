@@ -1788,15 +1788,14 @@ function Listings({cars,setCars}){
             <select value={form.transmission||"Manual"} onChange={e=>setForm({...form,transmission:e.target.value})}>
               <option value="Manual">Manual</option>
               <option value="IVT">IVT</option>
-              <optgroup label="Automatic types">
-                <option value="Automatic">Automatic</option>
-                <option value="DCT">DCT</option>
-                <option value="AMT">AMT</option>
-                <option value="CVT">CVT</option>
-                <option value="TipTronic">TipTronic</option>
-                <option value="MultiTronic">MultiTronic</option>
-                <option value="PDK">PDK</option>
-              </optgroup>
+              <option disabled>── Automatic ──</option>
+              <option value="Automatic">Automatic</option>
+              <option value="DCT">DCT</option>
+              <option value="AMT">AMT</option>
+              <option value="CVT">CVT</option>
+              <option value="TipTronic">TipTronic</option>
+              <option value="MultiTronic">MultiTronic</option>
+              <option value="PDK">PDK</option>
             </select>
           </div>
         </div>
