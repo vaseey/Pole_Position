@@ -320,7 +320,7 @@ function Navbar({page,setPage,user,setUser,setShowLogin,isAdmin,onGoAdmin}){
                 <div style={{position:"absolute",top:"100%",right:0,marginTop:8,background:"#fff",borderRadius:12,boxShadow:"0 12px 32px rgba(0,0,0,0.12)",border:"1px solid #E2E8F0",minWidth:210,overflow:"hidden",zIndex:300}}>
                   {isAdmin&&<button onClick={onGoAdmin} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"#0F172A",display:"flex",alignItems:"center",gap:9,borderBottom:"1px solid #F1F5F9"}}><Shield size={14} color="#DC2626"/> View Admin Dashboard</button>}
                   <button onClick={()=>{setPage("favorites");setUserMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"#0F172A",display:"flex",alignItems:"center",gap:9,borderBottom:"1px solid #F1F5F9"}}><Heart size={14} color="#DC2626"/> My Favourites</button>
-                  <button onClick={()=>{setUser(null);setUserMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"#64748B",display:"flex",alignItems:"center",gap:9}}><LogOut size={14}/> Sign Out</button>
+                  <button onClick={()=>{supabase.auth.signOut();setUser(null);setUserMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"#64748B",display:"flex",alignItems:"center",gap:9}}><LogOut size={14}/> Sign Out</button>
                 </div>
               )}
             </div>
@@ -350,7 +350,7 @@ function Navbar({page,setPage,user,setUser,setShowLogin,isAdmin,onGoAdmin}){
               <>
                 {isAdmin&&<button onClick={()=>{onGoAdmin();setMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",borderRadius:10,border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:600,color:"#0F172A",display:"flex",alignItems:"center",gap:9,fontFamily:"Outfit,sans-serif"}}><Shield size={14} color="#DC2626"/> Admin Dashboard</button>}
                 <button onClick={()=>{setPage("favorites");setMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",borderRadius:10,border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:600,color:"#0F172A",display:"flex",alignItems:"center",gap:9,fontFamily:"Outfit,sans-serif"}}><Heart size={14} color="#DC2626"/> My Favourites</button>
-                <button onClick={()=>{setUser(null);setMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",borderRadius:10,border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:600,color:"#64748B",display:"flex",alignItems:"center",gap:9,fontFamily:"Outfit,sans-serif"}}><LogOut size={14}/> Sign Out</button>
+                <button onClick={()=>{supabase.auth.signOut();setUser(null);setMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",borderRadius:10,border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:600,color:"#64748B",display:"flex",alignItems:"center",gap:9,fontFamily:"Outfit,sans-serif"}}><LogOut size={14}/> Sign Out</button>
               </>
             ):(
               <>
@@ -2336,6 +2336,27 @@ function PublicSite({cars,blog,threads,onGoAdmin}){
   const [isAdmin,setIsAdmin]=useState(false);
   const [showLogin,setShowLogin]=useState(false);
   const [favs,setFavs]=useState([]);
+
+  // Restore session on load and listen for auth changes
+  useEffect(()=>{
+    supabase.auth.getSession().then(({data:{session}})=>{
+      if(session?.user){
+        const name=session.user.user_metadata?.full_name||session.user.email.split("@")[0];
+        setUser(name);setUserEmail(session.user.email);
+        supabase.from("profiles").select("is_admin").eq("id",session.user.id).single()
+          .then(({data})=>{if(data?.is_admin)setIsAdmin(true);});
+      }
+    });
+    const {data:{subscription}}=supabase.auth.onAuthStateChange((_event,session)=>{
+      if(session?.user){
+        const name=session.user.user_metadata?.full_name||session.user.email.split("@")[0];
+        setUser(name);setUserEmail(session.user.email);
+      } else {
+        setUser(null);setUserEmail(null);setIsAdmin(false);
+      }
+    });
+    return()=>subscription.unsubscribe();
+  },[]);
 
   const toggleFav=(id)=>{
     if(!user){setShowLogin(true);return;}
