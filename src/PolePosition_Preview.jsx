@@ -2296,7 +2296,7 @@ function PublicSite({cars,blog,threads,onGoAdmin}){
       <Navbar page={page} setPage={p=>navTo(p)} user={user} setUser={setUser} setShowLogin={setShowLogin} isAdmin={isAdmin} onGoAdmin={onGoAdmin}/>
       {showLogin&&<LoginModal onClose={()=>setShowLogin(false)} onLogin={({name,email})=>{
         if(email&&email.toLowerCase()==="vaseey@gmail.com"){setShowLogin(false);onGoAdmin();return;}
-        setUser(name);setIsAdmin(false);setShowLogin(false);
+        setUser(name);setUserEmail(email);setIsAdmin(false);setShowLogin(false);
       }}/>}
       {page==="home"&&<HomePage setPage={p=>navTo(p)} setSelectedCar={c=>navTo("detail",c)} favs={favs} toggleFav={toggleFav} cars={cars} blog={blog}/>}
       {page==="browse"&&<BrowsePage setPage={p=>navTo(p)} setSelectedCar={c=>navTo("detail",c)} favs={favs} toggleFav={toggleFav} cars={cars}/>}
