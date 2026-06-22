@@ -1892,14 +1892,18 @@ function Listings({cars,setCars}){
       {/* Pricing & highlight */}
       <FormSection title="Pricing & Highlight">
         <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
-          <div><Label>Price (₹)</Label><input
-            type={priceFocused?"number":"text"}
-            value={priceFocused?form.price:(form.price?Number(form.price).toLocaleString("en-IN"):"")}
-            onFocus={()=>{setPriceFocused(true);}}
-            onBlur={()=>{setPriceFocused(false);if(form.price===""||form.price===null)setForm(f=>({...f,price:0}));}}
-            onChange={e=>{const v=Math.max(0,Number(e.target.value)||0);setForm({...form,price:v});}}
-            placeholder="e.g. 9,50,000"
-          /></div>
+          <div>
+            <Label>Price (₹)</Label>
+            <input
+              type={priceFocused?"number":"text"}
+              value={priceFocused?form.price:(form.price===0?"0":Number(form.price).toLocaleString('en-IN'))}
+              onFocus={()=>{setPriceFocused(true);if(form.price===0)setForm(f=>({...f,price:""}));}}
+              onBlur={()=>{setPriceFocused(false);if(form.price===""||form.price===undefined)setForm(f=>({...f,price:0}));}}
+              onChange={e=>{const v=e.target.value;if(v===""||Number(v)>=0)setForm(f=>({...f,price:v===""?"":Number(v)}));}}
+              placeholder="e.g. 950000"
+              min="0"
+            />
+          </div>
           <div><Label>Badge</Label><select value={form.badge||"None"} onChange={e=>setForm({...form,badge:e.target.value==="None"?null:e.target.value})}>{["None","Hot","Steal Deal","Most Viewed"].map(o=><option key={o}>{o}</option>)}</select></div>
           <FormInput label="Tagline" value={form.tagline} onChange={v=>setForm({...form,tagline:v})} ph="e.g. “Fun, frugal, and fast.”"/>
         </div>
