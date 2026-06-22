@@ -28,7 +28,7 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: "Upload dist to Supabase Storage (bucket: site)"
+      - name: "Upload dist to Supabase Storage (bucket: Site)"
         env:
           SUPABASE_URL: "https://tozzhpyvromigzhtzlvc.supabase.co"
           SUPABASE_SERVICE_KEY: "${{ secrets.SUPABASE_SERVICE_KEY }}"
@@ -36,9 +36,8 @@ jobs:
           find dist -type f | while read file; do
             REMOTE_PATH="${file#dist/}"
             MIME=$(file -b --mime-type "$file")
-            # Upsert each file into the "site" bucket
             HTTP=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
-              "$SUPABASE_URL/storage/v1/object/site/$REMOTE_PATH" \
+              "$SUPABASE_URL/storage/v1/object/Site/$REMOTE_PATH" \
               -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" \
               -H "Content-Type: $MIME" \
               -H "x-upsert: true" \
