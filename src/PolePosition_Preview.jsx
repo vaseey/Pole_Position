@@ -1841,29 +1841,40 @@ function Listings({cars,setCars}){
       {/* Tyres */}
       <FormSection title="Tyres">
         {/* Wear diagram */}
-        <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:16,marginBottom:24}}>
-          <div style={{position:"relative",width:200,height:360}}>
-            <div style={{position:"absolute",left:50,top:14,width:100,height:272,border:"2px solid rgba(255,255,255,0.12)",borderRadius:38,background:"rgba(255,255,255,0.015)"}}/>
-            <div style={{position:"absolute",left:68,top:42,width:64,height:3,borderRadius:2,background:"rgba(255,255,255,0.1)"}}/>
-            <div style={{position:"absolute",left:50,top:-2,fontSize:9.5,color:"#475569",fontWeight:700,letterSpacing:"0.1em"}}>FRONT</div>
-            {[
-              {key:"fl",label:"Front Left",top:36,left:6},
-              {key:"fr",label:"Front Right",top:36,left:144},
-              {key:"rl",label:"Rear Left",top:226,left:6},
-              {key:"rr",label:"Rear Right",top:226,left:144},
-            ].map(t=>(
-              <div key={t.key} style={{position:"absolute",top:t.top,left:t.left,display:"flex",flexDirection:"column",alignItems:"center",gap:5,width:50}}>
-                <div style={{width:26,height:54,borderRadius:7,background:"#0F172A",border:`2px solid ${tyreColor(form.tyreWear?.[t.key]??20)}`}}/>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:20,marginBottom:24}}>
+          {/* Left column: FL top, RL bottom */}
+          <div style={{display:"flex",flexDirection:"column",gap:60}}>
+            {[{key:"fl",label:"FL"},{key:"rl",label:"RL"}].map(t=>(
+              <div key={t.key} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:4}}>
+                <div style={{width:28,height:58,borderRadius:7,background:"#0F172A",border:`2px solid ${tyreColor(form.tyreWear?.[t.key]??20)}`}}/>
                 <div style={{display:"flex",alignItems:"center",gap:2}}>
                   <input type="number" min="0" max="100" value={form.tyreWear?.[t.key]??20} onChange={e=>setForm(f=>({...f,tyreWear:{...f.tyreWear,[t.key]:Math.max(0,Math.min(100,Number(e.target.value)))}}))} style={{width:44,padding:"4px 5px",fontSize:11.5,textAlign:"center"}}/>
                   <span style={{fontSize:10,color:"#64748B"}}>%</span>
                 </div>
-                <span style={{fontSize:9.5,color:"#64748B",fontWeight:600,textAlign:"center",lineHeight:1.3}}>{t.label}</span>
+                <span style={{fontSize:9.5,color:"#64748B",fontWeight:600}}>{t.label}</span>
               </div>
             ))}
           </div>
-          <p style={{color:"#475569",fontSize:11,textAlign:"center",margin:0}}>% wear — <span style={{color:"#10B981"}}>green = good</span> · <span style={{color:"#F59E0B"}}>amber = moderate</span> · <span style={{color:"#EF4444"}}>red = worn</span></p>
+          {/* Center: car body */}
+          <div style={{position:"relative",width:100,height:210}}>
+            <div style={{position:"absolute",left:0,top:0,width:"100%",height:"100%",border:"2px solid rgba(255,255,255,0.12)",borderRadius:38,background:"rgba(255,255,255,0.015)"}}/>
+            <div style={{position:"absolute",left:18,top:28,width:64,height:3,borderRadius:2,background:"rgba(255,255,255,0.1)"}}/>
+          </div>
+          {/* Right column: FR top, RR bottom */}
+          <div style={{display:"flex",flexDirection:"column",gap:60}}>
+            {[{key:"fr",label:"FR"},{key:"rr",label:"RR"}].map(t=>(
+              <div key={t.key} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:4}}>
+                <div style={{width:28,height:58,borderRadius:7,background:"#0F172A",border:`2px solid ${tyreColor(form.tyreWear?.[t.key]??20)}`}}/>
+                <div style={{display:"flex",alignItems:"center",gap:2}}>
+                  <input type="number" min="0" max="100" value={form.tyreWear?.[t.key]??20} onChange={e=>setForm(f=>({...f,tyreWear:{...f.tyreWear,[t.key]:Math.max(0,Math.min(100,Number(e.target.value)))}}))} style={{width:44,padding:"4px 5px",fontSize:11.5,textAlign:"center"}}/>
+                  <span style={{fontSize:10,color:"#64748B"}}>%</span>
+                </div>
+                <span style={{fontSize:9.5,color:"#64748B",fontWeight:600}}>{t.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
+        <p style={{color:"#475569",fontSize:11,textAlign:"center",margin:"0 0 24px"}}>% wear — <span style={{color:"#10B981"}}>green = good</span> · <span style={{color:"#F59E0B"}}>amber = moderate</span> · <span style={{color:"#EF4444"}}>red = worn</span></p>
         {/* Tyre specs */}
         <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
           <div>
