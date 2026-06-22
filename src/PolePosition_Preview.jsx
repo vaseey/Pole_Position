@@ -1514,13 +1514,20 @@ function Listings({cars,setCars}){
     setFileErr("");
   },[edit]);
 
-  const handleFiles=(fileList)=>{
+  const handleFiles=async(fileList)=>{
     const files=Array.from(fileList);
     const accepted=files.filter(f=>f.type.startsWith("image/")||f.type.startsWith("video/"));
     if(accepted.length<files.length)setFileErr("Some files were skipped — only images and videos are supported.");
     else setFileErr("");
-    const items=accepted.map(f=>({id:Date.now()+Math.random(),type:f.type.startsWith("video/")?"video":"image",url:URL.createObjectURL(f),name:f.name}));
-    setMedia(m=>[...m,...items]);
+    const uploaded=await Promise.all(accepted.map(async f=>{
+      const ext=f.name.split(".").pop();
+      const path=`${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+      const {error}=await supabase.storage.from("car-images").upload(path,f,{contentType:f.type,upsert:false});
+      if(error){setFileErr("Upload failed: "+error.message);return null;}
+      const {data}=supabase.storage.from("car-images").getPublicUrl(path);
+      return {id:Date.now()+Math.random(),type:f.type.startsWith("video/")?"video":"image",url:data.publicUrl,name:f.name};
+    }));
+    setMedia(m=>[...m,...uploaded.filter(Boolean)]);
   };
 
   const addFromUrl=()=>{
