@@ -897,7 +897,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
   const gallery=[...galleryImages.map(url=>({type:"image",url})),...(car.video?[{type:"video",url:car.video}]:[])];
 
   return(
-    <div style={{paddingTop:64,minHeight:"100vh",background:"#F8FAFC",paddingBottom:isMobile?100:0}}>
+    <div style={{paddingTop:64,minHeight:"100vh",background:"#F8FAFC",paddingBottom:isMobile?100:0,overflowX:"hidden"}}>
       {isMobile&&(
         <div style={{position:"fixed",top:64,left:0,right:0,zIndex:150,background:"rgba(255,255,255,0.97)",backdropFilter:"blur(10px)",borderBottom:"1px solid #E2E8F0",padding:"10px 16px",display:"flex",alignItems:"center",gap:10}}>
           <button onClick={()=>setPage("browse")} style={{background:"none",border:"none",cursor:"pointer",color:"#64748B",display:"flex",alignItems:"center"}}><ChevronLeft size={18}/></button>
@@ -920,7 +920,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
               )}
               {car.badge&&<div style={{position:"absolute",top:16,left:16,background:BADGE[car.badge].bg,padding:"5px 14px",borderRadius:100,fontSize:12,fontWeight:700,color:"#fff"}}>{BADGE[car.badge].label}</div>}
             </div>
-            <div style={{display:"flex",gap:10,marginTop:12}}>
+            <div style={{display:"flex",gap:10,marginTop:12,overflowX:"auto",paddingBottom:4}}>
               {gallery.map((m,i)=>(
                 <button key={i} onClick={()=>{setActiveImg(i);setErr(false);}} style={{width:80,height:60,borderRadius:11,overflow:"hidden",border:activeImg===i?"2.5px solid #DC2626":"2.5px solid transparent",padding:0,cursor:"pointer",flexShrink:0,opacity:activeImg===i?1:0.65,transition:"opacity 0.15s",position:"relative",background:"#0F172A"}}>
                   {m.type==="video"?(
@@ -988,11 +988,11 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
       </div>
 
       {/* Tab bar */}
-      <div style={{background:"#fff",borderBottom:"1px solid #E2E8F0",position:"sticky",top:64,zIndex:100,marginTop:32}}>
-        <div style={{maxWidth:1100,margin:"0 auto",padding:"0 28px",display:"flex",gap:0}}>
+      <div style={{background:"#fff",borderBottom:"1px solid #E2E8F0",position:"sticky",top:isMobile?108:64,zIndex:100,marginTop:isMobile?16:32}}>
+        <div style={{maxWidth:1100,margin:"0 auto",padding:"0 28px",display:"flex",gap:0,overflowX:"auto",scrollbarWidth:"none"}}>
           {TABS.map(([id,label])=>(
             <button key={id} onClick={()=>setTab(id)}
-              style={{padding:"16px 22px",border:"none",background:"transparent",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:600,fontSize:14,color:tab===id?"#DC2626":"#64748B",borderBottom:tab===id?"2.5px solid #DC2626":"2.5px solid transparent",transition:"all 0.15s",whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:6}}>
+              style={{padding:isMobile?"12px 14px":"16px 22px",border:"none",background:"transparent",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:600,fontSize:isMobile?13:14,color:tab===id?"#DC2626":"#64748B",borderBottom:tab===id?"2.5px solid #DC2626":"2.5px solid transparent",transition:"all 0.15s",whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:6,flexShrink:0}}>
               {label}{id!=="overview"&&!user&&<Lock size={11} color="#CBD5E1"/>}
             </button>
           ))}
