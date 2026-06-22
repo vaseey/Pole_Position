@@ -2148,6 +2148,28 @@ function PublicSite({cars,blog,threads,onGoAdmin}){
     setFavs(f=>f.includes(id)?f.filter(x=>x!==id):[...f,id]);
   };
 
+  // Hash-based routing for shareable car URLs
+  useEffect(()=>{
+    const onHash=()=>{
+      const hash=window.location.hash;
+      const m=hash.match(/^#\/car\/(\d+)$/);
+      if(m){
+        const found=cars.find(c=>String(c.id)===m[1]);
+        if(found){setCar(found);setPage("detail");return;}
+      }
+      if(hash===""||hash==="#/")setPage("home");
+    };
+    onHash();
+    window.addEventListener("hashchange",onHash);
+    return()=>window.removeEventListener("hashchange",onHash);
+  },[cars]);
+
+  const navTo=(p,c=null)=>{
+    if(p==="detail"&&c){window.location.hash=`#/car/${c.id}`;}
+    else{window.location.hash=p==="home"?"":"#/"+p;}
+    setPage(p);if(c)setCar(c);
+  };
+
   useEffect(()=>{try{window.scrollTo(0,0);}catch(e){}},[page]);
 
   return(
