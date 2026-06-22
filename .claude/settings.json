@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "statusMessage": "Auto-committing design change to GitHub…",
+            "command": "FILE=$(jq -r '.tool_input.file_path // \"\"'); echo \"$FILE\" | grep -q '\\.jsx$' && (cd /home/user/Pole_Position && git add -A && git diff --cached --quiet || (git commit -m \"auto: design update $(date +%H:%M:%S)\" && git push origin HEAD 2>&1 | tail -3)) || true"
+          }
+        ]
+      }
+    ]
+  }
+}

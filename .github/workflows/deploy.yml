@@ -1,0 +1,45 @@
+name: Build & Deploy to Supabase Storage
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - "src/**"
+      - "package.json"
+      - "vite.config.js"
+      - "index.html"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload dist to Supabase Storage (bucket: site)
+        env:
+          SUPABASE_URL: https://tozzhpyvromigzhtzlvc.supabase.co
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          find dist -type f | while read file; do
+            REMOTE_PATH="${file#dist/}"
+            MIME=$(file -b --mime-type "$file")
+            # Upsert each file into the "site" bucket
+            HTTP=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
+              "$SUPABASE_URL/storage/v1/object/site/$REMOTE_PATH" \
+              -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" \
+              -H "Content-Type: $MIME" \
+              -H "x-upsert: true" \
+              --data-binary @"$file")
+            echo "$HTTP  $REMOTE_PATH"
+          done
