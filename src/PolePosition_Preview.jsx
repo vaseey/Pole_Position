@@ -1522,10 +1522,12 @@ function Listings({cars,setCars}){
       score_breakdown:payload.scoreBreakdown||null,tyre_wear:payload.tyreWear||null,
     };
     if(payload.id && typeof payload.id==="number" && payload.id < 1e12){
-      await supabase.from("cars").update(dbPayload).eq("id",payload.id);
+      const {error}=await supabase.from("cars").update({...dbPayload,status}).eq("id",payload.id);
+      if(error){alert("Save failed: "+error.message);return;}
       setCars(cars.map(c=>c.id===payload.id?payload:c));
     } else {
-      const {data}=await supabase.from("cars").insert(dbPayload).select().single();
+      const {data,error}=await supabase.from("cars").insert({...dbPayload,status}).select().single();
+      if(error){alert("Save failed: "+error.message);return;}
       if(data) setCars([...cars,{...payload,id:data.id}]);
     }
     setEdit(null);
