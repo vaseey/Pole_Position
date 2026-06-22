@@ -1743,7 +1743,7 @@ function Listings({cars,setCars}){
       </FormSection>
 
       {/* Make & Model — dependent dropdowns */}
-      <FormSection title="Car Details" subtitle="What car is this?">
+      <FormSection title="Car Details">
         <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12}}>
           <div>
             <Label>Make</Label>
