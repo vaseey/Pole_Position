@@ -2175,19 +2175,19 @@ function PublicSite({cars,blog,threads,onGoAdmin}){
   return(
     <>
       <style>{G}</style>
-      <Navbar page={page} setPage={setPage} user={user} setUser={setUser} setShowLogin={setShowLogin} isAdmin={isAdmin} onGoAdmin={onGoAdmin}/>
+      <Navbar page={page} setPage={p=>navTo(p)} user={user} setUser={setUser} setShowLogin={setShowLogin} isAdmin={isAdmin} onGoAdmin={onGoAdmin}/>
       {showLogin&&<LoginModal onClose={()=>setShowLogin(false)} onLogin={({name,email})=>{
         if(email&&email.toLowerCase()==="vaseey@gmail.com"){setShowLogin(false);onGoAdmin();return;}
         setUser(name);setIsAdmin(false);setShowLogin(false);
       }}/>}
-      {page==="home"&&<HomePage setPage={setPage} setSelectedCar={c=>{setCar(c);}} favs={favs} toggleFav={toggleFav} cars={cars} blog={blog}/>}
-      {page==="browse"&&<BrowsePage setPage={setPage} setSelectedCar={c=>{setCar(c);}} favs={favs} toggleFav={toggleFav} cars={cars}/>}
-      {page==="favorites"&&<FavoritesPage setPage={setPage} setSelectedCar={c=>{setCar(c);}} favs={favs} toggleFav={toggleFav} cars={cars}/>}
-      {page==="detail"&&<CarDetailPage car={car} setPage={setPage} isFav={favs.includes(car?.id)} onFav={toggleFav} user={user} setShowLogin={setShowLogin}/>}
-      {page==="quiz"&&<QuizPage setPage={setPage} setSelectedCar={c=>{setCar(c);setPage("detail");}} cars={cars}/>}
+      {page==="home"&&<HomePage setPage={p=>navTo(p)} setSelectedCar={c=>navTo("detail",c)} favs={favs} toggleFav={toggleFav} cars={cars} blog={blog}/>}
+      {page==="browse"&&<BrowsePage setPage={p=>navTo(p)} setSelectedCar={c=>navTo("detail",c)} favs={favs} toggleFav={toggleFav} cars={cars}/>}
+      {page==="favorites"&&<FavoritesPage setPage={p=>navTo(p)} setSelectedCar={c=>navTo("detail",c)} favs={favs} toggleFav={toggleFav} cars={cars}/>}
+      {page==="detail"&&<CarDetailPage car={car} setPage={p=>navTo(p)} isFav={favs.includes(car?.id)} onFav={toggleFav} user={user} setShowLogin={setShowLogin}/>}
+      {page==="quiz"&&<QuizPage setPage={p=>navTo(p)} setSelectedCar={c=>navTo("detail",c)} cars={cars}/>}
       {page==="blog"&&<BlogPage blog={blog}/>}
-      {page==="forum"&&<ForumPage setPage={setPage} setThread={setThread} user={user} setShowLogin={setShowLogin} threads={threads}/>}
-      {page==="thread"&&<ThreadPage thread={thread} setPage={setPage} user={user} setShowLogin={setShowLogin}/>}
+      {page==="forum"&&<ForumPage setPage={p=>navTo(p)} setThread={setThread} user={user} setShowLogin={setShowLogin} threads={threads}/>}
+      {page==="thread"&&<ThreadPage thread={thread} setPage={p=>navTo(p)} user={user} setShowLogin={setShowLogin}/>}
     </>
   );
 }
