@@ -511,7 +511,7 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
             </button>
           </div>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(220px,1fr))",gap:20}}>
-            {hot.map(c=><CarCard key={c.id} car={c} onFav={toggleFav} isFav={favs.includes(c.id)} onClick={()=>{setSelectedCar(c);setPage("detail");}}/>)}
+            {hot.map(c=><CarCard key={c.id} car={c} onFav={toggleFav} isFav={favs.includes(c.id)} onClick={()=>{setSelectedCar(c);}}/>)}
           </div>
         </div>
       </div>
@@ -780,7 +780,7 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
           {/* ── Results grid ── */}
           <div style={{flex:1}}>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:20}}>
-              {filtered.map(c=><BrowseCarCard key={c.id} car={c} onFav={toggleFav} isFav={favs.includes(c.id)} onClick={()=>{setSelectedCar(c);setPage("detail");}}/>)}
+              {filtered.map(c=><BrowseCarCard key={c.id} car={c} onFav={toggleFav} isFav={favs.includes(c.id)} onClick={()=>{setSelectedCar(c);}}/>)}
             </div>
             {filtered.length===0&&<div style={{textAlign:"center",padding:"80px 0",color:"#94A3B8"}}>No cars match your filters.</div>}
           </div>
@@ -1128,7 +1128,7 @@ function QuizPage({setPage,setSelectedCar,cars}){
       });
       scored.sort((a,b)=>b.match-a.match);
       setSelectedCar(scored[0]);
-      setPage("detail");
+
     }
   };
   const q=QUIZ[step];
@@ -2130,7 +2130,7 @@ function FavoritesPage({setPage,setSelectedCar,favs,toggleFav,cars}){
           </div>
         ):(
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:20}}>
-            {saved.map(c=><BrowseCarCard key={c.id} car={c} onFav={toggleFav} isFav={true} onClick={()=>{setSelectedCar(c);setPage("detail");}}/>)}
+            {saved.map(c=><BrowseCarCard key={c.id} car={c} onFav={toggleFav} isFav={true} onClick={()=>{setSelectedCar(c);}}/>)}
           </div>
         )}
       </div>
