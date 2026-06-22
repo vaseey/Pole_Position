@@ -1863,7 +1863,7 @@ function Listings({cars,setCars}){
       </FormSection>
 
       {/* Tyres */}
-      <FormSection title="Tyres" subtitle="Condition and specifications">
+      <FormSection title="Tyres">
         {/* Wear diagram */}
         <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:16,marginBottom:24}}>
           <div style={{position:"relative",width:200,height:360}}>
