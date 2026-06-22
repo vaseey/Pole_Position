@@ -2243,6 +2243,7 @@ function AdminConsole({cars,setCars,blogs,setBlogs,users,onExit}){
             {tab==="listings"&&<Listings cars={cars} setCars={setCars}/>}
             {tab==="users"&&<AdminTeam/>}
             {tab==="blog"&&<Blog blogs={blogs} setBlogs={setBlogs}/>}
+            {tab==="enquiries"&&<EnquiriesPanel/>}
           </div>
         </div>
       </div>
