@@ -2216,6 +2216,28 @@ export default function App(){
     fetchData();
   },[]);
 
+  // Detect Supabase email confirmation redirect
+  const [confirmed,setConfirmed]=useState(()=>window.location.hash.includes("type=signup"));
+  useEffect(()=>{
+    if(!confirmed)return;
+    supabase.auth.getSession(); // consume the token from hash
+    const t=setTimeout(()=>{
+      window.location.hash="";
+      setConfirmed(false);
+    },2500);
+    return()=>clearTimeout(t);
+  },[confirmed]);
+
+  if(confirmed) return(
+    <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",height:"100vh",fontFamily:"Outfit,sans-serif",background:"#F8FAFC",gap:16,textAlign:"center",padding:24}}>
+      <div style={{width:64,height:64,background:"#DCFCE7",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",marginBottom:8}}><CheckCircle size={32} color="#16A34A"/></div>
+      <h1 style={{fontWeight:900,fontSize:28,letterSpacing:"-0.03em",color:"#0F172A",margin:0}}>Your account is confirmed.</h1>
+      <p style={{fontWeight:600,fontSize:17,color:"#0F172A",margin:0}}>Welcome to Pole Position.</p>
+      <p style={{color:"#64748B",fontSize:14,margin:0}}>Please wait. Redirecting…</p>
+      <div style={{width:36,height:36,border:"3px solid #E2E8F0",borderTopColor:"#DC2626",borderRadius:"50%",animation:"spin 0.8s linear infinite",marginTop:8}}/>
+    </div>
+  );
+
   if(loading) return <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100vh",fontFamily:"Outfit,sans-serif",fontSize:18,color:"#64748B"}}>Loading…</div>;
 
   if(view==="admin"){
