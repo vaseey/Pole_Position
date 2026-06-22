@@ -383,6 +383,17 @@ function LoginCard({mode="user",onClose,onSubmit,error}){
 function LoginModal({onClose,onLogin}){
   const [err,setErr]=useState("");
   const [loading,setLoading]=useState(false);
+  const [confirmed,setConfirmed]=useState(false);
+  if(confirmed) return(
+    <div style={{position:"fixed",inset:0,zIndex:500,background:"rgba(15,23,42,0.55)",backdropFilter:"blur(6px)",display:"flex",alignItems:"center",justifyContent:"center"}} onClick={onClose}>
+      <div className="glass" style={{borderRadius:24,padding:40,width:390,maxWidth:"94vw",textAlign:"center"}} onClick={e=>e.stopPropagation()}>
+        <div style={{width:52,height:52,background:"#DCFCE7",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 16px"}}><CheckCircle size={26} color="#16A34A"/></div>
+        <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,marginBottom:8,color:"#0F172A"}}>Check your email</h2>
+        <p style={{color:"#64748B",fontSize:14,lineHeight:1.6,marginBottom:24}}>We've sent a confirmation link to your email. Click it to activate your account, then come back and sign in.</p>
+        <button className="btn-red" style={{padding:"11px 28px",borderRadius:12,fontSize:14}} onClick={onClose}>Got it</button>
+      </div>
+    </div>
+  );
   return(
     <div style={{position:"fixed",inset:0,zIndex:500,background:"rgba(15,23,42,0.55)",backdropFilter:"blur(6px)",display:"flex",alignItems:"center",justifyContent:"center"}} onClick={onClose}>
       <LoginCard mode="user" onClose={onClose} error={err} loading={loading} onSubmit={async({tab,name,email,pass})=>{
@@ -390,6 +401,7 @@ function LoginModal({onClose,onLogin}){
         if(tab==="signup"){
           const {data,error}=await supabase.auth.signUp({email,password:pass,options:{data:{name}}});
           if(error){setErr(error.message);setLoading(false);return;}
+          if(data.user&&!data.session){setConfirmed(true);setLoading(false);return;}
           onLogin({name:name||email.split("@")[0]||"User",email,id:data.user?.id});
         } else {
           const {data,error}=await supabase.auth.signInWithPassword({email,password:pass});
