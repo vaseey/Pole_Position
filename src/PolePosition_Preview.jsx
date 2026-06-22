@@ -1530,7 +1530,10 @@ function Listings({cars,setCars}){
       const {data}=supabase.storage.from("car-images").getPublicUrl(path);
       return {id:Date.now()+Math.random(),type:f.type.startsWith("video/")?"video":"image",url:data.publicUrl,name:f.name};
     }));
-    setMedia(m=>[...m,...uploaded.filter(Boolean)]);
+    const valid=uploaded.filter(Boolean);
+    const firstNewImg=valid.find(u=>u.type==="image");
+    if(firstNewImg)setCoverId(firstNewImg.id);
+    setMedia(m=>[...m,...valid]);
   };
 
   const addFromUrl=()=>{
