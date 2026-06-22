@@ -1570,6 +1570,8 @@ function Listings({cars,setCars}){
   const [media,setMedia]=useState([]);
   const [coverId,setCoverId]=useState(null);
   const [urlInput,setUrlInput]=useState("");
+  const [kmFocused,setKmFocused]=useState(false);
+  const [priceFocused,setPriceFocused]=useState(false);
   const [fileErr,setFileErr]=useState("");
   const [customMake,setCustomMake]=useState(false);
   const [customModel,setCustomModel]=useState(false);
@@ -1784,14 +1786,31 @@ function Listings({cars,setCars}){
           <div>
             <Label>Transmission {form.variant&&variantOptions.find(o=>o.variant===form.variant)?.transmission&&<span style={{color:"#10B981",fontSize:9,fontWeight:700,marginLeft:4}}>AUTO</span>}</Label>
             <select value={form.transmission||"Manual"} onChange={e=>setForm({...form,transmission:e.target.value})}>
-              {["Manual","Automatic","DCT","CVT","AMT"].map(o=><option key={o}>{o}</option>)}
+              <option value="Manual">Manual</option>
+              <option value="IVT">IVT</option>
+              <optgroup label="Automatic types">
+                <option value="Automatic">Automatic</option>
+                <option value="DCT">DCT</option>
+                <option value="AMT">AMT</option>
+                <option value="CVT">CVT</option>
+                <option value="TipTronic">TipTronic</option>
+                <option value="MultiTronic">MultiTronic</option>
+                <option value="PDK">PDK</option>
+              </optgroup>
             </select>
           </div>
         </div>
       </FormSection>
       <FormSection title="History">
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:16}}>
-          <FormInput label="KM Driven" value={form.km} onChange={v=>setForm({...form,km:v})} type="number" ph="e.g. 25000"/>
+          <div><Label>KM Driven</Label><input
+            type={kmFocused?"number":"text"}
+            value={kmFocused?form.km:(form.km?Number(form.km).toLocaleString("en-IN"):"")}
+            onFocus={()=>{setKmFocused(true);}}
+            onBlur={()=>{setKmFocused(false);if(form.km===""||form.km===null)setForm(f=>({...f,km:0}));}}
+            onChange={e=>{const v=Math.max(0,Number(e.target.value)||0);setForm({...form,km:v});}}
+            placeholder="e.g. 25,000"
+          /></div>
           <div><Label>Owners</Label><select value={form.owners||1} onChange={e=>setForm({...form,owners:Number(e.target.value)})}>{[1,2,3,4].map(o=><option key={o} value={o}>{o===4?"4+":o===1?"1st owner":o===2?"2nd owner":"3rd owner"}</option>)}</select></div>
         </div>
         <div>
@@ -1868,7 +1887,14 @@ function Listings({cars,setCars}){
       {/* Pricing & highlight */}
       <FormSection title="Pricing & Highlight">
         <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
-          <FormInput label="Price (₹)" value={form.price} onChange={v=>setForm({...form,price:v})} type="number" ph="e.g. 950000"/>
+          <div><Label>Price (₹)</Label><input
+            type={priceFocused?"number":"text"}
+            value={priceFocused?form.price:(form.price?Number(form.price).toLocaleString("en-IN"):"")}
+            onFocus={()=>{setPriceFocused(true);}}
+            onBlur={()=>{setPriceFocused(false);if(form.price===""||form.price===null)setForm(f=>({...f,price:0}));}}
+            onChange={e=>{const v=Math.max(0,Number(e.target.value)||0);setForm({...form,price:v});}}
+            placeholder="e.g. 9,50,000"
+          /></div>
           <div><Label>Badge</Label><select value={form.badge||"None"} onChange={e=>setForm({...form,badge:e.target.value==="None"?null:e.target.value})}>{["None","Hot","Steal Deal","Most Viewed"].map(o=><option key={o}>{o}</option>)}</select></div>
           <FormInput label="Tagline" value={form.tagline} onChange={v=>setForm({...form,tagline:v})} ph="e.g. “Fun, frugal, and fast.”"/>
         </div>
