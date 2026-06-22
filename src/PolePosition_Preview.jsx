@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from "react";
+import { supabase } from "./supabase.js";
 import { Search, Heart, X, ChevronRight, ArrowRight, User, Gauge, Calendar, CheckCircle, XCircle, Shield, Zap, ChevronDown, ChevronLeft, Award, Clock, TrendingUp, Users, Filter, Star, RotateCcw, Check, MapPin, Wrench, Fuel, MessageSquare, BookOpen, ThumbsUp, Send, Eye, Car, Activity, Share2, BarChart2, Plus, Bookmark, PenSquare, Hash, LogOut, AlertCircle, Edit2, Trash2, FileText, Lock, Hourglass, Upload, Film, Play } from "lucide-react";
 
 const G = `
