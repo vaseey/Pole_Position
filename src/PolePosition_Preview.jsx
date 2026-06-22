@@ -1164,6 +1164,49 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
           )}
 
         </div>
+      {isMobile&&(
+        <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:150,background:"rgba(255,255,255,0.97)",backdropFilter:"blur(10px)",borderTop:"1px solid #E2E8F0",padding:"12px 20px",display:"flex",gap:12,alignItems:"center"}}>
+          <div style={{flex:1}}>
+            <div style={{fontWeight:900,fontSize:20,letterSpacing:"-0.03em"}}>{fmt(car.price)}</div>
+            <div style={{color:"#94A3B8",fontSize:11}}>EMI from ₹{emi.toLocaleString("en-IN")}/mo</div>
+          </div>
+          <button onClick={()=>{if(!user){setShowLogin(true);return;}setShowEnquiryModal(true);}} className="btn-red" style={{padding:"12px 24px",borderRadius:11,fontSize:14}}>Enquire Now</button>
+        </div>
+      )}
+      {showEnquiryModal&&(
+        <div style={{position:"fixed",inset:0,zIndex:600,background:"rgba(15,23,42,0.6)",backdropFilter:"blur(6px)",display:"flex",alignItems:"center",justifyContent:"center",padding:"0 20px"}} onClick={()=>setShowEnquiryModal(false)}>
+          <div style={{background:"#fff",borderRadius:20,padding:32,width:420,maxWidth:"100%",position:"relative"}} onClick={e=>e.stopPropagation()}>
+            <button onClick={()=>setShowEnquiryModal(false)} style={{position:"absolute",top:14,right:14,background:"#F1F5F9",border:"none",borderRadius:"50%",width:30,height:30,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><X size={14}/></button>
+            <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,marginBottom:6,color:"#0F172A"}}>Get in Touch</h2>
+            <p style={{color:"#64748B",fontSize:13.5,marginBottom:20}}>We'll connect you with the seller via WhatsApp.</p>
+            <div style={{marginBottom:16}}>
+              <label style={{fontSize:11,fontWeight:700,color:"#64748B",textTransform:"uppercase",display:"block",marginBottom:6}}>Phone Number</label>
+              <input value={enquiryPhone} onChange={e=>setEnquiryPhone(e.target.value)} placeholder="+91 98765 43210" type="tel" style={{width:"100%",padding:"11px 14px",fontSize:14,borderRadius:12,border:"1.5px solid #E2E8F0",background:"#F8FAFC",color:"#0F172A",fontFamily:"Outfit,sans-serif",outline:"none"}}/>
+            </div>
+            <button disabled={enquirySubmitting||!enquiryPhone} onClick={async()=>{
+              setEnquirySubmitting(true);
+              try{
+                await supabase.from("enquiries").insert({
+                  car_id:car.id,
+                  name:user,
+                  email:userEmail||"",
+                  phone:enquiryPhone,
+                  listing_url:window.location.href,
+                  car_title:`${car.make} ${car.model} ${car.year}`
+                });
+              }catch(e){}
+              const msg=encodeURIComponent(`New Enquiry from Pole Position\n\nName: ${user}\nEmail: ${userEmail||""}\nPhone: ${enquiryPhone}\nListing: ${window.location.href}\nCar: ${car.make} ${car.model} ${car.year}`);
+              window.open(`https://wa.me/919884257043?text=${msg}`,"_blank");
+              setEnquirySubmitting(false);
+              setShowEnquiryModal(false);
+              setEnquired(true);
+              setTimeout(()=>setEnquired(false),3000);
+            }} className="btn-red" style={{width:"100%",padding:"13px",borderRadius:12,fontSize:15,opacity:(enquirySubmitting||!enquiryPhone)?0.6:1,cursor:(enquirySubmitting||!enquiryPhone)?"not-allowed":"pointer"}}>
+              {enquirySubmitting?"Sending…":"Send Enquiry"}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
