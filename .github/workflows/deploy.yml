@@ -36,11 +36,13 @@ jobs:
           find dist -type f | while read file; do
             REMOTE_PATH="${file#dist/}"
             MIME=$(file -b --mime-type "$file")
-            HTTP=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
+            BODY=$(curl -s -w "\n%{http_code}" -X POST \
               "$SUPABASE_URL/storage/v1/object/Site/$REMOTE_PATH" \
               -H "Authorization: Bearer $SUPABASE_SERVICE_KEY" \
+              -H "apikey: $SUPABASE_SERVICE_KEY" \
               -H "Content-Type: $MIME" \
               -H "x-upsert: true" \
               --data-binary @"$file")
-            echo "$HTTP  $REMOTE_PATH"
+            HTTP=$(echo "$BODY" | tail -1)
+            echo "$HTTP  $REMOTE_PATH  $(echo "$BODY" | head -1)"
           done
