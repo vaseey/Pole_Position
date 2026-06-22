@@ -1747,40 +1747,11 @@ function Listings({cars,setCars}){
         <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12}}>
           <div>
             <Label>Make</Label>
-            {customMake?(
-              <div style={{display:"flex",gap:6}}>
-                <input value={form.make} onChange={e=>setForm({...form,make:e.target.value})} placeholder="Enter make"/>
-                <button onClick={()=>{setCustomMake(false);setForm(f=>({...f,make:"",model:"",variant:"",carClass:"Economy"}));setCustomModel(false);setVariantOptions([]);}} style={{width:38,borderRadius:10,border:"1px solid rgba(255,255,255,0.12)",background:"transparent",color:"#94A3B8",cursor:"pointer",flexShrink:0}}><RotateCcw size={13}/></button>
-              </div>
-            ):(
-              <select value={form.make||""} onChange={e=>{
-                const mk=e.target.value;
-                if(mk==="Other"){setCustomMake(true);setForm(f=>({...f,make:"",model:"",variant:"",carClass:"Economy"}));}
-                else setForm(f=>({...f,make:mk,model:"",variant:"",carClass:MAKE_CLASS[mk]||"Economy"}));
-                setCustomModel(false);setVariantOptions([]);
-              }}>
-                <option value="">Select</option>
-                {Object.keys(MAKE_MODELS).map(m=><option key={m} value={m}>{m}</option>)}
-              </select>
-            )}
+            <input value={form.make||""} onChange={e=>setForm({...form,make:e.target.value})} placeholder="e.g. Honda"/>
           </div>
           <div>
             <Label>Model</Label>
-            {customModel||customMake?(
-              <input value={form.model} onChange={e=>setForm({...form,model:e.target.value})} placeholder="Enter model"/>
-            ):!form.make?(
-              <input value="" disabled placeholder="Select a make first" style={{opacity:0.5,cursor:"not-allowed"}}/>
-            ):(
-              <select value={form.model||""} onChange={e=>{
-                const mdl=e.target.value;
-                if(mdl==="Other"){setCustomModel(true);setForm(f=>({...f,model:"",variant:""}));setVariantOptions([]);}
-                else{const cat=MODEL_CATEGORY[mdl]||form.category;setForm(f=>({...f,model:mdl,variant:"",category:cat}));fetchVariants(form.make,mdl,form.year);}
-              }}>
-                <option value="">Select</option>
-                {(MAKE_MODELS[form.make]||[]).map(m=><option key={m} value={m}>{m}</option>)}
-                <option value="Other">Other</option>
-              </select>
-            )}
+            <input value={form.model||""} onChange={e=>{const mdl=e.target.value;const cat=MODEL_CATEGORY[mdl]||form.category;setForm(f=>({...f,model:mdl,category:cat}));if(form.make&&mdl&&form.year)fetchVariants(form.make,mdl,form.year);}} placeholder="e.g. City"/>
           </div>
           <div>
             <Label>Year</Label>
@@ -1790,26 +1761,7 @@ function Listings({cars,setCars}){
           </div>
           <div>
             <Label>Variant {variantLoading&&<span style={{color:"#F59E0B",fontSize:9,fontWeight:700,marginLeft:4}}>LOADING…</span>}</Label>
-            {customVariant?(
-              <div style={{display:"flex",gap:6}}>
-                <input value={form.variant||""} onChange={e=>setForm({...form,variant:e.target.value})} placeholder="Enter variant"/>
-                <button onClick={()=>{setCustomVariant(false);setForm(f=>({...f,variant:""}));}} style={{width:38,borderRadius:10,border:"1px solid rgba(255,255,255,0.12)",background:"transparent",color:"#94A3B8",cursor:"pointer",flexShrink:0}}><RotateCcw size={13}/></button>
-              </div>
-            ):!form.model?(
-              <input value="" disabled placeholder="Select model first" style={{opacity:0.5,cursor:"not-allowed"}}/>
-            ):variantLoading?(
-              <input value="" disabled placeholder="Fetching variants…" style={{opacity:0.5}}/>
-            ):(
-              <select value={form.variant||""} onChange={e=>{
-                const v=e.target.value;
-                if(v==="Other"){setCustomVariant(true);setForm(f=>({...f,variant:""}));}
-                else{const opt=variantOptions.find(o=>o.variant===v)||{};setForm(f=>({...f,variant:v,...(opt.fuel?{fuel:opt.fuel}:{}),...(opt.transmission?{transmission:opt.transmission}:{})}));}
-              }}>
-                <option value="">Select</option>
-                {variantOptions.map(o=><option key={o.variant} value={o.variant}>{o.variant}</option>)}
-                <option value="Other">Other…</option>
-              </select>
-            )}
+            <input value={form.variant||""} onChange={e=>{const v=e.target.value;const specs=VARIANT_SPECS[v]||{};setForm(f=>({...f,variant:v,...(specs.fuel?{fuel:specs.fuel}:{}),...(specs.transmission?{transmission:specs.transmission}:{})}));}} placeholder="e.g. VX"/>
           </div>
           <div>
             <Label>Category {MODEL_CATEGORY[form.model]&&<span style={{color:"#10B981",fontSize:9,fontWeight:700,marginLeft:4}}>AUTO</span>}</Label>
