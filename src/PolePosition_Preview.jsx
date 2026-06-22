@@ -1578,6 +1578,8 @@ function Listings({cars,setCars}){
   const [customVariant,setCustomVariant]=useState(false);
   const [variantOptions,setVariantOptions]=useState([]);
   const [variantLoading,setVariantLoading]=useState(false);
+  const [kmFocused,setKmFocused]=useState(false);
+  const [priceFocused,setPriceFocused]=useState(false);
 
   const fetchVariants=async(make,model,year)=>{
     if(!make||!model||!year)return;
