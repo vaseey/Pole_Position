@@ -938,7 +938,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
           </div>
 
           {/* RIGHT — summary panel */}
-          <div style={{background:"#fff",borderRadius:20,border:"1px solid #E2E8F0",padding:24,position:"sticky",top:88}}>
+          <div style={{background:"#fff",borderRadius:20,border:"1px solid #E2E8F0",padding:24,...(isMobile?{}:{position:"sticky",top:88})}}>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:10,marginBottom:6}}>
               <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:23,letterSpacing:"-0.03em",lineHeight:1.15}}>{car.make} {car.model}{car.variant&&<span style={{color:"#94A3B8",fontWeight:700}}> {car.variant}</span>}</h1>
               <div style={{display:"flex",gap:6,flexShrink:0}}>
