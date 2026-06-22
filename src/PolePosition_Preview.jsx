@@ -2122,8 +2122,26 @@ export default function App(){
   const [view,setView]=useState("public");
   const [cars,setCars]=useState(CARS_SEED);
   const [blogs,setBlogs]=useState(BLOG_SEED);
-  const [threads]=useState(THREADS_SEED);
+  const [threads,setThreads]=useState(THREADS_SEED);
   const [users]=useState(USERS_SEED);
+  const [loading,setLoading]=useState(true);
+
+  useEffect(()=>{
+    async function fetchData(){
+      const [carsRes,blogsRes,threadsRes]=await Promise.all([
+        supabase.from("cars").select("*").order("id"),
+        supabase.from("blog_posts").select("*").order("id"),
+        supabase.from("forum_threads").select("*").order("pinned",{ascending:false}).order("id"),
+      ]);
+      if(carsRes.data?.length) setCars(carsRes.data.map(c=>({...c,scoreBreakdown:c.score_breakdown,tyreWear:c.tyre_wear})));
+      if(blogsRes.data?.length) setBlogs(blogsRes.data.map(b=>({...b,readTime:b.read_time})));
+      if(threadsRes.data?.length) setThreads(threadsRes.data);
+      setLoading(false);
+    }
+    fetchData();
+  },[]);
+
+  if(loading) return <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100vh",fontFamily:"Outfit,sans-serif",fontSize:18,color:"#64748B"}}>Loading…</div>;
 
   if(view==="admin"){
     return <AdminConsole cars={cars} setCars={setCars} blogs={blogs} setBlogs={setBlogs} users={users} onExit={()=>setView("public")}/>;
