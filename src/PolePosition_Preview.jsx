@@ -1508,13 +1508,26 @@ function Listings({cars,setCars}){
 
   const removeMedia=(id)=>setMedia(m=>m.filter(x=>x.id!==id));
 
-  const save=(status="published")=>{
+  const save=async(status="published")=>{
     if(!form.make)return;
     const images=media.filter(m=>m.type==="image").map(m=>m.url);
     const video=media.find(m=>m.type==="video")?.url||null;
     const payload={...form,images,video,img:images[0]||form.img||"",status,serviceHistory:serviceDoc};
-    if(payload.id)setCars(cars.map(c=>c.id===payload.id?payload:c));
-    else setCars([...cars,{...payload,id:Date.now()}]);
+    const dbPayload={
+      make:payload.make,model:payload.model,year:payload.year,fuel:payload.fuel,
+      transmission:payload.transmission,km:payload.km,seats:payload.seats,price:payload.price,
+      score:payload.score,badge:payload.badge||null,img:payload.img,images:payload.images,
+      video:payload.video||null,category:payload.category,tagline:payload.tagline,
+      owners:payload.owners,insurance:payload.insurance,
+      score_breakdown:payload.scoreBreakdown||null,tyre_wear:payload.tyreWear||null,
+    };
+    if(payload.id && typeof payload.id==="number" && payload.id < 1e12){
+      await supabase.from("cars").update(dbPayload).eq("id",payload.id);
+      setCars(cars.map(c=>c.id===payload.id?payload:c));
+    } else {
+      const {data}=await supabase.from("cars").insert(dbPayload).select().single();
+      if(data) setCars([...cars,{...payload,id:data.id}]);
+    }
     setEdit(null);
   };
 
