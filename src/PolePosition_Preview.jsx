@@ -1993,10 +1993,13 @@ function AdminConsole({cars,setCars,blogs,setBlogs,users,onExit}){
   const [loginPass,setLoginPass]=useState("");
   const [loginRemember,setLoginRemember]=useState(true);
 
-  const handleLogin=()=>{
+  const handleLogin=async()=>{
     setLoginErr("");
-    if(loginEmail==="vaseey@gmail.com"&&loginPass==="E7676e7f1!"){setAuthed(true);return;}
-    setLoginErr("Incorrect email or password.");
+    const {data,error}=await supabase.auth.signInWithPassword({email:loginEmail,password:loginPass});
+    if(error){setLoginErr("Incorrect email or password.");return;}
+    const profile=await supabase.from("profiles").select("is_admin").eq("id",data.user.id).single();
+    if(!profile.data?.is_admin){setLoginErr("You do not have admin access.");return;}
+    setAuthed(true);
   };
 
   if(!authed)return(
