@@ -1543,7 +1543,8 @@ function Listings({cars,setCars}){
     if(!form.make)return;
     const images=media.filter(m=>m.type==="image").map(m=>m.url);
     const video=media.find(m=>m.type==="video")?.url||null;
-    const payload={...form,images,video,img:images[0]||form.img||"",status,serviceHistory:serviceDoc};
+    const coverUrl=media.find(m=>m.id===coverId)?.url||images[0]||form.img||"";
+    const payload={...form,images,video,img:coverUrl,status,serviceHistory:serviceDoc};
     const dbPayload={
       make:payload.make,model:payload.model,year:payload.year,fuel:payload.fuel,
       transmission:payload.transmission,km:payload.km,seats:payload.seats,price:payload.price,
