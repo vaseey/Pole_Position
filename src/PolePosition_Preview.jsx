@@ -1460,6 +1460,7 @@ function Listings({cars,setCars}){
   const [form,setForm]=useState(empty);
   const [scoring,setScoring]=useState(false);
   const [media,setMedia]=useState([]);
+  const [coverId,setCoverId]=useState(null);
   const [urlInput,setUrlInput]=useState("");
   const [fileErr,setFileErr]=useState("");
   const [customMake,setCustomMake]=useState(false);
