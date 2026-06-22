@@ -680,6 +680,13 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
   const [selTrans,setSelTrans]=useState([]);
   const [selFuel,setSelFuel]=useState([]);
   const [selCat,setSelCat]=useState([]);
+  const [showMobileFilters,setShowMobileFilters]=useState(false);
+  const [isMobile,setIsMobile]=useState(()=>window.innerWidth<=768);
+  useEffect(()=>{
+    const handler=()=>setIsMobile(window.innerWidth<=768);
+    window.addEventListener("resize",handler);
+    return()=>window.removeEventListener("resize",handler);
+  },[]);
 
   const allPrices=cars.map(c=>c.price);
   const floorPrice=Math.min(...allPrices), ceilPrice=Math.max(...allPrices);
