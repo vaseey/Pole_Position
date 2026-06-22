@@ -897,13 +897,19 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
   const gallery=[...galleryImages.map(url=>({type:"image",url})),...(car.video?[{type:"video",url:car.video}]:[])];
 
   return(
-    <div style={{paddingTop:64,minHeight:"100vh",background:"#F8FAFC"}}>
+    <div style={{paddingTop:64,minHeight:"100vh",background:"#F8FAFC",paddingBottom:isMobile?100:0}}>
+      {isMobile&&(
+        <div style={{position:"fixed",top:64,left:0,right:0,zIndex:150,background:"rgba(255,255,255,0.97)",backdropFilter:"blur(10px)",borderBottom:"1px solid #E2E8F0",padding:"10px 16px",display:"flex",alignItems:"center",gap:10}}>
+          <button onClick={()=>setPage("browse")} style={{background:"none",border:"none",cursor:"pointer",color:"#64748B",display:"flex",alignItems:"center"}}><ChevronLeft size={18}/></button>
+          <span style={{fontWeight:700,fontSize:15,flex:1,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{car.make} {car.model}</span>
+        </div>
+      )}
       {/* Gallery + summary panel */}
-      <div style={{maxWidth:1100,margin:"0 auto",padding:"24px 28px 0"}}>
-        <button onClick={()=>setPage("browse")} style={{display:"flex",alignItems:"center",gap:6,background:"none",border:"none",cursor:"pointer",color:"#64748B",fontSize:13,fontWeight:600,marginBottom:18}}>
+      <div style={{maxWidth:1100,margin:"0 auto",padding:isMobile?"60px 16px 0":"24px 28px 0"}}>
+        {!isMobile&&<button onClick={()=>setPage("browse")} style={{display:"flex",alignItems:"center",gap:6,background:"none",border:"none",cursor:"pointer",color:"#64748B",fontSize:13,fontWeight:600,marginBottom:18}}>
           <ChevronLeft size={15}/> Back to results
-        </button>
-        <div style={{display:"grid",gridTemplateColumns:"1fr 360px",gap:30,alignItems:"flex-start"}}>
+        </button>}
+        <div style={{display:"grid",gridTemplateColumns:isMobile?"1fr":"1fr 360px",gap:30,alignItems:"flex-start"}}>
           {/* LEFT — gallery */}
           <div>
             <div style={{position:"relative",borderRadius:20,overflow:"hidden",aspectRatio:"16/10",background:"#0F172A"}}>
