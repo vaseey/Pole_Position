@@ -2206,7 +2206,7 @@ function AdminConsole({cars,setCars,blogs,setBlogs,users,onExit}){
     </>
   );
 
-  const NAV=[{id:"dashboard",label:"Dashboard",icon:BarChart2},{id:"listings",label:"Listings",icon:Car},{id:"users",label:"Admin Team",icon:Shield},{id:"blog",label:"Blog",icon:BookOpen}];
+  const NAV=[{id:"dashboard",label:"Dashboard",icon:BarChart2},{id:"listings",label:"Listings",icon:Car},{id:"users",label:"Admin Team",icon:Shield},{id:"blog",label:"Blog",icon:BookOpen},{id:"enquiries",label:"Enquiries",icon:MessageSquare}];
   return(
     <>
       <style>{G}</style>
