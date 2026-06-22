@@ -1804,14 +1804,18 @@ function Listings({cars,setCars}){
       </FormSection>
       <FormSection title="History">
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:16}}>
-          <div><Label>KM Driven</Label><input
-            type={kmFocused?"number":"text"}
-            value={kmFocused?form.km:(form.km?Number(form.km).toLocaleString("en-IN"):"")}
-            onFocus={()=>{setKmFocused(true);}}
-            onBlur={()=>{setKmFocused(false);if(form.km===""||form.km===null)setForm(f=>({...f,km:0}));}}
-            onChange={e=>{const v=Math.max(0,Number(e.target.value)||0);setForm({...form,km:v});}}
-            placeholder="e.g. 25,000"
-          /></div>
+          <div>
+            <Label>KM Driven</Label>
+            <input
+              type={kmFocused?"number":"text"}
+              value={kmFocused?form.km:(form.km===0?"0":Number(form.km).toLocaleString('en-IN'))}
+              onFocus={()=>{setKmFocused(true);if(form.km===0)setForm(f=>({...f,km:""}));}}
+              onBlur={()=>{setKmFocused(false);if(form.km===""||form.km===undefined)setForm(f=>({...f,km:0}));}}
+              onChange={e=>{const v=e.target.value;if(v===""||Number(v)>=0)setForm(f=>({...f,km:v===""?"":Number(v)}));}}
+              placeholder="e.g. 25000"
+              min="0"
+            />
+          </div>
           <div><Label>Owners</Label><select value={form.owners||1} onChange={e=>setForm({...form,owners:Number(e.target.value)})}>{[1,2,3,4].map(o=><option key={o} value={o}>{o===4?"4+":o===1?"1st owner":o===2?"2nd owner":"3rd owner"}</option>)}</select></div>
         </div>
         <div>
