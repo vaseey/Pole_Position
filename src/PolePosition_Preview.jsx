@@ -843,11 +843,20 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
 // ── CarDetailPage ─────────────────────────────────────────────────
 
 // ── CarDetailPage ────────────────────────────────────────────────
-function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin}){
+function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
   const [tab,setTab]=useState("overview");
   const [err,setErr]=useState(false);
   const [activeImg,setActiveImg]=useState(0);
   const [enquired,setEnquired]=useState(false);
+  const [showEnquiryModal,setShowEnquiryModal]=useState(false);
+  const [enquiryPhone,setEnquiryPhone]=useState("");
+  const [enquirySubmitting,setEnquirySubmitting]=useState(false);
+  const [isMobile,setIsMobile]=useState(()=>window.innerWidth<=768);
+  useEffect(()=>{
+    const handler=()=>setIsMobile(window.innerWidth<=768);
+    window.addEventListener("resize",handler);
+    return()=>window.removeEventListener("resize",handler);
+  },[]);
   if(!car)return null;
   const FB="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=1200&q=80";
   const bd=car.scoreBreakdown||{};
