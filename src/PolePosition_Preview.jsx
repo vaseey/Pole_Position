@@ -2119,6 +2119,38 @@ function AdminTeam(){
 
 // ── Error Boundary — catches render crashes instead of a blank page ──
 
+// ── EnquiriesPanel ───────────────────────────────────────────────
+function EnquiriesPanel(){
+  const [enquiries,setEnquiries]=useState([]);
+  const [loading,setLoading]=useState(true);
+  useEffect(()=>{
+    supabase.from("enquiries").select("*").order("created_at",{ascending:false}).then(({data})=>{
+      setEnquiries(data||[]);
+      setLoading(false);
+    });
+  },[]);
+  if(loading)return <div style={{color:"#64748B",padding:20}}>Loading enquiries…</div>;
+  if(!enquiries.length)return <div style={{color:"#64748B",padding:20}}>No enquiries yet.</div>;
+  return(
+    <Card>
+      <div style={{padding:"16px 22px",borderBottom:"1px solid rgba(255,255,255,0.07)",fontWeight:700,fontSize:15}}>All Enquiries</div>
+      <div style={{overflowX:"auto"}}>
+      <table style={{width:"100%",borderCollapse:"collapse",minWidth:700}}>
+        <thead><tr style={{borderBottom:"1px solid rgba(255,255,255,0.07)"}}>{["Car","Name","Email","Phone","Date","Listing"].map(h=><th key={h} style={{padding:"11px 16px",textAlign:"left",color:"#64748B",fontSize:11,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.07em",whiteSpace:"nowrap"}}>{h}</th>)}</tr></thead>
+        <tbody>{enquiries.map((e,i)=><tr key={e.id||i} style={{borderBottom:"1px solid rgba(255,255,255,0.04)"}}>
+          <td style={{padding:"12px 16px",fontWeight:600,fontSize:13,whiteSpace:"nowrap"}}>{e.car_title||e.car_id}</td>
+          <td style={{padding:"12px 16px",fontSize:13}}>{e.name}</td>
+          <td style={{padding:"12px 16px",fontSize:13,color:"#94A3B8"}}>{e.email}</td>
+          <td style={{padding:"12px 16px",fontSize:13}}>{e.phone}</td>
+          <td style={{padding:"12px 16px",fontSize:13,color:"#94A3B8",whiteSpace:"nowrap"}}>{e.created_at?new Date(e.created_at).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}):"-"}</td>
+          <td style={{padding:"12px 16px"}}>{e.listing_url?<a href={e.listing_url} target="_blank" rel="noopener noreferrer" style={{color:"#60A5FA",fontSize:12,fontWeight:600,textDecoration:"none"}}>View</a>:"-"}</td>
+        </tr>)}</tbody>
+      </table>
+      </div>
+    </Card>
+  );
+}
+
 // ── AdminConsole ─────────────────────────────────────────────────
 function AdminConsole({cars,setCars,blogs,setBlogs,users,onExit}){
   const [tab,setTab]=useState("dashboard");
