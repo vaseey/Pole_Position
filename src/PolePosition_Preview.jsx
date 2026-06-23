@@ -1311,7 +1311,7 @@ function QuizPage({setPage,setSelectedCar,cars}){
       <div style={{maxWidth:560,width:"100%"}}>
         <div style={{textAlign:"center",marginBottom:40}}>
           <div style={{color:"#9B2B2B",fontSize:12,fontWeight:700,letterSpacing:"0.1em",marginBottom:12}}>STEP {step+1} OF {QUIZ.length}</div>
-          <div style={{background:"rgba(255,255,255,0.08)",borderRadius:100,height:4,overflow:"hidden",marginBottom:28}}>
+          <div style={{background:"var(--pp-card2)",borderRadius:100,height:4,overflow:"hidden",marginBottom:28}}>
             <div style={{height:"100%",width:((step+1)/QUIZ.length*100)+"%",background:"#9B2B2B",transition:"width 0.4s ease"}}/>
           </div>
           <h2 style={{color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:28,letterSpacing:"-0.03em"}}>{q.q}</h2>
@@ -1319,7 +1319,7 @@ function QuizPage({setPage,setSelectedCar,cars}){
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {q.opts.map(o=>(
             <button key={o.v} onClick={()=>pick(q.key,o.v)}
-              style={{padding:"18px 22px",borderRadius:14,border:"1.5px solid rgba(255,255,255,0.1)",background:"rgba(255,255,255,0.04)",color:"var(--pp-text)",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:600,transition:"all 0.15s"}}>
+              style={{padding:"18px 22px",borderRadius:14,border:"1.5px solid var(--pp-border2)",background:"var(--pp-card)",color:"var(--pp-text)",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:600,transition:"all 0.15s"}}>
               {o.l}
             </button>
           ))}
