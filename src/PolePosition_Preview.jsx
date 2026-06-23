@@ -560,7 +560,7 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
               <div style={{color:"var(--pp-text2)",fontSize:12,fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:8}}>Curated Picks</div>
               <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:32,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>Top Picks</h2>
             </div>
-            <button onClick={()=>setPage("browse")} style={{display:"flex",alignItems:"center",gap:6,padding:"9px 18px",borderRadius:100,border:"1px solid rgba(255,255,255,0.15)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13.5,color:"var(--pp-text2)"}}>
+            <button onClick={()=>setPage("browse")} style={{display:"flex",alignItems:"center",gap:6,padding:"9px 18px",borderRadius:100,border:"1px solid var(--pp-border)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13.5,color:"var(--pp-text2)"}}>
               View all <ArrowRight size={14}/>
             </button>
           </div>
@@ -590,7 +590,7 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
               <div style={{color:"var(--pp-text2)",fontSize:12,fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:8}}>From the Blog</div>
               <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:28,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>Expert Reviews & Guides</h2>
             </div>
-            <button onClick={()=>setPage("blog")} style={{display:"flex",alignItems:"center",gap:6,padding:"9px 18px",borderRadius:100,border:"1px solid rgba(255,255,255,0.15)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13.5,color:"var(--pp-text2)"}}>
+            <button onClick={()=>setPage("blog")} style={{display:"flex",alignItems:"center",gap:6,padding:"9px 18px",borderRadius:100,border:"1px solid var(--pp-border)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13.5,color:"var(--pp-text2)"}}>
               All articles <ArrowRight size={14}/>
             </button>
           </div>
@@ -835,7 +835,7 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
           <div style={{flex:1}}>
             {isMobile&&(
               <div style={{marginBottom:16}}>
-                <button onClick={()=>setShowMobileFilters(true)} style={{display:"flex",alignItems:"center",gap:8,padding:"10px 18px",borderRadius:100,border:"1px solid rgba(255,255,255,0.15)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13.5,color:"var(--pp-text2)"}}>
+                <button onClick={()=>setShowMobileFilters(true)} style={{display:"flex",alignItems:"center",gap:8,padding:"10px 18px",borderRadius:100,border:"1px solid var(--pp-border)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13.5,color:"var(--pp-text2)"}}>
                   <Filter size={14}/> Filters
                 </button>
               </div>
