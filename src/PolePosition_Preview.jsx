@@ -914,7 +914,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
         <div style={{flex:1,textAlign:"center",fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:15,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>
           Pole<span style={{color:"#9B2B2B"}}>Position</span>
         </div>
-        <button onClick={()=>setPage("home")} style={{background:"none",border:"none",cursor:"pointer",color:"var(--pp-text2)",flexShrink:0,fontSize:20,lineHeight:1}}>☰</button>
+        <button onClick={()=>setDarkMode&&setDarkMode(d=>!d)} style={{width:34,height:34,borderRadius:"50%",border:"1.5px solid var(--pp-border2)",background:"none",cursor:"pointer",fontSize:15,display:"flex",alignItems:"center",justifyContent:"center",color:"var(--pp-text)",flexShrink:0}}>{darkMode?"☀":"🌙"}</button>
       </div>
 
       {/* Hero image — full width, edge to edge */}
