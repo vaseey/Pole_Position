@@ -1344,9 +1344,9 @@ function BlogPage({blog}){
   const featured=blog[0]||{};
   const rest=blog.slice(1).filter(p=>tag==="All"||p.tag===tag);
   return(
-    <div style={{paddingTop:64,minHeight:"100vh",background:"#F8FAFC"}}>
-      <div style={{background:"linear-gradient(135deg,#0F172A,#1E293B)",padding:"60px 32px 50px",textAlign:"center"}}>
-        <div style={{color:"#DC2626",fontSize:12,fontWeight:700,letterSpacing:"0.1em",marginBottom:12}}>POLE POSITION BLOG</div>
+    <div style={{paddingTop:56,minHeight:"100vh",background:"#0A0A0A"}}>
+      <div style={{background:"#111",borderBottom:"1px solid rgba(255,255,255,0.08)",padding:"60px 32px 50px",textAlign:"center"}}>
+        <div style={{color:"rgba(255,255,255,0.4)",fontSize:12,fontWeight:700,letterSpacing:"0.1em",marginBottom:12}}>POLE POSITION BLOG</div>
         <h1 style={{color:"#fff",fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:38,letterSpacing:"-0.04em",marginBottom:14}}>Expert Reviews & Guides</h1>
         <div style={{display:"flex",gap:8,justifyContent:"center",flexWrap:"wrap",marginTop:24}}>
           {tags.map(t=><button key={t} onClick={()=>setTag(t)} style={{padding:"8px 18px",borderRadius:100,border:"none",cursor:"pointer",fontWeight:600,fontSize:13,background:tag===t?"#DC2626":"rgba(255,255,255,0.08)",color:tag===t?"#fff":"rgba(255,255,255,0.6)"}}>{t}</button>)}
@@ -1354,29 +1354,29 @@ function BlogPage({blog}){
       </div>
       <div style={{maxWidth:1100,margin:"0 auto",padding:"40px 24px"}}>
         {/* Featured */}
-        <div style={{background:"#fff",borderRadius:20,overflow:"hidden",border:"1px solid #E2E8F0",display:"grid",gridTemplateColumns:"1.2fr 1fr",marginBottom:36,cursor:"pointer"}}>
+        <div style={{background:"#111",borderRadius:16,overflow:"hidden",border:"1px solid rgba(255,255,255,0.08)",display:"grid",gridTemplateColumns:"1.2fr 1fr",marginBottom:36,cursor:"pointer"}}>
           <img src={featured.img} alt="" style={{width:"100%",height:340,objectFit:"cover"}} onError={e=>e.target.style.display="none"}/>
           <div style={{padding:"32px"}}>
             <div style={{display:"flex",gap:8,marginBottom:16}}>
-              <span style={{background:TAG_COLORS[featured.tag]+"18",color:TAG_COLORS[featured.tag],fontSize:11,fontWeight:700,padding:"3px 10px",borderRadius:20}}>{featured.tag}</span>
-              <span style={{background:"#FEF3C7",color:"#D97706",fontSize:11,fontWeight:700,padding:"3px 10px",borderRadius:20}}>Featured</span>
+              <span style={{background:TAG_COLORS[featured.tag]+"22",color:TAG_COLORS[featured.tag],fontSize:11,fontWeight:700,padding:"3px 10px",borderRadius:20}}>{featured.tag}</span>
+              <span style={{background:"rgba(217,119,6,0.15)",color:"#F59E0B",fontSize:11,fontWeight:700,padding:"3px 10px",borderRadius:20}}>Featured</span>
             </div>
-            <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:22,letterSpacing:"-0.03em",lineHeight:1.25,marginBottom:12}}>{featured.title}</h2>
-            <p style={{color:"#64748B",fontSize:14,lineHeight:1.6,marginBottom:20}}>{featured.excerpt}</p>
-            <div style={{fontSize:12.5,color:"#94A3B8"}}>{featured.author} · {featured.date} · {featured.readTime} read · {featured.views.toLocaleString()} views</div>
+            <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:22,letterSpacing:"-0.03em",lineHeight:1.25,marginBottom:12,color:"#fff"}}>{featured.title}</h2>
+            <p style={{color:"rgba(255,255,255,0.5)",fontSize:14,lineHeight:1.6,marginBottom:20}}>{featured.excerpt}</p>
+            <div style={{fontSize:12.5,color:"rgba(255,255,255,0.3)"}}>{featured.author} · {featured.date} · {featured.readTime} read · {featured.views.toLocaleString()} views</div>
           </div>
         </div>
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))",gap:20}}>
           {rest.map(p=>(
-            <div key={p.id} style={{background:"#fff",borderRadius:16,overflow:"hidden",border:"1px solid #E2E8F0",cursor:"pointer"}}>
+            <div key={p.id} style={{background:"#111",borderRadius:16,overflow:"hidden",border:"1px solid rgba(255,255,255,0.07)",cursor:"pointer"}}>
               <div style={{position:"relative"}}>
                 <img src={p.img} alt="" style={{width:"100%",height:190,objectFit:"cover"}} onError={e=>e.target.style.display="none"}/>
                 <span style={{position:"absolute",top:12,left:12,background:TAG_COLORS[p.tag],color:"#fff",fontSize:10.5,fontWeight:700,padding:"3px 10px",borderRadius:20}}>{p.tag}</span>
               </div>
               <div style={{padding:"16px 18px"}}>
-                <p style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,letterSpacing:"-0.02em",lineHeight:1.3,marginBottom:10}}>{p.title}</p>
-                <p style={{color:"#64748B",fontSize:12.5,lineHeight:1.55,marginBottom:12}}>{p.excerpt}</p>
-                <div style={{fontSize:11.5,color:"#94A3B8"}}>{p.author} · {p.readTime} · {p.views.toLocaleString()} views</div>
+                <p style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,letterSpacing:"-0.02em",lineHeight:1.3,marginBottom:10,color:"#fff"}}>{p.title}</p>
+                <p style={{color:"rgba(255,255,255,0.4)",fontSize:12.5,lineHeight:1.55,marginBottom:12}}>{p.excerpt}</p>
+                <div style={{fontSize:11.5,color:"rgba(255,255,255,0.3)"}}>{p.author} · {p.readTime} · {p.views.toLocaleString()} views</div>
               </div>
             </div>
           ))}
