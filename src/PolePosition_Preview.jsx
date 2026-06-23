@@ -816,8 +816,8 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
 
             <FilterCard title="Year" onReset={(yearMin>floorYear||yearMax<ceilYear)?()=>{setYearMin(floorYear);setYearMax(ceilYear);}:null}>
               <div style={{display:"flex",justifyContent:"space-between",marginBottom:16}}>
-                <span style={{fontSize:12.5,fontWeight:700,color:"#0F172A"}}>{yearMin}</span>
-                <span style={{fontSize:12.5,fontWeight:700,color:"#0F172A"}}>{yearMax}</span>
+                <span style={{fontSize:12.5,fontWeight:700,color:"#fff"}}>{yearMin}</span>
+                <span style={{fontSize:12.5,fontWeight:700,color:"#fff"}}>{yearMax}</span>
               </div>
               <div style={{position:"relative",height:20}}>
                 <div style={{position:"absolute",top:8,left:0,right:0,height:4,background:"#E2E8F0",borderRadius:2}}/>
