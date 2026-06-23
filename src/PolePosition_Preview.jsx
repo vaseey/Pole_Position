@@ -571,14 +571,16 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
         <div style={{maxWidth:1200,margin:"0 auto"}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:32}}>
             <div>
-              <div style={{color:"var(--pp-text2)",fontSize:12,fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:8}}>Curated Picks</div>
-              <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:32,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>Top Picks</h2>
+              <div style={{color:"var(--pp-text2)",fontSize:12,fontWeight:500,marginBottom:6}}>The most</div>
+              <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:"clamp(24px,4vw,36px)",letterSpacing:"-0.03em",color:"var(--pp-text)"}}>Searched Cars</h2>
             </div>
-            <button onClick={()=>setPage("browse")} style={{display:"flex",alignItems:"center",gap:6,padding:"9px 18px",borderRadius:100,border:"1px solid var(--pp-border)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13.5,color:"var(--pp-text2)"}}>
-              View all <ArrowRight size={14}/>
-            </button>
+            <div style={{display:"flex",gap:8}}>
+              <button onClick={()=>setPage("browse")} style={{display:"flex",alignItems:"center",gap:6,padding:"9px 18px",borderRadius:100,border:"1px solid var(--pp-border)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13.5,color:"var(--pp-text2)"}}>
+                View all <ArrowRight size={14}/>
+              </button>
+            </div>
           </div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(220px,1fr))",gap:20}}>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))",gap:20}}>
             {hot.map(c=><CarCard key={c.id} car={c} onFav={toggleFav} isFav={favs.includes(c.id)} onClick={()=>{setSelectedCar(c);}}/>)}
           </div>
         </div>
