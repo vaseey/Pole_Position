@@ -329,7 +329,8 @@ function Navbar({page,setPage,user,setUser,setShowLogin,isAdmin,onGoAdmin,darkMo
             </div>
           :<div style={{display:"flex",alignItems:"center",gap:14}}>
               <button onClick={onGoAdmin} style={{fontSize:12.5,color:"rgba(255,255,255,0.4)",fontWeight:600,background:"none",border:"none",cursor:"pointer",padding:0,fontFamily:"Outfit,sans-serif"}}>Login as Admin</button>
-              <button onClick={()=>setShowLogin(true)} style={{padding:"7px 18px",borderRadius:100,fontSize:13,fontWeight:600,background:"transparent",color:"#fff",border:"1.5px solid rgba(255,255,255,0.3)",cursor:"pointer",fontFamily:"Outfit,sans-serif"}}>Sign In</button>
+              <button onClick={()=>setDarkMode(d=>!d)} style={{background:"none",border:"1.5px solid var(--pp-border2)",borderRadius:100,padding:"5px 12px",cursor:"pointer",color:"var(--pp-text)",fontSize:12,fontWeight:600,fontFamily:"Outfit,sans-serif",display:"flex",alignItems:"center",gap:6,marginRight:8}}>{darkMode?"☀ Light":"⬛ Dark"}</button>
+              <button onClick={()=>setShowLogin(true)} style={{padding:"7px 18px",borderRadius:100,fontSize:13,fontWeight:600,background:"transparent",color:"var(--pp-text)",border:"1.5px solid var(--pp-border2)",cursor:"pointer",fontFamily:"Outfit,sans-serif"}}>Sign In</button>
             </div>
         }
         </>
