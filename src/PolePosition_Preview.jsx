@@ -1161,7 +1161,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
               <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,color:"var(--pp-text)"}}>Why This Car?</h2>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
                 {highlights.map((h,i)=>(
-                  <div key={i} style={{display:"flex",gap:10,alignItems:"flex-start",padding:"12px 14px",background:"rgba(255,255,255,0.04)",borderRadius:12}}>
+                  <div key={i} style={{display:"flex",gap:10,alignItems:"flex-start",padding:"12px 14px",background:"var(--pp-card2)",borderRadius:12}}>
                     <CheckCircle size={15} color="#10B981" style={{flexShrink:0,marginTop:2}}/>
                     <span style={{fontSize:13.5,color:"var(--pp-text2)",lineHeight:1.4}}>{h}</span>
                   </div>
@@ -1172,7 +1172,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
               <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,color:"var(--pp-text)"}}>Quick Specs</h2>
               <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
                 {[["Year",car.year],["Fuel",car.fuel],["Gearbox",car.transmission],["Km Driven",fmtKm(car.km)],["Seats",car.seats+" seats"],["Owners",car.owners+" owner"+(car.owners>1?"s":"")]].map(([l,v])=>(
-                  <div key={l} style={{background:"rgba(255,255,255,0.04)",borderRadius:12,padding:"14px",border:"1px solid rgba(255,255,255,0.06)"}}>
+                  <div key={l} style={{background:"var(--pp-card2)",borderRadius:12,padding:"14px",border:"1px solid rgba(255,255,255,0.06)"}}>
                     <div style={{color:"var(--pp-text2)",fontSize:10.5,fontWeight:700,letterSpacing:"0.07em",textTransform:"uppercase",marginBottom:5}}>{l}</div>
                     <div style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,color:"var(--pp-text)"}}>{v}</div>
                   </div>
@@ -1213,7 +1213,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
                     <h3 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:15,marginBottom:16,color:"var(--pp-text)"}}>Tyre Condition</h3>
                     <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10}}>
                       {[["fl","Front Left"],["fr","Front Right"],["rl","Rear Left"],["rr","Rear Right"]].map(([k,label])=>(
-                        <div key={k} style={{background:"rgba(255,255,255,0.04)",borderRadius:12,padding:"12px 10px",textAlign:"center",border:"1px solid rgba(255,255,255,0.06)"}}>
+                        <div key={k} style={{background:"var(--pp-card2)",borderRadius:12,padding:"12px 10px",textAlign:"center",border:"1px solid rgba(255,255,255,0.06)"}}>
                           <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:16,color:tyreColor(car.tyreWear[k])}}>{car.tyreWear[k]}%</div>
                           <div style={{color:"var(--pp-text2)",fontSize:10.5,fontWeight:600,marginTop:3}}>{label}</div>
                         </div>
