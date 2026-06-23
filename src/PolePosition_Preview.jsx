@@ -2468,7 +2468,7 @@ export default function App(){
   },[confirmed]);
 
   if(confirmed) return(
-    <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",height:"100vh",fontFamily:"Outfit,sans-serif",background:"#F8FAFC",gap:16,textAlign:"center",padding:24}}>
+    <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",height:"100vh",fontFamily:"Outfit,sans-serif",background:"var(--pp-bg)",gap:16,textAlign:"center",padding:24}}>
       <div style={{width:64,height:64,background:"#DCFCE7",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",marginBottom:8}}><CheckCircle size={32} color="#16A34A"/></div>
       <h1 style={{fontWeight:900,fontSize:28,letterSpacing:"-0.03em",color:"#0F172A",margin:0}}>Your account is confirmed.</h1>
       <p style={{fontWeight:600,fontSize:17,color:"#0F172A",margin:0}}>Welcome to Pole Position.</p>
