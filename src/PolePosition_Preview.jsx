@@ -12,7 +12,7 @@ const G = `
   input,textarea,select{font-family:var(--f);outline:none;}
   button{font-family:var(--f);outline:none;}
   .btn-red{background:var(--red);color:#fff;border:none;cursor:pointer;font-weight:700;font-family:var(--f);}
-  .btn-red:hover{background:#B91C1C;}
+  .btn-red:hover{background:#7A1F1F;}
   .glass{background:rgba(20,20,20,0.95);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);}
   .pp-nav{background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);}
   .pp-admin{background:#0F172A;color:#fff;--pp-text:#ffffff;--pp-text2:rgba(255,255,255,0.5);--pp-text3:rgba(255,255,255,0.3);--pp-border:rgba(255,255,255,0.08);--pp-card:#1E293B;--pp-chip:rgba(255,255,255,0.1);}
