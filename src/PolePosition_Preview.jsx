@@ -957,10 +957,10 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
       </div>
 
       {/* Tabs */}
-      <div style={{borderTop:"1px solid #F1F5F9",borderBottom:"1px solid #F1F5F9",background:"#fff",position:"sticky",top:64,zIndex:100}}>
+      <div style={{borderTop:"1px solid var(--pp-border)",borderBottom:"1px solid var(--pp-border)",background:"var(--pp-card)",position:"sticky",top:56,zIndex:100}}>
         <div style={{display:"flex",overflowX:"auto",scrollbarWidth:"none"}}>
           {TABS.map(([id,label])=>(
-            <button key={id} onClick={()=>setTab(id)} style={{flexShrink:0,padding:"13px 18px",border:"none",background:"transparent",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:600,fontSize:13.5,color:tab===id?"#E87722":"#94A3B8",borderBottom:tab===id?"2.5px solid #E87722":"2.5px solid transparent",transition:"all 0.15s"}}>
+            <button key={id} onClick={()=>setTab(id)} style={{flexShrink:0,padding:"13px 18px",border:"none",background:"transparent",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:600,fontSize:13.5,color:tab===id?"#9B2B2B":"var(--pp-text3)",borderBottom:tab===id?"2.5px solid #9B2B2B":"2.5px solid transparent",transition:"all 0.15s"}}>
               {label}
             </button>
           ))}
@@ -968,22 +968,22 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
       </div>
 
       {/* Tab content */}
-      <div style={{padding:"16px 16px 20px",background:"#F8FAFC"}}>
+      <div style={{padding:"16px 16px 20px",background:"var(--pp-bg)"}}>
         {tab==="overview"&&(
           <>
-            <div style={{background:"#fff",borderRadius:14,padding:"18px 16px",marginBottom:14}}>
+            <div style={{background:"var(--pp-card)",borderRadius:14,padding:"18px 16px",marginBottom:14,border:"1px solid var(--pp-border)"}}>
               <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:14}}>
-                <Star size={16} color="#E87722" fill="#E87722"/>
+                <Star size={16} color="#9B2B2B" fill="#9B2B2B"/>
                 <span style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:16,color:"var(--pp-text)"}}>Why This Car?</span>
               </div>
               {highlights.map((h,i)=>(
                 <div key={i} style={{display:"flex",alignItems:"flex-start",gap:10,marginBottom:10}}>
                   <CheckCircle size={16} color="#22C55E" style={{flexShrink:0,marginTop:2}}/>
-                  <span style={{fontSize:14,color:"#334155",lineHeight:1.45}}>{h}</span>
+                  <span style={{fontSize:14,color:"var(--pp-text2)",lineHeight:1.45}}>{h}</span>
                 </div>
               ))}
             </div>
-            <div style={{background:"#fff",borderRadius:14,padding:"18px 16px"}}>
+            <div style={{background:"var(--pp-card)",borderRadius:14,padding:"18px 16px",border:"1px solid var(--pp-border)"}}>
               <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:16,color:"var(--pp-text)",marginBottom:14}}>Quick Specs</div>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
                 {[["Year",car.year],["Fuel Type",car.fuel],["Seats",car.seats+" seats"],["Transmission",car.transmission],["Kilometres",fmtKm(car.km)],["Owners",car.owners+" owner"+(car.owners>1?"s":"")]].map(([l,v])=>(
