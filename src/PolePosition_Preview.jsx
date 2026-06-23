@@ -632,41 +632,33 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
 // ── BrowsePage ───────────────────────────────────────────────────
 function BrowseCarCard({car,onFav,isFav,onClick}){
   const [err,setErr]=useState(false);
+  const [hov,setHov]=useState(false);
   const FB="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=800&q=80";
-  const specs=[[Gauge,fmtKm(car.km)],[Fuel,car.fuel],[Car,car.transmission],[Users,car.seats+" seats"]];
   return(
-    <div onClick={onClick} style={{background:"#fff",borderRadius:20,border:"1.5px solid #E2E8F0",overflow:"hidden",cursor:"pointer",transition:"box-shadow 0.2s,transform 0.2s,border-color 0.2s"}}
-      onMouseEnter={e=>{e.currentTarget.style.boxShadow="0 18px 34px rgba(15,23,42,0.1)";e.currentTarget.style.transform="translateY(-3px)";e.currentTarget.style.borderColor="#E2E8F0";}}
-      onMouseLeave={e=>{e.currentTarget.style.boxShadow="none";e.currentTarget.style.transform="none";}}>
-      <div style={{position:"relative",aspectRatio:"16/10"}}>
+    <div onClick={onClick} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
+      style={{background:"#111",borderRadius:16,border:"1px solid rgba(255,255,255,0.07)",overflow:"hidden",cursor:"pointer",transition:"transform 0.25s",transform:hov?"translateY(-4px)":"none"}}>
+      <div style={{position:"relative",aspectRatio:"4/3",overflow:"hidden",borderRadius:"16px 16px 0 0"}}>
         <img src={err?FB:(car.img||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model} style={{width:"100%",height:"100%",objectFit:"cover"}}/>
-        {car.badge&&<span style={{position:"absolute",top:12,left:12,background:BADGE[car.badge].bg,color:"#fff",padding:"4px 11px",borderRadius:100,fontSize:10.5,fontWeight:700}}>{BADGE[car.badge].label}</span>}
-        <button onClick={e=>{e.stopPropagation();onFav(car.id);}} style={{position:"absolute",top:10,right:10,width:32,height:32,borderRadius:"50%",border:"none",background:"rgba(255,255,255,0.92)",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
-          <Heart size={14} fill={isFav?"#DC2626":"none"} color={isFav?"#DC2626":"#475569"}/>
+        {/* Fuel chip top-left */}
+        <span style={{position:"absolute",top:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"#fff",fontSize:11,fontWeight:600}}>● {car.fuel}</span>
+        {/* Transmission chip top-right */}
+        <span style={{position:"absolute",top:10,right:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"#fff",fontSize:11,fontWeight:600}}>{car.transmission}</span>
+        {/* Year pill bottom-left */}
+        <span style={{position:"absolute",bottom:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"#fff",fontSize:11,fontWeight:600}}>{car.year}</span>
+        {/* Fav button */}
+        <button onClick={e=>{e.stopPropagation();onFav(car.id);}} style={{position:"absolute",bottom:10,right:10,width:30,height:30,borderRadius:"50%",border:"1px solid rgba(255,255,255,0.2)",background:"rgba(0,0,0,0.5)",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
+          <Heart size={12} fill={isFav?"#DC2626":"none"} color={isFav?"#DC2626":"#fff"}/>
         </button>
       </div>
-      <div style={{padding:18}}>
-        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:10,marginBottom:13}}>
-          <div>
-            <div style={{fontWeight:800,fontSize:16,letterSpacing:"-0.02em"}}>{car.make} {car.model}</div>
-            <div style={{color:"#94A3B8",fontSize:11.5,fontWeight:600,marginTop:2}}>{car.year} · {car.category}</div>
-          </div>
-          <div style={{display:"flex",alignItems:"center",gap:9,flexShrink:0}}>
-            <ScoreRing score={car.score} size={36} light/>
-            <div style={{fontWeight:800,fontSize:16.5,color:"#DC2626",letterSpacing:"-0.02em",whiteSpace:"nowrap"}}>{fmt(car.price)}</div>
+      <div style={{padding:"16px 16px 18px"}}>
+        <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,color:"#fff",letterSpacing:"-0.03em",marginBottom:4}}>{car.make} {car.model}</div>
+        {car.variant&&<div style={{color:"rgba(255,255,255,0.4)",fontSize:12,fontWeight:600,marginBottom:10}}>{car.variant}</div>}
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:10}}>
+          <span style={{fontSize:15,color:"rgba(255,255,255,0.7)",fontWeight:600}}>{fmt(car.price)}</span>
+          <div style={{width:32,height:32,borderRadius:"50%",background:"#fff",display:"flex",alignItems:"center",justifyContent:"center"}}>
+            <span style={{color:"#000",fontSize:16,lineHeight:1}}>↗</span>
           </div>
         </div>
-        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:7,marginBottom:14}}>
-          {specs.map(([Icon,label],i)=>(
-            <div key={i} style={{display:"flex",alignItems:"center",gap:6,background:"#F8FAFC",borderRadius:9,padding:"7px 9px"}}>
-              <Icon size={12.5} color="#64748B"/><span style={{fontSize:11,color:"#475569",fontWeight:600,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{label}</span>
-            </div>
-          ))}
-        </div>
-        <p style={{color:"#64748B",fontSize:12.5,lineHeight:1.5,marginBottom:14,display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical",overflow:"hidden"}}>{car.tagline}</p>
-        <button className="btn-red" style={{width:"100%",padding:"11px",borderRadius:11,fontSize:13.5,display:"flex",alignItems:"center",justifyContent:"center",gap:6}}>
-          View Details <ArrowRight size={13}/>
-        </button>
       </div>
     </div>
   );
