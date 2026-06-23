@@ -745,7 +745,7 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
 
         <div style={{display:"flex",alignItems:"center",gap:14,marginBottom:28}}>
           <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:32,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>Our Collection</h1>
-          <span style={{background:"#9B2B2B",color:"var(--pp-text)",padding:"5px 14px",borderRadius:100,fontWeight:700,fontSize:14}}>{filtered.length}</span>
+          <span style={{background:"#9B2B2B",color:"#fff",padding:"5px 14px",borderRadius:100,fontWeight:700,fontSize:14}}>{filtered.length}</span>
         </div>
 
         <div style={{display:"flex",gap:26,alignItems:"flex-start"}}>
