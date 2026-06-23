@@ -666,9 +666,9 @@ function BrowseCarCard({car,onFav,isFav,onClick}){
 
 function FilterCard({title,onReset,children}){
   return(
-    <div style={{background:"#fff",borderRadius:18,border:"1.5px solid #E2E8F0",padding:18}}>
+    <div style={{background:"#111",borderRadius:16,border:"1px solid rgba(255,255,255,0.07)",padding:18}}>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
-        <span style={{fontWeight:700,fontSize:13.5}}>{title}</span>
+        <span style={{fontWeight:700,fontSize:13.5,color:"#fff"}}>{title}</span>
         {onReset&&<button onClick={onReset} style={{color:"#DC2626",fontSize:12,fontWeight:600,background:"none",border:"none",cursor:"pointer"}}>Reset</button>}
       </div>
       {children}
@@ -682,7 +682,7 @@ function ChipFilter({options,selected,onToggle}){
       {options.map(o=>{
         const active=selected.includes(o);
         return(
-          <button key={o} onClick={()=>onToggle(o)} style={{padding:"7px 13px",borderRadius:9,border:active?"1.5px solid #DC2626":"1.5px solid #E2E8F0",background:active?"#FEF2F2":"#fff",color:active?"#DC2626":"#475569",fontSize:12.5,fontWeight:600,cursor:"pointer"}}>
+          <button key={o} onClick={()=>onToggle(o)} style={{padding:"7px 13px",borderRadius:9,border:active?"1.5px solid #DC2626":"1px solid rgba(255,255,255,0.12)",background:active?"rgba(220,38,38,0.12)":"transparent",color:active?"#DC2626":"rgba(255,255,255,0.7)",fontSize:12.5,fontWeight:600,cursor:"pointer"}}>
             {o}
           </button>
         );
