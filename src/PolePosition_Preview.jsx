@@ -412,7 +412,7 @@ function LoginCard({mode="user",onClose,onSubmit,error}){
       setLoading(false);
     },800);
   };
-  const inp={width:"100%",padding:"11px 14px",fontSize:14,borderRadius:12,border:"1.5px solid #E2E8F0",background:"#F8FAFC",color:"var(--pp-text)"};
+  const inp={width:"100%",padding:"11px 14px",fontSize:14,borderRadius:12,border:"1.5px solid var(--pp-border2)",background:"var(--pp-input)",color:"var(--pp-text)"};
   return(
     <div className="glass" style={{borderRadius:24,padding:36,width:390,maxWidth:"94vw",position:"relative"}} onClick={e=>e.stopPropagation()}>
       {onClose&&<button onClick={onClose} style={{position:"absolute",top:14,right:14,background:"#F1F5F9",border:"none",borderRadius:"50%",width:30,height:30,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><X size={14}/></button>}
