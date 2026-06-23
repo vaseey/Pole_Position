@@ -950,9 +950,9 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
         </div>
         <div style={{display:"flex",alignItems:"center",gap:6,color:"var(--pp-text3)",fontSize:12.5,marginBottom:14,flexWrap:"wrap"}}>
           <Eye size={13}/><span>{viewsToday} views today</span>
-          <span style={{color:"#E2E8F0"}}>·</span>
+          <span style={{color:"var(--pp-text3)"}}>·</span>
           <span>{fmtKm(car.km)}</span>
-          <span style={{color:"#E2E8F0"}}>·</span>
+          <span style={{color:"var(--pp-text3)"}}>·</span>
           <span>₹{emi.toLocaleString("en-IN")}/month</span>
         </div>
       </div>
