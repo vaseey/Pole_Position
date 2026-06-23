@@ -491,39 +491,6 @@ function CarCard({car,onFav,isFav,onClick}){
   );
 }
 
-// ── OLD CarCard remainder (replaced) — keep empty placeholder ──
-function _CarCardOldRemainder(){return null;
-  // unused: original bottom section
-  return(
-    <div>
-      <div style={{padding:"0 16px 2px"}}>
-        {[{l:"Year",v:""},{l:"Fuel",v:""},{l:"Driven",v:""}].map(s=>(
-            <div key={s.l} style={{display:"flex",justifyContent:"space-between",padding:"6px 0",borderBottom:"1px solid rgba(255,255,255,0.1)"}}>
-              <span style={{fontSize:10,color:"rgba(255,255,255,0.4)",fontWeight:500,letterSpacing:"0.07em",textTransform:"uppercase"}}>{s.l}</span>
-              <span style={{fontSize:11.5,color:"#fff",fontWeight:700}}>{s.v}</span>
-            </div>
-          ))}
-        </div>
-        <div style={{padding:"9px 16px 10px",display:"flex",justifyContent:"space-between",alignItems:"flex-end"}}>
-          <div>
-            <div style={{color:"#fff",fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:18,letterSpacing:"-0.035em",lineHeight:1.1}}>{car.make} {car.model}</div>
-            <div style={{color:"rgba(255,255,255,0.38)",fontSize:10,marginTop:3,fontWeight:600,letterSpacing:"0.06em",textTransform:"uppercase"}}>{car.category} · {car.transmission}</div>
-          </div>
-          <ScoreRing score={car.score} size={44}/>
-        </div>
-        <div style={{display:"flex",borderTop:"1px solid rgba(255,255,255,0.1)"}}>
-          <div style={{padding:"11px 16px",flex:1}}>
-            <div style={{color:"#fff",fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:17,letterSpacing:"-0.04em"}}>{fmt(car.price)}</div>
-            <div style={{color:"rgba(255,255,255,0.28)",fontSize:10,marginTop:1,fontWeight:600,textTransform:"uppercase"}}>{car.owners} owner{car.owners>1?"s":""}</div>
-          </div>
-          <div style={{padding:"11px 16px",borderLeft:"1px solid rgba(255,255,255,0.1)",display:"flex",alignItems:"center",gap:4,color:"rgba(255,255,255,0.6)",fontSize:11.5,fontWeight:700}}>
-            View <ChevronRight size={12}/>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 // ── HomePage ──────────────────────────────────────────────────────
 
