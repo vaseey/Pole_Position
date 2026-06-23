@@ -2325,17 +2325,17 @@ function AdminConsole({cars,setCars,blogs,setBlogs,users,onExit}){
 function FavoritesPage({setPage,setSelectedCar,favs,toggleFav,cars}){
   const saved=cars.filter(c=>favs.includes(c.id));
   return(
-    <div style={{paddingTop:80,minHeight:"100vh",background:"#F8FAFC"}}>
+    <div style={{paddingTop:80,minHeight:"100vh",background:"#0A0A0A"}}>
       <div style={{maxWidth:1280,margin:"0 auto",padding:"0 24px 70px"}}>
         <div style={{display:"flex",alignItems:"center",gap:14,marginBottom:28}}>
-          <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:32,letterSpacing:"-0.03em"}}>My Favourites</h1>
+          <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:32,letterSpacing:"-0.03em",color:"#fff"}}>My Favourites</h1>
           <span style={{background:"#DC2626",color:"#fff",padding:"5px 14px",borderRadius:100,fontWeight:700,fontSize:14}}>{saved.length}</span>
         </div>
         {saved.length===0?(
-          <div style={{textAlign:"center",padding:"80px 20px",color:"#94A3B8"}}>
-            <Heart size={36} color="#CBD5E1" style={{marginBottom:14}}/>
+          <div style={{textAlign:"center",padding:"80px 20px",color:"rgba(255,255,255,0.3)"}}>
+            <Heart size={36} color="rgba(255,255,255,0.2)" style={{marginBottom:14}}/>
             <p style={{fontSize:15,marginBottom:18}}>You haven't saved any cars yet.</p>
-            <button onClick={()=>setPage("browse")} className="btn-red" style={{padding:"11px 24px",borderRadius:11,fontSize:14}}>Browse Cars</button>
+            <button onClick={()=>setPage("browse")} className="btn-red" style={{padding:"11px 24px",borderRadius:100,fontSize:14}}>Browse Cars</button>
           </div>
         ):(
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:20}}>
