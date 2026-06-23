@@ -320,7 +320,7 @@ function Navbar({page,setPage,user,setUser,setShowLogin,isAdmin,onGoAdmin,darkMo
                 <ChevronDown size={14} color="rgba(255,255,255,0.5)"/>
               </button>
               {userMenuOpen&&(
-                <div style={{position:"absolute",top:"100%",right:0,marginTop:8,background:"#111",borderRadius:12,boxShadow:"0 12px 32px rgba(0,0,0,0.6)",border:"1px solid rgba(255,255,255,0.08)",minWidth:210,overflow:"hidden",zIndex:300}}>
+                <div style={{position:"absolute",top:"100%",right:0,marginTop:8,background:"var(--pp-card)",borderRadius:12,boxShadow:"0 12px 32px rgba(0,0,0,0.6)",border:"1px solid rgba(255,255,255,0.08)",minWidth:210,overflow:"hidden",zIndex:300}}>
                   {isAdmin&&<button onClick={onGoAdmin} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"#fff",display:"flex",alignItems:"center",gap:9,borderBottom:"1px solid rgba(255,255,255,0.08)"}}><Shield size={14} color="#DC2626"/> View Admin Dashboard</button>}
                   <button onClick={()=>{setPage("favorites");setUserMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"#fff",display:"flex",alignItems:"center",gap:9,borderBottom:"1px solid rgba(255,255,255,0.08)"}}><Heart size={14} color="#DC2626"/> My Favourites</button>
                   <button onClick={()=>{supabase.auth.signOut();setUser(null);setUserMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"rgba(255,255,255,0.5)",display:"flex",alignItems:"center",gap:9}}><LogOut size={14}/> Sign Out</button>
@@ -343,7 +343,7 @@ function Navbar({page,setPage,user,setUser,setShowLogin,isAdmin,onGoAdmin,darkMo
     </nav>
     {isMobile&&menuOpen&&(
       <div style={{position:"fixed",inset:0,zIndex:190,background:"rgba(0,0,0,0.7)"}} onClick={()=>setMenuOpen(false)}>
-        <div style={{position:"absolute",top:56,left:0,right:0,background:"#111",borderBottom:"1px solid rgba(255,255,255,0.08)",padding:"16px 20px",display:"flex",flexDirection:"column",gap:4}} onClick={e=>e.stopPropagation()}>
+        <div style={{position:"absolute",top:56,left:0,right:0,background:"var(--pp-card)",borderBottom:"1px solid rgba(255,255,255,0.08)",padding:"16px 20px",display:"flex",flexDirection:"column",gap:4}} onClick={e=>e.stopPropagation()}>
           {links.map(([p,l])=>(
             <button key={p} onClick={()=>{setPage(p);setMenuOpen(false);}} style={{padding:"12px 16px",borderRadius:10,border:"none",cursor:"pointer",background:page===p?"rgba(255,255,255,0.07)":"transparent",color:"#fff",fontWeight:page===p?700:500,fontSize:15,textAlign:"left",fontFamily:"Outfit,sans-serif"}}>
               {l}
@@ -464,7 +464,7 @@ function CarCard({car,onFav,isFav,onClick}){
   const FB="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=800&q=80";
   return(
     <div onClick={onClick} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
-      style={{borderRadius:16,overflow:"hidden",cursor:"pointer",background:"#111",border:"1px solid rgba(255,255,255,0.07)",transition:"transform 0.25s",transform:hov?"translateY(-4px)":"none"}}>
+      style={{borderRadius:16,overflow:"hidden",cursor:"pointer",background:"var(--pp-card)",border:"1px solid rgba(255,255,255,0.07)",transition:"transform 0.25s",transform:hov?"translateY(-4px)":"none"}}>
       {/* Image section */}
       <div style={{aspectRatio:"4/3",overflow:"hidden",borderRadius:"16px 16px 0 0",position:"relative"}}>
         <img src={err?FB:(car.img||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model}
@@ -547,7 +547,7 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
       </div>
 
       {/* Stats */}
-      <div style={{background:"#111",padding:"60px 32px",borderTop:"1px solid rgba(255,255,255,0.07)",borderBottom:"1px solid rgba(255,255,255,0.07)"}}>
+      <div style={{background:"var(--pp-card)",padding:"60px 32px",borderTop:"1px solid rgba(255,255,255,0.07)",borderBottom:"1px solid rgba(255,255,255,0.07)"}}>
         <div style={{maxWidth:900,margin:"0 auto",display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:32,textAlign:"center"}}>
           {[[cars.length+"+ Cars","In our showroom"],[cars.filter(c=>c.score>=85).length,"Scored 85+"],["100%","Inspected"]].map(([n,l])=>(
             <div key={l}>
@@ -572,7 +572,7 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
           </div>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))",gap:20}}>
             {blog.slice(0,3).map(p=>(
-              <div key={p.id} style={{background:"#111",borderRadius:16,overflow:"hidden",border:"1px solid rgba(255,255,255,0.07)",cursor:"pointer"}} onClick={()=>setPage("blog")}>
+              <div key={p.id} style={{background:"var(--pp-card)",borderRadius:16,overflow:"hidden",border:"1px solid rgba(255,255,255,0.07)",cursor:"pointer"}} onClick={()=>setPage("blog")}>
                 <img src={p.img} alt="" style={{width:"100%",height:180,objectFit:"cover"}} onError={e=>e.target.style.display="none"}/>
                 <div style={{padding:"16px 18px"}}>
                   <span style={{background:TAG_COLORS[p.tag]+"22",color:TAG_COLORS[p.tag],fontSize:10.5,fontWeight:700,padding:"3px 9px",borderRadius:20}}>{p.tag}</span>
@@ -606,7 +606,7 @@ function BrowseCarCard({car,onFav,isFav,onClick}){
   const FB="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=800&q=80";
   return(
     <div onClick={onClick} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
-      style={{background:"#111",borderRadius:16,border:"1px solid rgba(255,255,255,0.07)",overflow:"hidden",cursor:"pointer",transition:"transform 0.25s",transform:hov?"translateY(-4px)":"none"}}>
+      style={{background:"var(--pp-card)",borderRadius:16,border:"1px solid rgba(255,255,255,0.07)",overflow:"hidden",cursor:"pointer",transition:"transform 0.25s",transform:hov?"translateY(-4px)":"none"}}>
       <div style={{position:"relative",aspectRatio:"4/3",overflow:"hidden",borderRadius:"16px 16px 0 0"}}>
         <img src={err?FB:(car.img||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model} style={{width:"100%",height:"100%",objectFit:"cover"}}/>
         {/* Fuel chip top-left */}
@@ -636,7 +636,7 @@ function BrowseCarCard({car,onFav,isFav,onClick}){
 
 function FilterCard({title,onReset,children}){
   return(
-    <div style={{background:"#111",borderRadius:16,border:"1px solid rgba(255,255,255,0.07)",padding:18}}>
+    <div style={{background:"var(--pp-card)",borderRadius:16,border:"1px solid rgba(255,255,255,0.07)",padding:18}}>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
         <span style={{fontWeight:700,fontSize:13.5,color:"#fff"}}>{title}</span>
         {onReset&&<button onClick={onReset} style={{color:"#DC2626",fontSize:12,fontWeight:600,background:"none",border:"none",cursor:"pointer"}}>Reset</button>}
@@ -726,7 +726,7 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
 
         <div style={{display:"flex",gap:26,alignItems:"flex-start"}}>
           {/* ── Filter sidebar ── */}
-          {(!isMobile||showMobileFilters)&&(<div style={{width:268,flexShrink:0,display:"flex",flexDirection:"column",gap:16,...(isMobile?{position:"fixed",top:0,left:0,bottom:0,zIndex:400,width:300,background:"#111",overflowY:"auto",padding:"70px 16px 20px",boxShadow:"0 0 40px rgba(0,0,0,0.8)"}:{position:"sticky",top:90,maxHeight:"calc(100vh - 110px)",overflowY:"auto",paddingRight:4})}}>
+          {(!isMobile||showMobileFilters)&&(<div style={{width:268,flexShrink:0,display:"flex",flexDirection:"column",gap:16,...(isMobile?{position:"fixed",top:0,left:0,bottom:0,zIndex:400,width:300,background:"var(--pp-card)",overflowY:"auto",padding:"70px 16px 20px",boxShadow:"0 0 40px rgba(0,0,0,0.8)"}:{position:"sticky",top:90,maxHeight:"calc(100vh - 110px)",overflowY:"auto",paddingRight:4})}}>
           {isMobile&&showMobileFilters&&<button onClick={()=>setShowMobileFilters(false)} style={{position:"fixed",top:20,right:20,zIndex:401,background:"rgba(255,255,255,0.1)",border:"none",borderRadius:"50%",width:34,height:34,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff"}}><X size={16}/></button>}
 
             <FilterCard title="Make & Model" onReset={selModels.length>0?()=>setSelModels([]):null}>
@@ -1080,14 +1080,14 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
             {/* Thumbnail strip */}
             <div style={{display:"flex",gap:10,marginTop:12,overflowX:"auto",paddingBottom:4,background:"var(--pp-bg)"}}>
               {gallery.map((m,i)=>(
-                <button key={i} onClick={()=>{setActiveImg(i);setErr(false);}} style={{width:80,height:60,borderRadius:8,overflow:"hidden",border:activeImg===i?"2px solid #fff":"2px solid transparent",padding:0,cursor:"pointer",flexShrink:0,opacity:activeImg===i?1:0.5,background:"#111"}}>
+                <button key={i} onClick={()=>{setActiveImg(i);setErr(false);}} style={{width:80,height:60,borderRadius:8,overflow:"hidden",border:activeImg===i?"2px solid #fff":"2px solid transparent",padding:0,cursor:"pointer",flexShrink:0,opacity:activeImg===i?1:0.5,background:"var(--pp-card)"}}>
                   {m.type==="video"?<div style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center"}}><Play size={15} color="#fff" fill="#fff"/></div>:<img src={m.url} alt="" style={{width:"100%",height:"100%",objectFit:"cover"}}/>}
                 </button>
               ))}
             </div>
           </div>
           {/* Info sidebar */}
-          <div style={{background:"#111",borderRadius:16,border:"1px solid rgba(255,255,255,0.08)",padding:24,position:"sticky",top:76}}>
+          <div style={{background:"var(--pp-card)",borderRadius:16,border:"1px solid rgba(255,255,255,0.08)",padding:24,position:"sticky",top:76}}>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:10,marginBottom:6}}>
               <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:22,letterSpacing:"-0.03em",lineHeight:1.15,color:"#fff"}}>{car.make} {car.model}{car.variant&&<span style={{color:"rgba(255,255,255,0.4)",fontWeight:700}}> {car.variant}</span>}</h1>
               <div style={{display:"flex",gap:6,flexShrink:0}}>
@@ -1133,7 +1133,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
       <div style={{maxWidth:1100,margin:"0 auto",padding:"36px 28px",display:"flex",flexDirection:"column",gap:20}}>
         {tab==="overview"&&(
           <>
-            <div style={{background:"#111",borderRadius:16,padding:"24px",border:"1px solid rgba(255,255,255,0.08)"}}>
+            <div style={{background:"var(--pp-card)",borderRadius:16,padding:"24px",border:"1px solid rgba(255,255,255,0.08)"}}>
               <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,color:"#fff"}}>Why This Car?</h2>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
                 {highlights.map((h,i)=>(
@@ -1144,7 +1144,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
                 ))}
               </div>
             </div>
-            <div style={{background:"#111",borderRadius:16,padding:"24px",border:"1px solid rgba(255,255,255,0.08)"}}>
+            <div style={{background:"var(--pp-card)",borderRadius:16,padding:"24px",border:"1px solid rgba(255,255,255,0.08)"}}>
               <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,color:"#fff"}}>Quick Specs</h2>
               <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
                 {[["Year",car.year],["Fuel",car.fuel],["Gearbox",car.transmission],["Km Driven",fmtKm(car.km)],["Seats",car.seats+" seats"],["Owners",car.owners+" owner"+(car.owners>1?"s":"")]].map(([l,v])=>(
@@ -1158,7 +1158,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
           </>
         )}
         {tab!=="overview"&&!user&&(
-          <div style={{background:"#111",borderRadius:16,padding:"56px 24px",border:"1px solid rgba(255,255,255,0.08)",textAlign:"center"}}>
+          <div style={{background:"var(--pp-card)",borderRadius:16,padding:"56px 24px",border:"1px solid rgba(255,255,255,0.08)",textAlign:"center"}}>
             <Shield size={22} color="rgba(255,255,255,0.3)" style={{margin:"0 auto 18px"}}/>
             <h3 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:8,color:"#fff"}}>Sign in to see the full report</h3>
             <p style={{color:"rgba(255,255,255,0.4)",fontSize:13.5,marginBottom:24}}>Register to access the {TABS.find(([id])=>id===tab)?.[1]} section.</p>
@@ -1168,7 +1168,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
         {tab!=="overview"&&user&&(
           <>
             {tab==="inspection"&&(
-              <div style={{background:"#111",borderRadius:16,padding:"28px",border:"1px solid rgba(255,255,255,0.08)"}}>
+              <div style={{background:"var(--pp-card)",borderRadius:16,padding:"28px",border:"1px solid rgba(255,255,255,0.08)"}}>
                 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:24}}>
                   <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,color:"#fff"}}>7-Point Inspection</h2>
                   <div style={{background:"rgba(255,255,255,0.06)",borderRadius:12,padding:"8px 16px",display:"flex",alignItems:"center",gap:10,border:"1px solid rgba(255,255,255,0.08)"}}>
@@ -1201,13 +1201,13 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
             )}
             {tab==="who"&&(
               <div style={{display:"flex",flexDirection:"column",gap:16}}>
-                <div style={{background:"#111",borderRadius:16,padding:"24px",border:"1px solid rgba(255,255,255,0.08)"}}>
+                <div style={{background:"var(--pp-card)",borderRadius:16,padding:"24px",border:"1px solid rgba(255,255,255,0.08)"}}>
                   <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,display:"flex",alignItems:"center",gap:8,color:"#fff"}}><CheckCircle size={18} color="#10B981"/> Great for</h2>
                   <div style={{display:"flex",flexDirection:"column",gap:10}}>
                     {forWho.map((item,i)=><div key={i} style={{display:"flex",gap:12,alignItems:"flex-start",padding:"13px 16px",background:"rgba(16,185,129,0.08)",borderRadius:12,border:"1px solid rgba(16,185,129,0.2)"}}><CheckCircle size={14} color="#10B981" style={{flexShrink:0,marginTop:2}}/><span style={{fontSize:13.5,color:"rgba(255,255,255,0.8)",lineHeight:1.45}}>{item}</span></div>)}
                   </div>
                 </div>
-                <div style={{background:"#111",borderRadius:16,padding:"24px",border:"1px solid rgba(255,255,255,0.08)"}}>
+                <div style={{background:"var(--pp-card)",borderRadius:16,padding:"24px",border:"1px solid rgba(255,255,255,0.08)"}}>
                   <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,display:"flex",alignItems:"center",gap:8,color:"#fff"}}><XCircle size={18} color="#EF4444"/> Maybe not for</h2>
                   <div style={{display:"flex",flexDirection:"column",gap:10}}>
                     {notForWho.map((item,i)=><div key={i} style={{display:"flex",gap:12,alignItems:"flex-start",padding:"13px 16px",background:"rgba(239,68,68,0.08)",borderRadius:12,border:"1px solid rgba(239,68,68,0.2)"}}><XCircle size={14} color="#EF4444" style={{flexShrink:0,marginTop:2}}/><span style={{fontSize:13.5,color:"rgba(255,255,255,0.8)",lineHeight:1.45}}>{item}</span></div>)}
@@ -1216,7 +1216,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
               </div>
             )}
             {tab==="specs"&&(
-              <div style={{background:"#111",borderRadius:16,border:"1px solid rgba(255,255,255,0.08)",overflow:"hidden"}}>
+              <div style={{background:"var(--pp-card)",borderRadius:16,border:"1px solid rgba(255,255,255,0.08)",overflow:"hidden"}}>
                 <div style={{padding:"20px 24px",borderBottom:"1px solid rgba(255,255,255,0.08)"}}><h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,color:"#fff"}}>Full Specifications</h2></div>
                 <table style={{width:"100%",borderCollapse:"collapse"}}><tbody>
                   {[["Make",car.make],["Model",car.model],["Year",car.year],["Category",car.category],["Fuel Type",car.fuel],["Transmission",car.transmission],["KM Driven",fmtKm(car.km)],["Seats",car.seats],["Previous Owners",car.owners],["Listed Price",fmt(car.price)],["Insurance",car.insurance||"—"],["PP Score",car.score+"/100"]].map(([label,value],i)=>(
@@ -1233,7 +1233,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
       </div>
       {showEnquiryModal&&(
         <div style={{position:"fixed",inset:0,zIndex:600,background:"rgba(0,0,0,0.8)",backdropFilter:"blur(6px)",display:"flex",alignItems:"center",justifyContent:"center",padding:"0 20px"}} onClick={()=>setShowEnquiryModal(false)}>
-          <div style={{background:"#111",borderRadius:20,padding:32,width:420,maxWidth:"100%",position:"relative",border:"1px solid rgba(255,255,255,0.08)"}} onClick={e=>e.stopPropagation()}>
+          <div style={{background:"var(--pp-card)",borderRadius:20,padding:32,width:420,maxWidth:"100%",position:"relative",border:"1px solid rgba(255,255,255,0.08)"}} onClick={e=>e.stopPropagation()}>
             <button onClick={()=>setShowEnquiryModal(false)} style={{position:"absolute",top:14,right:14,background:"rgba(255,255,255,0.08)",border:"none",borderRadius:"50%",width:30,height:30,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff"}}><X size={14}/></button>
             <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,marginBottom:6,color:"#fff"}}>Get in Touch</h2>
             <p style={{color:"rgba(255,255,255,0.4)",fontSize:13.5,marginBottom:20}}>We'll connect you with the seller via WhatsApp.</p>
@@ -1315,7 +1315,7 @@ function BlogPage({blog}){
   const rest=blog.slice(1).filter(p=>tag==="All"||p.tag===tag);
   return(
     <div style={{paddingTop:56,minHeight:"100vh",background:"var(--pp-bg)"}}>
-      <div style={{background:"#111",borderBottom:"1px solid rgba(255,255,255,0.08)",padding:"60px 32px 50px",textAlign:"center"}}>
+      <div style={{background:"var(--pp-card)",borderBottom:"1px solid rgba(255,255,255,0.08)",padding:"60px 32px 50px",textAlign:"center"}}>
         <div style={{color:"rgba(255,255,255,0.4)",fontSize:12,fontWeight:700,letterSpacing:"0.1em",marginBottom:12}}>POLE POSITION BLOG</div>
         <h1 style={{color:"#fff",fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:38,letterSpacing:"-0.04em",marginBottom:14}}>Expert Reviews & Guides</h1>
         <div style={{display:"flex",gap:8,justifyContent:"center",flexWrap:"wrap",marginTop:24}}>
@@ -1324,7 +1324,7 @@ function BlogPage({blog}){
       </div>
       <div style={{maxWidth:1100,margin:"0 auto",padding:"40px 24px"}}>
         {/* Featured */}
-        <div style={{background:"#111",borderRadius:16,overflow:"hidden",border:"1px solid rgba(255,255,255,0.08)",display:"grid",gridTemplateColumns:"1.2fr 1fr",marginBottom:36,cursor:"pointer"}}>
+        <div style={{background:"var(--pp-card)",borderRadius:16,overflow:"hidden",border:"1px solid rgba(255,255,255,0.08)",display:"grid",gridTemplateColumns:"1.2fr 1fr",marginBottom:36,cursor:"pointer"}}>
           <img src={featured.img} alt="" style={{width:"100%",height:340,objectFit:"cover"}} onError={e=>e.target.style.display="none"}/>
           <div style={{padding:"32px"}}>
             <div style={{display:"flex",gap:8,marginBottom:16}}>
@@ -1338,7 +1338,7 @@ function BlogPage({blog}){
         </div>
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))",gap:20}}>
           {rest.map(p=>(
-            <div key={p.id} style={{background:"#111",borderRadius:16,overflow:"hidden",border:"1px solid rgba(255,255,255,0.07)",cursor:"pointer"}}>
+            <div key={p.id} style={{background:"var(--pp-card)",borderRadius:16,overflow:"hidden",border:"1px solid rgba(255,255,255,0.07)",cursor:"pointer"}}>
               <div style={{position:"relative"}}>
                 <img src={p.img} alt="" style={{width:"100%",height:190,objectFit:"cover"}} onError={e=>e.target.style.display="none"}/>
                 <span style={{position:"absolute",top:12,left:12,background:TAG_COLORS[p.tag],color:"#fff",fontSize:10.5,fontWeight:700,padding:"3px 10px",borderRadius:20}}>{p.tag}</span>
@@ -1366,7 +1366,7 @@ function ForumPage({setPage,setThread,user,setShowLogin,threads}){
   const visible=threads.filter(t=>cat==="All"||t.cat===cat);
   return(
     <div style={{paddingTop:56,minHeight:"100vh",background:"var(--pp-bg)"}}>
-      <div style={{background:"#111",borderBottom:"1px solid rgba(255,255,255,0.08)",padding:"52px 32px 44px",textAlign:"center"}}>
+      <div style={{background:"var(--pp-card)",borderBottom:"1px solid rgba(255,255,255,0.08)",padding:"52px 32px 44px",textAlign:"center"}}>
         <div style={{color:"rgba(255,255,255,0.4)",fontSize:12,fontWeight:700,letterSpacing:"0.1em",marginBottom:12}}>COMMUNITY</div>
         <h1 style={{color:"#fff",fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:36,letterSpacing:"-0.04em",marginBottom:14}}>The Pit Lane Forum</h1>
         <div style={{display:"flex",gap:8,justifyContent:"center",flexWrap:"wrap",marginTop:20}}>
@@ -1382,7 +1382,7 @@ function ForumPage({setPage,setThread,user,setShowLogin,threads}){
           </div>
         )}
         {visible.map(t=>(
-          <div key={t.id} onClick={()=>{setThread(t);setPage("thread");}} style={{background:"#111",borderRadius:14,padding:"18px 20px",marginBottom:10,border:t.pinned?"1px solid rgba(220,38,38,0.3)":"1px solid rgba(255,255,255,0.07)",cursor:"pointer",display:"flex",alignItems:"center",gap:14,transition:"border-color 0.15s",borderLeft:t.pinned?"3px solid #DC2626":"1px solid rgba(255,255,255,0.07)"}}>
+          <div key={t.id} onClick={()=>{setThread(t);setPage("thread");}} style={{background:"var(--pp-card)",borderRadius:14,padding:"18px 20px",marginBottom:10,border:t.pinned?"1px solid rgba(220,38,38,0.3)":"1px solid rgba(255,255,255,0.07)",cursor:"pointer",display:"flex",alignItems:"center",gap:14,transition:"border-color 0.15s",borderLeft:t.pinned?"3px solid #DC2626":"1px solid rgba(255,255,255,0.07)"}}>
             <div style={{width:42,height:42,borderRadius:12,background:(CAT_COLORS[t.cat]||"#64748B")+"22",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
               <MessageSquare size={17} color={CAT_COLORS[t.cat]||"#64748B"}/>
             </div>
@@ -1420,7 +1420,7 @@ function ThreadPage({thread:t,setPage,user,setShowLogin}){
   };
   return(
     <div style={{paddingTop:56,minHeight:"100vh",background:"var(--pp-bg)"}}>
-      <div style={{background:"#111",borderBottom:"1px solid rgba(255,255,255,0.08)",padding:"36px 32px 30px"}}>
+      <div style={{background:"var(--pp-card)",borderBottom:"1px solid rgba(255,255,255,0.08)",padding:"36px 32px 30px"}}>
         <div style={{maxWidth:820,margin:"0 auto"}}>
           <button onClick={()=>setPage("forum")} style={{display:"flex",alignItems:"center",gap:6,background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.12)",borderRadius:9,padding:"7px 14px",color:"rgba(255,255,255,0.7)",cursor:"pointer",fontSize:13,fontWeight:600,marginBottom:16}}>
             <ChevronLeft size={14}/> Back to Forum
@@ -1431,7 +1431,7 @@ function ThreadPage({thread:t,setPage,user,setShowLogin}){
       </div>
       <div style={{maxWidth:820,margin:"0 auto",padding:"28px 24px"}}>
         {replies.map(r=>(
-          <div key={r.id} style={{background:"#111",borderRadius:14,padding:"18px 20px",marginBottom:12,border:"1px solid rgba(255,255,255,0.08)"}}>
+          <div key={r.id} style={{background:"var(--pp-card)",borderRadius:14,padding:"18px 20px",marginBottom:12,border:"1px solid rgba(255,255,255,0.08)"}}>
             <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:12}}>
               <div style={{width:36,height:36,borderRadius:"50%",background:"rgba(255,255,255,0.1)",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:700,fontSize:13}}>{r.author[0]}</div>
               <div>
@@ -1445,7 +1445,7 @@ function ThreadPage({thread:t,setPage,user,setShowLogin}){
             </button>
           </div>
         ))}
-        <div style={{background:"#111",borderRadius:14,padding:"18px 20px",border:"1px solid rgba(255,255,255,0.08)",marginTop:20}}>
+        <div style={{background:"var(--pp-card)",borderRadius:14,padding:"18px 20px",border:"1px solid rgba(255,255,255,0.08)",marginTop:20}}>
           <h3 style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,marginBottom:14,color:"#fff"}}>Add a Reply</h3>
           {user
             ?<><textarea value={reply} onChange={e=>setReply(e.target.value)} rows={4} placeholder="Share your thoughts…" style={{width:"100%",padding:"12px 14px",borderRadius:10,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"#fff",fontSize:13.5,resize:"vertical",fontFamily:"inherit"}}/><button onClick={submit} className="btn-red" style={{marginTop:10,padding:"10px 22px",borderRadius:100,fontSize:13.5,display:"flex",alignItems:"center",gap:7}}><Send size={13}/> Post Reply</button></>
