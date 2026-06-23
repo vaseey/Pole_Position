@@ -874,17 +874,10 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
 
           {/* ── Results grid ── */}
           <div style={{flex:1}}>
-            {isMobile&&(
-              <div style={{marginBottom:16}}>
-                <button onClick={()=>setShowMobileFilters(true)} style={{display:"flex",alignItems:"center",gap:8,padding:"10px 18px",borderRadius:100,border:"1px solid var(--pp-border)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13.5,color:"var(--pp-text2)"}}>
-                  <Filter size={14}/> Filters
-                </button>
-              </div>
-            )}
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:20}}>
-              {filtered.map(c=><BrowseCarCard key={c.id} car={c} onFav={toggleFav} isFav={favs.includes(c.id)} onClick={()=>{setSelectedCar(c);}}/>)}
+              {finalFiltered.map(c=><BrowseCarCard key={c.id} car={c} onFav={toggleFav} isFav={favs.includes(c.id)} onClick={()=>{setSelectedCar(c);}}/>)}
             </div>
-            {filtered.length===0&&<div style={{textAlign:"center",padding:"80px 0",color:"var(--pp-text3)"}}>No cars match your filters.</div>}
+            {finalFiltered.length===0&&<div style={{textAlign:"center",padding:"80px 0",color:"var(--pp-text3)"}}>No cars match your filters.</div>}
           </div>
         </div>
       </div>
