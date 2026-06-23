@@ -461,19 +461,43 @@ function CarCard({car,onFav,isFav,onClick}){
   const FB="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=800&q=80";
   return(
     <div onClick={onClick} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
-      style={{borderRadius:20,overflow:"hidden",cursor:"pointer",position:"relative",aspectRatio:"3/4",transition:"transform 0.3s,box-shadow 0.3s",transform:hov?"translateY(-7px) scale(1.012)":"none",boxShadow:hov?"0 36px 72px rgba(0,0,0,0.35)":"0 6px 24px rgba(0,0,0,0.1)",background:"#1a1a2e"}}>
-      <img src={err?FB:(car.img||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model}
-        style={{position:"absolute",top:0,left:0,width:"100%",height:"100%",objectFit:"cover"}}/>
-      <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,rgba(0,0,0,0.08) 0%,rgba(0,0,0,0) 22%,rgba(0,0,0,0.55) 58%,rgba(0,0,0,0.97) 100%)"}}/>
-      <div style={{position:"absolute",top:13,left:13,right:13,display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
-        {b?<span style={{background:b.bg,padding:"4px 10px",borderRadius:100,fontSize:10,fontWeight:700,color:"#fff"}}>{b.label}</span>:<span/>}
-        <button onClick={e=>{e.stopPropagation();onFav(car.id);}} style={{background:"rgba(0,0,0,0.4)",border:"1px solid rgba(255,255,255,0.2)",cursor:"pointer",width:34,height:34,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center"}}>
-          <Heart size={13} fill={isFav?"#DC2626":"none"} color={isFav?"#DC2626":"#fff"} strokeWidth={2.2}/>
+      style={{borderRadius:16,overflow:"hidden",cursor:"pointer",background:"#111",border:"1px solid rgba(255,255,255,0.07)",transition:"transform 0.25s",transform:hov?"translateY(-4px)":"none"}}>
+      {/* Image section */}
+      <div style={{aspectRatio:"4/3",overflow:"hidden",borderRadius:"16px 16px 0 0",position:"relative"}}>
+        <img src={err?FB:(car.img||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model}
+          style={{width:"100%",height:"100%",objectFit:"cover"}}/>
+        {/* Fuel chip top-left */}
+        <span style={{position:"absolute",top:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"#fff",fontSize:11,fontWeight:600}}>● {car.fuel}</span>
+        {/* Transmission chip top-right */}
+        <span style={{position:"absolute",top:10,right:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"#fff",fontSize:11,fontWeight:600}}>{car.transmission}</span>
+        {/* Year pill bottom-left */}
+        <span style={{position:"absolute",bottom:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"#fff",fontSize:11,fontWeight:600}}>{car.year}</span>
+        {/* Fav button */}
+        <button onClick={e=>{e.stopPropagation();onFav(car.id);}} style={{position:"absolute",bottom:10,right:10,background:"rgba(0,0,0,0.5)",border:"1px solid rgba(255,255,255,0.2)",cursor:"pointer",width:30,height:30,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center"}}>
+          <Heart size={12} fill={isFav?"#DC2626":"none"} color={isFav?"#DC2626":"#fff"} strokeWidth={2.2}/>
         </button>
       </div>
-      <div style={{position:"absolute",bottom:0,left:0,right:0}}>
-        <div style={{padding:"0 16px 2px"}}>
-          {[{l:"Year",v:car.year},{l:"Fuel",v:car.fuel},{l:"Driven",v:fmtKm(car.km)}].map(s=>(
+      {/* Info section */}
+      <div style={{padding:"16px 16px 18px"}}>
+        <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,color:"#fff",letterSpacing:"-0.03em",marginBottom:10}}>{car.make} {car.model}</div>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+          <span style={{fontSize:15,color:"rgba(255,255,255,0.7)",fontWeight:600}}>{fmt(car.price)}</span>
+          <div style={{width:32,height:32,borderRadius:"50%",background:"#fff",display:"flex",alignItems:"center",justifyContent:"center"}}>
+            <span style={{color:"#000",fontSize:16,lineHeight:1}}>↗</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── OLD CarCard remainder (replaced) — keep empty placeholder ──
+function _CarCardOldRemainder(){return null;
+  // unused: original bottom section
+  return(
+    <div>
+      <div style={{padding:"0 16px 2px"}}>
+        {[{l:"Year",v:""},{l:"Fuel",v:""},{l:"Driven",v:""}].map(s=>(
             <div key={s.l} style={{display:"flex",justifyContent:"space-between",padding:"6px 0",borderBottom:"1px solid rgba(255,255,255,0.1)"}}>
               <span style={{fontSize:10,color:"rgba(255,255,255,0.4)",fontWeight:500,letterSpacing:"0.07em",textTransform:"uppercase"}}>{s.l}</span>
               <span style={{fontSize:11.5,color:"#fff",fontWeight:700}}>{s.v}</span>
