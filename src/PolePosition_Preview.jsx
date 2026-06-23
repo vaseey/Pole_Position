@@ -833,7 +833,18 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
       <div style={{maxWidth:1280,margin:"0 auto",padding:"24px 24px 70px"}}>
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:20}}>
           <span style={{color:"var(--pp-text2)",fontSize:13.5,fontWeight:600}}>{finalFiltered.length} cars found</span>
-          {isMobile&&<button onClick={()=>setShowMobileFilters(true)} style={{display:"flex",alignItems:"center",gap:8,padding:"9px 16px",borderRadius:100,border:"1px solid var(--pp-border)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13,color:"var(--pp-text2)"}}><Filter size={13}/> Filters</button>}
+          <div style={{display:"flex",alignItems:"center",gap:8}}>
+            {isMobile&&<button onClick={()=>setShowMobileFilters(true)} style={{display:"flex",alignItems:"center",gap:8,padding:"9px 16px",borderRadius:100,border:"1px solid var(--pp-border)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13,color:"var(--pp-text2)"}}><Filter size={13}/> Filters</button>}
+            {/* Grid / List toggle */}
+            <div style={{display:"flex",border:"1px solid var(--pp-border)",borderRadius:10,overflow:"hidden"}}>
+              <button onClick={()=>setListView(false)} title="Grid view" style={{padding:"7px 12px",border:"none",cursor:"pointer",background:!listView?"var(--pp-chip)":"transparent",color:!listView?"var(--pp-text)":"var(--pp-text3)",display:"flex",alignItems:"center",justifyContent:"center",transition:"all 0.15s"}}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="9" y="1" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="1" y="9" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="9" y="9" width="6" height="6" rx="1.5" fill="currentColor"/></svg>
+              </button>
+              <button onClick={()=>setListView(true)} title="List view" style={{padding:"7px 12px",border:"none",borderLeft:"1px solid var(--pp-border)",cursor:"pointer",background:listView?"var(--pp-chip)":"transparent",color:listView?"var(--pp-text)":"var(--pp-text3)",display:"flex",alignItems:"center",justifyContent:"center",transition:"all 0.15s"}}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="3" rx="1.5" fill="currentColor"/><rect x="1" y="7" width="14" height="3" rx="1.5" fill="currentColor"/><rect x="1" y="12" width="14" height="3" rx="1.5" fill="currentColor"/></svg>
+              </button>
+            </div>
+          </div>
         </div>
 
         <div style={{display:"flex",gap:26,alignItems:"flex-start"}}>
