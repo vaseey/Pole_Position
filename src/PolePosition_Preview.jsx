@@ -509,8 +509,8 @@ function CarCard({car,onFav,isFav,onClick}){
         <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,color:"var(--pp-text)",letterSpacing:"-0.03em",marginBottom:10}}>{car.make} {car.model}</div>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
           <span style={{fontSize:15,color:"var(--pp-text2)",fontWeight:600}}>{fmt(car.price)}</span>
-          <div style={{width:32,height:32,borderRadius:"50%",background:"#fff",display:"flex",alignItems:"center",justifyContent:"center"}}>
-            <span style={{color:"#000",fontSize:16,lineHeight:1}}>↗</span>
+          <div style={{width:32,height:32,borderRadius:"50%",background:"var(--pp-card2)",border:"1px solid var(--pp-border)",display:"flex",alignItems:"center",justifyContent:"center"}}>
+            <span style={{color:"var(--pp-text)",fontSize:16,lineHeight:1}}>↗</span>
           </div>
         </div>
       </div>
@@ -649,8 +649,8 @@ function BrowseCarCard({car,onFav,isFav,onClick}){
         {car.variant&&<div style={{color:"var(--pp-text2)",fontSize:12,fontWeight:600,marginBottom:10}}>{car.variant}</div>}
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:10}}>
           <span style={{fontSize:15,color:"var(--pp-text2)",fontWeight:600}}>{fmt(car.price)}</span>
-          <div style={{width:32,height:32,borderRadius:"50%",background:"#fff",display:"flex",alignItems:"center",justifyContent:"center"}}>
-            <span style={{color:"#000",fontSize:16,lineHeight:1}}>↗</span>
+          <div style={{width:32,height:32,borderRadius:"50%",background:"var(--pp-card2)",border:"1px solid var(--pp-border)",display:"flex",alignItems:"center",justifyContent:"center"}}>
+            <span style={{color:"var(--pp-text)",fontSize:16,lineHeight:1}}>↗</span>
           </div>
         </div>
       </div>
