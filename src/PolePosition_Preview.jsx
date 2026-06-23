@@ -752,13 +752,41 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
   const histBars=[30,45,60,80,95,70,85,100,75,55,65,40,50,35,25];
   const yearPct=v=>((v-floorYear)/((ceilYear-floorYear)||1))*100;
 
-  return(
-    <div style={{paddingTop:80,minHeight:"100vh",background:"var(--pp-bg)"}}>
-      <div style={{maxWidth:1280,margin:"0 auto",padding:"0 24px 70px"}}>
+  const CAT_TABS=[["all","All"],["Hatchback","Hatchback"],["Sedan","Sedan"],["SUV","SUV"],["Electric","Electric"],["Luxury","Luxury"]];
+  const [activeCat,setActiveCat]=useState("all");
+  const finalFiltered=activeCat==="all"?filtered:filtered.filter(c=>{
+    if(activeCat==="Electric")return c.fuel==="Electric"||c.category?.toLowerCase().includes("ev");
+    if(activeCat==="Luxury")return c.price>=2000000;
+    return c.category===activeCat||c.category?.includes(activeCat);
+  });
 
-        <div style={{display:"flex",alignItems:"center",gap:14,marginBottom:28}}>
-          <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:32,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>Our Collection</h1>
-          <span style={{background:"#9B2B2B",color:"#fff",padding:"5px 14px",borderRadius:100,fontWeight:700,fontSize:14}}>{filtered.length}</span>
+  return(
+    <div style={{minHeight:"100vh",background:"var(--pp-bg)"}}>
+      {/* LuxAuto-style hero header */}
+      <div style={{position:"relative",paddingTop:56,background:"var(--pp-bg)",overflow:"hidden",borderBottom:"1px solid var(--pp-border)"}}>
+        <div style={{maxWidth:1280,margin:"0 auto",padding:"40px 24px 32px",position:"relative",zIndex:1}}>
+          <div style={{fontSize:11,fontWeight:700,letterSpacing:"0.15em",color:"#9B2B2B",marginBottom:10,textTransform:"uppercase"}}>Browse · {cars.length} Cars Available</div>
+          <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:"clamp(28px,5vw,52px)",letterSpacing:"-0.04em",color:"var(--pp-text)",marginBottom:0,lineHeight:1.1}}>Our Collection</h1>
+        </div>
+        {/* Giant watermark */}
+        <div style={{position:"absolute",top:"50%",right:-20,transform:"translateY(-50%)",fontSize:"clamp(60px,14vw,160px)",fontWeight:900,color:"rgba(255,255,255,0.025)",letterSpacing:"-0.05em",whiteSpace:"nowrap",fontFamily:"Outfit,sans-serif",userSelect:"none",pointerEvents:"none",lineHeight:1}}>OUR COLLECTION</div>
+      </div>
+
+      {/* Category chip bar */}
+      <div style={{background:"var(--pp-card)",borderBottom:"1px solid var(--pp-border)",position:"sticky",top:56,zIndex:150}}>
+        <div style={{maxWidth:1280,margin:"0 auto",padding:"0 24px",display:"flex",gap:4,overflowX:"auto",scrollbarWidth:"none"}}>
+          {CAT_TABS.map(([k,l])=>(
+            <button key={k} onClick={()=>setActiveCat(k)} style={{flexShrink:0,padding:"12px 18px",border:"none",background:"transparent",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:600,fontSize:13.5,color:activeCat===k?"#9B2B2B":"var(--pp-text2)",borderBottom:activeCat===k?"2.5px solid #9B2B2B":"2.5px solid transparent",transition:"all 0.15s",whiteSpace:"nowrap"}}>
+              {l}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div style={{maxWidth:1280,margin:"0 auto",padding:"24px 24px 70px"}}>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:20}}>
+          <span style={{color:"var(--pp-text2)",fontSize:13.5,fontWeight:600}}>{finalFiltered.length} cars found</span>
+          {isMobile&&<button onClick={()=>setShowMobileFilters(true)} style={{display:"flex",alignItems:"center",gap:8,padding:"9px 16px",borderRadius:100,border:"1px solid var(--pp-border)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13,color:"var(--pp-text2)"}}><Filter size={13}/> Filters</button>}
         </div>
 
         <div style={{display:"flex",gap:26,alignItems:"flex-start"}}>
