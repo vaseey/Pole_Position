@@ -762,7 +762,7 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
                   return(
                     <div key={make} style={{border:"1px solid var(--pp-border)",borderRadius:11,overflow:"hidden"}}>
                       <button onClick={()=>setOpenMake(isOpen?null:make)} style={{width:"100%",display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 12px",background:selectedCount>0?"rgba(155,43,43,0.1)":"transparent",border:"none",cursor:"pointer"}}>
-                        <span style={{fontSize:13,fontWeight:600,color:selectedCount>0?"#9B2B2B":"#fff"}}>{make}{selectedCount>0?" ("+selectedCount+")":""}</span>
+                        <span style={{fontSize:13,fontWeight:600,color:selectedCount>0?"#9B2B2B":"var(--pp-text)"}}>{make}{selectedCount>0?" ("+selectedCount+")":""}</span>
                         <ChevronDown size={14} color="var(--pp-text2)" style={{transform:isOpen?"rotate(180deg)":"none",transition:"transform 0.15s"}}/>
                       </button>
                       {isOpen&&(
