@@ -530,28 +530,28 @@ function _CarCardOldRemainder(){return null;
 // ── HomePage ─────────────────────────────────────────────────────
 function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
   const hot=useMemo(()=>cars.filter(c=>c.score>=86).slice(0,6),[cars]);
-  const hero={minHeight:"100vh",background:"linear-gradient(135deg,#0F172A 0%,#1E293B 100%)",display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",textAlign:"center",padding:"0 24px",position:"relative",overflow:"hidden"};
   return(
-    <div style={{paddingTop:64}}>
+    <div style={{paddingTop:56}}>
       {/* Hero */}
-      <div style={hero}>
-        <div style={{position:"absolute",top:"15%",left:"10%",width:400,height:400,background:"radial-gradient(circle,rgba(220,38,38,0.12) 0%,transparent 70%)",borderRadius:"50%"}}/>
-        <div style={{position:"relative",zIndex:1,maxWidth:680}}>
-          <div style={{display:"inline-flex",alignItems:"center",gap:8,background:"rgba(220,38,38,0.1)",border:"1px solid rgba(220,38,38,0.25)",borderRadius:100,padding:"6px 14px",marginBottom:24}}>
-            <div style={{width:6,height:6,borderRadius:"50%",background:"#DC2626"}}/>
-            <span style={{color:"#DC2626",fontSize:12.5,fontWeight:700,letterSpacing:"0.08em"}}>HYDERABAD'S TRUSTED USED CAR MARKETPLACE</span>
-          </div>
-          <h1 style={{color:"#fff",fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:"clamp(38px,7vw,72px)",letterSpacing:"-0.04em",lineHeight:1.0,marginBottom:20}}>
-            Find Your Perfect<br/><span style={{color:"#DC2626"}}>Used Car</span>
+      <div style={{position:"relative",background:"#0A0A0A",minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden",paddingTop:56}}>
+        {/* Giant watermark text */}
+        <div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",fontSize:"clamp(80px,18vw,220px)",fontWeight:900,color:"rgba(255,255,255,0.04)",letterSpacing:"-0.05em",whiteSpace:"nowrap",fontFamily:"Outfit,sans-serif",userSelect:"none",pointerEvents:"none",lineHeight:1}}>
+          POLE POSITION
+        </div>
+        {/* Content */}
+        <div style={{position:"relative",zIndex:1,textAlign:"center",padding:"0 24px"}}>
+          <div style={{fontSize:12,fontWeight:700,letterSpacing:"0.15em",color:"rgba(255,255,255,0.4)",marginBottom:20,textTransform:"uppercase"}}>Hyderabad's Premier Used Car Marketplace</div>
+          <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:"clamp(40px,8vw,80px)",color:"#fff",letterSpacing:"-0.04em",lineHeight:1.05,marginBottom:24}}>
+            Find Your Perfect<br/>Used Car.
           </h1>
-          <p style={{color:"rgba(255,255,255,0.55)",fontSize:"clamp(15px,2vw,18px)",lineHeight:1.65,marginBottom:36,maxWidth:500,margin:"0 auto 36px"}}>
+          <p style={{color:"rgba(255,255,255,0.4)",fontSize:16,marginBottom:40,maxWidth:440,margin:"0 auto 40px"}}>
             Every car independently inspected and scored. No hidden surprises.
           </p>
-          <div style={{display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap"}}>
-            <button onClick={()=>setPage("browse")} className="btn-red" style={{padding:"14px 32px",borderRadius:12,fontSize:15,display:"flex",alignItems:"center",gap:8}}>
-              Browse Cars <ChevronRight size={16}/>
+          <div style={{display:"flex",gap:12,justifyContent:"center"}}>
+            <button onClick={()=>setPage("browse")} style={{padding:"13px 28px",borderRadius:100,fontSize:14,fontWeight:700,background:"#fff",color:"#000",border:"none",cursor:"pointer",fontFamily:"Outfit,sans-serif",display:"flex",alignItems:"center",gap:6}}>
+              Browse Cars <span style={{fontSize:16}}>→</span>
             </button>
-            <button onClick={()=>setPage("quiz")} style={{padding:"14px 28px",borderRadius:12,fontSize:15,border:"1.5px solid rgba(255,255,255,0.15)",background:"transparent",color:"#fff",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:600}}>
+            <button onClick={()=>setPage("quiz")} style={{padding:"13px 28px",borderRadius:100,fontSize:14,fontWeight:700,background:"transparent",color:"#fff",border:"1.5px solid rgba(255,255,255,0.2)",cursor:"pointer",fontFamily:"Outfit,sans-serif"}}>
               Find My Match
             </button>
           </div>
@@ -559,14 +559,14 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
       </div>
 
       {/* Hot listings */}
-      <div style={{padding:"72px 32px",background:"#F8FAFC"}}>
+      <div style={{padding:"72px 32px",background:"#0A0A0A"}}>
         <div style={{maxWidth:1200,margin:"0 auto"}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:32}}>
             <div>
-              <div style={{color:"#DC2626",fontSize:12,fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:8}}>Curated Picks</div>
-              <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:32,letterSpacing:"-0.03em"}}>Top Rated Right Now</h2>
+              <div style={{color:"rgba(255,255,255,0.4)",fontSize:12,fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:8}}>Curated Picks</div>
+              <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:32,letterSpacing:"-0.03em",color:"#fff"}}>Top Picks</h2>
             </div>
-            <button onClick={()=>setPage("browse")} style={{display:"flex",alignItems:"center",gap:6,padding:"9px 18px",borderRadius:10,border:"1.5px solid #E2E8F0",background:"#fff",cursor:"pointer",fontWeight:600,fontSize:13.5,color:"#475569"}}>
+            <button onClick={()=>setPage("browse")} style={{display:"flex",alignItems:"center",gap:6,padding:"9px 18px",borderRadius:100,border:"1px solid rgba(255,255,255,0.15)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13.5,color:"rgba(255,255,255,0.7)"}}>
               View all <ArrowRight size={14}/>
             </button>
           </div>
@@ -577,7 +577,7 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
       </div>
 
       {/* Stats */}
-      <div style={{background:"#0F172A",padding:"60px 32px"}}>
+      <div style={{background:"#111",padding:"60px 32px",borderTop:"1px solid rgba(255,255,255,0.07)",borderBottom:"1px solid rgba(255,255,255,0.07)"}}>
         <div style={{maxWidth:900,margin:"0 auto",display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:32,textAlign:"center"}}>
           {[[cars.length+"+ Cars","In our showroom"],[cars.filter(c=>c.score>=85).length,"Scored 85+"],["100%","Inspected"]].map(([n,l])=>(
             <div key={l}>
@@ -589,25 +589,25 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
       </div>
 
       {/* Blog preview */}
-      <div style={{padding:"72px 32px",background:"#F8FAFC"}}>
+      <div style={{padding:"72px 32px",background:"#0A0A0A"}}>
         <div style={{maxWidth:1100,margin:"0 auto"}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:28}}>
             <div>
-              <div style={{color:"#DC2626",fontSize:12,fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:8}}>From the Blog</div>
-              <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:28,letterSpacing:"-0.03em"}}>Expert Reviews & Guides</h2>
+              <div style={{color:"rgba(255,255,255,0.4)",fontSize:12,fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:8}}>From the Blog</div>
+              <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:28,letterSpacing:"-0.03em",color:"#fff"}}>Expert Reviews & Guides</h2>
             </div>
-            <button onClick={()=>setPage("blog")} style={{display:"flex",alignItems:"center",gap:6,padding:"9px 18px",borderRadius:10,border:"1.5px solid #E2E8F0",background:"#fff",cursor:"pointer",fontWeight:600,fontSize:13.5,color:"#475569"}}>
+            <button onClick={()=>setPage("blog")} style={{display:"flex",alignItems:"center",gap:6,padding:"9px 18px",borderRadius:100,border:"1px solid rgba(255,255,255,0.15)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13.5,color:"rgba(255,255,255,0.7)"}}>
               All articles <ArrowRight size={14}/>
             </button>
           </div>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))",gap:20}}>
             {blog.slice(0,3).map(p=>(
-              <div key={p.id} style={{background:"#fff",borderRadius:16,overflow:"hidden",border:"1px solid #E2E8F0",cursor:"pointer"}} onClick={()=>setPage("blog")}>
+              <div key={p.id} style={{background:"#111",borderRadius:16,overflow:"hidden",border:"1px solid rgba(255,255,255,0.07)",cursor:"pointer"}} onClick={()=>setPage("blog")}>
                 <img src={p.img} alt="" style={{width:"100%",height:180,objectFit:"cover"}} onError={e=>e.target.style.display="none"}/>
                 <div style={{padding:"16px 18px"}}>
-                  <span style={{background:TAG_COLORS[p.tag]+"18",color:TAG_COLORS[p.tag],fontSize:10.5,fontWeight:700,padding:"3px 9px",borderRadius:20}}>{p.tag}</span>
-                  <p style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15.5,marginTop:10,letterSpacing:"-0.02em",lineHeight:1.3}}>{p.title}</p>
-                  <div style={{marginTop:10,fontSize:12,color:"#94A3B8"}}>{p.author} · {p.readTime} read</div>
+                  <span style={{background:TAG_COLORS[p.tag]+"22",color:TAG_COLORS[p.tag],fontSize:10.5,fontWeight:700,padding:"3px 9px",borderRadius:20}}>{p.tag}</span>
+                  <p style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15.5,marginTop:10,letterSpacing:"-0.02em",lineHeight:1.3,color:"#fff"}}>{p.title}</p>
+                  <div style={{marginTop:10,fontSize:12,color:"rgba(255,255,255,0.4)"}}>{p.author} · {p.readTime} read</div>
                 </div>
               </div>
             ))}
@@ -616,10 +616,10 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
       </div>
 
       {/* Footer */}
-      <div style={{background:"#0F172A",padding:"40px 32px",textAlign:"center"}}>
+      <div style={{background:"#0A0A0A",borderTop:"1px solid rgba(255,255,255,0.07)",padding:"40px 32px",textAlign:"center"}}>
         <div style={{display:"flex",alignItems:"center",gap:8,justifyContent:"center",marginBottom:12}}>
           <div style={{width:28,height:28,background:"#DC2626",borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center"}}><Car size={14} color="#fff"/></div>
-          <span style={{color:"#fff",fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:15}}>Pole<span style={{color:"#DC2626"}}>Position</span></span>
+          <span style={{color:"#fff",fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:15}}>Pole<span style={{fontWeight:900}}>Position</span></span>
         </div>
         <p style={{color:"rgba(255,255,255,0.3)",fontSize:13}}>© 2025 Pole Position. Hyderabad's #1 trusted used car marketplace.</p>
       </div>
