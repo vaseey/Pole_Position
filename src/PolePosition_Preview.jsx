@@ -1125,7 +1125,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
               <div style={{textAlign:"center"}}><ScoreRing score={car.score} size={52}/><div style={{color:"var(--pp-text2)",fontSize:9,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.05em",marginTop:3}}>PP Score</div></div>
             </div>
             <div style={{display:"flex",alignItems:"center",gap:5,color:"var(--pp-text2)",fontSize:12,marginBottom:16}}><Eye size={13}/> {viewsToday} views today</div>
-            <div style={{background:"rgba(255,255,255,0.05)",borderRadius:12,padding:"11px 14px",marginBottom:18,display:"flex",alignItems:"center",gap:9,border:"1px solid var(--pp-border)"}}>
+            <div style={{background:"var(--pp-card2)",borderRadius:12,padding:"11px 14px",marginBottom:18,display:"flex",alignItems:"center",gap:9,border:"1px solid var(--pp-border)"}}>
               <BarChart2 size={14} color="rgba(255,255,255,0.4)"/>
               <span style={{fontSize:12.5,color:"var(--pp-text2)",fontWeight:600}}>EMI from ₹{emi.toLocaleString("en-IN")}/month</span>
             </div>
