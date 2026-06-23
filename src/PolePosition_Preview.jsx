@@ -946,7 +946,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
         <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:22,letterSpacing:"-0.03em",color:"var(--pp-text)",marginBottom:8}}>{car.make} {car.model}{car.variant?` ${car.variant}`:""}</h1>
         <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
           <span style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:28,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>{fmt(car.price)}</span>
-          {car.tagline&&<span style={{background:"#F1F5F9",borderRadius:20,padding:"3px 10px",fontSize:11.5,fontWeight:600,color:"var(--pp-text2)"}}>{car.tagline}</span>}
+          {car.tagline&&<span style={{background:"var(--pp-card2)",borderRadius:20,padding:"3px 10px",fontSize:11.5,fontWeight:600,color:"var(--pp-text2)"}}>{car.tagline}</span>}
         </div>
         <div style={{display:"flex",alignItems:"center",gap:6,color:"var(--pp-text3)",fontSize:12.5,marginBottom:14,flexWrap:"wrap"}}>
           <Eye size={13}/><span>{viewsToday} views today</span>
