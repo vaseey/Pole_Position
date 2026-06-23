@@ -1449,8 +1449,8 @@ function ThreadPage({thread:t,setPage,user,setShowLogin}){
     setReply("");
   };
   return(
-    <div style={{paddingTop:64,minHeight:"100vh",background:"#F8FAFC"}}>
-      <div style={{background:"linear-gradient(135deg,#0F172A,#1E293B)",padding:"36px 32px 30px"}}>
+    <div style={{paddingTop:56,minHeight:"100vh",background:"#0A0A0A"}}>
+      <div style={{background:"#111",borderBottom:"1px solid rgba(255,255,255,0.08)",padding:"36px 32px 30px"}}>
         <div style={{maxWidth:820,margin:"0 auto"}}>
           <button onClick={()=>setPage("forum")} style={{display:"flex",alignItems:"center",gap:6,background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.12)",borderRadius:9,padding:"7px 14px",color:"rgba(255,255,255,0.7)",cursor:"pointer",fontSize:13,fontWeight:600,marginBottom:16}}>
             <ChevronLeft size={14}/> Back to Forum
@@ -1461,25 +1461,25 @@ function ThreadPage({thread:t,setPage,user,setShowLogin}){
       </div>
       <div style={{maxWidth:820,margin:"0 auto",padding:"28px 24px"}}>
         {replies.map(r=>(
-          <div key={r.id} style={{background:"#fff",borderRadius:14,padding:"18px 20px",marginBottom:12,border:"1px solid #E2E8F0"}}>
+          <div key={r.id} style={{background:"#111",borderRadius:14,padding:"18px 20px",marginBottom:12,border:"1px solid rgba(255,255,255,0.08)"}}>
             <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:12}}>
-              <div style={{width:36,height:36,borderRadius:"50%",background:"#0F172A",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:700,fontSize:13}}>{r.author[0]}</div>
+              <div style={{width:36,height:36,borderRadius:"50%",background:"rgba(255,255,255,0.1)",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:700,fontSize:13}}>{r.author[0]}</div>
               <div>
-                <div style={{fontWeight:700,fontSize:14}}>{r.author} {r.isOP&&<span style={{background:"#FEF2F2",color:"#DC2626",fontSize:10,fontWeight:700,padding:"2px 8px",borderRadius:20,marginLeft:6}}>OP</span>}</div>
-                <div style={{color:"#94A3B8",fontSize:11.5}}>{r.time}</div>
+                <div style={{fontWeight:700,fontSize:14,color:"#fff"}}>{r.author} {r.isOP&&<span style={{background:"rgba(220,38,38,0.15)",color:"#DC2626",fontSize:10,fontWeight:700,padding:"2px 8px",borderRadius:20,marginLeft:6}}>OP</span>}</div>
+                <div style={{color:"rgba(255,255,255,0.4)",fontSize:11.5}}>{r.time}</div>
               </div>
             </div>
-            <p style={{color:"#334155",fontSize:14,lineHeight:1.65,marginBottom:12}}>{r.body}</p>
-            <button onClick={()=>setLikes(l=>({...l,[r.id]:!l[r.id]}))} style={{display:"flex",alignItems:"center",gap:5,background:"none",border:"1px solid #E2E8F0",borderRadius:8,padding:"5px 12px",cursor:"pointer",color:likes[r.id]?"#DC2626":"#64748B",fontSize:12.5,fontWeight:600}}>
+            <p style={{color:"rgba(255,255,255,0.7)",fontSize:14,lineHeight:1.65,marginBottom:12}}>{r.body}</p>
+            <button onClick={()=>setLikes(l=>({...l,[r.id]:!l[r.id]}))} style={{display:"flex",alignItems:"center",gap:5,background:"none",border:"1px solid rgba(255,255,255,0.12)",borderRadius:8,padding:"5px 12px",cursor:"pointer",color:likes[r.id]?"#DC2626":"rgba(255,255,255,0.5)",fontSize:12.5,fontWeight:600}}>
               <ThumbsUp size={12} fill={likes[r.id]?"#DC2626":"none"}/> {r.likes+(likes[r.id]?1:0)}
             </button>
           </div>
         ))}
-        <div style={{background:"#fff",borderRadius:14,padding:"18px 20px",border:"1px solid #E2E8F0",marginTop:20}}>
-          <h3 style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,marginBottom:14}}>Add a Reply</h3>
+        <div style={{background:"#111",borderRadius:14,padding:"18px 20px",border:"1px solid rgba(255,255,255,0.08)",marginTop:20}}>
+          <h3 style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,marginBottom:14,color:"#fff"}}>Add a Reply</h3>
           {user
-            ?<><textarea value={reply} onChange={e=>setReply(e.target.value)} rows={4} placeholder="Share your thoughts…" style={{width:"100%",padding:"12px 14px",borderRadius:10,border:"1.5px solid #E2E8F0",fontSize:13.5,resize:"vertical",fontFamily:"inherit"}}/><button onClick={submit} className="btn-red" style={{marginTop:10,padding:"10px 22px",borderRadius:10,fontSize:13.5,display:"flex",alignItems:"center",gap:7}}><Send size={13}/> Post Reply</button></>
-            :<div style={{textAlign:"center",padding:"20px 0"}}><p style={{color:"#64748B",marginBottom:12}}>Sign in to join the discussion</p><button onClick={()=>setShowLogin(true)} className="btn-red" style={{padding:"10px 22px",borderRadius:10,fontSize:13.5}}>Sign In</button></div>
+            ?<><textarea value={reply} onChange={e=>setReply(e.target.value)} rows={4} placeholder="Share your thoughts…" style={{width:"100%",padding:"12px 14px",borderRadius:10,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"#fff",fontSize:13.5,resize:"vertical",fontFamily:"inherit"}}/><button onClick={submit} className="btn-red" style={{marginTop:10,padding:"10px 22px",borderRadius:100,fontSize:13.5,display:"flex",alignItems:"center",gap:7}}><Send size={13}/> Post Reply</button></>
+            :<div style={{textAlign:"center",padding:"20px 0"}}><p style={{color:"rgba(255,255,255,0.4)",marginBottom:12}}>Sign in to join the discussion</p><button onClick={()=>setShowLogin(true)} className="btn-red" style={{padding:"10px 22px",borderRadius:100,fontSize:13.5}}>Sign In</button></div>
           }
         </div>
       </div>
