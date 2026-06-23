@@ -545,7 +545,7 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
             <button onClick={()=>setPage("browse")} style={{padding:"13px 28px",borderRadius:100,fontSize:14,fontWeight:700,background:"#fff",color:"#000",border:"none",cursor:"pointer",fontFamily:"Outfit,sans-serif",display:"flex",alignItems:"center",gap:6}}>
               Browse Cars <span style={{fontSize:16}}>→</span>
             </button>
-            <button onClick={()=>setPage("quiz")} style={{padding:"13px 28px",borderRadius:100,fontSize:14,fontWeight:700,background:"transparent",color:"var(--pp-text)",border:"1.5px solid rgba(255,255,255,0.2)",cursor:"pointer",fontFamily:"Outfit,sans-serif"}}>
+            <button onClick={()=>setPage("quiz")} style={{padding:"13px 28px",borderRadius:100,fontSize:14,fontWeight:700,background:"transparent",color:"var(--pp-text)",border:"1.5px solid var(--pp-border2)",cursor:"pointer",fontFamily:"Outfit,sans-serif"}}>
               Find My Match
             </button>
           </div>
