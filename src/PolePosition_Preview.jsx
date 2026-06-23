@@ -766,20 +766,20 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
                   const isOpen=openMake===make;
                   const selectedCount=models.filter(m=>selModels.includes(make+"|"+m)).length;
                   return(
-                    <div key={make} style={{border:"1px solid #E2E8F0",borderRadius:11,overflow:"hidden"}}>
-                      <button onClick={()=>setOpenMake(isOpen?null:make)} style={{width:"100%",display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 12px",background:selectedCount>0?"#FEF2F2":"#fff",border:"none",cursor:"pointer"}}>
-                        <span style={{fontSize:13,fontWeight:600,color:selectedCount>0?"#DC2626":"#0F172A"}}>{make}{selectedCount>0?" ("+selectedCount+")":""}</span>
-                        <ChevronDown size={14} color="#94A3B8" style={{transform:isOpen?"rotate(180deg)":"none",transition:"transform 0.15s"}}/>
+                    <div key={make} style={{border:"1px solid rgba(255,255,255,0.08)",borderRadius:11,overflow:"hidden"}}>
+                      <button onClick={()=>setOpenMake(isOpen?null:make)} style={{width:"100%",display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 12px",background:selectedCount>0?"rgba(220,38,38,0.1)":"rgba(255,255,255,0.03)",border:"none",cursor:"pointer"}}>
+                        <span style={{fontSize:13,fontWeight:600,color:selectedCount>0?"#DC2626":"#fff"}}>{make}{selectedCount>0?" ("+selectedCount+")":""}</span>
+                        <ChevronDown size={14} color="rgba(255,255,255,0.4)" style={{transform:isOpen?"rotate(180deg)":"none",transition:"transform 0.15s"}}/>
                       </button>
                       {isOpen&&(
-                        <div style={{padding:"4px 12px 10px",display:"flex",flexDirection:"column",gap:6,background:"#FAFBFC"}}>
+                        <div style={{padding:"4px 12px 10px",display:"flex",flexDirection:"column",gap:6,background:"rgba(255,255,255,0.02)"}}>
                           {models.map(model=>{
                             const key=make+"|"+model;
                             const checked=selModels.includes(key);
                             return(
                               <label key={model} style={{display:"flex",alignItems:"center",gap:8,cursor:"pointer"}}>
                                 <input type="checkbox" checked={checked} onChange={()=>toggleIn(selModels,setSelModels,key)} style={{width:14,height:14,accentColor:"#DC2626"}}/>
-                                <span style={{fontSize:12.5,color:"#475569"}}>{model}</span>
+                                <span style={{fontSize:12.5,color:"rgba(255,255,255,0.7)"}}>{model}</span>
                               </label>
                             );
                           })}
