@@ -1313,7 +1313,7 @@ function QuizPage({setPage,setSelectedCar,cars}){
   };
   const q=QUIZ[step];
   return(
-    <div style={{paddingTop:64,minHeight:"100vh",background:"linear-gradient(135deg,#0F172A,#1E293B)",display:"flex",alignItems:"center",justifyContent:"center",padding:"80px 24px"}}>
+    <div style={{paddingTop:56,minHeight:"100vh",background:"#0A0A0A",display:"flex",alignItems:"center",justifyContent:"center",padding:"80px 24px"}}>
       <div style={{maxWidth:560,width:"100%"}}>
         <div style={{textAlign:"center",marginBottom:40}}>
           <div style={{color:"#DC2626",fontSize:12,fontWeight:700,letterSpacing:"0.1em",marginBottom:12}}>STEP {step+1} OF {QUIZ.length}</div>
