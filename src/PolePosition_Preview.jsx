@@ -746,18 +746,18 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
   const yearPct=v=>((v-floorYear)/((ceilYear-floorYear)||1))*100;
 
   return(
-    <div style={{paddingTop:80,minHeight:"100vh",background:"#F8FAFC"}}>
+    <div style={{paddingTop:80,minHeight:"100vh",background:"#0A0A0A"}}>
       <div style={{maxWidth:1280,margin:"0 auto",padding:"0 24px 70px"}}>
 
         <div style={{display:"flex",alignItems:"center",gap:14,marginBottom:28}}>
-          <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:32,letterSpacing:"-0.03em"}}>Browse Cars</h1>
+          <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:32,letterSpacing:"-0.03em",color:"#fff"}}>Our Collection</h1>
           <span style={{background:"#DC2626",color:"#fff",padding:"5px 14px",borderRadius:100,fontWeight:700,fontSize:14}}>{filtered.length}</span>
         </div>
 
         <div style={{display:"flex",gap:26,alignItems:"flex-start"}}>
           {/* ── Filter sidebar ── */}
-          {(!isMobile||showMobileFilters)&&(<div style={{width:268,flexShrink:0,display:"flex",flexDirection:"column",gap:16,...(isMobile?{position:"fixed",top:0,left:0,bottom:0,zIndex:400,width:300,background:"#fff",overflowY:"auto",padding:"70px 16px 20px",boxShadow:"0 0 40px rgba(0,0,0,0.2)"}:{position:"sticky",top:90,maxHeight:"calc(100vh - 110px)",overflowY:"auto",paddingRight:4})}}>
-          {isMobile&&showMobileFilters&&<button onClick={()=>setShowMobileFilters(false)} style={{position:"fixed",top:20,right:20,zIndex:401,background:"#F1F5F9",border:"none",borderRadius:"50%",width:34,height:34,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><X size={16}/></button>}
+          {(!isMobile||showMobileFilters)&&(<div style={{width:268,flexShrink:0,display:"flex",flexDirection:"column",gap:16,...(isMobile?{position:"fixed",top:0,left:0,bottom:0,zIndex:400,width:300,background:"#111",overflowY:"auto",padding:"70px 16px 20px",boxShadow:"0 0 40px rgba(0,0,0,0.8)"}:{position:"sticky",top:90,maxHeight:"calc(100vh - 110px)",overflowY:"auto",paddingRight:4})}}>
+          {isMobile&&showMobileFilters&&<button onClick={()=>setShowMobileFilters(false)} style={{position:"fixed",top:20,right:20,zIndex:401,background:"rgba(255,255,255,0.1)",border:"none",borderRadius:"50%",width:34,height:34,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff"}}><X size={16}/></button>}
 
             <FilterCard title="Make & Model" onReset={selModels.length>0?()=>setSelModels([]):null}>
               <div style={{display:"flex",flexDirection:"column",gap:6}}>
