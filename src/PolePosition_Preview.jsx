@@ -793,12 +793,12 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
 
             <FilterCard title="Price" onReset={(priceMin>floorPrice||priceMax<ceilPrice)?()=>{setPriceMin(floorPrice);setPriceMax(ceilPrice);}:null}>
               <div style={{display:"flex",alignItems:"flex-end",gap:2,height:40,marginBottom:14}}>
-                {histBars.map((h,i)=><div key={i} style={{flex:1,height:h+"%",background:"#FCA5A5",borderRadius:2}}/>)}
+                {histBars.map((h,i)=><div key={i} style={{flex:1,height:h+"%",background:"rgba(220,38,38,0.5)",borderRadius:2}}/>)}
               </div>
               <div style={{display:"flex",gap:8,alignItems:"center"}}>
-                <input type="number" value={priceMin} onChange={e=>setPriceMin(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1.5px solid #E2E8F0",fontSize:12}}/>
-                <span style={{color:"#CBD5E1",fontSize:12}}>–</span>
-                <input type="number" value={priceMax} onChange={e=>setPriceMax(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1.5px solid #E2E8F0",fontSize:12}}/>
+                <input type="number" value={priceMin} onChange={e=>setPriceMin(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"#fff",fontSize:12}}/>
+                <span style={{color:"rgba(255,255,255,0.3)",fontSize:12}}>–</span>
+                <input type="number" value={priceMax} onChange={e=>setPriceMax(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"#fff",fontSize:12}}/>
               </div>
             </FilterCard>
 
