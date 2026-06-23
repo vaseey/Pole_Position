@@ -997,23 +997,23 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
           </>
         )}
         {tab!=="overview"&&!user&&(
-          <div style={{background:"#fff",borderRadius:14,padding:"40px 20px",textAlign:"center"}}>
-            <Lock size={28} color="#94A3B8" style={{margin:"0 auto 14px"}}/>
-            <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:17,marginBottom:8}}>Sign in to unlock</div>
+          <div style={{background:"var(--pp-card)",borderRadius:14,padding:"40px 20px",textAlign:"center",border:"1px solid var(--pp-border)"}}>
+            <Lock size={28} color="var(--pp-text3)" style={{margin:"0 auto 14px"}}/>
+            <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:17,marginBottom:8,color:"var(--pp-text)"}}>Sign in to unlock</div>
             <p style={{color:"var(--pp-text2)",fontSize:13.5,marginBottom:20}}>This section is available to registered users.</p>
-            <button onClick={()=>setShowLogin(true)} style={{background:"#E87722",color:"var(--pp-text)",border:"none",borderRadius:50,padding:"12px 28px",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:14,cursor:"pointer"}}>Sign In</button>
+            <button onClick={()=>setShowLogin(true)} style={{background:"#9B2B2B",color:"#fff",border:"none",borderRadius:50,padding:"12px 28px",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:14,cursor:"pointer"}}>Sign In</button>
           </div>
         )}
         {tab==="inspection"&&user&&(
-          <div style={{background:"#fff",borderRadius:14,padding:"18px 16px"}}>
-            <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:16,marginBottom:16}}>Inspection Report</div>
+          <div style={{background:"var(--pp-card)",borderRadius:14,padding:"18px 16px",border:"1px solid var(--pp-border)"}}>
+            <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:16,marginBottom:16,color:"var(--pp-text)"}}>Inspection Report</div>
             {Object.entries(bd).map(([k,v])=>(
               <div key={k} style={{marginBottom:16}}>
                 <div style={{display:"flex",justifyContent:"space-between",marginBottom:6}}>
-                  <span style={{fontSize:13.5,fontWeight:600,color:"#334155"}}>{scoreLabels[k]||k}</span>
+                  <span style={{fontSize:13.5,fontWeight:600,color:"var(--pp-text)"}}>{scoreLabels[k]||k}</span>
                   <span style={{fontWeight:800,color:sc(v),fontSize:13}}>{v}/100</span>
                 </div>
-                <div style={{height:7,background:"#F1F5F9",borderRadius:10,overflow:"hidden"}}>
+                <div style={{height:7,background:"var(--pp-card2)",borderRadius:10,overflow:"hidden"}}>
                   <div style={{height:"100%",width:v+"%",background:sc(v),borderRadius:10}}/>
                 </div>
               </div>
@@ -1022,20 +1022,20 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
         )}
         {tab==="who"&&user&&(
           <>
-            <div style={{background:"#fff",borderRadius:14,padding:"18px 16px",marginBottom:14}}>
+            <div style={{background:"var(--pp-card)",borderRadius:14,padding:"18px 16px",marginBottom:14,border:"1px solid var(--pp-border)"}}>
               <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:15,marginBottom:12,color:"#16A34A"}}>Great for</div>
-              {forWho.map((h,i)=><div key={i} style={{display:"flex",gap:10,marginBottom:8}}><CheckCircle size={15} color="#22C55E" style={{flexShrink:0,marginTop:2}}/><span style={{fontSize:13.5,color:"#334155"}}>{h}</span></div>)}
+              {forWho.map((h,i)=><div key={i} style={{display:"flex",gap:10,marginBottom:8}}><CheckCircle size={15} color="#22C55E" style={{flexShrink:0,marginTop:2}}/><span style={{fontSize:13.5,color:"var(--pp-text2)"}}>{h}</span></div>)}
             </div>
-            <div style={{background:"#fff",borderRadius:14,padding:"18px 16px"}}>
+            <div style={{background:"var(--pp-card)",borderRadius:14,padding:"18px 16px",border:"1px solid var(--pp-border)"}}>
               <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:15,marginBottom:12,color:"#9B2B2B"}}>Maybe not for</div>
-              {notForWho.map((h,i)=><div key={i} style={{display:"flex",gap:10,marginBottom:8}}><XCircle size={15} color="#EF4444" style={{flexShrink:0,marginTop:2}}/><span style={{fontSize:13.5,color:"#334155"}}>{h}</span></div>)}
+              {notForWho.map((h,i)=><div key={i} style={{display:"flex",gap:10,marginBottom:8}}><XCircle size={15} color="#EF4444" style={{flexShrink:0,marginTop:2}}/><span style={{fontSize:13.5,color:"var(--pp-text2)"}}>{h}</span></div>)}
             </div>
           </>
         )}
         {tab==="specs"&&user&&(
-          <div style={{background:"#fff",borderRadius:14,overflow:"hidden"}}>
+          <div style={{background:"var(--pp-card)",borderRadius:14,overflow:"hidden",border:"1px solid var(--pp-border)"}}>
             {[["Make",car.make],["Model",car.model],["Year",car.year],["Fuel",car.fuel],["Transmission",car.transmission],["KM Driven",fmtKm(car.km)],["Seats",car.seats],["Owners",car.owners],["Price",fmt(car.price)],["Insurance",car.insurance||"—"]].map(([l,v],i)=>(
-              <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"13px 16px",borderBottom:"1px solid #F1F5F9",background:i%2?"#F8FAFC":"#fff"}}>
+              <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"13px 16px",borderBottom:"1px solid var(--pp-border)",background:i%2?"var(--pp-card2)":"var(--pp-card)"}}>
                 <span style={{color:"var(--pp-text2)",fontSize:13.5}}>{l}</span>
                 <span style={{fontWeight:700,fontSize:13.5,color:"var(--pp-text)"}}>{v}</span>
               </div>
@@ -1045,8 +1045,8 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
       </div>
 
       {/* Fixed bottom enquire bar */}
-      <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:150,padding:"12px 16px",background:"#fff",borderTop:"1px solid #F1F5F9"}}>
-        <button onClick={openEnquiry} style={{width:"100%",background:"#E87722",color:"var(--pp-text)",border:"none",borderRadius:50,padding:"15px",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",gap:10}}>
+      <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:150,padding:"12px 16px",background:"var(--pp-card)",borderTop:"1px solid var(--pp-border)"}}>
+        <button onClick={openEnquiry} style={{width:"100%",background:"#9B2B2B",color:"#fff",border:"none",borderRadius:50,padding:"15px",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",gap:10}}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
           Enquire Now
         </button>
@@ -1054,20 +1054,20 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
 
       {/* Enquiry modal */}
       {showEnquiryModal&&(
-        <div style={{position:"fixed",inset:0,zIndex:600,background:"rgba(15,23,42,0.6)",display:"flex",alignItems:"flex-end",justifyContent:"center"}} onClick={()=>setShowEnquiryModal(false)}>
-          <div style={{background:"#fff",borderRadius:"20px 20px 0 0",padding:"28px 20px 36px",width:"100%"}} onClick={e=>e.stopPropagation()}>
-            <div style={{width:40,height:4,background:"#E2E8F0",borderRadius:4,margin:"0 auto 20px"}}/>
+        <div style={{position:"fixed",inset:0,zIndex:600,background:"rgba(0,0,0,0.7)",display:"flex",alignItems:"flex-end",justifyContent:"center"}} onClick={()=>setShowEnquiryModal(false)}>
+          <div style={{background:"var(--pp-card)",borderRadius:"20px 20px 0 0",padding:"28px 20px 36px",width:"100%",border:"1px solid var(--pp-border)"}} onClick={e=>e.stopPropagation()}>
+            <div style={{width:40,height:4,background:"var(--pp-border2)",borderRadius:4,margin:"0 auto 20px"}}/>
             <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,marginBottom:6,color:"var(--pp-text)"}}>Get in Touch</h2>
             <p style={{color:"var(--pp-text2)",fontSize:13.5,marginBottom:20}}>We'll connect you with the seller via WhatsApp.</p>
             <label style={{fontSize:11,fontWeight:700,color:"var(--pp-text2)",textTransform:"uppercase",display:"block",marginBottom:6}}>Phone Number</label>
-            <input value={enquiryPhone} onChange={e=>setEnquiryPhone(e.target.value)} placeholder="+91 98765 43210" type="tel" style={{width:"100%",padding:"13px 14px",fontSize:15,borderRadius:12,border:"1.5px solid #E2E8F0",background:"#F8FAFC",color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",outline:"none",boxSizing:"border-box",marginBottom:16}}/>
+            <input value={enquiryPhone} onChange={e=>setEnquiryPhone(e.target.value)} placeholder="+91 98765 43210" type="tel" style={{width:"100%",padding:"13px 14px",fontSize:15,borderRadius:12,border:"1.5px solid var(--pp-border2)",background:"var(--pp-input)",color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",outline:"none",boxSizing:"border-box",marginBottom:16}}/>
             <button disabled={enquirySubmitting||!enquiryPhone} onClick={async()=>{
               setEnquirySubmitting(true);
               try{await supabase.from("enquiries").insert({car_id:car.id,name:user,email:userEmail||"",phone:enquiryPhone,listing_url:window.location.href,car_title:`${car.make} ${car.model} ${car.year}`});}catch(e){}
               const msg=encodeURIComponent(`New Enquiry from Pole Position\n\nName: ${user}\nEmail: ${userEmail||""}\nPhone: ${enquiryPhone}\nListing: ${window.location.href}\nCar: ${car.make} ${car.model} ${car.year}`);
               window.open(`https://wa.me/919884257043?text=${msg}`,"_blank");
               setEnquirySubmitting(false);setShowEnquiryModal(false);setEnquired(true);setTimeout(()=>setEnquired(false),3000);
-            }} style={{width:"100%",background:(!enquiryPhone||enquirySubmitting)?"#E2E8F0":"#E87722",color:(!enquiryPhone||enquirySubmitting)?"#94A3B8":"#fff",border:"none",borderRadius:50,padding:"15px",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,cursor:(!enquiryPhone||enquirySubmitting)?"not-allowed":"pointer"}}>
+            }} style={{width:"100%",background:(!enquiryPhone||enquirySubmitting)?"var(--pp-card2)":"#9B2B2B",color:(!enquiryPhone||enquirySubmitting)?"var(--pp-text3)":"#fff",border:"none",borderRadius:50,padding:"15px",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,cursor:(!enquiryPhone||enquirySubmitting)?"not-allowed":"pointer"}}>
               {enquirySubmitting?"Sending…":"Send Enquiry"}
             </button>
           </div>
