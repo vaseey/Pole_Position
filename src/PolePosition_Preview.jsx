@@ -1405,26 +1405,26 @@ function ForumPage({setPage,setThread,user,setShowLogin,threads}){
       </div>
       <div style={{maxWidth:860,margin:"0 auto",padding:"36px 24px"}}>
         {!user&&(
-          <div style={{background:"#FEF2F2",border:"1px solid #FECACA",borderRadius:14,padding:"16px 20px",marginBottom:24,display:"flex",alignItems:"center",gap:12}}>
+          <div style={{background:"rgba(220,38,38,0.08)",border:"1px solid rgba(220,38,38,0.2)",borderRadius:14,padding:"16px 20px",marginBottom:24,display:"flex",alignItems:"center",gap:12}}>
             <AlertCircle size={16} color="#DC2626"/>
-            <span style={{fontSize:13.5,color:"#991B1B"}}>Sign in to participate in discussions.</span>
-            <button onClick={()=>setShowLogin(true)} className="btn-red" style={{marginLeft:"auto",padding:"7px 16px",borderRadius:9,fontSize:13}}>Sign In</button>
+            <span style={{fontSize:13.5,color:"rgba(255,255,255,0.7)"}}>Sign in to participate in discussions.</span>
+            <button onClick={()=>setShowLogin(true)} className="btn-red" style={{marginLeft:"auto",padding:"7px 16px",borderRadius:100,fontSize:13}}>Sign In</button>
           </div>
         )}
         {visible.map(t=>(
-          <div key={t.id} onClick={()=>{setThread(t);setPage("thread");}} style={{background:"#fff",borderRadius:14,padding:"18px 20px",marginBottom:10,border:"1px solid #E2E8F0",cursor:"pointer",display:"flex",alignItems:"center",gap:14,transition:"border-color 0.15s",borderLeft:t.pinned?"3px solid #DC2626":"1px solid #E2E8F0"}}>
-            <div style={{width:42,height:42,borderRadius:12,background:(CAT_COLORS[t.cat]||"#64748B")+"18",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+          <div key={t.id} onClick={()=>{setThread(t);setPage("thread");}} style={{background:"#111",borderRadius:14,padding:"18px 20px",marginBottom:10,border:t.pinned?"1px solid rgba(220,38,38,0.3)":"1px solid rgba(255,255,255,0.07)",cursor:"pointer",display:"flex",alignItems:"center",gap:14,transition:"border-color 0.15s",borderLeft:t.pinned?"3px solid #DC2626":"1px solid rgba(255,255,255,0.07)"}}>
+            <div style={{width:42,height:42,borderRadius:12,background:(CAT_COLORS[t.cat]||"#64748B")+"22",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
               <MessageSquare size={17} color={CAT_COLORS[t.cat]||"#64748B"}/>
             </div>
             <div style={{flex:1,minWidth:0}}>
               <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4}}>
-                {t.pinned&&<span style={{background:"#FEF2F2",color:"#DC2626",fontSize:10,fontWeight:700,padding:"2px 8px",borderRadius:20}}>Pinned</span>}
-                <span style={{background:(CAT_COLORS[t.cat]||"#64748B")+"18",color:CAT_COLORS[t.cat]||"#64748B",fontSize:10.5,fontWeight:700,padding:"2px 8px",borderRadius:20}}>{t.cat}</span>
+                {t.pinned&&<span style={{background:"rgba(220,38,38,0.15)",color:"#DC2626",fontSize:10,fontWeight:700,padding:"2px 8px",borderRadius:20}}>Pinned</span>}
+                <span style={{background:(CAT_COLORS[t.cat]||"#64748B")+"22",color:CAT_COLORS[t.cat]||"#64748B",fontSize:10.5,fontWeight:700,padding:"2px 8px",borderRadius:20}}>{t.cat}</span>
               </div>
-              <p style={{fontWeight:700,fontSize:14.5,marginBottom:4,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{t.title}</p>
-              <div style={{color:"#94A3B8",fontSize:12}}>{t.author} · {t.replies} replies · {t.views.toLocaleString()} views · {t.last}</div>
+              <p style={{fontWeight:700,fontSize:14.5,marginBottom:4,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",color:"#fff"}}>{t.title}</p>
+              <div style={{color:"rgba(255,255,255,0.4)",fontSize:12}}>{t.author} · {t.replies} replies · {t.views.toLocaleString()} views · {t.last}</div>
             </div>
-            <ChevronRight size={16} color="#CBD5E1"/>
+            <ChevronRight size={16} color="rgba(255,255,255,0.2)"/>
           </div>
         ))}
       </div>
