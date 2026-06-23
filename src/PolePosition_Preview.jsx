@@ -820,7 +820,7 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
                 <span style={{fontSize:12.5,fontWeight:700,color:"#fff"}}>{yearMax}</span>
               </div>
               <div style={{position:"relative",height:20}}>
-                <div style={{position:"absolute",top:8,left:0,right:0,height:4,background:"#E2E8F0",borderRadius:2}}/>
+                <div style={{position:"absolute",top:8,left:0,right:0,height:4,background:"rgba(255,255,255,0.1)",borderRadius:2}}/>
                 <div style={{position:"absolute",top:8,height:4,background:"#DC2626",borderRadius:2,left:yearPct(yearMin)+"%",right:(100-yearPct(yearMax))+"%"}}/>
                 <input type="range" className="range-dual" min={floorYear} max={ceilYear} value={yearMin} onChange={e=>setYearMin(Math.min(Number(e.target.value),yearMax))} style={{zIndex:3}}/>
                 <input type="range" className="range-dual" min={floorYear} max={ceilYear} value={yearMax} onChange={e=>setYearMax(Math.max(Number(e.target.value),yearMin))} style={{zIndex:4}}/>
