@@ -931,11 +931,16 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
 
           </div>)}
 
-          {/* ── Results grid ── */}
-          <div style={{flex:1}}>
-            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:20}}>
-              {finalFiltered.map(c=><BrowseCarCard key={c.id} car={c} onFav={toggleFav} isFav={favs.includes(c.id)} onClick={()=>{setSelectedCar(c);}}/>)}
-            </div>
+          {/* ── Results ── */}
+          <div style={{flex:1,minWidth:0}}>
+            {listView
+              ?<div style={{display:"flex",flexDirection:"column",gap:16}}>
+                  {finalFiltered.map(c=><HorizontalCarCard key={c.id} car={c} onFav={toggleFav} isFav={favs.includes(c.id)} onClick={()=>{setSelectedCar(c);}}/>)}
+                </div>
+              :<div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:20}}>
+                  {finalFiltered.map(c=><BrowseCarCard key={c.id} car={c} onFav={toggleFav} isFav={favs.includes(c.id)} onClick={()=>{setSelectedCar(c);}}/>)}
+                </div>
+            }
             {finalFiltered.length===0&&<div style={{textAlign:"center",padding:"80px 0",color:"var(--pp-text3)"}}>No cars match your filters.</div>}
           </div>
         </div>
