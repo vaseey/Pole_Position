@@ -745,6 +745,72 @@ function ChipFilter({options,selected,onToggle}){
   );
 }
 
+// ── HorizontalCarCard (list view) ────────────────────────────────
+function HorizontalCarCard({car,onFav,isFav,onClick}){
+  const [err,setErr]=useState(false);
+  const [hov,setHov]=useState(false);
+  const FB="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=800&q=80";
+  const b=car.badge?BADGE[car.badge]:null;
+  const specs=[
+    {val:fmtKm(car.km),lbl:"km"},
+    {val:car.year,lbl:"Year"},
+    {val:car.transmission==="Automatic"?"Auto":car.transmission==="Manual"?"Manual":car.transmission,lbl:"Gearbox"},
+    {val:car.fuel,lbl:"Fuel"},
+    {val:car.seats+" Seats",lbl:"Capacity"},
+  ];
+  return(
+    <div onClick={onClick} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
+      style={{background:"var(--pp-card)",borderRadius:20,border:"1px solid var(--pp-border)",overflow:"hidden",cursor:"pointer",display:"flex",transition:"all 0.25s",boxShadow:hov?"0 12px 32px rgba(0,0,0,0.12)":"0 2px 8px rgba(0,0,0,0.04)",transform:hov?"translateY(-2px)":"none"}}>
+      {/* Image — left side */}
+      <div style={{position:"relative",width:220,flexShrink:0,background:"var(--pp-card2)"}}>
+        <img src={err?FB:(car.img||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model}
+          style={{width:"100%",height:"100%",objectFit:"cover",transition:"transform 0.5s",transform:hov?"scale(1.04)":"scale(1)"}}/>
+        {b&&<span style={{position:"absolute",top:10,left:10,background:b.bg,padding:"3px 10px",borderRadius:100,fontSize:9.5,fontWeight:700,color:"#fff"}}>{b.label}</span>}
+        <button onClick={e=>{e.stopPropagation();onFav(car.id);}}
+          style={{position:"absolute",top:10,right:10,width:30,height:30,borderRadius:"50%",background:"rgba(0,0,0,0.45)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
+          <Heart size={13} fill={isFav?"#E74C3C":"none"} color={isFav?"#E74C3C":"#fff"} strokeWidth={2}/>
+        </button>
+      </div>
+      {/* Content — right side */}
+      <div style={{flex:1,padding:"20px 22px",display:"flex",flexDirection:"column",justifyContent:"space-between",minWidth:0}}>
+        {/* Top: name + price */}
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:12,marginBottom:4}}>
+          <div>
+            <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,color:"var(--pp-text)",letterSpacing:"-0.02em",marginBottom:2}}>{car.make} {car.model}{car.variant?` ${car.variant}`:""}</div>
+            <div style={{fontSize:12,color:"var(--pp-text3)"}}>{car.year} · {car.category||car.fuel} · {car.fuel}</div>
+          </div>
+          <div style={{textAlign:"right",flexShrink:0}}>
+            <div style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:22,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>{fmtL(car.price)}</div>
+            <div style={{fontSize:11,color:"var(--pp-text3)"}}>Fixed price</div>
+          </div>
+        </div>
+        {/* Spec chips */}
+        <div style={{display:"flex",gap:8,flexWrap:"wrap",margin:"14px 0"}}>
+          {specs.map(s=>(
+            <div key={s.lbl} style={{padding:"7px 12px",borderRadius:10,border:"1px solid var(--pp-border)",background:"var(--pp-card2)",textAlign:"center"}}>
+              <div style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:12,color:"var(--pp-text)"}}>{s.val}</div>
+              <div style={{fontSize:10,color:"var(--pp-text3)",marginTop:1}}>{s.lbl}</div>
+            </div>
+          ))}
+        </div>
+        {/* Bottom: location + tagline + CTA */}
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:12}}>
+          <div style={{flex:1,minWidth:0}}>
+            <div style={{display:"flex",alignItems:"center",gap:4,color:"#9B2B2B",fontSize:12,fontWeight:600,marginBottom:car.tagline?4:0}}>
+              <MapPin size={12} color="#9B2B2B"/><span>Hyderabad, TG</span>
+            </div>
+            {car.tagline&&<p style={{fontSize:12.5,color:"var(--pp-text2)",lineHeight:1.4,margin:0,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{car.tagline}</p>}
+          </div>
+          <button onClick={e=>{e.stopPropagation();onClick();}}
+            style={{padding:"10px 20px",borderRadius:100,border:"none",background:"#9B2B2B",fontSize:13,fontWeight:700,color:"#fff",cursor:"pointer",fontFamily:"Outfit,sans-serif",flexShrink:0,whiteSpace:"nowrap"}}>
+            Enquire Now
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
   const [openMake,setOpenMake]=useState(null);
   const [selModels,setSelModels]=useState([]);
