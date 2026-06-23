@@ -902,16 +902,16 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
 
   /* ── MOBILE LAYOUT ── */
   if(isMobile) return(
-    <div style={{background:"#fff",minHeight:"100vh",paddingTop:64,paddingBottom:80,overflowX:"hidden"}}>
-      {/* Mobile sticky header replacing sub-header */}
-      <div style={{position:"fixed",top:0,left:0,right:0,zIndex:200,background:"#fff",borderBottom:"1px solid #F1F5F9",height:64,display:"flex",alignItems:"center",padding:"0 16px",gap:12}}>
-        <button onClick={()=>setPage("browse")} style={{display:"flex",alignItems:"center",gap:4,background:"none",border:"none",cursor:"pointer",color:"#E87722",fontWeight:700,fontSize:13,fontFamily:"Outfit,sans-serif",flexShrink:0}}>
-          <ChevronLeft size={16} color="#E87722"/> Back to results
+    <div style={{background:"var(--pp-bg)",minHeight:"100vh",paddingTop:56,paddingBottom:80,overflowX:"hidden"}}>
+      {/* Mobile sticky header */}
+      <div style={{position:"fixed",top:0,left:0,right:0,zIndex:200,background:"var(--pp-nav)",backdropFilter:"blur(12px)",borderBottom:"1px solid var(--pp-border)",height:56,display:"flex",alignItems:"center",padding:"0 16px",gap:12}}>
+        <button onClick={()=>setPage("browse")} style={{display:"flex",alignItems:"center",gap:4,background:"none",border:"none",cursor:"pointer",color:"#9B2B2B",fontWeight:700,fontSize:13,fontFamily:"Outfit,sans-serif",flexShrink:0}}>
+          <ChevronLeft size={16} color="#9B2B2B"/> Back
         </button>
-        <div style={{flex:1,textAlign:"center",fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:16,letterSpacing:"-0.03em"}}>
-          Pole<span style={{color:"#E87722"}}>Position</span>
+        <div style={{flex:1,textAlign:"center",fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:15,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>
+          Pole<span style={{color:"#9B2B2B"}}>Position</span>
         </div>
-        <button style={{background:"none",border:"none",cursor:"pointer",color:"var(--pp-text)",flexShrink:0,fontSize:20,lineHeight:1}}>☰</button>
+        <button onClick={()=>setPage("home")} style={{background:"none",border:"none",cursor:"pointer",color:"var(--pp-text2)",flexShrink:0,fontSize:20,lineHeight:1}}>☰</button>
       </div>
 
       {/* Hero image — full width, edge to edge */}
