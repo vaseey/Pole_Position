@@ -624,30 +624,29 @@ function BrowseCarCard({car,onFav,isFav,onClick}){
   const [err,setErr]=useState(false);
   const [hov,setHov]=useState(false);
   const FB="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=800&q=80";
+  const b=car.badge?BADGE[car.badge]:null;
+  const likes=((car.id*317+1543)%2400+200);
+  const likesLabel=likes>=1000?(likes/1000).toFixed(1)+"k":likes;
   return(
     <div onClick={onClick} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
-      style={{background:"var(--pp-card)",borderRadius:16,border:"1px solid var(--pp-border)",overflow:"hidden",cursor:"pointer",transition:"transform 0.25s",transform:hov?"translateY(-4px)":"none"}}>
-      <div style={{position:"relative",aspectRatio:"4/3",overflow:"hidden",borderRadius:"16px 16px 0 0"}}>
-        <img src={err?FB:(car.img||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model} style={{width:"100%",height:"100%",objectFit:"cover"}}/>
-        {/* Fuel chip top-left */}
-        <span style={{position:"absolute",top:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"#fff",fontSize:11,fontWeight:600}}>● {car.fuel}</span>
-        {/* Transmission chip top-right */}
-        <span style={{position:"absolute",top:10,right:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"#fff",fontSize:11,fontWeight:600}}>{car.transmission}</span>
-        {/* Year pill bottom-left */}
-        <span style={{position:"absolute",bottom:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"#fff",fontSize:11,fontWeight:600}}>{car.year}</span>
-        {/* Fav button */}
-        <button onClick={e=>{e.stopPropagation();onFav(car.id);}} style={{position:"absolute",bottom:10,right:10,width:30,height:30,borderRadius:"50%",border:"1px solid rgba(255,255,255,0.2)",background:"rgba(0,0,0,0.5)",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
-          <Heart size={12} fill={isFav?"#9B2B2B":"none"} color={isFav?"#9B2B2B":"#fff"}/>
+      style={{background:"var(--pp-card)",borderRadius:20,border:"1px solid var(--pp-border)",overflow:"hidden",cursor:"pointer",transition:"all 0.25s",transform:hov?"translateY(-6px)":"none",boxShadow:hov?"0 16px 40px rgba(0,0,0,0.18)":"0 2px 8px rgba(0,0,0,0.04)"}}>
+      <div style={{position:"relative",aspectRatio:"4/3",overflow:"hidden",background:"var(--pp-card2)"}}>
+        <img src={err?FB:(car.img||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model} style={{width:"100%",height:"100%",objectFit:"cover",transition:"transform 0.4s",transform:hov?"scale(1.04)":"scale(1)"}}/>
+        {b&&<span style={{position:"absolute",top:12,left:12,background:b.bg,padding:"4px 12px",borderRadius:100,fontSize:10.5,fontWeight:700,color:"#fff"}}>{b.label}</span>}
+        <button onClick={e=>{e.stopPropagation();onFav(car.id);}} style={{position:"absolute",bottom:12,right:12,background:"var(--pp-card)",borderRadius:100,padding:"5px 11px",border:"none",cursor:"pointer",display:"flex",alignItems:"center",gap:5,boxShadow:"0 2px 8px rgba(0,0,0,0.2)"}}>
+          <Heart size={13} fill={isFav?"#9B2B2B":"none"} color={isFav?"#9B2B2B":"var(--pp-text2)"} strokeWidth={2}/>
+          <span style={{fontSize:11,fontWeight:700,color:isFav?"#9B2B2B":"var(--pp-text2)"}}>{likesLabel}</span>
         </button>
       </div>
-      <div style={{padding:"16px 16px 18px"}}>
-        <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,color:"var(--pp-text)",letterSpacing:"-0.03em",marginBottom:4}}>{car.make} {car.model}</div>
-        {car.variant&&<div style={{color:"var(--pp-text2)",fontSize:12,fontWeight:600,marginBottom:10}}>{car.variant}</div>}
-        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:10}}>
-          <span style={{fontSize:15,color:"var(--pp-text2)",fontWeight:600}}>{fmt(car.price)}</span>
-          <div style={{width:32,height:32,borderRadius:"50%",background:"var(--pp-card2)",border:"1px solid var(--pp-border)",display:"flex",alignItems:"center",justifyContent:"center"}}>
-            <span style={{color:"var(--pp-text)",fontSize:16,lineHeight:1}}>↗</span>
-          </div>
+      <div style={{padding:"14px 16px 16px"}}>
+        <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:17,color:"var(--pp-text)",letterSpacing:"-0.02em",marginBottom:3}}>{car.make} {car.model}{car.variant?` ${car.variant}`:""}</div>
+        <div style={{fontSize:12,color:"var(--pp-text2)",marginBottom:12}}>{car.seats} Seater · {car.fuel} · {car.transmission}</div>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+          <span style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:20,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>{fmt(car.price)}</span>
+          <span style={{padding:"7px 14px",borderRadius:100,border:"1.5px solid var(--pp-border2)",fontSize:12,fontWeight:600,color:"var(--pp-text2)"}}>Explore more</span>
+        </div>
+        <div style={{marginTop:10,display:"flex",alignItems:"center",gap:4,color:"var(--pp-text3)",fontSize:11.5}}>
+          <MapPin size={11}/><span>Hyderabad, Telangana</span>
         </div>
       </div>
     </div>
