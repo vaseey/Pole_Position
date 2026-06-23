@@ -287,7 +287,7 @@ function ScoreRing({score,size=52,light=false}){
 // ── Navbar ────────────────────────────────────────────────────────
 
 // ── Navbar ───────────────────────────────────────────────────────
-function Navbar({page,setPage,user,setUser,setShowLogin,isAdmin,onGoAdmin}){
+function Navbar({page,setPage,user,setUser,setShowLogin,isAdmin,onGoAdmin,darkMode,setDarkMode}){
   const [menuOpen,setMenuOpen]=useState(false);
   const [userMenuOpen,setUserMenuOpen]=useState(false);
   const [isMobile,setIsMobile]=useState(()=>window.innerWidth<=768);
