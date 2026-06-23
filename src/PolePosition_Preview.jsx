@@ -1085,61 +1085,63 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
 
   /* ── DESKTOP LAYOUT ── */
   return(
-    <div style={{paddingTop:64,minHeight:"100vh",background:"#F8FAFC",overflowX:"hidden"}}>
+    <div style={{paddingTop:56,minHeight:"100vh",background:"#0A0A0A",overflowX:"hidden"}}>
       <div style={{maxWidth:1100,margin:"0 auto",padding:"24px 28px 0"}}>
-        <button onClick={()=>setPage("browse")} style={{display:"flex",alignItems:"center",gap:6,background:"none",border:"none",cursor:"pointer",color:"#64748B",fontSize:13,fontWeight:600,marginBottom:18}}>
+        <button onClick={()=>setPage("browse")} style={{display:"flex",alignItems:"center",gap:6,background:"none",border:"none",cursor:"pointer",color:"rgba(255,255,255,0.5)",fontSize:13,fontWeight:600,marginBottom:18}}>
           <ChevronLeft size={15}/> Back to results
         </button>
         <div style={{display:"grid",gridTemplateColumns:"1fr 360px",gap:30,alignItems:"flex-start"}}>
           <div>
-            <div style={{position:"relative",borderRadius:20,overflow:"hidden",aspectRatio:"16/10",background:"#0F172A"}}>
+            <div style={{position:"relative",overflow:"hidden",maxHeight:600,background:"#0A0A0A"}}>
               {gallery[activeImg]?.type==="video"?(
-                <video src={gallery[activeImg].url} controls style={{width:"100%",height:"100%",objectFit:"cover"}}/>
+                <video src={gallery[activeImg].url} controls style={{width:"100%",maxHeight:600,objectFit:"cover"}}/>
               ):(
-                <img src={err?FB:(gallery[activeImg]?.url||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model} style={{width:"100%",height:"100%",objectFit:"cover"}}/>
+                <img src={err?FB:(gallery[activeImg]?.url||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model} style={{width:"100%",maxHeight:600,objectFit:"cover"}}/>
               )}
-              {car.badge&&<div style={{position:"absolute",top:16,left:16,background:BADGE[car.badge]?.bg||"#E87722",padding:"5px 14px",borderRadius:100,fontSize:12,fontWeight:700,color:"#fff"}}>{BADGE[car.badge]?.label||car.badge}</div>}
+              {car.badge&&<div style={{position:"absolute",top:16,left:16,background:BADGE[car.badge]?.bg||"#DC2626",padding:"5px 14px",borderRadius:100,fontSize:12,fontWeight:700,color:"#fff"}}>{BADGE[car.badge]?.label||car.badge}</div>}
               {gallery.length>1&&(
                 <>
-                  <button onClick={()=>setActiveImg(i=>(i-1+gallery.length)%gallery.length)} style={{position:"absolute",left:14,top:"50%",transform:"translateY(-50%)",width:36,height:36,borderRadius:"50%",background:"rgba(0,0,0,0.45)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><ChevronLeft size={18} color="#fff"/></button>
-                  <button onClick={()=>setActiveImg(i=>(i+1)%gallery.length)} style={{position:"absolute",right:14,top:"50%",transform:"translateY(-50%)",width:36,height:36,borderRadius:"50%",background:"rgba(0,0,0,0.45)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><ChevronRight size={18} color="#fff"/></button>
-                  <div style={{position:"absolute",bottom:14,right:14,background:"rgba(0,0,0,0.55)",borderRadius:20,padding:"4px 12px",fontSize:12,fontWeight:700,color:"#fff"}}>{activeImg+1} / {gallery.length}</div>
+                  <button onClick={()=>setActiveImg(i=>(i-1+gallery.length)%gallery.length)} style={{position:"absolute",left:14,top:"50%",transform:"translateY(-50%)",width:36,height:36,borderRadius:"50%",background:"rgba(0,0,0,0.55)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><ChevronLeft size={18} color="#fff"/></button>
+                  <button onClick={()=>setActiveImg(i=>(i+1)%gallery.length)} style={{position:"absolute",right:14,top:"50%",transform:"translateY(-50%)",width:36,height:36,borderRadius:"50%",background:"rgba(0,0,0,0.55)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><ChevronRight size={18} color="#fff"/></button>
+                  <div style={{position:"absolute",bottom:14,right:14,background:"rgba(0,0,0,0.7)",borderRadius:20,padding:"4px 12px",fontSize:12,fontWeight:700,color:"#fff"}}>{activeImg+1} / {gallery.length}</div>
                 </>
               )}
             </div>
-            <div style={{display:"flex",gap:10,marginTop:12,overflowX:"auto",paddingBottom:4}}>
+            {/* Thumbnail strip */}
+            <div style={{display:"flex",gap:10,marginTop:12,overflowX:"auto",paddingBottom:4,background:"#0A0A0A"}}>
               {gallery.map((m,i)=>(
-                <button key={i} onClick={()=>{setActiveImg(i);setErr(false);}} style={{width:80,height:60,borderRadius:11,overflow:"hidden",border:activeImg===i?"2.5px solid #DC2626":"2.5px solid transparent",padding:0,cursor:"pointer",flexShrink:0,opacity:activeImg===i?1:0.65,background:"#0F172A"}}>
+                <button key={i} onClick={()=>{setActiveImg(i);setErr(false);}} style={{width:80,height:60,borderRadius:8,overflow:"hidden",border:activeImg===i?"2px solid #fff":"2px solid transparent",padding:0,cursor:"pointer",flexShrink:0,opacity:activeImg===i?1:0.5,background:"#111"}}>
                   {m.type==="video"?<div style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center"}}><Play size={15} color="#fff" fill="#fff"/></div>:<img src={m.url} alt="" style={{width:"100%",height:"100%",objectFit:"cover"}}/>}
                 </button>
               ))}
             </div>
           </div>
-          <div style={{background:"#fff",borderRadius:20,border:"1px solid #E2E8F0",padding:24,position:"sticky",top:88}}>
+          {/* Info sidebar */}
+          <div style={{background:"#111",borderRadius:16,border:"1px solid rgba(255,255,255,0.08)",padding:24,position:"sticky",top:76}}>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:10,marginBottom:6}}>
-              <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:23,letterSpacing:"-0.03em",lineHeight:1.15}}>{car.make} {car.model}{car.variant&&<span style={{color:"#94A3B8",fontWeight:700}}> {car.variant}</span>}</h1>
+              <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:22,letterSpacing:"-0.03em",lineHeight:1.15,color:"#fff"}}>{car.make} {car.model}{car.variant&&<span style={{color:"rgba(255,255,255,0.4)",fontWeight:700}}> {car.variant}</span>}</h1>
               <div style={{display:"flex",gap:6,flexShrink:0}}>
-                <button onClick={()=>onFav(car.id)} style={{width:34,height:34,borderRadius:10,border:"1.5px solid #E2E8F0",background:"#fff",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><Heart size={15} fill={isFav?"#DC2626":"none"} color={isFav?"#DC2626":"#64748B"}/></button>
-                <button style={{width:34,height:34,borderRadius:10,border:"1.5px solid #E2E8F0",background:"#fff",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><Share2 size={14} color="#64748B"/></button>
+                <button onClick={()=>onFav(car.id)} style={{width:34,height:34,borderRadius:10,border:"1px solid rgba(255,255,255,0.12)",background:"transparent",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><Heart size={15} fill={isFav?"#DC2626":"none"} color={isFav?"#DC2626":"rgba(255,255,255,0.5)"}/></button>
+                <button style={{width:34,height:34,borderRadius:10,border:"1px solid rgba(255,255,255,0.12)",background:"transparent",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><Share2 size={14} color="rgba(255,255,255,0.5)"/></button>
               </div>
             </div>
-            <p style={{color:"#94A3B8",fontSize:13,marginBottom:18}}>{car.tagline}</p>
+            <p style={{color:"rgba(255,255,255,0.4)",fontSize:13,marginBottom:18}}>{car.tagline}</p>
             <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:5}}>
-              <span style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:29,letterSpacing:"-0.03em"}}>{fmt(car.price)}</span>
-              <div style={{textAlign:"center"}}><ScoreRing score={car.score} size={52} light/><div style={{color:"#94A3B8",fontSize:9,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.05em",marginTop:3}}>PP Score</div></div>
+              <span style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:28,letterSpacing:"-0.03em",color:"#fff"}}>{fmt(car.price)}</span>
+              <div style={{textAlign:"center"}}><ScoreRing score={car.score} size={52}/><div style={{color:"rgba(255,255,255,0.4)",fontSize:9,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.05em",marginTop:3}}>PP Score</div></div>
             </div>
-            <div style={{display:"flex",alignItems:"center",gap:5,color:"#94A3B8",fontSize:12,marginBottom:16}}><Eye size={13}/> {viewsToday} views today</div>
-            <div style={{background:"#F8FAFC",borderRadius:12,padding:"11px 14px",marginBottom:18,display:"flex",alignItems:"center",gap:9}}>
-              <BarChart2 size={14} color="#64748B"/>
-              <span style={{fontSize:12.5,color:"#475569",fontWeight:600}}>EMI from ₹{emi.toLocaleString("en-IN")}/month</span>
+            <div style={{display:"flex",alignItems:"center",gap:5,color:"rgba(255,255,255,0.4)",fontSize:12,marginBottom:16}}><Eye size={13}/> {viewsToday} views today</div>
+            <div style={{background:"rgba(255,255,255,0.05)",borderRadius:12,padding:"11px 14px",marginBottom:18,display:"flex",alignItems:"center",gap:9,border:"1px solid rgba(255,255,255,0.07)"}}>
+              <BarChart2 size={14} color="rgba(255,255,255,0.4)"/>
+              <span style={{fontSize:12.5,color:"rgba(255,255,255,0.5)",fontWeight:600}}>EMI from ₹{emi.toLocaleString("en-IN")}/month</span>
             </div>
-            <button onClick={openEnquiry} className="btn-red" style={{width:"100%",padding:"13px",borderRadius:12,fontSize:15,marginBottom:22}}>{enquired?"Enquiry Sent ✓":"Enquire Now"}</button>
-            <div style={{fontWeight:700,fontSize:13,marginBottom:11}}>Inspection Snapshot</div>
+            <button onClick={openEnquiry} style={{width:"100%",padding:"13px",borderRadius:100,fontSize:15,marginBottom:22,background:"#fff",color:"#000",border:"none",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:700}}>{enquired?"Enquiry Sent ✓":"Enquire Now →"}</button>
+            <div style={{fontWeight:700,fontSize:13,marginBottom:11,color:"#fff"}}>Inspection Snapshot</div>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:9,marginBottom:12}}>
               {Object.entries(bd).map(([k,v])=>(
                 <div key={k} style={{display:"flex",alignItems:"center",gap:6}}>
                   {v>=80?<CheckCircle size={13} color="#10B981"/>:<AlertCircle size={13} color="#F59E0B"/>}
-                  <span style={{fontSize:12,color:"#475569",fontWeight:600}}>{k}</span>
+                  <span style={{fontSize:12,color:"rgba(255,255,255,0.6)",fontWeight:600}}>{k}</span>
                 </div>
               ))}
             </div>
@@ -1147,36 +1149,38 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
           </div>
         </div>
       </div>
-      <div style={{background:"#fff",borderBottom:"1px solid #E2E8F0",position:"sticky",top:64,zIndex:100,marginTop:32}}>
+      {/* Tab bar */}
+      <div style={{background:"#0A0A0A",borderBottom:"1px solid rgba(255,255,255,0.08)",position:"sticky",top:56,zIndex:100,marginTop:32}}>
         <div style={{maxWidth:1100,margin:"0 auto",padding:"0 28px",display:"flex",gap:0}}>
           {TABS.map(([id,label])=>(
-            <button key={id} onClick={()=>setTab(id)} style={{padding:"16px 22px",border:"none",background:"transparent",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:600,fontSize:14,color:tab===id?"#DC2626":"#64748B",borderBottom:tab===id?"2.5px solid #DC2626":"2.5px solid transparent",transition:"all 0.15s",whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:6}}>
-              {label}{id!=="overview"&&!user&&<Lock size={11} color="#CBD5E1"/>}
+            <button key={id} onClick={()=>setTab(id)} style={{padding:"16px 22px",border:"none",background:"transparent",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:600,fontSize:14,color:tab===id?"#fff":"rgba(255,255,255,0.4)",borderBottom:tab===id?"2.5px solid #fff":"2.5px solid transparent",transition:"all 0.15s",whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:6}}>
+              {label}{id!=="overview"&&!user&&<Lock size={11} color="rgba(255,255,255,0.2)"/>}
             </button>
           ))}
         </div>
       </div>
+      {/* Tab content */}
       <div style={{maxWidth:1100,margin:"0 auto",padding:"36px 28px",display:"flex",flexDirection:"column",gap:20}}>
         {tab==="overview"&&(
           <>
-            <div style={{background:"#fff",borderRadius:18,padding:"24px",border:"1px solid #E2E8F0"}}>
-              <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16}}>Why This Car?</h2>
+            <div style={{background:"#111",borderRadius:16,padding:"24px",border:"1px solid rgba(255,255,255,0.08)"}}>
+              <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,color:"#fff"}}>Why This Car?</h2>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
                 {highlights.map((h,i)=>(
-                  <div key={i} style={{display:"flex",gap:10,alignItems:"flex-start",padding:"12px 14px",background:"#F8FAFC",borderRadius:12}}>
+                  <div key={i} style={{display:"flex",gap:10,alignItems:"flex-start",padding:"12px 14px",background:"rgba(255,255,255,0.04)",borderRadius:12}}>
                     <CheckCircle size={15} color="#10B981" style={{flexShrink:0,marginTop:2}}/>
-                    <span style={{fontSize:13.5,color:"#334155",lineHeight:1.4}}>{h}</span>
+                    <span style={{fontSize:13.5,color:"rgba(255,255,255,0.7)",lineHeight:1.4}}>{h}</span>
                   </div>
                 ))}
               </div>
             </div>
-            <div style={{background:"#fff",borderRadius:18,padding:"24px",border:"1px solid #E2E8F0"}}>
-              <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16}}>Quick Specs</h2>
+            <div style={{background:"#111",borderRadius:16,padding:"24px",border:"1px solid rgba(255,255,255,0.08)"}}>
+              <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,color:"#fff"}}>Quick Specs</h2>
               <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
                 {[["Year",car.year],["Fuel",car.fuel],["Gearbox",car.transmission],["Km Driven",fmtKm(car.km)],["Seats",car.seats+" seats"],["Owners",car.owners+" owner"+(car.owners>1?"s":"")]].map(([l,v])=>(
-                  <div key={l} style={{background:"#F8FAFC",borderRadius:12,padding:"14px"}}>
-                    <div style={{color:"#94A3B8",fontSize:10.5,fontWeight:700,letterSpacing:"0.07em",textTransform:"uppercase",marginBottom:5}}>{l}</div>
-                    <div style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15}}>{v}</div>
+                  <div key={l} style={{background:"rgba(255,255,255,0.04)",borderRadius:12,padding:"14px",border:"1px solid rgba(255,255,255,0.06)"}}>
+                    <div style={{color:"rgba(255,255,255,0.4)",fontSize:10.5,fontWeight:700,letterSpacing:"0.07em",textTransform:"uppercase",marginBottom:5}}>{l}</div>
+                    <div style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,color:"#fff"}}>{v}</div>
                   </div>
                 ))}
               </div>
@@ -1184,40 +1188,40 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
           </>
         )}
         {tab!=="overview"&&!user&&(
-          <div style={{background:"#fff",borderRadius:18,padding:"56px 24px",border:"1px solid #E2E8F0",textAlign:"center"}}>
-            <Shield size={22} color="#94A3B8" style={{margin:"0 auto 18px"}}/>
-            <h3 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:8}}>Sign in to see the full report</h3>
-            <p style={{color:"#64748B",fontSize:13.5,marginBottom:24}}>Register to access the {TABS.find(([id])=>id===tab)?.[1]} section.</p>
-            <button onClick={()=>setShowLogin(true)} className="btn-red" style={{padding:"12px 28px",borderRadius:11,fontSize:14}}>Join Now</button>
+          <div style={{background:"#111",borderRadius:16,padding:"56px 24px",border:"1px solid rgba(255,255,255,0.08)",textAlign:"center"}}>
+            <Shield size={22} color="rgba(255,255,255,0.3)" style={{margin:"0 auto 18px"}}/>
+            <h3 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:8,color:"#fff"}}>Sign in to see the full report</h3>
+            <p style={{color:"rgba(255,255,255,0.4)",fontSize:13.5,marginBottom:24}}>Register to access the {TABS.find(([id])=>id===tab)?.[1]} section.</p>
+            <button onClick={()=>setShowLogin(true)} className="btn-red" style={{padding:"12px 28px",borderRadius:100,fontSize:14}}>Join Now</button>
           </div>
         )}
         {tab!=="overview"&&user&&(
           <>
             {tab==="inspection"&&(
-              <div style={{background:"#fff",borderRadius:18,padding:"28px",border:"1px solid #E2E8F0"}}>
+              <div style={{background:"#111",borderRadius:16,padding:"28px",border:"1px solid rgba(255,255,255,0.08)"}}>
                 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:24}}>
-                  <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18}}>7-Point Inspection</h2>
-                  <div style={{background:"#0F172A",borderRadius:12,padding:"8px 16px",display:"flex",alignItems:"center",gap:10}}>
+                  <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,color:"#fff"}}>7-Point Inspection</h2>
+                  <div style={{background:"rgba(255,255,255,0.06)",borderRadius:12,padding:"8px 16px",display:"flex",alignItems:"center",gap:10,border:"1px solid rgba(255,255,255,0.08)"}}>
                     <ScoreRing score={car.score} size={36}/><div><div style={{color:"#fff",fontWeight:800,fontSize:16}}>{car.score}/100</div><div style={{color:"rgba(255,255,255,0.4)",fontSize:10.5,fontWeight:600}}>{car.score>=88?"Excellent":car.score>=78?"Very Good":"Good"}</div></div>
                   </div>
                 </div>
                 {Object.entries(bd).map(([k,v])=>(
                   <div key={k} style={{marginBottom:18}}>
                     <div style={{display:"flex",justifyContent:"space-between",marginBottom:7}}>
-                      <span style={{fontSize:14,fontWeight:600,color:"#334155"}}>{scoreLabels[k]||k}</span>
-                      <div style={{display:"flex",alignItems:"center",gap:8}}><span style={{fontSize:13,fontWeight:800,color:sc(v)}}>{v}</span><span style={{background:sc(v)+"18",color:sc(v),fontSize:10.5,fontWeight:700,padding:"2px 9px",borderRadius:20}}>{v>=88?"Excellent":v>=78?"Very Good":v>=68?"Good":"Fair"}</span></div>
+                      <span style={{fontSize:14,fontWeight:600,color:"rgba(255,255,255,0.8)"}}>{scoreLabels[k]||k}</span>
+                      <div style={{display:"flex",alignItems:"center",gap:8}}><span style={{fontSize:13,fontWeight:800,color:sc(v)}}>{v}</span><span style={{background:sc(v)+"22",color:sc(v),fontSize:10.5,fontWeight:700,padding:"2px 9px",borderRadius:20}}>{v>=88?"Excellent":v>=78?"Very Good":v>=68?"Good":"Fair"}</span></div>
                     </div>
-                    <div style={{height:8,background:"#F1F5F9",borderRadius:10,overflow:"hidden"}}><div style={{height:"100%",width:v+"%",background:sc(v),borderRadius:10}}/></div>
+                    <div style={{height:8,background:"rgba(255,255,255,0.08)",borderRadius:10,overflow:"hidden"}}><div style={{height:"100%",width:v+"%",background:sc(v),borderRadius:10}}/></div>
                   </div>
                 ))}
                 {car.tyreWear&&(
-                  <div style={{marginTop:24,paddingTop:24,borderTop:"1px solid #F1F5F9"}}>
-                    <h3 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:15,marginBottom:16}}>Tyre Condition</h3>
+                  <div style={{marginTop:24,paddingTop:24,borderTop:"1px solid rgba(255,255,255,0.08)"}}>
+                    <h3 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:15,marginBottom:16,color:"#fff"}}>Tyre Condition</h3>
                     <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10}}>
                       {[["fl","Front Left"],["fr","Front Right"],["rl","Rear Left"],["rr","Rear Right"]].map(([k,label])=>(
-                        <div key={k} style={{background:"#F8FAFC",borderRadius:12,padding:"12px 10px",textAlign:"center"}}>
+                        <div key={k} style={{background:"rgba(255,255,255,0.04)",borderRadius:12,padding:"12px 10px",textAlign:"center",border:"1px solid rgba(255,255,255,0.06)"}}>
                           <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:16,color:tyreColor(car.tyreWear[k])}}>{car.tyreWear[k]}%</div>
-                          <div style={{color:"#94A3B8",fontSize:10.5,fontWeight:600,marginTop:3}}>{label}</div>
+                          <div style={{color:"rgba(255,255,255,0.4)",fontSize:10.5,fontWeight:600,marginTop:3}}>{label}</div>
                         </div>
                       ))}
                     </div>
@@ -1227,28 +1231,28 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
             )}
             {tab==="who"&&(
               <div style={{display:"flex",flexDirection:"column",gap:16}}>
-                <div style={{background:"#fff",borderRadius:18,padding:"24px",border:"1px solid #E2E8F0"}}>
-                  <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,display:"flex",alignItems:"center",gap:8}}><CheckCircle size={18} color="#10B981"/> Great for</h2>
+                <div style={{background:"#111",borderRadius:16,padding:"24px",border:"1px solid rgba(255,255,255,0.08)"}}>
+                  <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,display:"flex",alignItems:"center",gap:8,color:"#fff"}}><CheckCircle size={18} color="#10B981"/> Great for</h2>
                   <div style={{display:"flex",flexDirection:"column",gap:10}}>
-                    {forWho.map((item,i)=><div key={i} style={{display:"flex",gap:12,alignItems:"flex-start",padding:"13px 16px",background:"#F0FDF4",borderRadius:12,border:"1px solid #BBF7D0"}}><CheckCircle size={14} color="#10B981" style={{flexShrink:0,marginTop:2}}/><span style={{fontSize:13.5,color:"#166534",lineHeight:1.45}}>{item}</span></div>)}
+                    {forWho.map((item,i)=><div key={i} style={{display:"flex",gap:12,alignItems:"flex-start",padding:"13px 16px",background:"rgba(16,185,129,0.08)",borderRadius:12,border:"1px solid rgba(16,185,129,0.2)"}}><CheckCircle size={14} color="#10B981" style={{flexShrink:0,marginTop:2}}/><span style={{fontSize:13.5,color:"rgba(255,255,255,0.8)",lineHeight:1.45}}>{item}</span></div>)}
                   </div>
                 </div>
-                <div style={{background:"#fff",borderRadius:18,padding:"24px",border:"1px solid #E2E8F0"}}>
-                  <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,display:"flex",alignItems:"center",gap:8}}><XCircle size={18} color="#EF4444"/> Maybe not for</h2>
+                <div style={{background:"#111",borderRadius:16,padding:"24px",border:"1px solid rgba(255,255,255,0.08)"}}>
+                  <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,display:"flex",alignItems:"center",gap:8,color:"#fff"}}><XCircle size={18} color="#EF4444"/> Maybe not for</h2>
                   <div style={{display:"flex",flexDirection:"column",gap:10}}>
-                    {notForWho.map((item,i)=><div key={i} style={{display:"flex",gap:12,alignItems:"flex-start",padding:"13px 16px",background:"#FFF1F2",borderRadius:12,border:"1px solid #FECDD3"}}><XCircle size={14} color="#EF4444" style={{flexShrink:0,marginTop:2}}/><span style={{fontSize:13.5,color:"#9F1239",lineHeight:1.45}}>{item}</span></div>)}
+                    {notForWho.map((item,i)=><div key={i} style={{display:"flex",gap:12,alignItems:"flex-start",padding:"13px 16px",background:"rgba(239,68,68,0.08)",borderRadius:12,border:"1px solid rgba(239,68,68,0.2)"}}><XCircle size={14} color="#EF4444" style={{flexShrink:0,marginTop:2}}/><span style={{fontSize:13.5,color:"rgba(255,255,255,0.8)",lineHeight:1.45}}>{item}</span></div>)}
                   </div>
                 </div>
               </div>
             )}
             {tab==="specs"&&(
-              <div style={{background:"#fff",borderRadius:18,border:"1px solid #E2E8F0",overflow:"hidden"}}>
-                <div style={{padding:"20px 24px",borderBottom:"1px solid #E2E8F0"}}><h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18}}>Full Specifications</h2></div>
+              <div style={{background:"#111",borderRadius:16,border:"1px solid rgba(255,255,255,0.08)",overflow:"hidden"}}>
+                <div style={{padding:"20px 24px",borderBottom:"1px solid rgba(255,255,255,0.08)"}}><h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,color:"#fff"}}>Full Specifications</h2></div>
                 <table style={{width:"100%",borderCollapse:"collapse"}}><tbody>
                   {[["Make",car.make],["Model",car.model],["Year",car.year],["Category",car.category],["Fuel Type",car.fuel],["Transmission",car.transmission],["KM Driven",fmtKm(car.km)],["Seats",car.seats],["Previous Owners",car.owners],["Listed Price",fmt(car.price)],["Insurance",car.insurance||"—"],["PP Score",car.score+"/100"]].map(([label,value],i)=>(
-                    <tr key={label} style={{borderBottom:"1px solid #F1F5F9",background:i%2===0?"#fff":"#F8FAFC"}}>
-                      <td style={{padding:"13px 24px",color:"#64748B",fontSize:13.5,fontWeight:600,width:"40%"}}>{label}</td>
-                      <td style={{padding:"13px 24px",color:"#0F172A",fontSize:13.5,fontWeight:700}}>{value}</td>
+                    <tr key={label} style={{borderBottom:"1px solid rgba(255,255,255,0.06)",background:i%2===0?"transparent":"rgba(255,255,255,0.02)"}}>
+                      <td style={{padding:"13px 24px",color:"rgba(255,255,255,0.4)",fontSize:13.5,fontWeight:600,width:"40%"}}>{label}</td>
+                      <td style={{padding:"13px 24px",color:"#fff",fontSize:13.5,fontWeight:700}}>{value}</td>
                     </tr>
                   ))}
                 </tbody></table>
@@ -1258,20 +1262,20 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
         )}
       </div>
       {showEnquiryModal&&(
-        <div style={{position:"fixed",inset:0,zIndex:600,background:"rgba(15,23,42,0.6)",backdropFilter:"blur(6px)",display:"flex",alignItems:"center",justifyContent:"center",padding:"0 20px"}} onClick={()=>setShowEnquiryModal(false)}>
-          <div style={{background:"#fff",borderRadius:20,padding:32,width:420,maxWidth:"100%",position:"relative"}} onClick={e=>e.stopPropagation()}>
-            <button onClick={()=>setShowEnquiryModal(false)} style={{position:"absolute",top:14,right:14,background:"#F1F5F9",border:"none",borderRadius:"50%",width:30,height:30,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><X size={14}/></button>
-            <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,marginBottom:6}}>Get in Touch</h2>
-            <p style={{color:"#64748B",fontSize:13.5,marginBottom:20}}>We'll connect you with the seller via WhatsApp.</p>
-            <label style={{fontSize:11,fontWeight:700,color:"#64748B",textTransform:"uppercase",display:"block",marginBottom:6}}>Phone Number</label>
-            <input value={enquiryPhone} onChange={e=>setEnquiryPhone(e.target.value)} placeholder="+91 98765 43210" type="tel" style={{width:"100%",padding:"11px 14px",fontSize:14,borderRadius:12,border:"1.5px solid #E2E8F0",background:"#F8FAFC",color:"#0F172A",fontFamily:"Outfit,sans-serif",outline:"none",marginBottom:16}}/>
+        <div style={{position:"fixed",inset:0,zIndex:600,background:"rgba(0,0,0,0.8)",backdropFilter:"blur(6px)",display:"flex",alignItems:"center",justifyContent:"center",padding:"0 20px"}} onClick={()=>setShowEnquiryModal(false)}>
+          <div style={{background:"#111",borderRadius:20,padding:32,width:420,maxWidth:"100%",position:"relative",border:"1px solid rgba(255,255,255,0.08)"}} onClick={e=>e.stopPropagation()}>
+            <button onClick={()=>setShowEnquiryModal(false)} style={{position:"absolute",top:14,right:14,background:"rgba(255,255,255,0.08)",border:"none",borderRadius:"50%",width:30,height:30,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff"}}><X size={14}/></button>
+            <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,marginBottom:6,color:"#fff"}}>Get in Touch</h2>
+            <p style={{color:"rgba(255,255,255,0.4)",fontSize:13.5,marginBottom:20}}>We'll connect you with the seller via WhatsApp.</p>
+            <label style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.4)",textTransform:"uppercase",display:"block",marginBottom:6}}>Phone Number</label>
+            <input value={enquiryPhone} onChange={e=>setEnquiryPhone(e.target.value)} placeholder="+91 98765 43210" type="tel" style={{width:"100%",padding:"11px 14px",fontSize:14,borderRadius:12,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"#fff",fontFamily:"Outfit,sans-serif",outline:"none",marginBottom:16}}/>
             <button disabled={enquirySubmitting||!enquiryPhone} onClick={async()=>{
               setEnquirySubmitting(true);
               try{await supabase.from("enquiries").insert({car_id:car.id,name:user,email:userEmail||"",phone:enquiryPhone,listing_url:window.location.href,car_title:`${car.make} ${car.model} ${car.year}`});}catch(e){}
               const msg=encodeURIComponent(`New Enquiry from Pole Position\n\nName: ${user}\nEmail: ${userEmail||""}\nPhone: ${enquiryPhone}\nListing: ${window.location.href}\nCar: ${car.make} ${car.model} ${car.year}`);
               window.open(`https://wa.me/919884257043?text=${msg}`,"_blank");
               setEnquirySubmitting(false);setShowEnquiryModal(false);setEnquired(true);setTimeout(()=>setEnquired(false),3000);
-            }} className="btn-red" style={{width:"100%",padding:"13px",borderRadius:12,fontSize:15,opacity:(enquirySubmitting||!enquiryPhone)?0.6:1,cursor:(enquirySubmitting||!enquiryPhone)?"not-allowed":"pointer"}}>
+            }} style={{width:"100%",padding:"13px",borderRadius:100,fontSize:15,background:(enquirySubmitting||!enquiryPhone)?"rgba(255,255,255,0.1)":"#fff",color:(enquirySubmitting||!enquiryPhone)?"rgba(255,255,255,0.3)":"#000",border:"none",fontFamily:"Outfit,sans-serif",fontWeight:700,opacity:1,cursor:(enquirySubmitting||!enquiryPhone)?"not-allowed":"pointer"}}>
               {enquirySubmitting?"Sending…":"Send Enquiry"}
             </button>
           </div>
