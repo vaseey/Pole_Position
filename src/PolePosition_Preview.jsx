@@ -1395,9 +1395,9 @@ function ForumPage({setPage,setThread,user,setShowLogin,threads}){
   const CAT_COLORS={Cars:"#DC2626","Bikes & Scooters":"#7C3AED",EVs:"#059669","Buying Help":"#F59E0B","Ownership Diaries":"#3B82F6"};
   const visible=threads.filter(t=>cat==="All"||t.cat===cat);
   return(
-    <div style={{paddingTop:64,minHeight:"100vh",background:"#F8FAFC"}}>
-      <div style={{background:"linear-gradient(135deg,#0F172A,#1E293B)",padding:"52px 32px 44px",textAlign:"center"}}>
-        <div style={{color:"#DC2626",fontSize:12,fontWeight:700,letterSpacing:"0.1em",marginBottom:12}}>COMMUNITY</div>
+    <div style={{paddingTop:56,minHeight:"100vh",background:"#0A0A0A"}}>
+      <div style={{background:"#111",borderBottom:"1px solid rgba(255,255,255,0.08)",padding:"52px 32px 44px",textAlign:"center"}}>
+        <div style={{color:"rgba(255,255,255,0.4)",fontSize:12,fontWeight:700,letterSpacing:"0.1em",marginBottom:12}}>COMMUNITY</div>
         <h1 style={{color:"#fff",fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:36,letterSpacing:"-0.04em",marginBottom:14}}>The Pit Lane Forum</h1>
         <div style={{display:"flex",gap:8,justifyContent:"center",flexWrap:"wrap",marginTop:20}}>
           {cats.map(c=><button key={c} onClick={()=>setCat(c)} style={{padding:"7px 16px",borderRadius:100,border:"none",cursor:"pointer",fontWeight:600,fontSize:12.5,background:cat===c?"#DC2626":"rgba(255,255,255,0.08)",color:cat===c?"#fff":"rgba(255,255,255,0.6)"}}>{c}</button>)}
