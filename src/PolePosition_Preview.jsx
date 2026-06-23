@@ -2322,7 +2322,7 @@ function FavoritesPage({setPage,setSelectedCar,favs,toggleFav,cars}){
     <div style={{paddingTop:80,minHeight:"100vh",background:"var(--pp-bg)"}}>
       <div style={{maxWidth:1280,margin:"0 auto",padding:"0 24px 70px"}}>
         <div style={{display:"flex",alignItems:"center",gap:14,marginBottom:28}}>
-          <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:32,letterSpacing:"-0.03em",color:"#fff"}}>My Favourites</h1>
+          <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:32,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>My Favourites</h1>
           <span style={{background:"#9B2B2B",color:"#fff",padding:"5px 14px",borderRadius:100,fontWeight:700,fontSize:14}}>{saved.length}</span>
         </div>
         {saved.length===0?(
