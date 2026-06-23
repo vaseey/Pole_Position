@@ -494,11 +494,11 @@ function CarCard({car,onFav,isFav,onClick}){
         <img src={err?FB:(car.img||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model}
           style={{width:"100%",height:"100%",objectFit:"cover"}}/>
         {/* Fuel chip top-left */}
-        <span style={{position:"absolute",top:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"var(--pp-text)",fontSize:11,fontWeight:600}}>● {car.fuel}</span>
+        <span style={{position:"absolute",top:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"#fff",fontSize:11,fontWeight:600}}>● {car.fuel}</span>
         {/* Transmission chip top-right */}
-        <span style={{position:"absolute",top:10,right:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"var(--pp-text)",fontSize:11,fontWeight:600}}>{car.transmission}</span>
+        <span style={{position:"absolute",top:10,right:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"#fff",fontSize:11,fontWeight:600}}>{car.transmission}</span>
         {/* Year pill bottom-left */}
-        <span style={{position:"absolute",bottom:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"var(--pp-text)",fontSize:11,fontWeight:600}}>{car.year}</span>
+        <span style={{position:"absolute",bottom:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"#fff",fontSize:11,fontWeight:600}}>{car.year}</span>
         {/* Fav button */}
         <button onClick={e=>{e.stopPropagation();onFav(car.id);}} style={{position:"absolute",bottom:10,right:10,background:"rgba(0,0,0,0.5)",border:"1px solid rgba(255,255,255,0.2)",cursor:"pointer",width:30,height:30,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center"}}>
           <Heart size={12} fill={isFav?"#9B2B2B":"none"} color={isFav?"#9B2B2B":"#fff"} strokeWidth={2.2}/>
@@ -634,11 +634,11 @@ function BrowseCarCard({car,onFav,isFav,onClick}){
       <div style={{position:"relative",aspectRatio:"4/3",overflow:"hidden",borderRadius:"16px 16px 0 0"}}>
         <img src={err?FB:(car.img||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model} style={{width:"100%",height:"100%",objectFit:"cover"}}/>
         {/* Fuel chip top-left */}
-        <span style={{position:"absolute",top:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"var(--pp-text)",fontSize:11,fontWeight:600}}>● {car.fuel}</span>
+        <span style={{position:"absolute",top:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"#fff",fontSize:11,fontWeight:600}}>● {car.fuel}</span>
         {/* Transmission chip top-right */}
-        <span style={{position:"absolute",top:10,right:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"var(--pp-text)",fontSize:11,fontWeight:600}}>{car.transmission}</span>
+        <span style={{position:"absolute",top:10,right:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"#fff",fontSize:11,fontWeight:600}}>{car.transmission}</span>
         {/* Year pill bottom-left */}
-        <span style={{position:"absolute",bottom:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"var(--pp-text)",fontSize:11,fontWeight:600}}>{car.year}</span>
+        <span style={{position:"absolute",bottom:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"#fff",fontSize:11,fontWeight:600}}>{car.year}</span>
         {/* Fav button */}
         <button onClick={e=>{e.stopPropagation();onFav(car.id);}} style={{position:"absolute",bottom:10,right:10,width:30,height:30,borderRadius:"50%",border:"1px solid rgba(255,255,255,0.2)",background:"rgba(0,0,0,0.5)",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
           <Heart size={12} fill={isFav?"#9B2B2B":"none"} color={isFav?"#9B2B2B":"#fff"}/>
