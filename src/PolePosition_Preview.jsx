@@ -2389,7 +2389,7 @@ function PublicSite({cars,blog,threads,onGoAdmin}){
   return(
     <>
       <style>{G}</style>
-      <Navbar page={page} setPage={p=>navTo(p)} user={user} setUser={setUser} setShowLogin={setShowLogin} isAdmin={isAdmin} onGoAdmin={onGoAdmin}/>
+      <Navbar page={page} setPage={p=>navTo(p)} user={user} setUser={setUser} setShowLogin={setShowLogin} isAdmin={isAdmin} onGoAdmin={onGoAdmin} darkMode={darkMode} setDarkMode={setDarkMode}/>
       {showLogin&&<LoginModal onClose={()=>setShowLogin(false)} onLogin={({name,email})=>{
         if(email&&email.toLowerCase()==="vaseey@gmail.com"){setShowLogin(false);onGoAdmin();return;}
         setUser(name);setUserEmail(email);setIsAdmin(false);setShowLogin(false);
