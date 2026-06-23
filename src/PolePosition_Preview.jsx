@@ -5,13 +5,14 @@ import { Search, Heart, X, ChevronRight, ArrowRight, User, Gauge, Calendar, Chec
 const G = `
   @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
   *{box-sizing:border-box;margin:0;padding:0;}
-  :root{--red:#DC2626;--dark:#0F172A;--card:#1E293B;--border:rgba(255,255,255,0.07);--f:Outfit,sans-serif;}
-  body{font-family:var(--f);background:#F8FAFC;color:#0F172A;}
+  :root{--red:#DC2626;--dark:#0A0A0A;--card:#111111;--border:rgba(255,255,255,0.08);--f:Outfit,sans-serif;}
+  body{font-family:var(--f);background:#0A0A0A;color:#fff;}
   input,textarea,select{font-family:var(--f);outline:none;}
   button{font-family:var(--f);outline:none;}
   .btn-red{background:var(--red);color:#fff;border:none;cursor:pointer;font-weight:700;font-family:var(--f);}
   .btn-red:hover{background:#B91C1C;}
-  .glass{background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.8);}
+  .glass{background:rgba(20,20,20,0.95);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);}
+  .pp-nav{background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);}
   .pp-admin{background:#0F172A;color:#fff;}
   .pp-admin input,.pp-admin textarea,.pp-admin select{font:inherit;margin:0;line-height:1.4;}
   .pp-admin input,.pp-admin textarea{background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);color:#fff;padding:10px 14px;border-radius:10px;font-size:14px;width:100%;box-sizing:border-box;}
