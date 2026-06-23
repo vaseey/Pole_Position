@@ -2326,6 +2326,11 @@ function PublicSite({cars,blog,threads,onGoAdmin}){
   const [isAdmin,setIsAdmin]=useState(false);
   const [showLogin,setShowLogin]=useState(false);
   const [favs,setFavs]=useState([]);
+  const [darkMode,setDarkMode]=useState(true);
+  useEffect(()=>{
+    if(darkMode) document.documentElement.classList.remove('light');
+    else document.documentElement.classList.add('light');
+  },[darkMode]);
 
   // Restore session on load and listen for auth changes
   useEffect(()=>{
