@@ -299,7 +299,7 @@ function Navbar({page,setPage,user,setUser,setShowLogin,isAdmin,onGoAdmin,darkMo
   const links=[["home","Home"],["browse","Browse"],["blog","Blog"],["forum","Community"]];
   return(
     <>
-    <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:200,background:"rgba(0,0,0,0.85)",backdropFilter:"blur(12px)",borderBottom:"1px solid rgba(255,255,255,0.08)",height:56,display:"flex",alignItems:"center",padding:"0 20px",gap:0}}>
+    <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:200,background:"var(--pp-nav)",backdropFilter:"blur(12px)",borderBottom:"1px solid rgba(255,255,255,0.08)",height:56,display:"flex",alignItems:"center",padding:"0 20px",gap:0}}>
       <button onClick={()=>setPage("home")} style={{display:"flex",alignItems:"center",gap:8,background:"none",border:"none",cursor:"pointer",marginRight:"auto"}}>
         <div style={{width:30,height:30,background:"#DC2626",borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center"}}><Car size={15} color="#fff"/></div>
         <span style={{fontWeight:900,fontSize:16,letterSpacing:"-0.04em",fontFamily:"Outfit,sans-serif",color:"#fff"}}>Pole<span style={{fontWeight:900}}>Position</span></span>
