@@ -520,32 +520,50 @@ function CarCard({car,onFav,isFav,onClick}){
 // ── HomePage ─────────────────────────────────────────────────────
 function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
   const hot=useMemo(()=>cars.filter(c=>c.score>=86).slice(0,6),[cars]);
+  const [isMobile,setIsMobile]=useState(()=>window.innerWidth<=768);
+  useEffect(()=>{const h=()=>setIsMobile(window.innerWidth<=768);window.addEventListener("resize",h);return()=>window.removeEventListener("resize",h);},[]);
+  const heroImg=hot[0]?.img||"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=800&q=80";
   return(
     <div style={{paddingTop:56}}>
-      {/* Hero */}
-      <div style={{position:"relative",background:"var(--pp-bg)",minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden",paddingTop:56}}>
-        {/* Giant watermark text */}
-        <div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",fontSize:"clamp(80px,18vw,220px)",fontWeight:900,color:"rgba(255,255,255,0.04)",letterSpacing:"-0.05em",whiteSpace:"nowrap",fontFamily:"Outfit,sans-serif",userSelect:"none",pointerEvents:"none",lineHeight:1}}>
-          POLE POSITION
-        </div>
-        {/* Content */}
-        <div style={{position:"relative",zIndex:1,textAlign:"center",padding:"0 24px"}}>
-          <div style={{fontSize:12,fontWeight:700,letterSpacing:"0.15em",color:"var(--pp-text2)",marginBottom:20,textTransform:"uppercase"}}>Hyderabad's Premier Used Car Marketplace</div>
-          <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:"clamp(40px,8vw,80px)",color:"var(--pp-text)",letterSpacing:"-0.04em",lineHeight:1.05,marginBottom:24}}>
-            Find Your Perfect<br/>Used Car.
-          </h1>
-          <p style={{color:"var(--pp-text2)",fontSize:16,marginBottom:40,maxWidth:440,margin:"0 auto 40px"}}>
-            Every car independently inspected and scored. No hidden surprises.
-          </p>
-          <div style={{display:"flex",gap:12,justifyContent:"center"}}>
-            <button onClick={()=>setPage("browse")} style={{padding:"13px 28px",borderRadius:100,fontSize:14,fontWeight:700,background:"#9B2B2B",color:"#fff",border:"none",cursor:"pointer",fontFamily:"Outfit,sans-serif",display:"flex",alignItems:"center",gap:6}}>
-              Browse Cars <span style={{fontSize:16}}>→</span>
-            </button>
-            <button onClick={()=>setPage("quiz")} style={{padding:"13px 28px",borderRadius:100,fontSize:14,fontWeight:700,background:"transparent",color:"var(--pp-text)",border:"1.5px solid var(--pp-border2)",cursor:"pointer",fontFamily:"Outfit,sans-serif"}}>
-              Find My Match
-            </button>
+      {/* Hero — split layout */}
+      <div style={{position:"relative",background:"var(--pp-bg)",minHeight:"100vh",display:"flex",alignItems:"center",overflow:"hidden"}}>
+        <div style={{maxWidth:1280,margin:"0 auto",padding:isMobile?"80px 24px 60px":"60px 40px",display:"flex",alignItems:"center",justifyContent:"space-between",gap:40,width:"100%",position:"relative",zIndex:1}}>
+          {/* Left — text */}
+          <div style={{flex:"0 0 auto",maxWidth:isMobile?"100%":480}}>
+            <div style={{fontSize:11,fontWeight:700,letterSpacing:"0.15em",color:"#9B2B2B",marginBottom:16,textTransform:"uppercase"}}>— Hyderabad's Premier Used Car Marketplace</div>
+            <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:isMobile?"clamp(36px,10vw,54px)":"clamp(44px,5vw,72px)",color:"var(--pp-text)",letterSpacing:"-0.04em",lineHeight:1.05,marginBottom:20}}>
+              Sell &amp; Buy Your Car<br/>For The Best Price.
+            </h1>
+            <p style={{color:"var(--pp-text2)",fontSize:15,marginBottom:32,lineHeight:1.65,maxWidth:400}}>
+              Every car independently inspected and scored. No hidden surprises — transparent pricing guaranteed.
+            </p>
+            <div style={{display:"flex",gap:12,flexWrap:"wrap"}}>
+              <button onClick={()=>setPage("browse")} style={{padding:"13px 28px",borderRadius:100,fontSize:14,fontWeight:700,background:"#9B2B2B",color:"#fff",border:"none",cursor:"pointer",fontFamily:"Outfit,sans-serif",display:"flex",alignItems:"center",gap:6}}>
+                Buy Car <ArrowRight size={15}/>
+              </button>
+              <button onClick={()=>setPage("quiz")} style={{padding:"13px 28px",borderRadius:100,fontSize:14,fontWeight:700,background:"transparent",color:"var(--pp-text)",border:"1.5px solid var(--pp-border2)",cursor:"pointer",fontFamily:"Outfit,sans-serif"}}>
+                Find My Match
+              </button>
+            </div>
+            <div style={{display:"flex",gap:32,marginTop:40,paddingTop:32,borderTop:"1px solid var(--pp-border)"}}>
+              {[[cars.length+"+","Cars in showroom"],["100%","Inspected"],["5★","Customer rating"]].map(([n,l])=>(
+                <div key={l}>
+                  <div style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:22,color:"var(--pp-text)",letterSpacing:"-0.03em"}}>{n}</div>
+                  <div style={{fontSize:11,color:"var(--pp-text2)",marginTop:2}}>{l}</div>
+                </div>
+              ))}
+            </div>
           </div>
+          {/* Right — hero car image (desktop only) */}
+          {!isMobile&&(
+            <div style={{flex:"1 1 auto",position:"relative",display:"flex",alignItems:"center",justifyContent:"center",minHeight:360}}>
+              <div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",width:"110%",height:"110%",background:"radial-gradient(ellipse at center,var(--pp-primary)18 0%,transparent 70%)",pointerEvents:"none"}}/>
+              <img src={heroImg} alt="Featured car" style={{width:"100%",maxWidth:560,objectFit:"contain",filter:"drop-shadow(0 24px 60px rgba(0,0,0,0.35))",position:"relative",zIndex:1,animation:"fadeIn 0.7s ease"}}/>
+            </div>
+          )}
         </div>
+        {/* Ambient watermark */}
+        <div style={{position:"absolute",bottom:-30,left:"50%",transform:"translateX(-50%)",fontSize:"clamp(80px,18vw,200px)",fontWeight:900,color:"rgba(255,255,255,0.025)",letterSpacing:"-0.05em",whiteSpace:"nowrap",fontFamily:"Outfit,sans-serif",userSelect:"none",pointerEvents:"none",lineHeight:1}}>POLE POSITION</div>
       </div>
 
       {/* Hot listings */}
