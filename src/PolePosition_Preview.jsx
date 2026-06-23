@@ -336,26 +336,28 @@ function Navbar({page,setPage,user,setUser,setShowLogin,isAdmin,onGoAdmin,darkMo
             </button>
           ))}
         </div>
-        {user
-          ?<div style={{position:"relative"}}>
-              <button onClick={()=>setUserMenuOpen(m=>!m)} style={{display:"flex",alignItems:"center",gap:6,background:"none",border:"none",cursor:"pointer",padding:"6px 10px",borderRadius:9}}>
-                <span style={{fontSize:13,fontWeight:600,color:"var(--pp-text)"}}>Hi, {user}</span>
-                <ChevronDown size={14} color="var(--pp-text2)"/>
-              </button>
-              {userMenuOpen&&(
-                <div style={{position:"absolute",top:"100%",right:0,marginTop:8,background:"var(--pp-card)",borderRadius:12,boxShadow:"0 12px 32px rgba(0,0,0,0.6)",border:"1px solid var(--pp-border)",minWidth:210,overflow:"hidden",zIndex:300}}>
-                  {isAdmin&&<button onClick={onGoAdmin} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"var(--pp-text)",display:"flex",alignItems:"center",gap:9,borderBottom:"1px solid var(--pp-border)"}}><Shield size={14} color="#9B2B2B"/> View Admin Dashboard</button>}
-                  <button onClick={()=>{setPage("favorites");setUserMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"var(--pp-text)",display:"flex",alignItems:"center",gap:9,borderBottom:"1px solid var(--pp-border)"}}><Heart size={14} color="#9B2B2B"/> My Favourites</button>
-                  <button onClick={()=>{supabase.auth.signOut();setUser(null);setUserMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"var(--pp-text2)",display:"flex",alignItems:"center",gap:9}}><LogOut size={14}/> Sign Out</button>
-                </div>
-              )}
-            </div>
-          :<div style={{display:"flex",alignItems:"center",gap:14}}>
-              <button onClick={onGoAdmin} style={{fontSize:12.5,color:"var(--pp-text2)",fontWeight:600,background:"none",border:"none",cursor:"pointer",padding:0,fontFamily:"Outfit,sans-serif"}}>Login as Admin</button>
-              <button onClick={()=>setDarkMode(d=>!d)} style={{background:"none",border:"1.5px solid var(--pp-border2)",borderRadius:100,padding:"5px 12px",cursor:"pointer",color:"var(--pp-text)",fontSize:12,fontWeight:600,fontFamily:"Outfit,sans-serif",display:"flex",alignItems:"center",gap:6,marginRight:8}}>{darkMode?"☀ Light":"⬛ Dark"}</button>
-              <button onClick={()=>setShowLogin(true)} style={{padding:"7px 18px",borderRadius:100,fontSize:13,fontWeight:600,background:"transparent",color:"var(--pp-text)",border:"1.5px solid var(--pp-border2)",cursor:"pointer",fontFamily:"Outfit,sans-serif"}}>Sign In</button>
-            </div>
-        }
+        <div style={{display:"flex",alignItems:"center",gap:8}}>
+          <button onClick={()=>setDarkMode(d=>!d)} title={darkMode?"Switch to Light":"Switch to Dark"} style={{width:36,height:36,borderRadius:"50%",border:"1.5px solid var(--pp-border2)",background:"none",cursor:"pointer",fontSize:16,display:"flex",alignItems:"center",justifyContent:"center",color:"var(--pp-text)",flexShrink:0}}>{darkMode?"☀":"🌙"}</button>
+          {user
+            ?<div style={{position:"relative"}}>
+                <button onClick={()=>setUserMenuOpen(m=>!m)} style={{display:"flex",alignItems:"center",gap:6,background:"none",border:"none",cursor:"pointer",padding:"6px 10px",borderRadius:9}}>
+                  <span style={{fontSize:13,fontWeight:600,color:"var(--pp-text)"}}>Hi, {user}</span>
+                  <ChevronDown size={14} color="var(--pp-text2)"/>
+                </button>
+                {userMenuOpen&&(
+                  <div style={{position:"absolute",top:"100%",right:0,marginTop:8,background:"var(--pp-card)",borderRadius:12,boxShadow:"0 12px 32px rgba(0,0,0,0.6)",border:"1px solid var(--pp-border)",minWidth:210,overflow:"hidden",zIndex:300}}>
+                    {isAdmin&&<button onClick={onGoAdmin} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"var(--pp-text)",display:"flex",alignItems:"center",gap:9,borderBottom:"1px solid var(--pp-border)"}}><Shield size={14} color="#9B2B2B"/> View Admin Dashboard</button>}
+                    <button onClick={()=>{setPage("favorites");setUserMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"var(--pp-text)",display:"flex",alignItems:"center",gap:9,borderBottom:"1px solid var(--pp-border)"}}><Heart size={14} color="#9B2B2B"/> My Favourites</button>
+                    <button onClick={()=>{supabase.auth.signOut();setUser(null);setUserMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"var(--pp-text2)",display:"flex",alignItems:"center",gap:9}}><LogOut size={14}/> Sign Out</button>
+                  </div>
+                )}
+              </div>
+            :<div style={{display:"flex",alignItems:"center",gap:8}}>
+                <button onClick={onGoAdmin} style={{fontSize:12.5,color:"var(--pp-text2)",fontWeight:600,background:"none",border:"none",cursor:"pointer",padding:0,fontFamily:"Outfit,sans-serif"}}>Admin</button>
+                <button onClick={()=>setShowLogin(true)} style={{padding:"7px 18px",borderRadius:100,fontSize:13,fontWeight:600,background:"transparent",color:"var(--pp-text)",border:"1.5px solid var(--pp-border2)",cursor:"pointer",fontFamily:"Outfit,sans-serif"}}>Sign In</button>
+              </div>
+          }
+        </div>
         </>
       )}
       {isMobile&&(
