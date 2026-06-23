@@ -1202,7 +1202,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
                 {Object.entries(bd).map(([k,v])=>(
                   <div key={k} style={{marginBottom:18}}>
                     <div style={{display:"flex",justifyContent:"space-between",marginBottom:7}}>
-                      <span style={{fontSize:14,fontWeight:600,color:"rgba(255,255,255,0.8)"}}>{scoreLabels[k]||k}</span>
+                      <span style={{fontSize:14,fontWeight:600,color:"var(--pp-text)"}}>{scoreLabels[k]||k}</span>
                       <div style={{display:"flex",alignItems:"center",gap:8}}><span style={{fontSize:13,fontWeight:800,color:sc(v)}}>{v}</span><span style={{background:sc(v)+"22",color:sc(v),fontSize:10.5,fontWeight:700,padding:"2px 9px",borderRadius:20}}>{v>=88?"Excellent":v>=78?"Very Good":v>=68?"Good":"Fair"}</span></div>
                     </div>
                     <div style={{height:8,background:"rgba(255,255,255,0.08)",borderRadius:10,overflow:"hidden"}}><div style={{height:"100%",width:v+"%",background:sc(v),borderRadius:10}}/></div>
@@ -1228,13 +1228,13 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
                 <div style={{background:"var(--pp-card)",borderRadius:16,padding:"24px",border:"1px solid var(--pp-border)"}}>
                   <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,display:"flex",alignItems:"center",gap:8,color:"var(--pp-text)"}}><CheckCircle size={18} color="#10B981"/> Great for</h2>
                   <div style={{display:"flex",flexDirection:"column",gap:10}}>
-                    {forWho.map((item,i)=><div key={i} style={{display:"flex",gap:12,alignItems:"flex-start",padding:"13px 16px",background:"rgba(16,185,129,0.08)",borderRadius:12,border:"1px solid rgba(16,185,129,0.2)"}}><CheckCircle size={14} color="#10B981" style={{flexShrink:0,marginTop:2}}/><span style={{fontSize:13.5,color:"rgba(255,255,255,0.8)",lineHeight:1.45}}>{item}</span></div>)}
+                    {forWho.map((item,i)=><div key={i} style={{display:"flex",gap:12,alignItems:"flex-start",padding:"13px 16px",background:"rgba(16,185,129,0.08)",borderRadius:12,border:"1px solid rgba(16,185,129,0.2)"}}><CheckCircle size={14} color="#10B981" style={{flexShrink:0,marginTop:2}}/><span style={{fontSize:13.5,color:"var(--pp-text)",lineHeight:1.45}}>{item}</span></div>)}
                   </div>
                 </div>
                 <div style={{background:"var(--pp-card)",borderRadius:16,padding:"24px",border:"1px solid var(--pp-border)"}}>
                   <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,display:"flex",alignItems:"center",gap:8,color:"var(--pp-text)"}}><XCircle size={18} color="#EF4444"/> Maybe not for</h2>
                   <div style={{display:"flex",flexDirection:"column",gap:10}}>
-                    {notForWho.map((item,i)=><div key={i} style={{display:"flex",gap:12,alignItems:"flex-start",padding:"13px 16px",background:"rgba(239,68,68,0.08)",borderRadius:12,border:"1px solid rgba(239,68,68,0.2)"}}><XCircle size={14} color="#EF4444" style={{flexShrink:0,marginTop:2}}/><span style={{fontSize:13.5,color:"rgba(255,255,255,0.8)",lineHeight:1.45}}>{item}</span></div>)}
+                    {notForWho.map((item,i)=><div key={i} style={{display:"flex",gap:12,alignItems:"flex-start",padding:"13px 16px",background:"rgba(239,68,68,0.08)",borderRadius:12,border:"1px solid rgba(239,68,68,0.2)"}}><XCircle size={14} color="#EF4444" style={{flexShrink:0,marginTop:2}}/><span style={{fontSize:13.5,color:"var(--pp-text)",lineHeight:1.45}}>{item}</span></div>)}
                   </div>
                 </div>
               </div>
