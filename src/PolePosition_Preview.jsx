@@ -790,9 +790,9 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
                 {histBars.map((h,i)=><div key={i} style={{flex:1,height:h+"%",background:"rgba(220,38,38,0.5)",borderRadius:2}}/>)}
               </div>
               <div style={{display:"flex",gap:8,alignItems:"center"}}>
-                <input type="number" value={priceMin} onChange={e=>setPriceMin(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"var(--pp-text)",fontSize:12}}/>
+                <input type="number" value={priceMin} onChange={e=>setPriceMin(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1px solid var(--pp-border)",background:"rgba(255,255,255,0.05)",color:"var(--pp-text)",fontSize:12}}/>
                 <span style={{color:"var(--pp-text3)",fontSize:12}}>–</span>
-                <input type="number" value={priceMax} onChange={e=>setPriceMax(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"var(--pp-text)",fontSize:12}}/>
+                <input type="number" value={priceMax} onChange={e=>setPriceMax(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1px solid var(--pp-border)",background:"rgba(255,255,255,0.05)",color:"var(--pp-text)",fontSize:12}}/>
               </div>
             </FilterCard>
 
@@ -802,9 +802,9 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
 
             <FilterCard title="KM Driven" onReset={(kmMin>floorKm||kmMax<ceilKm)?()=>{setKmMin(floorKm);setKmMax(ceilKm);}:null}>
               <div style={{display:"flex",gap:8,alignItems:"center"}}>
-                <input type="number" value={kmMin} onChange={e=>setKmMin(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"var(--pp-text)",fontSize:12}}/>
+                <input type="number" value={kmMin} onChange={e=>setKmMin(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1px solid var(--pp-border)",background:"rgba(255,255,255,0.05)",color:"var(--pp-text)",fontSize:12}}/>
                 <span style={{color:"var(--pp-text3)",fontSize:12}}>–</span>
-                <input type="number" value={kmMax} onChange={e=>setKmMax(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"var(--pp-text)",fontSize:12}}/>
+                <input type="number" value={kmMax} onChange={e=>setKmMax(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1px solid var(--pp-border)",background:"rgba(255,255,255,0.05)",color:"var(--pp-text)",fontSize:12}}/>
               </div>
             </FilterCard>
 
@@ -1115,8 +1115,8 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:10,marginBottom:6}}>
               <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:22,letterSpacing:"-0.03em",lineHeight:1.15,color:"var(--pp-text)"}}>{car.make} {car.model}{car.variant&&<span style={{color:"var(--pp-text2)",fontWeight:700}}> {car.variant}</span>}</h1>
               <div style={{display:"flex",gap:6,flexShrink:0}}>
-                <button onClick={()=>onFav(car.id)} style={{width:34,height:34,borderRadius:10,border:"1px solid rgba(255,255,255,0.12)",background:"transparent",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><Heart size={15} fill={isFav?"#9B2B2B":"none"} color={isFav?"#9B2B2B":"rgba(255,255,255,0.5)"}/></button>
-                <button style={{width:34,height:34,borderRadius:10,border:"1px solid rgba(255,255,255,0.12)",background:"transparent",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><Share2 size={14} color="rgba(255,255,255,0.5)"/></button>
+                <button onClick={()=>onFav(car.id)} style={{width:34,height:34,borderRadius:10,border:"1px solid var(--pp-border)",background:"transparent",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><Heart size={15} fill={isFav?"#9B2B2B":"none"} color={isFav?"#9B2B2B":"rgba(255,255,255,0.5)"}/></button>
+                <button style={{width:34,height:34,borderRadius:10,border:"1px solid var(--pp-border)",background:"transparent",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><Share2 size={14} color="rgba(255,255,255,0.5)"/></button>
               </div>
             </div>
             <p style={{color:"var(--pp-text2)",fontSize:13,marginBottom:18}}>{car.tagline}</p>
@@ -1262,7 +1262,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
             <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,marginBottom:6,color:"var(--pp-text)"}}>Get in Touch</h2>
             <p style={{color:"var(--pp-text2)",fontSize:13.5,marginBottom:20}}>We'll connect you with the seller via WhatsApp.</p>
             <label style={{fontSize:11,fontWeight:700,color:"var(--pp-text2)",textTransform:"uppercase",display:"block",marginBottom:6}}>Phone Number</label>
-            <input value={enquiryPhone} onChange={e=>setEnquiryPhone(e.target.value)} placeholder="+91 98765 43210" type="tel" style={{width:"100%",padding:"11px 14px",fontSize:14,borderRadius:12,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",outline:"none",marginBottom:16}}/>
+            <input value={enquiryPhone} onChange={e=>setEnquiryPhone(e.target.value)} placeholder="+91 98765 43210" type="tel" style={{width:"100%",padding:"11px 14px",fontSize:14,borderRadius:12,border:"1px solid var(--pp-border)",background:"rgba(255,255,255,0.05)",color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",outline:"none",marginBottom:16}}/>
             <button disabled={enquirySubmitting||!enquiryPhone} onClick={async()=>{
               setEnquirySubmitting(true);
               try{await supabase.from("enquiries").insert({car_id:car.id,name:user,email:userEmail||"",phone:enquiryPhone,listing_url:window.location.href,car_title:`${car.make} ${car.model} ${car.year}`});}catch(e){}
@@ -1446,7 +1446,7 @@ function ThreadPage({thread:t,setPage,user,setShowLogin}){
     <div style={{paddingTop:56,minHeight:"100vh",background:"var(--pp-bg)"}}>
       <div style={{background:"var(--pp-card)",borderBottom:"1px solid var(--pp-border)",padding:"36px 32px 30px"}}>
         <div style={{maxWidth:820,margin:"0 auto"}}>
-          <button onClick={()=>setPage("forum")} style={{display:"flex",alignItems:"center",gap:6,background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.12)",borderRadius:9,padding:"7px 14px",color:"var(--pp-text2)",cursor:"pointer",fontSize:13,fontWeight:600,marginBottom:16}}>
+          <button onClick={()=>setPage("forum")} style={{display:"flex",alignItems:"center",gap:6,background:"rgba(255,255,255,0.08)",border:"1px solid var(--pp-border)",borderRadius:9,padding:"7px 14px",color:"var(--pp-text2)",cursor:"pointer",fontSize:13,fontWeight:600,marginBottom:16}}>
             <ChevronLeft size={14}/> Back to Forum
           </button>
           <h1 style={{color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:22,letterSpacing:"-0.03em",lineHeight:1.3}}>{t.title}</h1>
@@ -1464,7 +1464,7 @@ function ThreadPage({thread:t,setPage,user,setShowLogin}){
               </div>
             </div>
             <p style={{color:"var(--pp-text2)",fontSize:14,lineHeight:1.65,marginBottom:12}}>{r.body}</p>
-            <button onClick={()=>setLikes(l=>({...l,[r.id]:!l[r.id]}))} style={{display:"flex",alignItems:"center",gap:5,background:"none",border:"1px solid rgba(255,255,255,0.12)",borderRadius:8,padding:"5px 12px",cursor:"pointer",color:likes[r.id]?"#9B2B2B":"rgba(255,255,255,0.5)",fontSize:12.5,fontWeight:600}}>
+            <button onClick={()=>setLikes(l=>({...l,[r.id]:!l[r.id]}))} style={{display:"flex",alignItems:"center",gap:5,background:"none",border:"1px solid var(--pp-border)",borderRadius:8,padding:"5px 12px",cursor:"pointer",color:likes[r.id]?"#9B2B2B":"rgba(255,255,255,0.5)",fontSize:12.5,fontWeight:600}}>
               <ThumbsUp size={12} fill={likes[r.id]?"#9B2B2B":"none"}/> {r.likes+(likes[r.id]?1:0)}
             </button>
           </div>
@@ -1472,7 +1472,7 @@ function ThreadPage({thread:t,setPage,user,setShowLogin}){
         <div style={{background:"var(--pp-card)",borderRadius:14,padding:"18px 20px",border:"1px solid var(--pp-border)",marginTop:20}}>
           <h3 style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,marginBottom:14,color:"var(--pp-text)"}}>Add a Reply</h3>
           {user
-            ?<><textarea value={reply} onChange={e=>setReply(e.target.value)} rows={4} placeholder="Share your thoughts…" style={{width:"100%",padding:"12px 14px",borderRadius:10,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"var(--pp-text)",fontSize:13.5,resize:"vertical",fontFamily:"inherit"}}/><button onClick={submit} className="btn-red" style={{marginTop:10,padding:"10px 22px",borderRadius:100,fontSize:13.5,display:"flex",alignItems:"center",gap:7}}><Send size={13}/> Post Reply</button></>
+            ?<><textarea value={reply} onChange={e=>setReply(e.target.value)} rows={4} placeholder="Share your thoughts…" style={{width:"100%",padding:"12px 14px",borderRadius:10,border:"1px solid var(--pp-border)",background:"rgba(255,255,255,0.05)",color:"var(--pp-text)",fontSize:13.5,resize:"vertical",fontFamily:"inherit"}}/><button onClick={submit} className="btn-red" style={{marginTop:10,padding:"10px 22px",borderRadius:100,fontSize:13.5,display:"flex",alignItems:"center",gap:7}}><Send size={13}/> Post Reply</button></>
             :<div style={{textAlign:"center",padding:"20px 0"}}><p style={{color:"var(--pp-text2)",marginBottom:12}}>Sign in to join the discussion</p><button onClick={()=>setShowLogin(true)} className="btn-red" style={{padding:"10px 22px",borderRadius:100,fontSize:13.5}}>Sign In</button></div>
           }
         </div>
@@ -2171,7 +2171,7 @@ function AdminTeam(){
             <Label>Email</Label>
             <input value={addEmail} onChange={e=>setAddEmail(e.target.value)} type="email" placeholder="teammate@example.com" style={{marginBottom:14}}/>
             <div style={{display:"flex",gap:8}}>
-              <button onClick={()=>setShowAdd(false)} style={{flex:1,padding:"11px",borderRadius:10,border:"1px solid rgba(255,255,255,0.12)",background:"transparent",color:"var(--pp-text3)",cursor:"pointer",fontWeight:600,fontFamily:"Outfit,sans-serif"}}>Cancel</button>
+              <button onClick={()=>setShowAdd(false)} style={{flex:1,padding:"11px",borderRadius:10,border:"1px solid var(--pp-border)",background:"transparent",color:"var(--pp-text3)",cursor:"pointer",fontWeight:600,fontFamily:"Outfit,sans-serif"}}>Cancel</button>
               <button onClick={inviteAdmin} disabled={addBusy} style={{flex:1,padding:"11px",borderRadius:10,border:"none",background:"#9B2B2B",color:"#fff",cursor:"pointer",fontWeight:700,fontFamily:"Outfit,sans-serif",opacity:addBusy?0.7:1}}>{addBusy?"Sending…":"Send Invite"}</button>
             </div>
           </div>
