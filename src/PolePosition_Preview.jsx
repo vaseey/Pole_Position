@@ -15,7 +15,7 @@ const G = `
   .btn-red:hover{background:#B91C1C;}
   .glass{background:rgba(20,20,20,0.95);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);}
   .pp-nav{background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);}
-  .pp-admin{background:#0F172A;color:#fff;}
+  .pp-admin{background:#0F172A;color:#fff;--pp-text:#ffffff;--pp-text2:rgba(255,255,255,0.5);--pp-text3:rgba(255,255,255,0.3);--pp-border:rgba(255,255,255,0.08);--pp-card:#1E293B;--pp-chip:rgba(255,255,255,0.1);}
   .pp-admin input,.pp-admin textarea,.pp-admin select{font:inherit;margin:0;line-height:1.4;}
   .pp-admin input,.pp-admin textarea{background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);color:#fff;padding:10px 14px;border-radius:10px;font-size:14px;width:100%;box-sizing:border-box;}
   .pp-admin input[type=number]::-webkit-inner-spin-button,.pp-admin input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0;}
@@ -248,8 +248,8 @@ const rl = s => s>=90?"Excellent":s>=80?"Very Good":s>=70?"Good":s>=55?"Fair":"P
 const calcScore = bd => Math.round(SCORE_CATS.reduce((s,c)=>s+(bd[c.key]||0)*(c.weight/100),0));
 const tyreColor = pct => pct>=70?"#EF4444":pct>=40?"#F59E0B":"#10B981";
 
-const Card = ({children,style={}}) => <div style={{background:"#1E293B",borderRadius:16,border:"1px solid rgba(255,255,255,0.07)",...style}}>{children}</div>;
-const Label = ({children}) => <div style={{color:"#94A3B8",fontSize:11,fontWeight:700,letterSpacing:"0.07em",textTransform:"uppercase",marginBottom:6}}>{children}</div>;
+const Card = ({children,style={}}) => <div style={{background:"#1E293B",borderRadius:16,border:"1px solid var(--pp-border)",...style}}>{children}</div>;
+const Label = ({children}) => <div style={{color:"var(--pp-text3)",fontSize:11,fontWeight:700,letterSpacing:"0.07em",textTransform:"uppercase",marginBottom:6}}>{children}</div>;
 const Btn = ({onClick,children,danger,full,small,w}) => <button onClick={onClick} style={{padding:small?"6px 12px":"10px 20px",borderRadius:small?8:10,border:"none",cursor:"pointer",background:danger?"rgba(220,38,38,0.15)":full?"#DC2626":"rgba(59,130,246,0.15)",color:danger?"#F87171":full?"#fff":"#60A5FA",fontWeight:600,fontSize:small?12:13.5,display:"flex",alignItems:"center",justifyContent:w?"center":"flex-start",gap:6,fontFamily:"Outfit,sans-serif",width:w,flexShrink:0}}>{children}</button>;
 const FormInput=({label,value,onChange,type="text",ph=""})=>(
   <div>
@@ -261,7 +261,7 @@ const FormSection=({title,subtitle,children})=>(
   <div style={{background:"rgba(255,255,255,0.02)",border:"1.5px solid rgba(255,255,255,0.07)",borderRadius:16,padding:20,marginBottom:16}}>
     <div style={{marginBottom:16}}>
       <div style={{fontWeight:700,fontSize:14}}>{title}</div>
-      {subtitle&&<div style={{color:"#64748B",fontSize:11.5,marginTop:2}}>{subtitle}</div>}
+      {subtitle&&<div style={{color:"var(--pp-text2)",fontSize:11.5,marginTop:2}}>{subtitle}</div>}
     </div>
     {children}
   </div>
@@ -299,16 +299,16 @@ function Navbar({page,setPage,user,setUser,setShowLogin,isAdmin,onGoAdmin,darkMo
   const links=[["home","Home"],["browse","Browse"],["blog","Blog"],["forum","Community"]];
   return(
     <>
-    <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:200,background:"var(--pp-nav)",backdropFilter:"blur(12px)",borderBottom:"1px solid rgba(255,255,255,0.08)",height:56,display:"flex",alignItems:"center",padding:"0 20px",gap:0}}>
+    <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:200,background:"var(--pp-nav)",backdropFilter:"blur(12px)",borderBottom:"1px solid var(--pp-border)",height:56,display:"flex",alignItems:"center",padding:"0 20px",gap:0}}>
       <button onClick={()=>setPage("home")} style={{display:"flex",alignItems:"center",gap:8,background:"none",border:"none",cursor:"pointer",marginRight:"auto"}}>
         <div style={{width:30,height:30,background:"#DC2626",borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center"}}><Car size={15} color="#fff"/></div>
-        <span style={{fontWeight:900,fontSize:16,letterSpacing:"-0.04em",fontFamily:"Outfit,sans-serif",color:"#fff"}}>Pole<span style={{fontWeight:900}}>Position</span></span>
+        <span style={{fontWeight:900,fontSize:16,letterSpacing:"-0.04em",fontFamily:"Outfit,sans-serif",color:"var(--pp-text)"}}>Pole<span style={{fontWeight:900}}>Position</span></span>
       </button>
       {!isMobile&&(
         <>
         <div style={{display:"flex",gap:4,flex:1,justifyContent:"center"}}>
           {links.map(([p,l])=>(
-            <button key={p} onClick={()=>setPage(p)} style={{padding:"7px 14px",borderRadius:9,border:"none",cursor:"pointer",background:"transparent",color:"#fff",fontWeight:page===p?700:500,fontSize:13}}>
+            <button key={p} onClick={()=>setPage(p)} style={{padding:"7px 14px",borderRadius:9,border:"none",cursor:"pointer",background:"transparent",color:"var(--pp-text)",fontWeight:page===p?700:500,fontSize:13}}>
               {l}
             </button>
           ))}
@@ -316,19 +316,19 @@ function Navbar({page,setPage,user,setUser,setShowLogin,isAdmin,onGoAdmin,darkMo
         {user
           ?<div style={{position:"relative"}}>
               <button onClick={()=>setUserMenuOpen(m=>!m)} style={{display:"flex",alignItems:"center",gap:6,background:"none",border:"none",cursor:"pointer",padding:"6px 10px",borderRadius:9}}>
-                <span style={{fontSize:13,fontWeight:600,color:"#fff"}}>Hi, {user}</span>
+                <span style={{fontSize:13,fontWeight:600,color:"var(--pp-text)"}}>Hi, {user}</span>
                 <ChevronDown size={14} color="rgba(255,255,255,0.5)"/>
               </button>
               {userMenuOpen&&(
-                <div style={{position:"absolute",top:"100%",right:0,marginTop:8,background:"var(--pp-card)",borderRadius:12,boxShadow:"0 12px 32px rgba(0,0,0,0.6)",border:"1px solid rgba(255,255,255,0.08)",minWidth:210,overflow:"hidden",zIndex:300}}>
-                  {isAdmin&&<button onClick={onGoAdmin} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"#fff",display:"flex",alignItems:"center",gap:9,borderBottom:"1px solid rgba(255,255,255,0.08)"}}><Shield size={14} color="#DC2626"/> View Admin Dashboard</button>}
-                  <button onClick={()=>{setPage("favorites");setUserMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"#fff",display:"flex",alignItems:"center",gap:9,borderBottom:"1px solid rgba(255,255,255,0.08)"}}><Heart size={14} color="#DC2626"/> My Favourites</button>
-                  <button onClick={()=>{supabase.auth.signOut();setUser(null);setUserMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"rgba(255,255,255,0.5)",display:"flex",alignItems:"center",gap:9}}><LogOut size={14}/> Sign Out</button>
+                <div style={{position:"absolute",top:"100%",right:0,marginTop:8,background:"var(--pp-card)",borderRadius:12,boxShadow:"0 12px 32px rgba(0,0,0,0.6)",border:"1px solid var(--pp-border)",minWidth:210,overflow:"hidden",zIndex:300}}>
+                  {isAdmin&&<button onClick={onGoAdmin} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"var(--pp-text)",display:"flex",alignItems:"center",gap:9,borderBottom:"1px solid var(--pp-border)"}}><Shield size={14} color="#DC2626"/> View Admin Dashboard</button>}
+                  <button onClick={()=>{setPage("favorites");setUserMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"var(--pp-text)",display:"flex",alignItems:"center",gap:9,borderBottom:"1px solid var(--pp-border)"}}><Heart size={14} color="#DC2626"/> My Favourites</button>
+                  <button onClick={()=>{supabase.auth.signOut();setUser(null);setUserMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:13.5,fontWeight:600,color:"var(--pp-text2)",display:"flex",alignItems:"center",gap:9}}><LogOut size={14}/> Sign Out</button>
                 </div>
               )}
             </div>
           :<div style={{display:"flex",alignItems:"center",gap:14}}>
-              <button onClick={onGoAdmin} style={{fontSize:12.5,color:"rgba(255,255,255,0.4)",fontWeight:600,background:"none",border:"none",cursor:"pointer",padding:0,fontFamily:"Outfit,sans-serif"}}>Login as Admin</button>
+              <button onClick={onGoAdmin} style={{fontSize:12.5,color:"var(--pp-text2)",fontWeight:600,background:"none",border:"none",cursor:"pointer",padding:0,fontFamily:"Outfit,sans-serif"}}>Login as Admin</button>
               <button onClick={()=>setDarkMode(d=>!d)} style={{background:"none",border:"1.5px solid var(--pp-border2)",borderRadius:100,padding:"5px 12px",cursor:"pointer",color:"var(--pp-text)",fontSize:12,fontWeight:600,fontFamily:"Outfit,sans-serif",display:"flex",alignItems:"center",gap:6,marginRight:8}}>{darkMode?"☀ Light":"⬛ Dark"}</button>
               <button onClick={()=>setShowLogin(true)} style={{padding:"7px 18px",borderRadius:100,fontSize:13,fontWeight:600,background:"transparent",color:"var(--pp-text)",border:"1.5px solid var(--pp-border2)",cursor:"pointer",fontFamily:"Outfit,sans-serif"}}>Sign In</button>
             </div>
@@ -336,29 +336,29 @@ function Navbar({page,setPage,user,setUser,setShowLogin,isAdmin,onGoAdmin,darkMo
         </>
       )}
       {isMobile&&(
-        <button onClick={()=>setMenuOpen(m=>!m)} style={{background:"none",border:"none",cursor:"pointer",padding:"8px",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,color:"#fff"}}>
+        <button onClick={()=>setMenuOpen(m=>!m)} style={{background:"none",border:"none",cursor:"pointer",padding:"8px",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,color:"var(--pp-text)"}}>
           {menuOpen?"✕":"☰"}
         </button>
       )}
     </nav>
     {isMobile&&menuOpen&&(
       <div style={{position:"fixed",inset:0,zIndex:190,background:"rgba(0,0,0,0.7)"}} onClick={()=>setMenuOpen(false)}>
-        <div style={{position:"absolute",top:56,left:0,right:0,background:"var(--pp-card)",borderBottom:"1px solid rgba(255,255,255,0.08)",padding:"16px 20px",display:"flex",flexDirection:"column",gap:4}} onClick={e=>e.stopPropagation()}>
+        <div style={{position:"absolute",top:56,left:0,right:0,background:"var(--pp-card)",borderBottom:"1px solid var(--pp-border)",padding:"16px 20px",display:"flex",flexDirection:"column",gap:4}} onClick={e=>e.stopPropagation()}>
           {links.map(([p,l])=>(
-            <button key={p} onClick={()=>{setPage(p);setMenuOpen(false);}} style={{padding:"12px 16px",borderRadius:10,border:"none",cursor:"pointer",background:page===p?"rgba(255,255,255,0.07)":"transparent",color:"#fff",fontWeight:page===p?700:500,fontSize:15,textAlign:"left",fontFamily:"Outfit,sans-serif"}}>
+            <button key={p} onClick={()=>{setPage(p);setMenuOpen(false);}} style={{padding:"12px 16px",borderRadius:10,border:"none",cursor:"pointer",background:page===p?"rgba(255,255,255,0.07)":"transparent",color:"var(--pp-text)",fontWeight:page===p?700:500,fontSize:15,textAlign:"left",fontFamily:"Outfit,sans-serif"}}>
               {l}
             </button>
           ))}
-          <div style={{borderTop:"1px solid rgba(255,255,255,0.08)",marginTop:8,paddingTop:8}}>
+          <div style={{borderTop:"1px solid var(--pp-border)",marginTop:8,paddingTop:8}}>
             {user?(
               <>
-                {isAdmin&&<button onClick={()=>{onGoAdmin();setMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",borderRadius:10,border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:600,color:"#fff",display:"flex",alignItems:"center",gap:9,fontFamily:"Outfit,sans-serif"}}><Shield size={14} color="#DC2626"/> Admin Dashboard</button>}
-                <button onClick={()=>{setPage("favorites");setMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",borderRadius:10,border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:600,color:"#fff",display:"flex",alignItems:"center",gap:9,fontFamily:"Outfit,sans-serif"}}><Heart size={14} color="#DC2626"/> My Favourites</button>
-                <button onClick={()=>{supabase.auth.signOut();setUser(null);setMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",borderRadius:10,border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:600,color:"rgba(255,255,255,0.4)",display:"flex",alignItems:"center",gap:9,fontFamily:"Outfit,sans-serif"}}><LogOut size={14}/> Sign Out</button>
+                {isAdmin&&<button onClick={()=>{onGoAdmin();setMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",borderRadius:10,border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:600,color:"var(--pp-text)",display:"flex",alignItems:"center",gap:9,fontFamily:"Outfit,sans-serif"}}><Shield size={14} color="#DC2626"/> Admin Dashboard</button>}
+                <button onClick={()=>{setPage("favorites");setMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",borderRadius:10,border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:600,color:"var(--pp-text)",display:"flex",alignItems:"center",gap:9,fontFamily:"Outfit,sans-serif"}}><Heart size={14} color="#DC2626"/> My Favourites</button>
+                <button onClick={()=>{supabase.auth.signOut();setUser(null);setMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",borderRadius:10,border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:600,color:"var(--pp-text2)",display:"flex",alignItems:"center",gap:9,fontFamily:"Outfit,sans-serif"}}><LogOut size={14}/> Sign Out</button>
               </>
             ):(
               <>
-                <button onClick={()=>{onGoAdmin();setMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",borderRadius:10,border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:500,color:"rgba(255,255,255,0.4)",fontFamily:"Outfit,sans-serif"}}>Login as Admin</button>
+                <button onClick={()=>{onGoAdmin();setMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",borderRadius:10,border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:500,color:"var(--pp-text2)",fontFamily:"Outfit,sans-serif"}}>Login as Admin</button>
                 <button onClick={()=>{setShowLogin(true);setMenuOpen(false);}} className="btn-red" style={{width:"100%",padding:"12px 16px",borderRadius:10,fontSize:15,marginTop:4}}>Sign In</button>
               </>
             )}
@@ -388,13 +388,13 @@ function LoginCard({mode="user",onClose,onSubmit,error}){
       setLoading(false);
     },800);
   };
-  const inp={width:"100%",padding:"11px 14px",fontSize:14,borderRadius:12,border:"1.5px solid #E2E8F0",background:"#F8FAFC",color:"#0F172A"};
+  const inp={width:"100%",padding:"11px 14px",fontSize:14,borderRadius:12,border:"1.5px solid #E2E8F0",background:"#F8FAFC",color:"var(--pp-text)"};
   return(
     <div className="glass" style={{borderRadius:24,padding:36,width:390,maxWidth:"94vw",position:"relative"}} onClick={e=>e.stopPropagation()}>
       {onClose&&<button onClick={onClose} style={{position:"absolute",top:14,right:14,background:"#F1F5F9",border:"none",borderRadius:"50%",width:30,height:30,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><X size={14}/></button>}
       <div style={{width:40,height:40,background:"#DC2626",borderRadius:11,display:"flex",alignItems:"center",justifyContent:"center",marginBottom:16}}><Car size={19} color="#fff"/></div>
-      <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:21,letterSpacing:"-0.04em",marginBottom:4,color:"#0F172A"}}>{mode==="admin"?"Pole Position Admin Console":(tab==="signup"?"Welcome aboard":"Welcome back")}</h2>
-      <p style={{color:"#64748B",fontSize:13,marginBottom:20}}>{mode==="admin"?"Sign in with your admin account":"Sign in to save favourites and track listings"}</p>
+      <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:21,letterSpacing:"-0.04em",marginBottom:4,color:"var(--pp-text)"}}>{mode==="admin"?"Pole Position Admin Console":(tab==="signup"?"Welcome aboard":"Welcome back")}</h2>
+      <p style={{color:"var(--pp-text2)",fontSize:13,marginBottom:20}}>{mode==="admin"?"Sign in with your admin account":"Sign in to save favourites and track listings"}</p>
       {mode==="user"&&(
         <div style={{display:"flex",background:"#F1F5F9",borderRadius:11,padding:3,marginBottom:20}}>
           {["login","signup"].map(t=>(
@@ -404,12 +404,12 @@ function LoginCard({mode="user",onClose,onSubmit,error}){
           ))}
         </div>
       )}
-      {mode==="user"&&tab==="signup"&&<div style={{marginBottom:12}}><label style={{fontSize:11,fontWeight:700,color:"#64748B",textTransform:"uppercase",display:"block",marginBottom:6}}>Name</label><input value={name} onChange={e=>setName(e.target.value)} placeholder="Arjun Sharma" style={inp}/></div>}
-      <div style={{marginBottom:12}}><label style={{fontSize:11,fontWeight:700,color:"#64748B",textTransform:"uppercase",display:"block",marginBottom:6}}>Email</label><input value={email} onChange={e=>setEmail(e.target.value)} type="email" placeholder="you@example.com" style={inp}/></div>
-      <div style={{marginBottom:12}}><label style={{fontSize:11,fontWeight:700,color:"#64748B",textTransform:"uppercase",display:"block",marginBottom:6}}>Password</label><input value={pass} onChange={e=>setPass(e.target.value)} type="password" placeholder="••••••••" style={inp}/></div>
+      {mode==="user"&&tab==="signup"&&<div style={{marginBottom:12}}><label style={{fontSize:11,fontWeight:700,color:"var(--pp-text2)",textTransform:"uppercase",display:"block",marginBottom:6}}>Name</label><input value={name} onChange={e=>setName(e.target.value)} placeholder="Arjun Sharma" style={inp}/></div>}
+      <div style={{marginBottom:12}}><label style={{fontSize:11,fontWeight:700,color:"var(--pp-text2)",textTransform:"uppercase",display:"block",marginBottom:6}}>Email</label><input value={email} onChange={e=>setEmail(e.target.value)} type="email" placeholder="you@example.com" style={inp}/></div>
+      <div style={{marginBottom:12}}><label style={{fontSize:11,fontWeight:700,color:"var(--pp-text2)",textTransform:"uppercase",display:"block",marginBottom:6}}>Password</label><input value={pass} onChange={e=>setPass(e.target.value)} type="password" placeholder="••••••••" style={inp}/></div>
       <label style={{display:"flex",alignItems:"center",gap:8,cursor:"pointer",marginBottom:18}}>
         <input type="checkbox" checked={remember} onChange={e=>setRemember(e.target.checked)} style={{width:15,height:15,accentColor:"#DC2626"}}/>
-        <span style={{color:"#64748B",fontSize:12.5}}>Remember me</span>
+        <span style={{color:"var(--pp-text2)",fontSize:12.5}}>Remember me</span>
       </label>
       {error&&<p style={{color:"#DC2626",fontSize:12.5,marginBottom:14}}>{error}</p>}
       <button className="btn-red" style={{width:"100%",padding:"12px",borderRadius:12,fontSize:15,opacity:loading?0.7:1,cursor:loading?"default":"pointer",display:"flex",alignItems:"center",justifyContent:"center",gap:8}} onClick={submit} disabled={loading}>
@@ -427,8 +427,8 @@ function LoginModal({onClose,onLogin}){
     <div style={{position:"fixed",inset:0,zIndex:500,background:"rgba(15,23,42,0.55)",backdropFilter:"blur(6px)",display:"flex",alignItems:"center",justifyContent:"center"}} onClick={onClose}>
       <div className="glass" style={{borderRadius:24,padding:40,width:390,maxWidth:"94vw",textAlign:"center"}} onClick={e=>e.stopPropagation()}>
         <div style={{width:52,height:52,background:"#DCFCE7",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 16px"}}><CheckCircle size={26} color="#16A34A"/></div>
-        <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,marginBottom:8,color:"#0F172A"}}>Check your email</h2>
-        <p style={{color:"#64748B",fontSize:14,lineHeight:1.6,marginBottom:24}}>We've sent a confirmation link to your email. Click it to activate your account, then come back and sign in.</p>
+        <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,marginBottom:8,color:"var(--pp-text)"}}>Check your email</h2>
+        <p style={{color:"var(--pp-text2)",fontSize:14,lineHeight:1.6,marginBottom:24}}>We've sent a confirmation link to your email. Click it to activate your account, then come back and sign in.</p>
         <button className="btn-red" style={{padding:"11px 28px",borderRadius:12,fontSize:14}} onClick={onClose}>Got it</button>
       </div>
     </div>
@@ -464,17 +464,17 @@ function CarCard({car,onFav,isFav,onClick}){
   const FB="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=800&q=80";
   return(
     <div onClick={onClick} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
-      style={{borderRadius:16,overflow:"hidden",cursor:"pointer",background:"var(--pp-card)",border:"1px solid rgba(255,255,255,0.07)",transition:"transform 0.25s",transform:hov?"translateY(-4px)":"none"}}>
+      style={{borderRadius:16,overflow:"hidden",cursor:"pointer",background:"var(--pp-card)",border:"1px solid var(--pp-border)",transition:"transform 0.25s",transform:hov?"translateY(-4px)":"none"}}>
       {/* Image section */}
       <div style={{aspectRatio:"4/3",overflow:"hidden",borderRadius:"16px 16px 0 0",position:"relative"}}>
         <img src={err?FB:(car.img||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model}
           style={{width:"100%",height:"100%",objectFit:"cover"}}/>
         {/* Fuel chip top-left */}
-        <span style={{position:"absolute",top:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"#fff",fontSize:11,fontWeight:600}}>● {car.fuel}</span>
+        <span style={{position:"absolute",top:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"var(--pp-text)",fontSize:11,fontWeight:600}}>● {car.fuel}</span>
         {/* Transmission chip top-right */}
-        <span style={{position:"absolute",top:10,right:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"#fff",fontSize:11,fontWeight:600}}>{car.transmission}</span>
+        <span style={{position:"absolute",top:10,right:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"var(--pp-text)",fontSize:11,fontWeight:600}}>{car.transmission}</span>
         {/* Year pill bottom-left */}
-        <span style={{position:"absolute",bottom:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"#fff",fontSize:11,fontWeight:600}}>{car.year}</span>
+        <span style={{position:"absolute",bottom:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"var(--pp-text)",fontSize:11,fontWeight:600}}>{car.year}</span>
         {/* Fav button */}
         <button onClick={e=>{e.stopPropagation();onFav(car.id);}} style={{position:"absolute",bottom:10,right:10,background:"rgba(0,0,0,0.5)",border:"1px solid rgba(255,255,255,0.2)",cursor:"pointer",width:30,height:30,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center"}}>
           <Heart size={12} fill={isFav?"#DC2626":"none"} color={isFav?"#DC2626":"#fff"} strokeWidth={2.2}/>
@@ -482,7 +482,7 @@ function CarCard({car,onFav,isFav,onClick}){
       </div>
       {/* Info section */}
       <div style={{padding:"16px 16px 18px"}}>
-        <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,color:"#fff",letterSpacing:"-0.03em",marginBottom:10}}>{car.make} {car.model}</div>
+        <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,color:"var(--pp-text)",letterSpacing:"-0.03em",marginBottom:10}}>{car.make} {car.model}</div>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
           <span style={{fontSize:15,color:"rgba(255,255,255,0.7)",fontWeight:600}}>{fmt(car.price)}</span>
           <div style={{width:32,height:32,borderRadius:"50%",background:"#fff",display:"flex",alignItems:"center",justifyContent:"center"}}>
@@ -510,18 +510,18 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
         </div>
         {/* Content */}
         <div style={{position:"relative",zIndex:1,textAlign:"center",padding:"0 24px"}}>
-          <div style={{fontSize:12,fontWeight:700,letterSpacing:"0.15em",color:"rgba(255,255,255,0.4)",marginBottom:20,textTransform:"uppercase"}}>Hyderabad's Premier Used Car Marketplace</div>
-          <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:"clamp(40px,8vw,80px)",color:"#fff",letterSpacing:"-0.04em",lineHeight:1.05,marginBottom:24}}>
+          <div style={{fontSize:12,fontWeight:700,letterSpacing:"0.15em",color:"var(--pp-text2)",marginBottom:20,textTransform:"uppercase"}}>Hyderabad's Premier Used Car Marketplace</div>
+          <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:"clamp(40px,8vw,80px)",color:"var(--pp-text)",letterSpacing:"-0.04em",lineHeight:1.05,marginBottom:24}}>
             Find Your Perfect<br/>Used Car.
           </h1>
-          <p style={{color:"rgba(255,255,255,0.4)",fontSize:16,marginBottom:40,maxWidth:440,margin:"0 auto 40px"}}>
+          <p style={{color:"var(--pp-text2)",fontSize:16,marginBottom:40,maxWidth:440,margin:"0 auto 40px"}}>
             Every car independently inspected and scored. No hidden surprises.
           </p>
           <div style={{display:"flex",gap:12,justifyContent:"center"}}>
             <button onClick={()=>setPage("browse")} style={{padding:"13px 28px",borderRadius:100,fontSize:14,fontWeight:700,background:"#fff",color:"#000",border:"none",cursor:"pointer",fontFamily:"Outfit,sans-serif",display:"flex",alignItems:"center",gap:6}}>
               Browse Cars <span style={{fontSize:16}}>→</span>
             </button>
-            <button onClick={()=>setPage("quiz")} style={{padding:"13px 28px",borderRadius:100,fontSize:14,fontWeight:700,background:"transparent",color:"#fff",border:"1.5px solid rgba(255,255,255,0.2)",cursor:"pointer",fontFamily:"Outfit,sans-serif"}}>
+            <button onClick={()=>setPage("quiz")} style={{padding:"13px 28px",borderRadius:100,fontSize:14,fontWeight:700,background:"transparent",color:"var(--pp-text)",border:"1.5px solid rgba(255,255,255,0.2)",cursor:"pointer",fontFamily:"Outfit,sans-serif"}}>
               Find My Match
             </button>
           </div>
@@ -533,8 +533,8 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
         <div style={{maxWidth:1200,margin:"0 auto"}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:32}}>
             <div>
-              <div style={{color:"rgba(255,255,255,0.4)",fontSize:12,fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:8}}>Curated Picks</div>
-              <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:32,letterSpacing:"-0.03em",color:"#fff"}}>Top Picks</h2>
+              <div style={{color:"var(--pp-text2)",fontSize:12,fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:8}}>Curated Picks</div>
+              <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:32,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>Top Picks</h2>
             </div>
             <button onClick={()=>setPage("browse")} style={{display:"flex",alignItems:"center",gap:6,padding:"9px 18px",borderRadius:100,border:"1px solid rgba(255,255,255,0.15)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13.5,color:"rgba(255,255,255,0.7)"}}>
               View all <ArrowRight size={14}/>
@@ -547,12 +547,12 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
       </div>
 
       {/* Stats */}
-      <div style={{background:"var(--pp-card)",padding:"60px 32px",borderTop:"1px solid rgba(255,255,255,0.07)",borderBottom:"1px solid rgba(255,255,255,0.07)"}}>
+      <div style={{background:"var(--pp-card)",padding:"60px 32px",borderTop:"1px solid var(--pp-border)",borderBottom:"1px solid var(--pp-border)"}}>
         <div style={{maxWidth:900,margin:"0 auto",display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:32,textAlign:"center"}}>
           {[[cars.length+"+ Cars","In our showroom"],[cars.filter(c=>c.score>=85).length,"Scored 85+"],["100%","Inspected"]].map(([n,l])=>(
             <div key={l}>
-              <div style={{color:"#fff",fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:44,letterSpacing:"-0.04em",marginBottom:6}}>{n}</div>
-              <div style={{color:"rgba(255,255,255,0.4)",fontSize:14,fontWeight:500}}>{l}</div>
+              <div style={{color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:44,letterSpacing:"-0.04em",marginBottom:6}}>{n}</div>
+              <div style={{color:"var(--pp-text2)",fontSize:14,fontWeight:500}}>{l}</div>
             </div>
           ))}
         </div>
@@ -563,8 +563,8 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
         <div style={{maxWidth:1100,margin:"0 auto"}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:28}}>
             <div>
-              <div style={{color:"rgba(255,255,255,0.4)",fontSize:12,fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:8}}>From the Blog</div>
-              <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:28,letterSpacing:"-0.03em",color:"#fff"}}>Expert Reviews & Guides</h2>
+              <div style={{color:"var(--pp-text2)",fontSize:12,fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:8}}>From the Blog</div>
+              <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:28,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>Expert Reviews & Guides</h2>
             </div>
             <button onClick={()=>setPage("blog")} style={{display:"flex",alignItems:"center",gap:6,padding:"9px 18px",borderRadius:100,border:"1px solid rgba(255,255,255,0.15)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13.5,color:"rgba(255,255,255,0.7)"}}>
               All articles <ArrowRight size={14}/>
@@ -572,12 +572,12 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
           </div>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))",gap:20}}>
             {blog.slice(0,3).map(p=>(
-              <div key={p.id} style={{background:"var(--pp-card)",borderRadius:16,overflow:"hidden",border:"1px solid rgba(255,255,255,0.07)",cursor:"pointer"}} onClick={()=>setPage("blog")}>
+              <div key={p.id} style={{background:"var(--pp-card)",borderRadius:16,overflow:"hidden",border:"1px solid var(--pp-border)",cursor:"pointer"}} onClick={()=>setPage("blog")}>
                 <img src={p.img} alt="" style={{width:"100%",height:180,objectFit:"cover"}} onError={e=>e.target.style.display="none"}/>
                 <div style={{padding:"16px 18px"}}>
                   <span style={{background:TAG_COLORS[p.tag]+"22",color:TAG_COLORS[p.tag],fontSize:10.5,fontWeight:700,padding:"3px 9px",borderRadius:20}}>{p.tag}</span>
-                  <p style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15.5,marginTop:10,letterSpacing:"-0.02em",lineHeight:1.3,color:"#fff"}}>{p.title}</p>
-                  <div style={{marginTop:10,fontSize:12,color:"rgba(255,255,255,0.4)"}}>{p.author} · {p.readTime} read</div>
+                  <p style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15.5,marginTop:10,letterSpacing:"-0.02em",lineHeight:1.3,color:"var(--pp-text)"}}>{p.title}</p>
+                  <div style={{marginTop:10,fontSize:12,color:"var(--pp-text2)"}}>{p.author} · {p.readTime} read</div>
                 </div>
               </div>
             ))}
@@ -586,12 +586,12 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
       </div>
 
       {/* Footer */}
-      <div style={{background:"var(--pp-bg)",borderTop:"1px solid rgba(255,255,255,0.07)",padding:"40px 32px",textAlign:"center"}}>
+      <div style={{background:"var(--pp-bg)",borderTop:"1px solid var(--pp-border)",padding:"40px 32px",textAlign:"center"}}>
         <div style={{display:"flex",alignItems:"center",gap:8,justifyContent:"center",marginBottom:12}}>
           <div style={{width:28,height:28,background:"#DC2626",borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center"}}><Car size={14} color="#fff"/></div>
-          <span style={{color:"#fff",fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:15}}>Pole<span style={{fontWeight:900}}>Position</span></span>
+          <span style={{color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:15}}>Pole<span style={{fontWeight:900}}>Position</span></span>
         </div>
-        <p style={{color:"rgba(255,255,255,0.3)",fontSize:13}}>© 2025 Pole Position. Hyderabad's #1 trusted used car marketplace.</p>
+        <p style={{color:"var(--pp-text3)",fontSize:13}}>© 2025 Pole Position. Hyderabad's #1 trusted used car marketplace.</p>
       </div>
     </div>
   );
@@ -606,23 +606,23 @@ function BrowseCarCard({car,onFav,isFav,onClick}){
   const FB="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=800&q=80";
   return(
     <div onClick={onClick} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
-      style={{background:"var(--pp-card)",borderRadius:16,border:"1px solid rgba(255,255,255,0.07)",overflow:"hidden",cursor:"pointer",transition:"transform 0.25s",transform:hov?"translateY(-4px)":"none"}}>
+      style={{background:"var(--pp-card)",borderRadius:16,border:"1px solid var(--pp-border)",overflow:"hidden",cursor:"pointer",transition:"transform 0.25s",transform:hov?"translateY(-4px)":"none"}}>
       <div style={{position:"relative",aspectRatio:"4/3",overflow:"hidden",borderRadius:"16px 16px 0 0"}}>
         <img src={err?FB:(car.img||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model} style={{width:"100%",height:"100%",objectFit:"cover"}}/>
         {/* Fuel chip top-left */}
-        <span style={{position:"absolute",top:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"#fff",fontSize:11,fontWeight:600}}>● {car.fuel}</span>
+        <span style={{position:"absolute",top:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"var(--pp-text)",fontSize:11,fontWeight:600}}>● {car.fuel}</span>
         {/* Transmission chip top-right */}
-        <span style={{position:"absolute",top:10,right:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"#fff",fontSize:11,fontWeight:600}}>{car.transmission}</span>
+        <span style={{position:"absolute",top:10,right:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"var(--pp-text)",fontSize:11,fontWeight:600}}>{car.transmission}</span>
         {/* Year pill bottom-left */}
-        <span style={{position:"absolute",bottom:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"#fff",fontSize:11,fontWeight:600}}>{car.year}</span>
+        <span style={{position:"absolute",bottom:10,left:10,background:"rgba(0,0,0,0.6)",borderRadius:100,padding:"4px 10px",color:"var(--pp-text)",fontSize:11,fontWeight:600}}>{car.year}</span>
         {/* Fav button */}
         <button onClick={e=>{e.stopPropagation();onFav(car.id);}} style={{position:"absolute",bottom:10,right:10,width:30,height:30,borderRadius:"50%",border:"1px solid rgba(255,255,255,0.2)",background:"rgba(0,0,0,0.5)",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
           <Heart size={12} fill={isFav?"#DC2626":"none"} color={isFav?"#DC2626":"#fff"}/>
         </button>
       </div>
       <div style={{padding:"16px 16px 18px"}}>
-        <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,color:"#fff",letterSpacing:"-0.03em",marginBottom:4}}>{car.make} {car.model}</div>
-        {car.variant&&<div style={{color:"rgba(255,255,255,0.4)",fontSize:12,fontWeight:600,marginBottom:10}}>{car.variant}</div>}
+        <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,color:"var(--pp-text)",letterSpacing:"-0.03em",marginBottom:4}}>{car.make} {car.model}</div>
+        {car.variant&&<div style={{color:"var(--pp-text2)",fontSize:12,fontWeight:600,marginBottom:10}}>{car.variant}</div>}
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:10}}>
           <span style={{fontSize:15,color:"rgba(255,255,255,0.7)",fontWeight:600}}>{fmt(car.price)}</span>
           <div style={{width:32,height:32,borderRadius:"50%",background:"#fff",display:"flex",alignItems:"center",justifyContent:"center"}}>
@@ -636,9 +636,9 @@ function BrowseCarCard({car,onFav,isFav,onClick}){
 
 function FilterCard({title,onReset,children}){
   return(
-    <div style={{background:"var(--pp-card)",borderRadius:16,border:"1px solid rgba(255,255,255,0.07)",padding:18}}>
+    <div style={{background:"var(--pp-card)",borderRadius:16,border:"1px solid var(--pp-border)",padding:18}}>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
-        <span style={{fontWeight:700,fontSize:13.5,color:"#fff"}}>{title}</span>
+        <span style={{fontWeight:700,fontSize:13.5,color:"var(--pp-text)"}}>{title}</span>
         {onReset&&<button onClick={onReset} style={{color:"#DC2626",fontSize:12,fontWeight:600,background:"none",border:"none",cursor:"pointer"}}>Reset</button>}
       </div>
       {children}
@@ -720,14 +720,14 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
       <div style={{maxWidth:1280,margin:"0 auto",padding:"0 24px 70px"}}>
 
         <div style={{display:"flex",alignItems:"center",gap:14,marginBottom:28}}>
-          <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:32,letterSpacing:"-0.03em",color:"#fff"}}>Our Collection</h1>
-          <span style={{background:"#DC2626",color:"#fff",padding:"5px 14px",borderRadius:100,fontWeight:700,fontSize:14}}>{filtered.length}</span>
+          <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:32,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>Our Collection</h1>
+          <span style={{background:"#DC2626",color:"var(--pp-text)",padding:"5px 14px",borderRadius:100,fontWeight:700,fontSize:14}}>{filtered.length}</span>
         </div>
 
         <div style={{display:"flex",gap:26,alignItems:"flex-start"}}>
           {/* ── Filter sidebar ── */}
           {(!isMobile||showMobileFilters)&&(<div style={{width:268,flexShrink:0,display:"flex",flexDirection:"column",gap:16,...(isMobile?{position:"fixed",top:0,left:0,bottom:0,zIndex:400,width:300,background:"var(--pp-card)",overflowY:"auto",padding:"70px 16px 20px",boxShadow:"0 0 40px rgba(0,0,0,0.8)"}:{position:"sticky",top:90,maxHeight:"calc(100vh - 110px)",overflowY:"auto",paddingRight:4})}}>
-          {isMobile&&showMobileFilters&&<button onClick={()=>setShowMobileFilters(false)} style={{position:"fixed",top:20,right:20,zIndex:401,background:"rgba(255,255,255,0.1)",border:"none",borderRadius:"50%",width:34,height:34,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff"}}><X size={16}/></button>}
+          {isMobile&&showMobileFilters&&<button onClick={()=>setShowMobileFilters(false)} style={{position:"fixed",top:20,right:20,zIndex:401,background:"var(--pp-chip)",border:"none",borderRadius:"50%",width:34,height:34,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--pp-text)"}}><X size={16}/></button>}
 
             <FilterCard title="Make & Model" onReset={selModels.length>0?()=>setSelModels([]):null}>
               <div style={{display:"flex",flexDirection:"column",gap:6}}>
@@ -736,7 +736,7 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
                   const isOpen=openMake===make;
                   const selectedCount=models.filter(m=>selModels.includes(make+"|"+m)).length;
                   return(
-                    <div key={make} style={{border:"1px solid rgba(255,255,255,0.08)",borderRadius:11,overflow:"hidden"}}>
+                    <div key={make} style={{border:"1px solid var(--pp-border)",borderRadius:11,overflow:"hidden"}}>
                       <button onClick={()=>setOpenMake(isOpen?null:make)} style={{width:"100%",display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 12px",background:selectedCount>0?"rgba(220,38,38,0.1)":"rgba(255,255,255,0.03)",border:"none",cursor:"pointer"}}>
                         <span style={{fontSize:13,fontWeight:600,color:selectedCount>0?"#DC2626":"#fff"}}>{make}{selectedCount>0?" ("+selectedCount+")":""}</span>
                         <ChevronDown size={14} color="rgba(255,255,255,0.4)" style={{transform:isOpen?"rotate(180deg)":"none",transition:"transform 0.15s"}}/>
@@ -766,9 +766,9 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
                 {histBars.map((h,i)=><div key={i} style={{flex:1,height:h+"%",background:"rgba(220,38,38,0.5)",borderRadius:2}}/>)}
               </div>
               <div style={{display:"flex",gap:8,alignItems:"center"}}>
-                <input type="number" value={priceMin} onChange={e=>setPriceMin(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"#fff",fontSize:12}}/>
-                <span style={{color:"rgba(255,255,255,0.3)",fontSize:12}}>–</span>
-                <input type="number" value={priceMax} onChange={e=>setPriceMax(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"#fff",fontSize:12}}/>
+                <input type="number" value={priceMin} onChange={e=>setPriceMin(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"var(--pp-text)",fontSize:12}}/>
+                <span style={{color:"var(--pp-text3)",fontSize:12}}>–</span>
+                <input type="number" value={priceMax} onChange={e=>setPriceMax(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"var(--pp-text)",fontSize:12}}/>
               </div>
             </FilterCard>
 
@@ -778,19 +778,19 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
 
             <FilterCard title="KM Driven" onReset={(kmMin>floorKm||kmMax<ceilKm)?()=>{setKmMin(floorKm);setKmMax(ceilKm);}:null}>
               <div style={{display:"flex",gap:8,alignItems:"center"}}>
-                <input type="number" value={kmMin} onChange={e=>setKmMin(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"#fff",fontSize:12}}/>
-                <span style={{color:"rgba(255,255,255,0.3)",fontSize:12}}>–</span>
-                <input type="number" value={kmMax} onChange={e=>setKmMax(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"#fff",fontSize:12}}/>
+                <input type="number" value={kmMin} onChange={e=>setKmMin(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"var(--pp-text)",fontSize:12}}/>
+                <span style={{color:"var(--pp-text3)",fontSize:12}}>–</span>
+                <input type="number" value={kmMax} onChange={e=>setKmMax(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"var(--pp-text)",fontSize:12}}/>
               </div>
             </FilterCard>
 
             <FilterCard title="Year" onReset={(yearMin>floorYear||yearMax<ceilYear)?()=>{setYearMin(floorYear);setYearMax(ceilYear);}:null}>
               <div style={{display:"flex",justifyContent:"space-between",marginBottom:16}}>
-                <span style={{fontSize:12.5,fontWeight:700,color:"#fff"}}>{yearMin}</span>
-                <span style={{fontSize:12.5,fontWeight:700,color:"#fff"}}>{yearMax}</span>
+                <span style={{fontSize:12.5,fontWeight:700,color:"var(--pp-text)"}}>{yearMin}</span>
+                <span style={{fontSize:12.5,fontWeight:700,color:"var(--pp-text)"}}>{yearMax}</span>
               </div>
               <div style={{position:"relative",height:20}}>
-                <div style={{position:"absolute",top:8,left:0,right:0,height:4,background:"rgba(255,255,255,0.1)",borderRadius:2}}/>
+                <div style={{position:"absolute",top:8,left:0,right:0,height:4,background:"var(--pp-chip)",borderRadius:2}}/>
                 <div style={{position:"absolute",top:8,height:4,background:"#DC2626",borderRadius:2,left:yearPct(yearMin)+"%",right:(100-yearPct(yearMax))+"%"}}/>
                 <input type="range" className="range-dual" min={floorYear} max={ceilYear} value={yearMin} onChange={e=>setYearMin(Math.min(Number(e.target.value),yearMax))} style={{zIndex:3}}/>
                 <input type="range" className="range-dual" min={floorYear} max={ceilYear} value={yearMax} onChange={e=>setYearMax(Math.max(Number(e.target.value),yearMin))} style={{zIndex:4}}/>
@@ -819,7 +819,7 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:20}}>
               {filtered.map(c=><BrowseCarCard key={c.id} car={c} onFav={toggleFav} isFav={favs.includes(c.id)} onClick={()=>{setSelectedCar(c);}}/>)}
             </div>
-            {filtered.length===0&&<div style={{textAlign:"center",padding:"80px 0",color:"rgba(255,255,255,0.3)"}}>No cars match your filters.</div>}
+            {filtered.length===0&&<div style={{textAlign:"center",padding:"80px 0",color:"var(--pp-text3)"}}>No cars match your filters.</div>}
           </div>
         </div>
       </div>
@@ -888,7 +888,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
         <div style={{flex:1,textAlign:"center",fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:16,letterSpacing:"-0.03em"}}>
           Pole<span style={{color:"#E87722"}}>Position</span>
         </div>
-        <button style={{background:"none",border:"none",cursor:"pointer",color:"#0F172A",flexShrink:0,fontSize:20,lineHeight:1}}>☰</button>
+        <button style={{background:"none",border:"none",cursor:"pointer",color:"var(--pp-text)",flexShrink:0,fontSize:20,lineHeight:1}}>☰</button>
       </div>
 
       {/* Hero image — full width, edge to edge */}
@@ -898,12 +898,12 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
         ):(
           <img src={err?FB:(gallery[activeImg]?.url||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model} style={{width:"100%",height:"100%",objectFit:"cover"}}/>
         )}
-        {car.badge&&<div style={{position:"absolute",top:14,left:14,background:"#E87722",padding:"5px 14px",borderRadius:100,fontSize:12,fontWeight:700,color:"#fff"}}>{BADGE[car.badge]?.label||car.badge}</div>}
+        {car.badge&&<div style={{position:"absolute",top:14,left:14,background:"#E87722",padding:"5px 14px",borderRadius:100,fontSize:12,fontWeight:700,color:"var(--pp-text)"}}>{BADGE[car.badge]?.label||car.badge}</div>}
         {gallery.length>1&&(
           <>
             <button onClick={()=>setActiveImg(i=>(i-1+gallery.length)%gallery.length)} style={{position:"absolute",left:12,top:"50%",transform:"translateY(-50%)",width:32,height:32,borderRadius:"50%",background:"rgba(0,0,0,0.45)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><ChevronLeft size={16} color="#fff"/></button>
             <button onClick={()=>setActiveImg(i=>(i+1)%gallery.length)} style={{position:"absolute",right:12,top:"50%",transform:"translateY(-50%)",width:32,height:32,borderRadius:"50%",background:"rgba(0,0,0,0.45)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><ChevronRight size={16} color="#fff"/></button>
-            <div style={{position:"absolute",bottom:12,right:12,background:"rgba(0,0,0,0.55)",borderRadius:20,padding:"3px 10px",fontSize:12,fontWeight:700,color:"#fff"}}>{activeImg+1} / {gallery.length}</div>
+            <div style={{position:"absolute",bottom:12,right:12,background:"rgba(0,0,0,0.55)",borderRadius:20,padding:"3px 10px",fontSize:12,fontWeight:700,color:"var(--pp-text)"}}>{activeImg+1} / {gallery.length}</div>
           </>
         )}
       </div>
@@ -919,12 +919,12 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
 
       {/* Info block */}
       <div style={{padding:"14px 16px 0",background:"#fff"}}>
-        <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:22,letterSpacing:"-0.03em",color:"#0F172A",marginBottom:8}}>{car.make} {car.model}{car.variant?` ${car.variant}`:""}</h1>
+        <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:22,letterSpacing:"-0.03em",color:"var(--pp-text)",marginBottom:8}}>{car.make} {car.model}{car.variant?` ${car.variant}`:""}</h1>
         <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
-          <span style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:28,letterSpacing:"-0.03em",color:"#0F172A"}}>{fmt(car.price)}</span>
-          {car.tagline&&<span style={{background:"#F1F5F9",borderRadius:20,padding:"3px 10px",fontSize:11.5,fontWeight:600,color:"#64748B"}}>{car.tagline}</span>}
+          <span style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:28,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>{fmt(car.price)}</span>
+          {car.tagline&&<span style={{background:"#F1F5F9",borderRadius:20,padding:"3px 10px",fontSize:11.5,fontWeight:600,color:"var(--pp-text2)"}}>{car.tagline}</span>}
         </div>
-        <div style={{display:"flex",alignItems:"center",gap:6,color:"#94A3B8",fontSize:12.5,marginBottom:14,flexWrap:"wrap"}}>
+        <div style={{display:"flex",alignItems:"center",gap:6,color:"var(--pp-text3)",fontSize:12.5,marginBottom:14,flexWrap:"wrap"}}>
           <Eye size={13}/><span>{viewsToday} views today</span>
           <span style={{color:"#E2E8F0"}}>·</span>
           <span>{fmtKm(car.km)}</span>
@@ -951,7 +951,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
             <div style={{background:"#fff",borderRadius:14,padding:"18px 16px",marginBottom:14}}>
               <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:14}}>
                 <Star size={16} color="#E87722" fill="#E87722"/>
-                <span style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:16,color:"#0F172A"}}>Why This Car?</span>
+                <span style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:16,color:"var(--pp-text)"}}>Why This Car?</span>
               </div>
               {highlights.map((h,i)=>(
                 <div key={i} style={{display:"flex",alignItems:"flex-start",gap:10,marginBottom:10}}>
@@ -961,12 +961,12 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
               ))}
             </div>
             <div style={{background:"#fff",borderRadius:14,padding:"18px 16px"}}>
-              <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:16,color:"#0F172A",marginBottom:14}}>Quick Specs</div>
+              <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:16,color:"var(--pp-text)",marginBottom:14}}>Quick Specs</div>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
                 {[["Year",car.year],["Fuel Type",car.fuel],["Seats",car.seats+" seats"],["Transmission",car.transmission],["Kilometres",fmtKm(car.km)],["Owners",car.owners+" owner"+(car.owners>1?"s":"")]].map(([l,v])=>(
-                  <div key={l} style={{border:"1px solid #E2E8F0",borderRadius:12,padding:"12px 14px"}}>
-                    <div style={{color:"#94A3B8",fontSize:11,fontWeight:600,marginBottom:4}}>{l}</div>
-                    <div style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,color:"#0F172A"}}>{v}</div>
+                  <div key={l} style={{border:"1px solid var(--pp-border)",borderRadius:12,padding:"12px 14px"}}>
+                    <div style={{color:"var(--pp-text3)",fontSize:11,fontWeight:600,marginBottom:4}}>{l}</div>
+                    <div style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,color:"var(--pp-text)"}}>{v}</div>
                   </div>
                 ))}
               </div>
@@ -977,8 +977,8 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
           <div style={{background:"#fff",borderRadius:14,padding:"40px 20px",textAlign:"center"}}>
             <Lock size={28} color="#94A3B8" style={{margin:"0 auto 14px"}}/>
             <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:17,marginBottom:8}}>Sign in to unlock</div>
-            <p style={{color:"#64748B",fontSize:13.5,marginBottom:20}}>This section is available to registered users.</p>
-            <button onClick={()=>setShowLogin(true)} style={{background:"#E87722",color:"#fff",border:"none",borderRadius:50,padding:"12px 28px",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:14,cursor:"pointer"}}>Sign In</button>
+            <p style={{color:"var(--pp-text2)",fontSize:13.5,marginBottom:20}}>This section is available to registered users.</p>
+            <button onClick={()=>setShowLogin(true)} style={{background:"#E87722",color:"var(--pp-text)",border:"none",borderRadius:50,padding:"12px 28px",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:14,cursor:"pointer"}}>Sign In</button>
           </div>
         )}
         {tab==="inspection"&&user&&(
@@ -1013,8 +1013,8 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
           <div style={{background:"#fff",borderRadius:14,overflow:"hidden"}}>
             {[["Make",car.make],["Model",car.model],["Year",car.year],["Fuel",car.fuel],["Transmission",car.transmission],["KM Driven",fmtKm(car.km)],["Seats",car.seats],["Owners",car.owners],["Price",fmt(car.price)],["Insurance",car.insurance||"—"]].map(([l,v],i)=>(
               <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"13px 16px",borderBottom:"1px solid #F1F5F9",background:i%2?"#F8FAFC":"#fff"}}>
-                <span style={{color:"#64748B",fontSize:13.5}}>{l}</span>
-                <span style={{fontWeight:700,fontSize:13.5,color:"#0F172A"}}>{v}</span>
+                <span style={{color:"var(--pp-text2)",fontSize:13.5}}>{l}</span>
+                <span style={{fontWeight:700,fontSize:13.5,color:"var(--pp-text)"}}>{v}</span>
               </div>
             ))}
           </div>
@@ -1023,7 +1023,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
 
       {/* Fixed bottom enquire bar */}
       <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:150,padding:"12px 16px",background:"#fff",borderTop:"1px solid #F1F5F9"}}>
-        <button onClick={openEnquiry} style={{width:"100%",background:"#E87722",color:"#fff",border:"none",borderRadius:50,padding:"15px",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",gap:10}}>
+        <button onClick={openEnquiry} style={{width:"100%",background:"#E87722",color:"var(--pp-text)",border:"none",borderRadius:50,padding:"15px",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",gap:10}}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
           Enquire Now
         </button>
@@ -1034,10 +1034,10 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
         <div style={{position:"fixed",inset:0,zIndex:600,background:"rgba(15,23,42,0.6)",display:"flex",alignItems:"flex-end",justifyContent:"center"}} onClick={()=>setShowEnquiryModal(false)}>
           <div style={{background:"#fff",borderRadius:"20px 20px 0 0",padding:"28px 20px 36px",width:"100%"}} onClick={e=>e.stopPropagation()}>
             <div style={{width:40,height:4,background:"#E2E8F0",borderRadius:4,margin:"0 auto 20px"}}/>
-            <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,marginBottom:6,color:"#0F172A"}}>Get in Touch</h2>
-            <p style={{color:"#64748B",fontSize:13.5,marginBottom:20}}>We'll connect you with the seller via WhatsApp.</p>
-            <label style={{fontSize:11,fontWeight:700,color:"#64748B",textTransform:"uppercase",display:"block",marginBottom:6}}>Phone Number</label>
-            <input value={enquiryPhone} onChange={e=>setEnquiryPhone(e.target.value)} placeholder="+91 98765 43210" type="tel" style={{width:"100%",padding:"13px 14px",fontSize:15,borderRadius:12,border:"1.5px solid #E2E8F0",background:"#F8FAFC",color:"#0F172A",fontFamily:"Outfit,sans-serif",outline:"none",boxSizing:"border-box",marginBottom:16}}/>
+            <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,marginBottom:6,color:"var(--pp-text)"}}>Get in Touch</h2>
+            <p style={{color:"var(--pp-text2)",fontSize:13.5,marginBottom:20}}>We'll connect you with the seller via WhatsApp.</p>
+            <label style={{fontSize:11,fontWeight:700,color:"var(--pp-text2)",textTransform:"uppercase",display:"block",marginBottom:6}}>Phone Number</label>
+            <input value={enquiryPhone} onChange={e=>setEnquiryPhone(e.target.value)} placeholder="+91 98765 43210" type="tel" style={{width:"100%",padding:"13px 14px",fontSize:15,borderRadius:12,border:"1.5px solid #E2E8F0",background:"#F8FAFC",color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",outline:"none",boxSizing:"border-box",marginBottom:16}}/>
             <button disabled={enquirySubmitting||!enquiryPhone} onClick={async()=>{
               setEnquirySubmitting(true);
               try{await supabase.from("enquiries").insert({car_id:car.id,name:user,email:userEmail||"",phone:enquiryPhone,listing_url:window.location.href,car_title:`${car.make} ${car.model} ${car.year}`});}catch(e){}
@@ -1057,7 +1057,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
   return(
     <div style={{paddingTop:56,minHeight:"100vh",background:"var(--pp-bg)",overflowX:"hidden"}}>
       <div style={{maxWidth:1100,margin:"0 auto",padding:"24px 28px 0"}}>
-        <button onClick={()=>setPage("browse")} style={{display:"flex",alignItems:"center",gap:6,background:"none",border:"none",cursor:"pointer",color:"rgba(255,255,255,0.5)",fontSize:13,fontWeight:600,marginBottom:18}}>
+        <button onClick={()=>setPage("browse")} style={{display:"flex",alignItems:"center",gap:6,background:"none",border:"none",cursor:"pointer",color:"var(--pp-text2)",fontSize:13,fontWeight:600,marginBottom:18}}>
           <ChevronLeft size={15}/> Back to results
         </button>
         <div style={{display:"grid",gridTemplateColumns:"1fr 360px",gap:30,alignItems:"flex-start"}}>
@@ -1068,12 +1068,12 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
               ):(
                 <img src={err?FB:(gallery[activeImg]?.url||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model} style={{width:"100%",maxHeight:600,objectFit:"cover"}}/>
               )}
-              {car.badge&&<div style={{position:"absolute",top:16,left:16,background:BADGE[car.badge]?.bg||"#DC2626",padding:"5px 14px",borderRadius:100,fontSize:12,fontWeight:700,color:"#fff"}}>{BADGE[car.badge]?.label||car.badge}</div>}
+              {car.badge&&<div style={{position:"absolute",top:16,left:16,background:BADGE[car.badge]?.bg||"#DC2626",padding:"5px 14px",borderRadius:100,fontSize:12,fontWeight:700,color:"var(--pp-text)"}}>{BADGE[car.badge]?.label||car.badge}</div>}
               {gallery.length>1&&(
                 <>
                   <button onClick={()=>setActiveImg(i=>(i-1+gallery.length)%gallery.length)} style={{position:"absolute",left:14,top:"50%",transform:"translateY(-50%)",width:36,height:36,borderRadius:"50%",background:"rgba(0,0,0,0.55)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><ChevronLeft size={18} color="#fff"/></button>
                   <button onClick={()=>setActiveImg(i=>(i+1)%gallery.length)} style={{position:"absolute",right:14,top:"50%",transform:"translateY(-50%)",width:36,height:36,borderRadius:"50%",background:"rgba(0,0,0,0.55)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><ChevronRight size={18} color="#fff"/></button>
-                  <div style={{position:"absolute",bottom:14,right:14,background:"rgba(0,0,0,0.7)",borderRadius:20,padding:"4px 12px",fontSize:12,fontWeight:700,color:"#fff"}}>{activeImg+1} / {gallery.length}</div>
+                  <div style={{position:"absolute",bottom:14,right:14,background:"rgba(0,0,0,0.7)",borderRadius:20,padding:"4px 12px",fontSize:12,fontWeight:700,color:"var(--pp-text)"}}>{activeImg+1} / {gallery.length}</div>
                 </>
               )}
             </div>
@@ -1087,31 +1087,31 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
             </div>
           </div>
           {/* Info sidebar */}
-          <div style={{background:"var(--pp-card)",borderRadius:16,border:"1px solid rgba(255,255,255,0.08)",padding:24,position:"sticky",top:76}}>
+          <div style={{background:"var(--pp-card)",borderRadius:16,border:"1px solid var(--pp-border)",padding:24,position:"sticky",top:76}}>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:10,marginBottom:6}}>
-              <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:22,letterSpacing:"-0.03em",lineHeight:1.15,color:"#fff"}}>{car.make} {car.model}{car.variant&&<span style={{color:"rgba(255,255,255,0.4)",fontWeight:700}}> {car.variant}</span>}</h1>
+              <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:22,letterSpacing:"-0.03em",lineHeight:1.15,color:"var(--pp-text)"}}>{car.make} {car.model}{car.variant&&<span style={{color:"var(--pp-text2)",fontWeight:700}}> {car.variant}</span>}</h1>
               <div style={{display:"flex",gap:6,flexShrink:0}}>
                 <button onClick={()=>onFav(car.id)} style={{width:34,height:34,borderRadius:10,border:"1px solid rgba(255,255,255,0.12)",background:"transparent",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><Heart size={15} fill={isFav?"#DC2626":"none"} color={isFav?"#DC2626":"rgba(255,255,255,0.5)"}/></button>
                 <button style={{width:34,height:34,borderRadius:10,border:"1px solid rgba(255,255,255,0.12)",background:"transparent",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><Share2 size={14} color="rgba(255,255,255,0.5)"/></button>
               </div>
             </div>
-            <p style={{color:"rgba(255,255,255,0.4)",fontSize:13,marginBottom:18}}>{car.tagline}</p>
+            <p style={{color:"var(--pp-text2)",fontSize:13,marginBottom:18}}>{car.tagline}</p>
             <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:5}}>
-              <span style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:28,letterSpacing:"-0.03em",color:"#fff"}}>{fmt(car.price)}</span>
-              <div style={{textAlign:"center"}}><ScoreRing score={car.score} size={52}/><div style={{color:"rgba(255,255,255,0.4)",fontSize:9,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.05em",marginTop:3}}>PP Score</div></div>
+              <span style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:28,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>{fmt(car.price)}</span>
+              <div style={{textAlign:"center"}}><ScoreRing score={car.score} size={52}/><div style={{color:"var(--pp-text2)",fontSize:9,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.05em",marginTop:3}}>PP Score</div></div>
             </div>
-            <div style={{display:"flex",alignItems:"center",gap:5,color:"rgba(255,255,255,0.4)",fontSize:12,marginBottom:16}}><Eye size={13}/> {viewsToday} views today</div>
-            <div style={{background:"rgba(255,255,255,0.05)",borderRadius:12,padding:"11px 14px",marginBottom:18,display:"flex",alignItems:"center",gap:9,border:"1px solid rgba(255,255,255,0.07)"}}>
+            <div style={{display:"flex",alignItems:"center",gap:5,color:"var(--pp-text2)",fontSize:12,marginBottom:16}}><Eye size={13}/> {viewsToday} views today</div>
+            <div style={{background:"rgba(255,255,255,0.05)",borderRadius:12,padding:"11px 14px",marginBottom:18,display:"flex",alignItems:"center",gap:9,border:"1px solid var(--pp-border)"}}>
               <BarChart2 size={14} color="rgba(255,255,255,0.4)"/>
-              <span style={{fontSize:12.5,color:"rgba(255,255,255,0.5)",fontWeight:600}}>EMI from ₹{emi.toLocaleString("en-IN")}/month</span>
+              <span style={{fontSize:12.5,color:"var(--pp-text2)",fontWeight:600}}>EMI from ₹{emi.toLocaleString("en-IN")}/month</span>
             </div>
             <button onClick={openEnquiry} style={{width:"100%",padding:"13px",borderRadius:100,fontSize:15,marginBottom:22,background:"#fff",color:"#000",border:"none",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:700}}>{enquired?"Enquiry Sent ✓":"Enquire Now →"}</button>
-            <div style={{fontWeight:700,fontSize:13,marginBottom:11,color:"#fff"}}>Inspection Snapshot</div>
+            <div style={{fontWeight:700,fontSize:13,marginBottom:11,color:"var(--pp-text)"}}>Inspection Snapshot</div>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:9,marginBottom:12}}>
               {Object.entries(bd).map(([k,v])=>(
                 <div key={k} style={{display:"flex",alignItems:"center",gap:6}}>
                   {v>=80?<CheckCircle size={13} color="#10B981"/>:<AlertCircle size={13} color="#F59E0B"/>}
-                  <span style={{fontSize:12,color:"rgba(255,255,255,0.6)",fontWeight:600}}>{k}</span>
+                  <span style={{fontSize:12,color:"var(--pp-text2)",fontWeight:600}}>{k}</span>
                 </div>
               ))}
             </div>
@@ -1120,7 +1120,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
         </div>
       </div>
       {/* Tab bar */}
-      <div style={{background:"var(--pp-bg)",borderBottom:"1px solid rgba(255,255,255,0.08)",position:"sticky",top:56,zIndex:100,marginTop:32}}>
+      <div style={{background:"var(--pp-bg)",borderBottom:"1px solid var(--pp-border)",position:"sticky",top:56,zIndex:100,marginTop:32}}>
         <div style={{maxWidth:1100,margin:"0 auto",padding:"0 28px",display:"flex",gap:0}}>
           {TABS.map(([id,label])=>(
             <button key={id} onClick={()=>setTab(id)} style={{padding:"16px 22px",border:"none",background:"transparent",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:600,fontSize:14,color:tab===id?"#fff":"rgba(255,255,255,0.4)",borderBottom:tab===id?"2.5px solid #fff":"2.5px solid transparent",transition:"all 0.15s",whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:6}}>
@@ -1133,8 +1133,8 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
       <div style={{maxWidth:1100,margin:"0 auto",padding:"36px 28px",display:"flex",flexDirection:"column",gap:20}}>
         {tab==="overview"&&(
           <>
-            <div style={{background:"var(--pp-card)",borderRadius:16,padding:"24px",border:"1px solid rgba(255,255,255,0.08)"}}>
-              <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,color:"#fff"}}>Why This Car?</h2>
+            <div style={{background:"var(--pp-card)",borderRadius:16,padding:"24px",border:"1px solid var(--pp-border)"}}>
+              <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,color:"var(--pp-text)"}}>Why This Car?</h2>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
                 {highlights.map((h,i)=>(
                   <div key={i} style={{display:"flex",gap:10,alignItems:"flex-start",padding:"12px 14px",background:"rgba(255,255,255,0.04)",borderRadius:12}}>
@@ -1144,13 +1144,13 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
                 ))}
               </div>
             </div>
-            <div style={{background:"var(--pp-card)",borderRadius:16,padding:"24px",border:"1px solid rgba(255,255,255,0.08)"}}>
-              <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,color:"#fff"}}>Quick Specs</h2>
+            <div style={{background:"var(--pp-card)",borderRadius:16,padding:"24px",border:"1px solid var(--pp-border)"}}>
+              <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,color:"var(--pp-text)"}}>Quick Specs</h2>
               <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
                 {[["Year",car.year],["Fuel",car.fuel],["Gearbox",car.transmission],["Km Driven",fmtKm(car.km)],["Seats",car.seats+" seats"],["Owners",car.owners+" owner"+(car.owners>1?"s":"")]].map(([l,v])=>(
                   <div key={l} style={{background:"rgba(255,255,255,0.04)",borderRadius:12,padding:"14px",border:"1px solid rgba(255,255,255,0.06)"}}>
-                    <div style={{color:"rgba(255,255,255,0.4)",fontSize:10.5,fontWeight:700,letterSpacing:"0.07em",textTransform:"uppercase",marginBottom:5}}>{l}</div>
-                    <div style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,color:"#fff"}}>{v}</div>
+                    <div style={{color:"var(--pp-text2)",fontSize:10.5,fontWeight:700,letterSpacing:"0.07em",textTransform:"uppercase",marginBottom:5}}>{l}</div>
+                    <div style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,color:"var(--pp-text)"}}>{v}</div>
                   </div>
                 ))}
               </div>
@@ -1158,21 +1158,21 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
           </>
         )}
         {tab!=="overview"&&!user&&(
-          <div style={{background:"var(--pp-card)",borderRadius:16,padding:"56px 24px",border:"1px solid rgba(255,255,255,0.08)",textAlign:"center"}}>
+          <div style={{background:"var(--pp-card)",borderRadius:16,padding:"56px 24px",border:"1px solid var(--pp-border)",textAlign:"center"}}>
             <Shield size={22} color="rgba(255,255,255,0.3)" style={{margin:"0 auto 18px"}}/>
-            <h3 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:8,color:"#fff"}}>Sign in to see the full report</h3>
-            <p style={{color:"rgba(255,255,255,0.4)",fontSize:13.5,marginBottom:24}}>Register to access the {TABS.find(([id])=>id===tab)?.[1]} section.</p>
+            <h3 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:8,color:"var(--pp-text)"}}>Sign in to see the full report</h3>
+            <p style={{color:"var(--pp-text2)",fontSize:13.5,marginBottom:24}}>Register to access the {TABS.find(([id])=>id===tab)?.[1]} section.</p>
             <button onClick={()=>setShowLogin(true)} className="btn-red" style={{padding:"12px 28px",borderRadius:100,fontSize:14}}>Join Now</button>
           </div>
         )}
         {tab!=="overview"&&user&&(
           <>
             {tab==="inspection"&&(
-              <div style={{background:"var(--pp-card)",borderRadius:16,padding:"28px",border:"1px solid rgba(255,255,255,0.08)"}}>
+              <div style={{background:"var(--pp-card)",borderRadius:16,padding:"28px",border:"1px solid var(--pp-border)"}}>
                 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:24}}>
-                  <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,color:"#fff"}}>7-Point Inspection</h2>
-                  <div style={{background:"rgba(255,255,255,0.06)",borderRadius:12,padding:"8px 16px",display:"flex",alignItems:"center",gap:10,border:"1px solid rgba(255,255,255,0.08)"}}>
-                    <ScoreRing score={car.score} size={36}/><div><div style={{color:"#fff",fontWeight:800,fontSize:16}}>{car.score}/100</div><div style={{color:"rgba(255,255,255,0.4)",fontSize:10.5,fontWeight:600}}>{car.score>=88?"Excellent":car.score>=78?"Very Good":"Good"}</div></div>
+                  <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,color:"var(--pp-text)"}}>7-Point Inspection</h2>
+                  <div style={{background:"rgba(255,255,255,0.06)",borderRadius:12,padding:"8px 16px",display:"flex",alignItems:"center",gap:10,border:"1px solid var(--pp-border)"}}>
+                    <ScoreRing score={car.score} size={36}/><div><div style={{color:"var(--pp-text)",fontWeight:800,fontSize:16}}>{car.score}/100</div><div style={{color:"var(--pp-text2)",fontSize:10.5,fontWeight:600}}>{car.score>=88?"Excellent":car.score>=78?"Very Good":"Good"}</div></div>
                   </div>
                 </div>
                 {Object.entries(bd).map(([k,v])=>(
@@ -1185,13 +1185,13 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
                   </div>
                 ))}
                 {car.tyreWear&&(
-                  <div style={{marginTop:24,paddingTop:24,borderTop:"1px solid rgba(255,255,255,0.08)"}}>
-                    <h3 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:15,marginBottom:16,color:"#fff"}}>Tyre Condition</h3>
+                  <div style={{marginTop:24,paddingTop:24,borderTop:"1px solid var(--pp-border)"}}>
+                    <h3 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:15,marginBottom:16,color:"var(--pp-text)"}}>Tyre Condition</h3>
                     <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:10}}>
                       {[["fl","Front Left"],["fr","Front Right"],["rl","Rear Left"],["rr","Rear Right"]].map(([k,label])=>(
                         <div key={k} style={{background:"rgba(255,255,255,0.04)",borderRadius:12,padding:"12px 10px",textAlign:"center",border:"1px solid rgba(255,255,255,0.06)"}}>
                           <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:16,color:tyreColor(car.tyreWear[k])}}>{car.tyreWear[k]}%</div>
-                          <div style={{color:"rgba(255,255,255,0.4)",fontSize:10.5,fontWeight:600,marginTop:3}}>{label}</div>
+                          <div style={{color:"var(--pp-text2)",fontSize:10.5,fontWeight:600,marginTop:3}}>{label}</div>
                         </div>
                       ))}
                     </div>
@@ -1201,14 +1201,14 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
             )}
             {tab==="who"&&(
               <div style={{display:"flex",flexDirection:"column",gap:16}}>
-                <div style={{background:"var(--pp-card)",borderRadius:16,padding:"24px",border:"1px solid rgba(255,255,255,0.08)"}}>
-                  <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,display:"flex",alignItems:"center",gap:8,color:"#fff"}}><CheckCircle size={18} color="#10B981"/> Great for</h2>
+                <div style={{background:"var(--pp-card)",borderRadius:16,padding:"24px",border:"1px solid var(--pp-border)"}}>
+                  <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,display:"flex",alignItems:"center",gap:8,color:"var(--pp-text)"}}><CheckCircle size={18} color="#10B981"/> Great for</h2>
                   <div style={{display:"flex",flexDirection:"column",gap:10}}>
                     {forWho.map((item,i)=><div key={i} style={{display:"flex",gap:12,alignItems:"flex-start",padding:"13px 16px",background:"rgba(16,185,129,0.08)",borderRadius:12,border:"1px solid rgba(16,185,129,0.2)"}}><CheckCircle size={14} color="#10B981" style={{flexShrink:0,marginTop:2}}/><span style={{fontSize:13.5,color:"rgba(255,255,255,0.8)",lineHeight:1.45}}>{item}</span></div>)}
                   </div>
                 </div>
-                <div style={{background:"var(--pp-card)",borderRadius:16,padding:"24px",border:"1px solid rgba(255,255,255,0.08)"}}>
-                  <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,display:"flex",alignItems:"center",gap:8,color:"#fff"}}><XCircle size={18} color="#EF4444"/> Maybe not for</h2>
+                <div style={{background:"var(--pp-card)",borderRadius:16,padding:"24px",border:"1px solid var(--pp-border)"}}>
+                  <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:16,display:"flex",alignItems:"center",gap:8,color:"var(--pp-text)"}}><XCircle size={18} color="#EF4444"/> Maybe not for</h2>
                   <div style={{display:"flex",flexDirection:"column",gap:10}}>
                     {notForWho.map((item,i)=><div key={i} style={{display:"flex",gap:12,alignItems:"flex-start",padding:"13px 16px",background:"rgba(239,68,68,0.08)",borderRadius:12,border:"1px solid rgba(239,68,68,0.2)"}}><XCircle size={14} color="#EF4444" style={{flexShrink:0,marginTop:2}}/><span style={{fontSize:13.5,color:"rgba(255,255,255,0.8)",lineHeight:1.45}}>{item}</span></div>)}
                   </div>
@@ -1216,13 +1216,13 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
               </div>
             )}
             {tab==="specs"&&(
-              <div style={{background:"var(--pp-card)",borderRadius:16,border:"1px solid rgba(255,255,255,0.08)",overflow:"hidden"}}>
-                <div style={{padding:"20px 24px",borderBottom:"1px solid rgba(255,255,255,0.08)"}}><h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,color:"#fff"}}>Full Specifications</h2></div>
+              <div style={{background:"var(--pp-card)",borderRadius:16,border:"1px solid var(--pp-border)",overflow:"hidden"}}>
+                <div style={{padding:"20px 24px",borderBottom:"1px solid var(--pp-border)"}}><h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,color:"var(--pp-text)"}}>Full Specifications</h2></div>
                 <table style={{width:"100%",borderCollapse:"collapse"}}><tbody>
                   {[["Make",car.make],["Model",car.model],["Year",car.year],["Category",car.category],["Fuel Type",car.fuel],["Transmission",car.transmission],["KM Driven",fmtKm(car.km)],["Seats",car.seats],["Previous Owners",car.owners],["Listed Price",fmt(car.price)],["Insurance",car.insurance||"—"],["PP Score",car.score+"/100"]].map(([label,value],i)=>(
                     <tr key={label} style={{borderBottom:"1px solid rgba(255,255,255,0.06)",background:i%2===0?"transparent":"rgba(255,255,255,0.02)"}}>
-                      <td style={{padding:"13px 24px",color:"rgba(255,255,255,0.4)",fontSize:13.5,fontWeight:600,width:"40%"}}>{label}</td>
-                      <td style={{padding:"13px 24px",color:"#fff",fontSize:13.5,fontWeight:700}}>{value}</td>
+                      <td style={{padding:"13px 24px",color:"var(--pp-text2)",fontSize:13.5,fontWeight:600,width:"40%"}}>{label}</td>
+                      <td style={{padding:"13px 24px",color:"var(--pp-text)",fontSize:13.5,fontWeight:700}}>{value}</td>
                     </tr>
                   ))}
                 </tbody></table>
@@ -1233,12 +1233,12 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
       </div>
       {showEnquiryModal&&(
         <div style={{position:"fixed",inset:0,zIndex:600,background:"rgba(0,0,0,0.8)",backdropFilter:"blur(6px)",display:"flex",alignItems:"center",justifyContent:"center",padding:"0 20px"}} onClick={()=>setShowEnquiryModal(false)}>
-          <div style={{background:"var(--pp-card)",borderRadius:20,padding:32,width:420,maxWidth:"100%",position:"relative",border:"1px solid rgba(255,255,255,0.08)"}} onClick={e=>e.stopPropagation()}>
-            <button onClick={()=>setShowEnquiryModal(false)} style={{position:"absolute",top:14,right:14,background:"rgba(255,255,255,0.08)",border:"none",borderRadius:"50%",width:30,height:30,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff"}}><X size={14}/></button>
-            <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,marginBottom:6,color:"#fff"}}>Get in Touch</h2>
-            <p style={{color:"rgba(255,255,255,0.4)",fontSize:13.5,marginBottom:20}}>We'll connect you with the seller via WhatsApp.</p>
-            <label style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.4)",textTransform:"uppercase",display:"block",marginBottom:6}}>Phone Number</label>
-            <input value={enquiryPhone} onChange={e=>setEnquiryPhone(e.target.value)} placeholder="+91 98765 43210" type="tel" style={{width:"100%",padding:"11px 14px",fontSize:14,borderRadius:12,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"#fff",fontFamily:"Outfit,sans-serif",outline:"none",marginBottom:16}}/>
+          <div style={{background:"var(--pp-card)",borderRadius:20,padding:32,width:420,maxWidth:"100%",position:"relative",border:"1px solid var(--pp-border)"}} onClick={e=>e.stopPropagation()}>
+            <button onClick={()=>setShowEnquiryModal(false)} style={{position:"absolute",top:14,right:14,background:"rgba(255,255,255,0.08)",border:"none",borderRadius:"50%",width:30,height:30,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--pp-text)"}}><X size={14}/></button>
+            <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,marginBottom:6,color:"var(--pp-text)"}}>Get in Touch</h2>
+            <p style={{color:"var(--pp-text2)",fontSize:13.5,marginBottom:20}}>We'll connect you with the seller via WhatsApp.</p>
+            <label style={{fontSize:11,fontWeight:700,color:"var(--pp-text2)",textTransform:"uppercase",display:"block",marginBottom:6}}>Phone Number</label>
+            <input value={enquiryPhone} onChange={e=>setEnquiryPhone(e.target.value)} placeholder="+91 98765 43210" type="tel" style={{width:"100%",padding:"11px 14px",fontSize:14,borderRadius:12,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",outline:"none",marginBottom:16}}/>
             <button disabled={enquirySubmitting||!enquiryPhone} onClick={async()=>{
               setEnquirySubmitting(true);
               try{await supabase.from("enquiries").insert({car_id:car.id,name:user,email:userEmail||"",phone:enquiryPhone,listing_url:window.location.href,car_title:`${car.make} ${car.model} ${car.year}`});}catch(e){}
@@ -1290,12 +1290,12 @@ function QuizPage({setPage,setSelectedCar,cars}){
           <div style={{background:"rgba(255,255,255,0.08)",borderRadius:100,height:4,overflow:"hidden",marginBottom:28}}>
             <div style={{height:"100%",width:((step+1)/QUIZ.length*100)+"%",background:"#DC2626",transition:"width 0.4s ease"}}/>
           </div>
-          <h2 style={{color:"#fff",fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:28,letterSpacing:"-0.03em"}}>{q.q}</h2>
+          <h2 style={{color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:28,letterSpacing:"-0.03em"}}>{q.q}</h2>
         </div>
         <div style={{display:"flex",flexDirection:"column",gap:10}}>
           {q.opts.map(o=>(
             <button key={o.v} onClick={()=>pick(q.key,o.v)}
-              style={{padding:"18px 22px",borderRadius:14,border:"1.5px solid rgba(255,255,255,0.1)",background:"rgba(255,255,255,0.04)",color:"#fff",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:600,transition:"all 0.15s"}}>
+              style={{padding:"18px 22px",borderRadius:14,border:"1.5px solid rgba(255,255,255,0.1)",background:"rgba(255,255,255,0.04)",color:"var(--pp-text)",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:600,transition:"all 0.15s"}}>
               {o.l}
             </button>
           ))}
@@ -1315,38 +1315,38 @@ function BlogPage({blog}){
   const rest=blog.slice(1).filter(p=>tag==="All"||p.tag===tag);
   return(
     <div style={{paddingTop:56,minHeight:"100vh",background:"var(--pp-bg)"}}>
-      <div style={{background:"var(--pp-card)",borderBottom:"1px solid rgba(255,255,255,0.08)",padding:"60px 32px 50px",textAlign:"center"}}>
-        <div style={{color:"rgba(255,255,255,0.4)",fontSize:12,fontWeight:700,letterSpacing:"0.1em",marginBottom:12}}>POLE POSITION BLOG</div>
-        <h1 style={{color:"#fff",fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:38,letterSpacing:"-0.04em",marginBottom:14}}>Expert Reviews & Guides</h1>
+      <div style={{background:"var(--pp-card)",borderBottom:"1px solid var(--pp-border)",padding:"60px 32px 50px",textAlign:"center"}}>
+        <div style={{color:"var(--pp-text2)",fontSize:12,fontWeight:700,letterSpacing:"0.1em",marginBottom:12}}>POLE POSITION BLOG</div>
+        <h1 style={{color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:38,letterSpacing:"-0.04em",marginBottom:14}}>Expert Reviews & Guides</h1>
         <div style={{display:"flex",gap:8,justifyContent:"center",flexWrap:"wrap",marginTop:24}}>
           {tags.map(t=><button key={t} onClick={()=>setTag(t)} style={{padding:"8px 18px",borderRadius:100,border:"none",cursor:"pointer",fontWeight:600,fontSize:13,background:tag===t?"#DC2626":"rgba(255,255,255,0.08)",color:tag===t?"#fff":"rgba(255,255,255,0.6)"}}>{t}</button>)}
         </div>
       </div>
       <div style={{maxWidth:1100,margin:"0 auto",padding:"40px 24px"}}>
         {/* Featured */}
-        <div style={{background:"var(--pp-card)",borderRadius:16,overflow:"hidden",border:"1px solid rgba(255,255,255,0.08)",display:"grid",gridTemplateColumns:"1.2fr 1fr",marginBottom:36,cursor:"pointer"}}>
+        <div style={{background:"var(--pp-card)",borderRadius:16,overflow:"hidden",border:"1px solid var(--pp-border)",display:"grid",gridTemplateColumns:"1.2fr 1fr",marginBottom:36,cursor:"pointer"}}>
           <img src={featured.img} alt="" style={{width:"100%",height:340,objectFit:"cover"}} onError={e=>e.target.style.display="none"}/>
           <div style={{padding:"32px"}}>
             <div style={{display:"flex",gap:8,marginBottom:16}}>
               <span style={{background:TAG_COLORS[featured.tag]+"22",color:TAG_COLORS[featured.tag],fontSize:11,fontWeight:700,padding:"3px 10px",borderRadius:20}}>{featured.tag}</span>
               <span style={{background:"rgba(217,119,6,0.15)",color:"#F59E0B",fontSize:11,fontWeight:700,padding:"3px 10px",borderRadius:20}}>Featured</span>
             </div>
-            <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:22,letterSpacing:"-0.03em",lineHeight:1.25,marginBottom:12,color:"#fff"}}>{featured.title}</h2>
-            <p style={{color:"rgba(255,255,255,0.5)",fontSize:14,lineHeight:1.6,marginBottom:20}}>{featured.excerpt}</p>
-            <div style={{fontSize:12.5,color:"rgba(255,255,255,0.3)"}}>{featured.author} · {featured.date} · {featured.readTime} read · {featured.views.toLocaleString()} views</div>
+            <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:22,letterSpacing:"-0.03em",lineHeight:1.25,marginBottom:12,color:"var(--pp-text)"}}>{featured.title}</h2>
+            <p style={{color:"var(--pp-text2)",fontSize:14,lineHeight:1.6,marginBottom:20}}>{featured.excerpt}</p>
+            <div style={{fontSize:12.5,color:"var(--pp-text3)"}}>{featured.author} · {featured.date} · {featured.readTime} read · {featured.views.toLocaleString()} views</div>
           </div>
         </div>
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))",gap:20}}>
           {rest.map(p=>(
-            <div key={p.id} style={{background:"var(--pp-card)",borderRadius:16,overflow:"hidden",border:"1px solid rgba(255,255,255,0.07)",cursor:"pointer"}}>
+            <div key={p.id} style={{background:"var(--pp-card)",borderRadius:16,overflow:"hidden",border:"1px solid var(--pp-border)",cursor:"pointer"}}>
               <div style={{position:"relative"}}>
                 <img src={p.img} alt="" style={{width:"100%",height:190,objectFit:"cover"}} onError={e=>e.target.style.display="none"}/>
-                <span style={{position:"absolute",top:12,left:12,background:TAG_COLORS[p.tag],color:"#fff",fontSize:10.5,fontWeight:700,padding:"3px 10px",borderRadius:20}}>{p.tag}</span>
+                <span style={{position:"absolute",top:12,left:12,background:TAG_COLORS[p.tag],color:"var(--pp-text)",fontSize:10.5,fontWeight:700,padding:"3px 10px",borderRadius:20}}>{p.tag}</span>
               </div>
               <div style={{padding:"16px 18px"}}>
-                <p style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,letterSpacing:"-0.02em",lineHeight:1.3,marginBottom:10,color:"#fff"}}>{p.title}</p>
-                <p style={{color:"rgba(255,255,255,0.4)",fontSize:12.5,lineHeight:1.55,marginBottom:12}}>{p.excerpt}</p>
-                <div style={{fontSize:11.5,color:"rgba(255,255,255,0.3)"}}>{p.author} · {p.readTime} · {p.views.toLocaleString()} views</div>
+                <p style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,letterSpacing:"-0.02em",lineHeight:1.3,marginBottom:10,color:"var(--pp-text)"}}>{p.title}</p>
+                <p style={{color:"var(--pp-text2)",fontSize:12.5,lineHeight:1.55,marginBottom:12}}>{p.excerpt}</p>
+                <div style={{fontSize:11.5,color:"var(--pp-text3)"}}>{p.author} · {p.readTime} · {p.views.toLocaleString()} views</div>
               </div>
             </div>
           ))}
@@ -1366,9 +1366,9 @@ function ForumPage({setPage,setThread,user,setShowLogin,threads}){
   const visible=threads.filter(t=>cat==="All"||t.cat===cat);
   return(
     <div style={{paddingTop:56,minHeight:"100vh",background:"var(--pp-bg)"}}>
-      <div style={{background:"var(--pp-card)",borderBottom:"1px solid rgba(255,255,255,0.08)",padding:"52px 32px 44px",textAlign:"center"}}>
-        <div style={{color:"rgba(255,255,255,0.4)",fontSize:12,fontWeight:700,letterSpacing:"0.1em",marginBottom:12}}>COMMUNITY</div>
-        <h1 style={{color:"#fff",fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:36,letterSpacing:"-0.04em",marginBottom:14}}>The Pit Lane Forum</h1>
+      <div style={{background:"var(--pp-card)",borderBottom:"1px solid var(--pp-border)",padding:"52px 32px 44px",textAlign:"center"}}>
+        <div style={{color:"var(--pp-text2)",fontSize:12,fontWeight:700,letterSpacing:"0.1em",marginBottom:12}}>COMMUNITY</div>
+        <h1 style={{color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:36,letterSpacing:"-0.04em",marginBottom:14}}>The Pit Lane Forum</h1>
         <div style={{display:"flex",gap:8,justifyContent:"center",flexWrap:"wrap",marginTop:20}}>
           {cats.map(c=><button key={c} onClick={()=>setCat(c)} style={{padding:"7px 16px",borderRadius:100,border:"none",cursor:"pointer",fontWeight:600,fontSize:12.5,background:cat===c?"#DC2626":"rgba(255,255,255,0.08)",color:cat===c?"#fff":"rgba(255,255,255,0.6)"}}>{c}</button>)}
         </div>
@@ -1391,8 +1391,8 @@ function ForumPage({setPage,setThread,user,setShowLogin,threads}){
                 {t.pinned&&<span style={{background:"rgba(220,38,38,0.15)",color:"#DC2626",fontSize:10,fontWeight:700,padding:"2px 8px",borderRadius:20}}>Pinned</span>}
                 <span style={{background:(CAT_COLORS[t.cat]||"#64748B")+"22",color:CAT_COLORS[t.cat]||"#64748B",fontSize:10.5,fontWeight:700,padding:"2px 8px",borderRadius:20}}>{t.cat}</span>
               </div>
-              <p style={{fontWeight:700,fontSize:14.5,marginBottom:4,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",color:"#fff"}}>{t.title}</p>
-              <div style={{color:"rgba(255,255,255,0.4)",fontSize:12}}>{t.author} · {t.replies} replies · {t.views.toLocaleString()} views · {t.last}</div>
+              <p style={{fontWeight:700,fontSize:14.5,marginBottom:4,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",color:"var(--pp-text)"}}>{t.title}</p>
+              <div style={{color:"var(--pp-text2)",fontSize:12}}>{t.author} · {t.replies} replies · {t.views.toLocaleString()} views · {t.last}</div>
             </div>
             <ChevronRight size={16} color="rgba(255,255,255,0.2)"/>
           </div>
@@ -1420,23 +1420,23 @@ function ThreadPage({thread:t,setPage,user,setShowLogin}){
   };
   return(
     <div style={{paddingTop:56,minHeight:"100vh",background:"var(--pp-bg)"}}>
-      <div style={{background:"var(--pp-card)",borderBottom:"1px solid rgba(255,255,255,0.08)",padding:"36px 32px 30px"}}>
+      <div style={{background:"var(--pp-card)",borderBottom:"1px solid var(--pp-border)",padding:"36px 32px 30px"}}>
         <div style={{maxWidth:820,margin:"0 auto"}}>
           <button onClick={()=>setPage("forum")} style={{display:"flex",alignItems:"center",gap:6,background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.12)",borderRadius:9,padding:"7px 14px",color:"rgba(255,255,255,0.7)",cursor:"pointer",fontSize:13,fontWeight:600,marginBottom:16}}>
             <ChevronLeft size={14}/> Back to Forum
           </button>
-          <h1 style={{color:"#fff",fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:22,letterSpacing:"-0.03em",lineHeight:1.3}}>{t.title}</h1>
-          <div style={{color:"rgba(255,255,255,0.4)",fontSize:12.5,marginTop:8}}>{t.cat} · {t.replies} replies · {t.views.toLocaleString()} views</div>
+          <h1 style={{color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:22,letterSpacing:"-0.03em",lineHeight:1.3}}>{t.title}</h1>
+          <div style={{color:"var(--pp-text2)",fontSize:12.5,marginTop:8}}>{t.cat} · {t.replies} replies · {t.views.toLocaleString()} views</div>
         </div>
       </div>
       <div style={{maxWidth:820,margin:"0 auto",padding:"28px 24px"}}>
         {replies.map(r=>(
-          <div key={r.id} style={{background:"var(--pp-card)",borderRadius:14,padding:"18px 20px",marginBottom:12,border:"1px solid rgba(255,255,255,0.08)"}}>
+          <div key={r.id} style={{background:"var(--pp-card)",borderRadius:14,padding:"18px 20px",marginBottom:12,border:"1px solid var(--pp-border)"}}>
             <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:12}}>
-              <div style={{width:36,height:36,borderRadius:"50%",background:"rgba(255,255,255,0.1)",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:700,fontSize:13}}>{r.author[0]}</div>
+              <div style={{width:36,height:36,borderRadius:"50%",background:"var(--pp-chip)",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--pp-text)",fontWeight:700,fontSize:13}}>{r.author[0]}</div>
               <div>
-                <div style={{fontWeight:700,fontSize:14,color:"#fff"}}>{r.author} {r.isOP&&<span style={{background:"rgba(220,38,38,0.15)",color:"#DC2626",fontSize:10,fontWeight:700,padding:"2px 8px",borderRadius:20,marginLeft:6}}>OP</span>}</div>
-                <div style={{color:"rgba(255,255,255,0.4)",fontSize:11.5}}>{r.time}</div>
+                <div style={{fontWeight:700,fontSize:14,color:"var(--pp-text)"}}>{r.author} {r.isOP&&<span style={{background:"rgba(220,38,38,0.15)",color:"#DC2626",fontSize:10,fontWeight:700,padding:"2px 8px",borderRadius:20,marginLeft:6}}>OP</span>}</div>
+                <div style={{color:"var(--pp-text2)",fontSize:11.5}}>{r.time}</div>
               </div>
             </div>
             <p style={{color:"rgba(255,255,255,0.7)",fontSize:14,lineHeight:1.65,marginBottom:12}}>{r.body}</p>
@@ -1445,11 +1445,11 @@ function ThreadPage({thread:t,setPage,user,setShowLogin}){
             </button>
           </div>
         ))}
-        <div style={{background:"var(--pp-card)",borderRadius:14,padding:"18px 20px",border:"1px solid rgba(255,255,255,0.08)",marginTop:20}}>
-          <h3 style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,marginBottom:14,color:"#fff"}}>Add a Reply</h3>
+        <div style={{background:"var(--pp-card)",borderRadius:14,padding:"18px 20px",border:"1px solid var(--pp-border)",marginTop:20}}>
+          <h3 style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,marginBottom:14,color:"var(--pp-text)"}}>Add a Reply</h3>
           {user
-            ?<><textarea value={reply} onChange={e=>setReply(e.target.value)} rows={4} placeholder="Share your thoughts…" style={{width:"100%",padding:"12px 14px",borderRadius:10,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"#fff",fontSize:13.5,resize:"vertical",fontFamily:"inherit"}}/><button onClick={submit} className="btn-red" style={{marginTop:10,padding:"10px 22px",borderRadius:100,fontSize:13.5,display:"flex",alignItems:"center",gap:7}}><Send size={13}/> Post Reply</button></>
-            :<div style={{textAlign:"center",padding:"20px 0"}}><p style={{color:"rgba(255,255,255,0.4)",marginBottom:12}}>Sign in to join the discussion</p><button onClick={()=>setShowLogin(true)} className="btn-red" style={{padding:"10px 22px",borderRadius:100,fontSize:13.5}}>Sign In</button></div>
+            ?<><textarea value={reply} onChange={e=>setReply(e.target.value)} rows={4} placeholder="Share your thoughts…" style={{width:"100%",padding:"12px 14px",borderRadius:10,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"var(--pp-text)",fontSize:13.5,resize:"vertical",fontFamily:"inherit"}}/><button onClick={submit} className="btn-red" style={{marginTop:10,padding:"10px 22px",borderRadius:100,fontSize:13.5,display:"flex",alignItems:"center",gap:7}}><Send size={13}/> Post Reply</button></>
+            :<div style={{textAlign:"center",padding:"20px 0"}}><p style={{color:"var(--pp-text2)",marginBottom:12}}>Sign in to join the discussion</p><button onClick={()=>setShowLogin(true)} className="btn-red" style={{padding:"10px 22px",borderRadius:100,fontSize:13.5}}>Sign In</button></div>
           }
         </div>
       </div>
@@ -1475,7 +1475,7 @@ function ScoreEditor({car,initBd,onSave,onBack}){
         <Btn onClick={onBack}><ChevronLeft size={14}/> Back</Btn>
         <div>
           <h2 style={{fontWeight:800,fontSize:20,letterSpacing:"-0.03em"}}>Pole Position Score</h2>
-          <div style={{color:"#64748B",fontSize:13}}>{car.make} {car.model} {car.year}</div>
+          <div style={{color:"var(--pp-text2)",fontSize:13}}>{car.make} {car.model} {car.year}</div>
         </div>
       </div>
 
@@ -1483,7 +1483,7 @@ function ScoreEditor({car,initBd,onSave,onBack}){
         {/* Left nav */}
         <div style={{width:240,flexShrink:0,display:"flex",flexDirection:"column",gap:8}}>
           <Card style={{padding:"18px",textAlign:"center",marginBottom:4}}>
-            <div style={{color:"#64748B",fontSize:10.5,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.09em",marginBottom:12}}>Cumulative Score</div>
+            <div style={{color:"var(--pp-text2)",fontSize:10.5,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.09em",marginBottom:12}}>Cumulative Score</div>
             <div style={{position:"relative",width:88,height:88,margin:"0 auto 10px"}}>
               <svg viewBox="0 0 100 100" style={{transform:"rotate(-90deg)",width:"100%",height:"100%"}}>
                 <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="9"/>
@@ -1491,7 +1491,7 @@ function ScoreEditor({car,initBd,onSave,onBack}){
               </svg>
               <div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
                 <span style={{color:rc(cum),fontWeight:900,fontSize:28,letterSpacing:"-0.04em",lineHeight:1}}>{cum}</span>
-                <span style={{color:"#475569",fontSize:10}}>/100</span>
+                <span style={{color:"var(--pp-text2)",fontSize:10}}>/100</span>
               </div>
             </div>
             <div style={{color:rc(cum),fontWeight:700,fontSize:13}}>{rl(cum)}</div>
@@ -1527,13 +1527,13 @@ function ScoreEditor({car,initBd,onSave,onBack}){
                 <div style={{display:"flex",alignItems:"center",gap:9,marginBottom:5}}>
                   <AIcon size={17} color={rc(scores[active])}/>
                   <h3 style={{fontWeight:800,fontSize:17}}>{ac.label}</h3>
-                  <span style={{background:"rgba(255,255,255,0.06)",color:"#64748B",fontSize:10.5,fontWeight:700,padding:"2px 8px",borderRadius:20}}>{ac.weight}%</span>
+                  <span style={{background:"rgba(255,255,255,0.06)",color:"var(--pp-text2)",fontSize:10.5,fontWeight:700,padding:"2px 8px",borderRadius:20}}>{ac.weight}%</span>
                 </div>
-                <p style={{color:"#64748B",fontSize:13}}>{ac.desc}</p>
+                <p style={{color:"var(--pp-text2)",fontSize:13}}>{ac.desc}</p>
               </div>
               <div style={{textAlign:"center"}}>
                 <div style={{color:rc(scores[active]),fontWeight:900,fontSize:48,letterSpacing:"-0.04em",lineHeight:1,transition:"color 0.3s"}}>{scores[active]}</div>
-                <div style={{color:"#475569",fontSize:11}}>/ 100</div>
+                <div style={{color:"var(--pp-text2)",fontSize:11}}>/ 100</div>
               </div>
             </div>
             <input type="range" min={0} max={100} value={scores[active]} onChange={e=>setScores(s=>({...s,[active]:Number(e.target.value)}))} style={{width:"100%",height:6,cursor:"pointer",accentColor:rc(scores[active]),margin:"8px 0"}}/>
@@ -1552,8 +1552,8 @@ function ScoreEditor({car,initBd,onSave,onBack}){
           </Card>
           {idx<SCORE_CATS.length-1&&(()=>{
             const next=SCORE_CATS[idx+1];const NIcon=next.icon;
-            return <button onClick={()=>setActive(next.key)} style={{padding:"11px 18px",borderRadius:12,border:"1.5px solid rgba(255,255,255,0.07)",background:"rgba(255,255,255,0.02)",color:"#94A3B8",cursor:"pointer",fontSize:13,fontWeight:600,display:"flex",alignItems:"center",justifyContent:"space-between",fontFamily:"Outfit,sans-serif"}}>
-              <span style={{color:"#475569"}}>Next →</span><div style={{display:"flex",alignItems:"center",gap:6}}><NIcon size={13}/> {next.label} <ChevronRight size={13}/></div>
+            return <button onClick={()=>setActive(next.key)} style={{padding:"11px 18px",borderRadius:12,border:"1.5px solid rgba(255,255,255,0.07)",background:"rgba(255,255,255,0.02)",color:"var(--pp-text3)",cursor:"pointer",fontSize:13,fontWeight:600,display:"flex",alignItems:"center",justifyContent:"space-between",fontFamily:"Outfit,sans-serif"}}>
+              <span style={{color:"var(--pp-text2)"}}>Next →</span><div style={{display:"flex",alignItems:"center",gap:6}}><NIcon size={13}/> {next.label} <ChevronRight size={13}/></div>
             </button>;
           })()}
         </div>
@@ -1581,17 +1581,17 @@ function Dashboard({cars,blogs,users}){
               <div style={{width:38,height:38,borderRadius:10,background:`${s.c}22`,display:"flex",alignItems:"center",justifyContent:"center"}}><Icon size={18} color={s.c}/></div>
             </div>
             <div style={{fontWeight:900,fontSize:30,letterSpacing:"-0.04em",marginBottom:3}}>{s.v}</div>
-            <div style={{color:"#94A3B8",fontSize:13}}>{s.l}</div>
+            <div style={{color:"var(--pp-text3)",fontSize:13}}>{s.l}</div>
           </Card>
         );})}
       </div>
       <Card>
         <div style={{padding:"16px 22px",borderBottom:"1px solid rgba(255,255,255,0.07)",fontWeight:700,fontSize:15}}>Recent Listings</div>
         <table style={{width:"100%",borderCollapse:"collapse"}}>
-          <thead><tr style={{borderBottom:"1px solid rgba(255,255,255,0.07)"}}>{["Car","Year","Price","Score"].map(h=><th key={h} style={{padding:"11px 18px",textAlign:"left",color:"#64748B",fontSize:11,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.07em"}}>{h}</th>)}</tr></thead>
+          <thead><tr style={{borderBottom:"1px solid rgba(255,255,255,0.07)"}}>{["Car","Year","Price","Score"].map(h=><th key={h} style={{padding:"11px 18px",textAlign:"left",color:"var(--pp-text2)",fontSize:11,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.07em"}}>{h}</th>)}</tr></thead>
           <tbody>{cars.slice(0,6).map(c=><tr key={c.id} style={{borderBottom:"1px solid rgba(255,255,255,0.04)"}}>
             <td style={{padding:"12px 18px"}}><div style={{display:"flex",alignItems:"center",gap:10}}><img src={c.img} alt="" style={{width:48,height:32,objectFit:"cover",borderRadius:7}} onError={e=>e.target.style.display="none"}/><span style={{fontWeight:600,fontSize:13.5}}>{c.make} {c.model}</span></div></td>
-            <td style={{padding:"12px 18px",color:"#94A3B8",fontSize:13}}>{c.year}</td>
+            <td style={{padding:"12px 18px",color:"var(--pp-text3)",fontSize:13}}>{c.year}</td>
             <td style={{padding:"12px 18px",fontWeight:600,fontSize:13}}>{fmt(c.price)}</td>
             <td style={{padding:"12px 18px"}}><span style={{background:`${rc(c.score)}22`,color:rc(c.score),fontWeight:700,fontSize:12,padding:"3px 10px",borderRadius:20}}>{c.score}</span></td>
           </tr>)}</tbody>
@@ -1736,7 +1736,7 @@ function Listings({cars,setCars}){
         <button onClick={()=>setPreviewing(false)} style={{display:"flex",alignItems:"center",gap:7,background:"rgba(255,255,255,0.08)",border:"none",borderRadius:9,padding:"9px 16px",color:"#fff",cursor:"pointer",fontWeight:600,fontSize:13.5,fontFamily:"Outfit,sans-serif"}}>
           <ChevronLeft size={14}/> Back to Editing
         </button>
-        <span style={{color:"#64748B",fontSize:12.5}}>Preview — exactly what buyers will see</span>
+        <span style={{color:"var(--pp-text2)",fontSize:12.5}}>Preview — exactly what buyers will see</span>
       </div>
       <CarDetailPage car={buildPreviewCar()} setPage={()=>{}} isFav={false} onFav={()=>{}} user="Preview" setShowLogin={()=>{}}/>
     </div>
@@ -1757,8 +1757,8 @@ function Listings({cars,setCars}){
           onDrop={e=>{e.preventDefault();handleFiles(e.dataTransfer.files);}}
           style={{border:"1.5px dashed rgba(255,255,255,0.15)",borderRadius:12,padding:"26px",textAlign:"center",cursor:"pointer",background:"rgba(255,255,255,0.02)"}}>
           <Upload size={22} color="#64748B" style={{marginBottom:8}}/>
-          <div style={{fontSize:13.5,fontWeight:600,color:"#94A3B8"}}>Click to upload, or drag and drop</div>
-          <div style={{fontSize:11.5,color:"#475569",marginTop:3}}>PNG or JPG images, and MP4 / WebM / MOV video</div>
+          <div style={{fontSize:13.5,fontWeight:600,color:"var(--pp-text3)"}}>Click to upload, or drag and drop</div>
+          <div style={{fontSize:11.5,color:"var(--pp-text2)",marginTop:3}}>PNG or JPG images, and MP4 / WebM / MOV video</div>
         </div>
         {fileErr&&<p style={{color:"#F87171",fontSize:12,marginTop:8}}>{fileErr}</p>}
         <div style={{display:"flex",gap:8,marginTop:10}}>
@@ -1867,14 +1867,14 @@ function Listings({cars,setCars}){
                 <FileText size={15} color="#64748B" style={{flexShrink:0}}/>
                 <span style={{fontSize:12.5,color:"#CBD5E1",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{serviceDoc.name}</span>
               </div>
-              <button onClick={()=>setServiceDoc(null)} style={{background:"none",border:"none",cursor:"pointer",color:"#94A3B8",flexShrink:0}}><X size={14}/></button>
+              <button onClick={()=>setServiceDoc(null)} style={{background:"none",border:"none",cursor:"pointer",color:"var(--pp-text3)",flexShrink:0}}><X size={14}/></button>
             </div>
           ):(
-            <button onClick={()=>serviceFileRef.current?.click()} style={{display:"flex",alignItems:"center",gap:8,padding:"10px 14px",borderRadius:10,border:"1.5px dashed rgba(255,255,255,0.15)",background:"rgba(255,255,255,0.02)",color:"#94A3B8",cursor:"pointer",fontSize:13,fontWeight:600,fontFamily:"Outfit,sans-serif"}}>
+            <button onClick={()=>serviceFileRef.current?.click()} style={{display:"flex",alignItems:"center",gap:8,padding:"10px 14px",borderRadius:10,border:"1.5px dashed rgba(255,255,255,0.15)",background:"rgba(255,255,255,0.02)",color:"var(--pp-text3)",cursor:"pointer",fontSize:13,fontWeight:600,fontFamily:"Outfit,sans-serif"}}>
               <Upload size={14}/> Upload service history (PDF or Word doc)
             </button>
           )}
-          <p style={{color:"#475569",fontSize:11,marginTop:6}}>Shown to buyers as a downloadable file on the listing.</p>
+          <p style={{color:"var(--pp-text2)",fontSize:11,marginTop:6}}>Shown to buyers as a downloadable file on the listing.</p>
         </div>
       </FormSection>
 
@@ -1889,9 +1889,9 @@ function Listings({cars,setCars}){
                 <div style={{width:28,height:58,borderRadius:7,background:"#0F172A",border:`2px solid ${tyreColor(form.tyreWear?.[t.key]??20)}`}}/>
                 <div style={{display:"flex",alignItems:"center",gap:2}}>
                   <input type="number" min="0" max="100" value={form.tyreWear?.[t.key]??20} onChange={e=>setForm(f=>({...f,tyreWear:{...f.tyreWear,[t.key]:Math.max(0,Math.min(100,Number(e.target.value)))}}))} style={{width:44,padding:"4px 5px",fontSize:11.5,textAlign:"center"}}/>
-                  <span style={{fontSize:10,color:"#64748B"}}>%</span>
+                  <span style={{fontSize:10,color:"var(--pp-text2)"}}>%</span>
                 </div>
-                <span style={{fontSize:9.5,color:"#64748B",fontWeight:600}}>{t.label}</span>
+                <span style={{fontSize:9.5,color:"var(--pp-text2)",fontWeight:600}}>{t.label}</span>
               </div>
             ))}
           </div>
@@ -1907,14 +1907,14 @@ function Listings({cars,setCars}){
                 <div style={{width:28,height:58,borderRadius:7,background:"#0F172A",border:`2px solid ${tyreColor(form.tyreWear?.[t.key]??20)}`}}/>
                 <div style={{display:"flex",alignItems:"center",gap:2}}>
                   <input type="number" min="0" max="100" value={form.tyreWear?.[t.key]??20} onChange={e=>setForm(f=>({...f,tyreWear:{...f.tyreWear,[t.key]:Math.max(0,Math.min(100,Number(e.target.value)))}}))} style={{width:44,padding:"4px 5px",fontSize:11.5,textAlign:"center"}}/>
-                  <span style={{fontSize:10,color:"#64748B"}}>%</span>
+                  <span style={{fontSize:10,color:"var(--pp-text2)"}}>%</span>
                 </div>
-                <span style={{fontSize:9.5,color:"#64748B",fontWeight:600}}>{t.label}</span>
+                <span style={{fontSize:9.5,color:"var(--pp-text2)",fontWeight:600}}>{t.label}</span>
               </div>
             ))}
           </div>
         </div>
-        <p style={{color:"#475569",fontSize:11,textAlign:"center",margin:"0 0 24px"}}>% wear — <span style={{color:"#10B981"}}>green = good</span> · <span style={{color:"#F59E0B"}}>amber = moderate</span> · <span style={{color:"#EF4444"}}>red = worn</span></p>
+        <p style={{color:"var(--pp-text2)",fontSize:11,textAlign:"center",margin:"0 0 24px"}}>% wear — <span style={{color:"#10B981"}}>green = good</span> · <span style={{color:"#F59E0B"}}>amber = moderate</span> · <span style={{color:"#EF4444"}}>red = worn</span></p>
         {/* Tyre specs */}
         <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
           <div>
@@ -1977,17 +1977,17 @@ function Listings({cars,setCars}){
               <div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center"}}><span style={{color:form.score>0?rc(form.score):"#334155",fontWeight:900,fontSize:13}}>{form.score>0?form.score:"—"}</span></div>
             </div>
             <div>
-              <div style={{color:"#475569",fontSize:12}}>{form.score>0?rl(form.score)+" — "+SCORE_CATS.filter(c=>form.scoreBreakdown?.[c.key]>0).length+"/"+SCORE_CATS.length+" sections rated":"Not rated yet"}</div>
+              <div style={{color:"var(--pp-text2)",fontSize:12}}>{form.score>0?rl(form.score)+" — "+SCORE_CATS.filter(c=>form.scoreBreakdown?.[c.key]>0).length+"/"+SCORE_CATS.length+" sections rated":"Not rated yet"}</div>
             </div>
           </div>
           <Btn onClick={()=>setScoring(true)}>{form.score>0?<><Edit2 size={12}/> Edit Score</>:<><Award size={12}/> Set Score</>}</Btn>
         </div>
       </FormSection>
       <div style={{marginTop:16,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-        <button onClick={()=>setEdit(null)} style={{padding:"12px 20px",borderRadius:11,border:"1.5px solid rgba(255,255,255,0.1)",background:"transparent",color:"#94A3B8",cursor:"pointer",fontWeight:600,fontSize:14,fontFamily:"Outfit,sans-serif"}}>Cancel</button>
+        <button onClick={()=>setEdit(null)} style={{padding:"12px 20px",borderRadius:11,border:"1.5px solid rgba(255,255,255,0.1)",background:"transparent",color:"var(--pp-text3)",cursor:"pointer",fontWeight:600,fontSize:14,fontFamily:"Outfit,sans-serif"}}>Cancel</button>
         <div style={{display:"flex",gap:10}}>
           <button onClick={()=>form.make&&setPreviewing(true)} disabled={!form.make} style={{padding:"12px 22px",borderRadius:11,border:"1.5px solid rgba(255,255,255,0.12)",background:"transparent",color:form.make?"#60A5FA":"#475569",cursor:form.make?"pointer":"not-allowed",fontWeight:600,fontSize:14,fontFamily:"Outfit,sans-serif",display:"flex",alignItems:"center",gap:7}}><Eye size={14}/> Preview</button>
-          <button onClick={()=>save("draft")} style={{padding:"12px 22px",borderRadius:11,border:"1.5px solid rgba(255,255,255,0.12)",background:"transparent",color:"#94A3B8",cursor:"pointer",fontWeight:600,fontSize:14,fontFamily:"Outfit,sans-serif"}}>Save as Draft</button>
+          <button onClick={()=>save("draft")} style={{padding:"12px 22px",borderRadius:11,border:"1.5px solid rgba(255,255,255,0.12)",background:"transparent",color:"var(--pp-text3)",cursor:"pointer",fontWeight:600,fontSize:14,fontFamily:"Outfit,sans-serif"}}>Save as Draft</button>
           <button onClick={()=>save("published")} style={{padding:"12px 26px",borderRadius:11,background:"#DC2626",border:"none",color:"#fff",cursor:"pointer",fontWeight:700,fontSize:14,fontFamily:"Outfit,sans-serif"}}>{form.id?"Save Changes":"Create Listing"}</button>
         </div>
       </div>
@@ -1997,16 +1997,16 @@ function Listings({cars,setCars}){
   return(
     <div>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:18}}>
-        <span style={{color:"#94A3B8",fontSize:14}}>{cars.length} listings</span>
+        <span style={{color:"var(--pp-text3)",fontSize:14}}>{cars.length} listings</span>
         <button onClick={()=>setEdit({})} style={{padding:"10px 18px",borderRadius:10,background:"#DC2626",border:"none",color:"#fff",cursor:"pointer",fontWeight:700,fontSize:13,display:"flex",alignItems:"center",gap:6,fontFamily:"Outfit,sans-serif"}}><Plus size={14}/> Add Listing</button>
       </div>
       <Card>
         <table style={{width:"100%",borderCollapse:"collapse"}}>
-          <thead><tr style={{borderBottom:"1px solid rgba(255,255,255,0.07)"}}>{["Car","Category","Year","Price","Score","Actions"].map(h=><th key={h} style={{padding:"12px 16px",textAlign:"left",color:"#64748B",fontSize:11,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.07em"}}>{h}</th>)}</tr></thead>
+          <thead><tr style={{borderBottom:"1px solid rgba(255,255,255,0.07)"}}>{["Car","Category","Year","Price","Score","Actions"].map(h=><th key={h} style={{padding:"12px 16px",textAlign:"left",color:"var(--pp-text2)",fontSize:11,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.07em"}}>{h}</th>)}</tr></thead>
           <tbody>{cars.map(c=><tr key={c.id} style={{borderBottom:"1px solid rgba(255,255,255,0.04)"}}>
-            <td style={{padding:"11px 16px"}}><div style={{display:"flex",alignItems:"center",gap:10}}><img src={c.img} alt="" style={{width:52,height:36,objectFit:"cover",borderRadius:8,flexShrink:0}} onError={e=>e.target.style.display="none"}/><div><div style={{fontWeight:600,fontSize:13.5,display:"flex",alignItems:"center",gap:7}}>{c.make} {c.model}{c.status==="draft"&&<span style={{background:"#F59E0B22",color:"#F59E0B",fontSize:9.5,fontWeight:700,padding:"2px 7px",borderRadius:20}}>DRAFT</span>}</div><div style={{color:"#64748B",fontSize:11.5}}>{c.fuel} · {c.transmission}</div></div></div></td>
-            <td style={{padding:"11px 16px",color:"#94A3B8",fontSize:13}}>{c.category}</td>
-            <td style={{padding:"11px 16px",color:"#94A3B8",fontSize:13}}>{c.year}</td>
+            <td style={{padding:"11px 16px"}}><div style={{display:"flex",alignItems:"center",gap:10}}><img src={c.img} alt="" style={{width:52,height:36,objectFit:"cover",borderRadius:8,flexShrink:0}} onError={e=>e.target.style.display="none"}/><div><div style={{fontWeight:600,fontSize:13.5,display:"flex",alignItems:"center",gap:7}}>{c.make} {c.model}{c.status==="draft"&&<span style={{background:"#F59E0B22",color:"#F59E0B",fontSize:9.5,fontWeight:700,padding:"2px 7px",borderRadius:20}}>DRAFT</span>}</div><div style={{color:"var(--pp-text2)",fontSize:11.5}}>{c.fuel} · {c.transmission}</div></div></div></td>
+            <td style={{padding:"11px 16px",color:"var(--pp-text3)",fontSize:13}}>{c.category}</td>
+            <td style={{padding:"11px 16px",color:"var(--pp-text3)",fontSize:13}}>{c.year}</td>
             <td style={{padding:"11px 16px",fontWeight:600,fontSize:13}}>{fmt(c.price)}</td>
             <td style={{padding:"11px 16px"}}>{c.score>0?<span style={{background:`${rc(c.score)}22`,color:rc(c.score),fontWeight:700,fontSize:12,padding:"3px 10px",borderRadius:20}}>{c.score}</span>:<span style={{color:"#334155",fontSize:12}}>—</span>}</td>
             <td style={{padding:"11px 16px"}}><div style={{display:"flex",gap:6}}><Btn small onClick={()=>setEdit(c)}><Edit2 size={11}/> Edit</Btn><Btn small danger onClick={async()=>{await supabase.from("cars").delete().eq("id",c.id);setCars(cars.filter(x=>x.id!==c.id));}}><Trash2 size={11}/> Del</Btn></div></td>
@@ -2038,21 +2038,21 @@ function Blog({blogs,setBlogs}){
         {[["Title","title","Article title"],["Cover Image URL","img","https://images.unsplash.com/…"],["Author","author","Your name"],["Read Time","readTime","5 min"]].map(([l,k,ph])=><div key={k}><Label>{l}</Label><input value={form[k]||""} onChange={e=>setForm({...form,[k]:e.target.value})} placeholder={ph}/></div>)}
         <div><Label>Tag</Label><select value={form.tag} onChange={e=>setForm({...form,tag:e.target.value})}>{["Cars","EV","Bikes","Guide"].map(t=><option key={t}>{t}</option>)}</select></div>
         <div><Label>Excerpt</Label><textarea value={form.excerpt||""} onChange={e=>setForm({...form,excerpt:e.target.value})} rows={3} placeholder="Short summary…"/></div>
-        <label style={{display:"flex",alignItems:"center",gap:10,cursor:"pointer"}}><input type="checkbox" checked={form.featured} onChange={e=>setForm({...form,featured:e.target.checked})} style={{width:15,height:15,accentColor:"#DC2626"}}/><span style={{color:"#94A3B8",fontSize:13}}>Mark as Featured</span></label>
+        <label style={{display:"flex",alignItems:"center",gap:10,cursor:"pointer"}}><input type="checkbox" checked={form.featured} onChange={e=>setForm({...form,featured:e.target.checked})} style={{width:15,height:15,accentColor:"#DC2626"}}/><span style={{color:"var(--pp-text3)",fontSize:13}}>Mark as Featured</span></label>
         {form.img&&<img src={form.img} alt="" style={{width:320,height:180,objectFit:"cover",borderRadius:12}} onError={e=>e.target.style.display="none"}/>}
       </Card>
-      <div style={{marginTop:14,display:"flex",gap:10}}><button onClick={save} style={{padding:"12px 26px",borderRadius:11,background:"#DC2626",border:"none",color:"#fff",cursor:"pointer",fontWeight:700,fontSize:14,fontFamily:"Outfit,sans-serif"}}>{form.id?"Save":"Publish"}</button><button onClick={()=>setEdit(null)} style={{padding:"12px 20px",borderRadius:11,border:"1.5px solid rgba(255,255,255,0.1)",background:"transparent",color:"#94A3B8",cursor:"pointer",fontWeight:600,fontSize:14,fontFamily:"Outfit,sans-serif"}}>Cancel</button></div>
+      <div style={{marginTop:14,display:"flex",gap:10}}><button onClick={save} style={{padding:"12px 26px",borderRadius:11,background:"#DC2626",border:"none",color:"#fff",cursor:"pointer",fontWeight:700,fontSize:14,fontFamily:"Outfit,sans-serif"}}>{form.id?"Save":"Publish"}</button><button onClick={()=>setEdit(null)} style={{padding:"12px 20px",borderRadius:11,border:"1.5px solid rgba(255,255,255,0.1)",background:"transparent",color:"var(--pp-text3)",cursor:"pointer",fontWeight:600,fontSize:14,fontFamily:"Outfit,sans-serif"}}>Cancel</button></div>
     </div>
   );
   return(
     <div>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:18}}><span style={{color:"#94A3B8",fontSize:14}}>{blogs.length} posts</span><button onClick={()=>setEdit({})} style={{padding:"10px 18px",borderRadius:10,background:"#DC2626",border:"none",color:"#fff",cursor:"pointer",fontWeight:700,fontSize:13,display:"flex",alignItems:"center",gap:6,fontFamily:"Outfit,sans-serif"}}><Plus size={14}/> New Post</button></div>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:18}}><span style={{color:"var(--pp-text3)",fontSize:14}}>{blogs.length} posts</span><button onClick={()=>setEdit({})} style={{padding:"10px 18px",borderRadius:10,background:"#DC2626",border:"none",color:"#fff",cursor:"pointer",fontWeight:700,fontSize:13,display:"flex",alignItems:"center",gap:6,fontFamily:"Outfit,sans-serif"}}><Plus size={14}/> New Post</button></div>
       <div style={{display:"flex",flexDirection:"column",gap:10}}>
         {blogs.map(p=><Card key={p.id} style={{padding:"14px 18px",display:"flex",alignItems:"center",gap:14}}>
           <img src={p.img} alt="" style={{width:68,height:48,objectFit:"cover",borderRadius:9,flexShrink:0}} onError={e=>e.target.style.display="none"}/>
           <div style={{flex:1,minWidth:0}}>
             <div style={{fontWeight:700,fontSize:14,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",marginBottom:4}}>{p.title}</div>
-            <div style={{color:"#64748B",fontSize:12}}>{p.author} · {p.date} · {p.readTime} {p.featured&&<span style={{marginLeft:6,background:"rgba(245,158,11,0.15)",color:"#F59E0B",fontSize:10,fontWeight:700,padding:"2px 8px",borderRadius:20}}>Featured</span>}</div>
+            <div style={{color:"var(--pp-text2)",fontSize:12}}>{p.author} · {p.date} · {p.readTime} {p.featured&&<span style={{marginLeft:6,background:"rgba(245,158,11,0.15)",color:"#F59E0B",fontSize:10,fontWeight:700,padding:"2px 8px",borderRadius:20}}>Featured</span>}</div>
           </div>
           <div style={{display:"flex",gap:6,flexShrink:0}}><Btn small onClick={()=>setEdit(p)}><Edit2 size={11}/> Edit</Btn><Btn small danger onClick={()=>setBlogs(blogs.filter(x=>x.id!==p.id))}><Trash2 size={11}/> Del</Btn></div>
         </Card>)}
@@ -2088,35 +2088,35 @@ function AdminTeam(){
   return(
     <div>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
-        <div style={{color:"#94A3B8",fontSize:14}}>{team.length} admin {team.length===1?"account":"accounts"}</div>
+        <div style={{color:"var(--pp-text3)",fontSize:14}}>{team.length} admin {team.length===1?"account":"accounts"}</div>
         <Btn full onClick={()=>{setShowAdd(true);}}><Plus size={13}/> Add Admin</Btn>
       </div>
 
       <Card>
         <table style={{width:"100%",borderCollapse:"collapse"}}>
-          <thead><tr style={{borderBottom:"1px solid rgba(255,255,255,0.07)"}}>{["Admin","Email","Status","Joined","Actions"].map(h=><th key={h} style={{padding:"12px 16px",textAlign:h==="Actions"?"right":"left",color:"#64748B",fontSize:11,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.07em"}}>{h}</th>)}</tr></thead>
+          <thead><tr style={{borderBottom:"1px solid rgba(255,255,255,0.07)"}}>{["Admin","Email","Status","Joined","Actions"].map(h=><th key={h} style={{padding:"12px 16px",textAlign:h==="Actions"?"right":"left",color:"var(--pp-text2)",fontSize:11,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.07em"}}>{h}</th>)}</tr></thead>
           <tbody>{team.map(u=><tr key={u.id} style={{borderBottom:"1px solid rgba(255,255,255,0.04)"}}>
             <td style={{padding:"13px 16px"}}>
               <div style={{display:"flex",alignItems:"center",gap:10}}>
-                <div style={{width:34,height:34,borderRadius:"50%",background:"#334155",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:700,fontSize:13,color:"#94A3B8",flexShrink:0}}>{(u.name||u.email||"?")[0].toUpperCase()}</div>
+                <div style={{width:34,height:34,borderRadius:"50%",background:"#334155",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:700,fontSize:13,color:"var(--pp-text3)",flexShrink:0}}>{(u.name||u.email||"?")[0].toUpperCase()}</div>
                 {editingId===u.id?(
                   <div style={{display:"flex",gap:6,alignItems:"center"}}>
                     <input value={editName} onChange={e=>setEditName(e.target.value)} style={{padding:"6px 9px",fontSize:13,width:140}}/>
                     <button onClick={()=>saveName(u.id)} style={{background:"none",border:"none",cursor:"pointer",color:"#10B981"}}><CheckCircle size={15}/></button>
-                    <button onClick={()=>setEditingId(null)} style={{background:"none",border:"none",cursor:"pointer",color:"#64748B"}}><X size={15}/></button>
+                    <button onClick={()=>setEditingId(null)} style={{background:"none",border:"none",cursor:"pointer",color:"var(--pp-text2)"}}><X size={15}/></button>
                   </div>
                 ):(
                   <span style={{fontWeight:600,fontSize:14}}>{u.name||"Unnamed"}</span>
                 )}
               </div>
             </td>
-            <td style={{padding:"13px 16px",color:"#94A3B8",fontSize:13}}>{u.email}</td>
+            <td style={{padding:"13px 16px",color:"var(--pp-text3)",fontSize:13}}>{u.email}</td>
             <td style={{padding:"13px 16px"}}>
               {u.confirmed?
                 <span style={{display:"inline-flex",alignItems:"center",gap:5,background:"#10B98122",color:"#10B981",fontWeight:600,fontSize:11,padding:"3px 10px",borderRadius:20}}><CheckCircle size={11}/> Active</span>:
                 <span onClick={()=>simulateConfirm(u.id)} title="Click to simulate confirmation (preview only)" style={{display:"inline-flex",alignItems:"center",gap:5,background:"#F59E0B22",color:"#F59E0B",fontWeight:600,fontSize:11,padding:"3px 10px",borderRadius:20,cursor:"pointer"}}><Hourglass size={11}/> Pending</span>}
             </td>
-            <td style={{padding:"13px 16px",color:"#94A3B8",fontSize:13}}>{new Date(u.created_at).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})}</td>
+            <td style={{padding:"13px 16px",color:"var(--pp-text3)",fontSize:13}}>{new Date(u.created_at).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})}</td>
             <td style={{padding:"13px 16px"}}>
               <div style={{display:"flex",gap:7,justifyContent:"flex-end"}}>
                 {confirmRemove===u.id?(
@@ -2136,18 +2136,18 @@ function AdminTeam(){
             </td>
           </tr>)}</tbody>
         </table>
-        {team.length===0&&<div style={{padding:"40px 20px",textAlign:"center",color:"#475569",fontSize:13}}>No admin accounts yet — add one above.</div>}
+        {team.length===0&&<div style={{padding:"40px 20px",textAlign:"center",color:"var(--pp-text2)",fontSize:13}}>No admin accounts yet — add one above.</div>}
       </Card>
 
       {showAdd&&(
         <div style={{position:"fixed",inset:0,zIndex:500,background:"rgba(0,0,0,0.55)",display:"flex",alignItems:"center",justifyContent:"center"}} onClick={()=>setShowAdd(false)}>
           <div className="pp-admin" style={{background:"#1E293B",borderRadius:18,padding:28,width:380,maxWidth:"90vw",border:"1px solid rgba(255,255,255,0.08)"}} onClick={e=>e.stopPropagation()}>
             <h3 style={{fontWeight:800,fontSize:17,marginBottom:6}}>Invite an admin</h3>
-            <p style={{color:"#94A3B8",fontSize:12.5,marginBottom:18}}>They'll get an email with a link to confirm and set their password. (Preview mode: no real email is sent — click the Pending badge on their row to simulate them confirming.)</p>
+            <p style={{color:"var(--pp-text3)",fontSize:12.5,marginBottom:18}}>They'll get an email with a link to confirm and set their password. (Preview mode: no real email is sent — click the Pending badge on their row to simulate them confirming.)</p>
             <Label>Email</Label>
             <input value={addEmail} onChange={e=>setAddEmail(e.target.value)} type="email" placeholder="teammate@example.com" style={{marginBottom:14}}/>
             <div style={{display:"flex",gap:8}}>
-              <button onClick={()=>setShowAdd(false)} style={{flex:1,padding:"11px",borderRadius:10,border:"1px solid rgba(255,255,255,0.12)",background:"transparent",color:"#94A3B8",cursor:"pointer",fontWeight:600,fontFamily:"Outfit,sans-serif"}}>Cancel</button>
+              <button onClick={()=>setShowAdd(false)} style={{flex:1,padding:"11px",borderRadius:10,border:"1px solid rgba(255,255,255,0.12)",background:"transparent",color:"var(--pp-text3)",cursor:"pointer",fontWeight:600,fontFamily:"Outfit,sans-serif"}}>Cancel</button>
               <button onClick={inviteAdmin} disabled={addBusy} style={{flex:1,padding:"11px",borderRadius:10,border:"none",background:"#DC2626",color:"#fff",cursor:"pointer",fontWeight:700,fontFamily:"Outfit,sans-serif",opacity:addBusy?0.7:1}}>{addBusy?"Sending…":"Send Invite"}</button>
             </div>
           </div>
@@ -2169,20 +2169,20 @@ function EnquiriesPanel(){
       setLoading(false);
     });
   },[]);
-  if(loading)return <div style={{color:"#64748B",padding:20}}>Loading enquiries…</div>;
-  if(!enquiries.length)return <div style={{color:"#64748B",padding:20}}>No enquiries yet.</div>;
+  if(loading)return <div style={{color:"var(--pp-text2)",padding:20}}>Loading enquiries…</div>;
+  if(!enquiries.length)return <div style={{color:"var(--pp-text2)",padding:20}}>No enquiries yet.</div>;
   return(
     <Card>
       <div style={{padding:"16px 22px",borderBottom:"1px solid rgba(255,255,255,0.07)",fontWeight:700,fontSize:15}}>All Enquiries</div>
       <div style={{overflowX:"auto"}}>
       <table style={{width:"100%",borderCollapse:"collapse",minWidth:700}}>
-        <thead><tr style={{borderBottom:"1px solid rgba(255,255,255,0.07)"}}>{["Car","Name","Email","Phone","Date","Listing"].map(h=><th key={h} style={{padding:"11px 16px",textAlign:"left",color:"#64748B",fontSize:11,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.07em",whiteSpace:"nowrap"}}>{h}</th>)}</tr></thead>
+        <thead><tr style={{borderBottom:"1px solid rgba(255,255,255,0.07)"}}>{["Car","Name","Email","Phone","Date","Listing"].map(h=><th key={h} style={{padding:"11px 16px",textAlign:"left",color:"var(--pp-text2)",fontSize:11,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.07em",whiteSpace:"nowrap"}}>{h}</th>)}</tr></thead>
         <tbody>{enquiries.map((e,i)=><tr key={e.id||i} style={{borderBottom:"1px solid rgba(255,255,255,0.04)"}}>
           <td style={{padding:"12px 16px",fontWeight:600,fontSize:13,whiteSpace:"nowrap"}}>{e.car_title||e.car_id}</td>
           <td style={{padding:"12px 16px",fontSize:13}}>{e.name}</td>
-          <td style={{padding:"12px 16px",fontSize:13,color:"#94A3B8"}}>{e.email}</td>
+          <td style={{padding:"12px 16px",fontSize:13,color:"var(--pp-text3)"}}>{e.email}</td>
           <td style={{padding:"12px 16px",fontSize:13}}>{e.phone}</td>
-          <td style={{padding:"12px 16px",fontSize:13,color:"#94A3B8",whiteSpace:"nowrap"}}>{e.created_at?new Date(e.created_at).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}):"-"}</td>
+          <td style={{padding:"12px 16px",fontSize:13,color:"var(--pp-text3)",whiteSpace:"nowrap"}}>{e.created_at?new Date(e.created_at).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}):"-"}</td>
           <td style={{padding:"12px 16px"}}>{e.listing_url?<a href={e.listing_url} target="_blank" rel="noopener noreferrer" style={{color:"#60A5FA",fontSize:12,fontWeight:600,textDecoration:"none"}}>View</a>:"-"}</td>
         </tr>)}</tbody>
       </table>
@@ -2213,7 +2213,7 @@ function AdminConsole({cars,setCars,blogs,setBlogs,users,onExit}){
     <>
       <style>{G}</style>
       <div className="pp-admin" style={{minHeight:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:24,background:"#0F172A"}}>
-        <button onClick={onExit} style={{position:"absolute",top:20,left:24,display:"flex",alignItems:"center",gap:6,background:"none",border:"none",cursor:"pointer",color:"#64748B",fontSize:12.5,fontWeight:600,fontFamily:"Outfit,sans-serif"}}><ChevronLeft size={13}/> Back to site</button>
+        <button onClick={onExit} style={{position:"absolute",top:20,left:24,display:"flex",alignItems:"center",gap:6,background:"none",border:"none",cursor:"pointer",color:"var(--pp-text2)",fontSize:12.5,fontWeight:600,fontFamily:"Outfit,sans-serif"}}><ChevronLeft size={13}/> Back to site</button>
         <div style={{width:420,maxWidth:"94vw"}}>
           {/* Logo */}
           <div style={{textAlign:"center",marginBottom:36}}>
@@ -2234,9 +2234,9 @@ function AdminConsole({cars,setCars,blogs,setBlogs,users,onExit}){
             <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:24}}>
               <label style={{display:"flex",alignItems:"center",gap:8,cursor:"pointer"}}>
                 <input type="checkbox" checked={loginRemember} onChange={e=>setLoginRemember(e.target.checked)} style={{width:15,height:15,accentColor:"#DC2626"}}/>
-                <span style={{color:"#94A3B8",fontSize:13}}>Remember me</span>
+                <span style={{color:"var(--pp-text3)",fontSize:13}}>Remember me</span>
               </label>
-              <span style={{color:"#475569",fontSize:12.5,cursor:"pointer"}}>Forgot password?</span>
+              <span style={{color:"var(--pp-text2)",fontSize:12.5,cursor:"pointer"}}>Forgot password?</span>
             </div>
             {loginErr&&<div style={{background:"rgba(220,38,38,0.1)",border:"1px solid rgba(220,38,38,0.2)",color:"#F87171",fontSize:12.5,padding:"10px 14px",borderRadius:10,marginBottom:16}}>{loginErr}</div>}
             <button onClick={handleLogin} style={{width:"100%",padding:"14px",borderRadius:12,background:"linear-gradient(135deg,#DC2626,#B91C1C)",border:"none",color:"#fff",cursor:"pointer",fontWeight:700,fontSize:15,fontFamily:"Outfit,sans-serif",boxShadow:"0 4px 16px rgba(220,38,38,0.35)"}}>Sign in to Admin</button>
@@ -2266,15 +2266,15 @@ function AdminConsole({cars,setCars,blogs,setBlogs,users,onExit}){
             );})}
           </nav>
           <div style={{padding:"14px 20px",borderTop:"1px solid rgba(255,255,255,0.06)",display:"flex",flexDirection:"column",gap:10}}>
-            <button onClick={onExit} style={{display:"flex",alignItems:"center",gap:8,background:"transparent",border:"none",cursor:"pointer",color:"#94A3B8",fontSize:13,fontWeight:600,fontFamily:"Outfit,sans-serif"}}><ChevronLeft size={13}/> Back to site</button>
-            <button onClick={()=>setAuthed(false)} style={{display:"flex",alignItems:"center",gap:8,background:"transparent",border:"none",cursor:"pointer",color:"#64748B",fontSize:13,fontWeight:500,fontFamily:"Outfit,sans-serif"}}><LogOut size={13}/> Sign Out</button>
+            <button onClick={onExit} style={{display:"flex",alignItems:"center",gap:8,background:"transparent",border:"none",cursor:"pointer",color:"var(--pp-text3)",fontSize:13,fontWeight:600,fontFamily:"Outfit,sans-serif"}}><ChevronLeft size={13}/> Back to site</button>
+            <button onClick={()=>setAuthed(false)} style={{display:"flex",alignItems:"center",gap:8,background:"transparent",border:"none",cursor:"pointer",color:"var(--pp-text2)",fontSize:13,fontWeight:500,fontFamily:"Outfit,sans-serif"}}><LogOut size={13}/> Sign Out</button>
           </div>
         </div>
         <div style={{flex:1,display:"flex",flexDirection:"column",overflow:"hidden"}}>
           <div style={{padding:"16px 28px",borderBottom:"1px solid rgba(255,255,255,0.06)",background:"#1E293B",display:"flex",alignItems:"center",justifyContent:"space-between",flexShrink:0}}>
             <h1 style={{fontWeight:800,fontSize:19,letterSpacing:"-0.03em"}}>{NAV.find(n=>n.id===tab)?.label}</h1>
             <div style={{display:"flex",alignItems:"center",gap:10}}>
-              <div style={{textAlign:"right"}}><div style={{fontSize:12.5,fontWeight:600}}>Admin</div><div style={{color:"#64748B",fontSize:11}}>vaseey@gmail.com</div></div>
+              <div style={{textAlign:"right"}}><div style={{fontSize:12.5,fontWeight:600}}>Admin</div><div style={{color:"var(--pp-text2)",fontSize:11}}>vaseey@gmail.com</div></div>
               <div style={{width:34,height:34,background:"#DC2626",borderRadius:9,display:"flex",alignItems:"center",justifyContent:"center"}}><Shield size={16} color="#fff"/></div>
             </div>
           </div>
@@ -2302,7 +2302,7 @@ function FavoritesPage({setPage,setSelectedCar,favs,toggleFav,cars}){
           <span style={{background:"#DC2626",color:"#fff",padding:"5px 14px",borderRadius:100,fontWeight:700,fontSize:14}}>{saved.length}</span>
         </div>
         {saved.length===0?(
-          <div style={{textAlign:"center",padding:"80px 20px",color:"rgba(255,255,255,0.3)"}}>
+          <div style={{textAlign:"center",padding:"80px 20px",color:"var(--pp-text3)"}}>
             <Heart size={36} color="rgba(255,255,255,0.2)" style={{marginBottom:14}}/>
             <p style={{fontSize:15,marginBottom:18}}>You haven't saved any cars yet.</p>
             <button onClick={()=>setPage("browse")} className="btn-red" style={{padding:"11px 24px",borderRadius:100,fontSize:14}}>Browse Cars</button>
@@ -2448,12 +2448,12 @@ export default function App(){
       <div style={{width:64,height:64,background:"#DCFCE7",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",marginBottom:8}}><CheckCircle size={32} color="#16A34A"/></div>
       <h1 style={{fontWeight:900,fontSize:28,letterSpacing:"-0.03em",color:"#0F172A",margin:0}}>Your account is confirmed.</h1>
       <p style={{fontWeight:600,fontSize:17,color:"#0F172A",margin:0}}>Welcome to Pole Position.</p>
-      <p style={{color:"#64748B",fontSize:14,margin:0}}>Please wait. Redirecting…</p>
+      <p style={{color:"var(--pp-text2)",fontSize:14,margin:0}}>Please wait. Redirecting…</p>
       <div style={{width:36,height:36,border:"3px solid #E2E8F0",borderTopColor:"#DC2626",borderRadius:"50%",animation:"spin 0.8s linear infinite",marginTop:8}}/>
     </div>
   );
 
-  if(loading) return <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100vh",fontFamily:"Outfit,sans-serif",fontSize:18,color:"#64748B"}}>Loading…</div>;
+  if(loading) return <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100vh",fontFamily:"Outfit,sans-serif",fontSize:18,color:"var(--pp-text2)"}}>Loading…</div>;
 
   if(view==="admin"){
     return <AdminConsole cars={cars} setCars={setCars} blogs={blogs} setBlogs={setBlogs} users={users} onExit={()=>setView("public")}/>;
