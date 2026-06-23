@@ -415,7 +415,7 @@ function LoginCard({mode="user",onClose,onSubmit,error}){
   const inp={width:"100%",padding:"11px 14px",fontSize:14,borderRadius:12,border:"1.5px solid var(--pp-border2)",background:"var(--pp-input)",color:"var(--pp-text)"};
   return(
     <div className="glass" style={{borderRadius:24,padding:36,width:390,maxWidth:"94vw",position:"relative"}} onClick={e=>e.stopPropagation()}>
-      {onClose&&<button onClick={onClose} style={{position:"absolute",top:14,right:14,background:"#F1F5F9",border:"none",borderRadius:"50%",width:30,height:30,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><X size={14}/></button>}
+      {onClose&&<button onClick={onClose} style={{position:"absolute",top:14,right:14,background:"var(--pp-card2)",border:"none",borderRadius:"50%",width:30,height:30,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--pp-text)"}}><X size={14}/></button>}
       <div style={{width:40,height:40,background:"#9B2B2B",borderRadius:11,display:"flex",alignItems:"center",justifyContent:"center",marginBottom:16}}><Car size={19} color="#fff"/></div>
       <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:21,letterSpacing:"-0.04em",marginBottom:4,color:"var(--pp-text)"}}>{mode==="admin"?"Pole Position Admin Console":(tab==="signup"?"Welcome aboard":"Welcome back")}</h2>
       <p style={{color:"var(--pp-text2)",fontSize:13,marginBottom:20}}>{mode==="admin"?"Sign in with your admin account":"Sign in to save favourites and track listings"}</p>
