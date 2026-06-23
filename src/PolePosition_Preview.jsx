@@ -808,9 +808,9 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
 
             <FilterCard title="KM Driven" onReset={(kmMin>floorKm||kmMax<ceilKm)?()=>{setKmMin(floorKm);setKmMax(ceilKm);}:null}>
               <div style={{display:"flex",gap:8,alignItems:"center"}}>
-                <input type="number" value={kmMin} onChange={e=>setKmMin(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1.5px solid #E2E8F0",fontSize:12}}/>
-                <span style={{color:"#CBD5E1",fontSize:12}}>–</span>
-                <input type="number" value={kmMax} onChange={e=>setKmMax(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1.5px solid #E2E8F0",fontSize:12}}/>
+                <input type="number" value={kmMin} onChange={e=>setKmMin(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"#fff",fontSize:12}}/>
+                <span style={{color:"rgba(255,255,255,0.3)",fontSize:12}}>–</span>
+                <input type="number" value={kmMax} onChange={e=>setKmMax(Number(e.target.value)||0)} style={{width:"50%",padding:"8px 9px",borderRadius:9,border:"1px solid rgba(255,255,255,0.12)",background:"rgba(255,255,255,0.05)",color:"#fff",fontSize:12}}/>
               </div>
             </FilterCard>
 
