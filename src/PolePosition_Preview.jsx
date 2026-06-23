@@ -856,7 +856,7 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
 // ── CarDetailPage ─────────────────────────────────────────────────
 
 // ── CarDetailPage ────────────────────────────────────────────────
-function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
+function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,darkMode,setDarkMode}){
   const [tab,setTab]=useState("overview");
   const [err,setErr]=useState(false);
   const [activeImg,setActiveImg]=useState(0);
