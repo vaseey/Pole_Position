@@ -300,9 +300,32 @@ function Navbar({page,setPage,user,setUser,setShowLogin,isAdmin,onGoAdmin,darkMo
   return(
     <>
     <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:200,background:"var(--pp-nav)",backdropFilter:"blur(12px)",borderBottom:"1px solid var(--pp-border)",height:56,display:"flex",alignItems:"center",padding:"0 20px",gap:0}}>
-      <button onClick={()=>setPage("home")} style={{display:"flex",alignItems:"center",gap:8,background:"none",border:"none",cursor:"pointer",marginRight:"auto"}}>
-        <div style={{width:30,height:30,background:"#9B2B2B",borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center"}}><Car size={15} color="#fff"/></div>
-        <span style={{fontWeight:900,fontSize:16,letterSpacing:"-0.04em",fontFamily:"Outfit,sans-serif",color:"var(--pp-text)"}}>Pole<span style={{fontWeight:900}}>Position</span></span>
+      <button onClick={()=>setPage("home")} style={{display:"flex",alignItems:"center",gap:10,background:"none",border:"none",cursor:"pointer",marginRight:"auto"}}>
+        <svg width="36" height="36" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="48" fill="#fff" stroke="#D8E0EE" strokeWidth="2"/>
+          <circle cx="50" cy="50" r="38" fill="#1E3A6E"/>
+          <rect x="43" y="12" width="7" height="76" fill="#9B2B2B" opacity="0.85"/>
+          <rect x="53" y="12" width="5" height="76" fill="#9B2B2B" opacity="0.6"/>
+          <circle cx="50" cy="50" r="22" fill="#fff"/>
+          <circle cx="50" cy="50" r="18" fill="#1E3A6E"/>
+          <circle cx="50" cy="50" r="8" fill="#fff"/>
+          <circle cx="50" cy="50" r="5" fill="#1E3A6E"/>
+          <line x1="50" y1="32" x2="50" y2="42" stroke="#fff" strokeWidth="3" strokeLinecap="round"/>
+          <line x1="50" y1="58" x2="50" y2="68" stroke="#fff" strokeWidth="3" strokeLinecap="round"/>
+          <line x1="32" y1="50" x2="42" y2="50" stroke="#fff" strokeWidth="3" strokeLinecap="round"/>
+          <line x1="58" y1="50" x2="68" y2="50" stroke="#fff" strokeWidth="3" strokeLinecap="round"/>
+          <path d="M50 2 A48 48 0 0 1 98 50" fill="none" stroke="none"/>
+          <text fontFamily="Outfit,sans-serif" fontSize="10" fontWeight="700" fill="#1E3A6E" textAnchor="middle">
+            <textPath href="#topArc" startOffset="50%">POLE POSITION</textPath>
+          </text>
+          <defs>
+            <path id="topArc" d="M 12 50 A 38 38 0 0 1 88 50"/>
+          </defs>
+          <text x="50" y="90" textAnchor="middle" fontFamily="Outfit,sans-serif" fontSize="9" fontWeight="700" fill="#1E3A6E" letterSpacing="3">CARS</text>
+          <text x="18" y="46" fontSize="6" fill="#1E3A6E">★</text>
+          <text x="76" y="46" fontSize="6" fill="#1E3A6E">★</text>
+        </svg>
+        <span style={{fontWeight:900,fontSize:16,letterSpacing:"-0.04em",fontFamily:"Outfit,sans-serif",color:"var(--pp-text)"}}>Pole<span style={{color:"#9B2B2B"}}>Position</span></span>
       </button>
       {!isMobile&&(
         <>
