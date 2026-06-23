@@ -932,16 +932,16 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
       </div>
 
       {/* Thumbnail strip */}
-      <div style={{display:"flex",gap:8,padding:"10px 12px",overflowX:"auto",scrollbarWidth:"none",background:"#fff"}}>
+      <div style={{display:"flex",gap:8,padding:"10px 12px",overflowX:"auto",scrollbarWidth:"none",background:"var(--pp-card)"}}>
         {gallery.map((m,i)=>(
-          <button key={i} onClick={()=>{setActiveImg(i);setErr(false);}} style={{width:64,height:52,borderRadius:8,overflow:"hidden",border:activeImg===i?"2px solid #E87722":"2px solid #E2E8F0",padding:0,cursor:"pointer",flexShrink:0,background:"#F1F5F9"}}>
-            {m.type==="video"?<div style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center",background:"#0F172A"}}><Play size={14} color="#fff" fill="#fff"/></div>:<img src={m.url} alt="" style={{width:"100%",height:"100%",objectFit:"cover"}}/>}
+          <button key={i} onClick={()=>{setActiveImg(i);setErr(false);}} style={{width:64,height:52,borderRadius:8,overflow:"hidden",border:activeImg===i?"2px solid #9B2B2B":"2px solid var(--pp-border)",padding:0,cursor:"pointer",flexShrink:0,background:"var(--pp-card2)"}}>
+            {m.type==="video"?<div style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center",background:"var(--pp-card2)"}}><Play size={14} color="var(--pp-text)" fill="var(--pp-text)"/></div>:<img src={m.url} alt="" style={{width:"100%",height:"100%",objectFit:"cover"}}/>}
           </button>
         ))}
       </div>
 
       {/* Info block */}
-      <div style={{padding:"14px 16px 0",background:"#fff"}}>
+      <div style={{padding:"14px 16px 0",background:"var(--pp-card)"}}>
         <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:22,letterSpacing:"-0.03em",color:"var(--pp-text)",marginBottom:8}}>{car.make} {car.model}{car.variant?` ${car.variant}`:""}</h1>
         <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
           <span style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:28,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>{fmt(car.price)}</span>
