@@ -420,9 +420,9 @@ function LoginCard({mode="user",onClose,onSubmit,error}){
       <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:21,letterSpacing:"-0.04em",marginBottom:4,color:"var(--pp-text)"}}>{mode==="admin"?"Pole Position Admin Console":(tab==="signup"?"Welcome aboard":"Welcome back")}</h2>
       <p style={{color:"var(--pp-text2)",fontSize:13,marginBottom:20}}>{mode==="admin"?"Sign in with your admin account":"Sign in to save favourites and track listings"}</p>
       {mode==="user"&&(
-        <div style={{display:"flex",background:"#F1F5F9",borderRadius:11,padding:3,marginBottom:20}}>
+        <div style={{display:"flex",background:"var(--pp-card2)",borderRadius:11,padding:3,marginBottom:20}}>
           {["login","signup"].map(t=>(
-            <button key={t} onClick={()=>setTab(t)} style={{flex:1,padding:"7px 0",borderRadius:9,border:"none",cursor:"pointer",fontWeight:600,fontSize:13,background:tab===t?"#fff":"transparent",color:tab===t?"#0F172A":"#64748B",boxShadow:tab===t?"0 2px 6px rgba(0,0,0,0.08)":"none"}}>
+            <button key={t} onClick={()=>setTab(t)} style={{flex:1,padding:"7px 0",borderRadius:9,border:"none",cursor:"pointer",fontWeight:600,fontSize:13,background:tab===t?"var(--pp-card)":"transparent",color:tab===t?"var(--pp-text)":"var(--pp-text2)",boxShadow:tab===t?"0 2px 6px rgba(0,0,0,0.15)":"none"}}>
               {t==="login"?"Log in":"Sign up"}
             </button>
           ))}
