@@ -508,7 +508,7 @@ function CarCard({car,onFav,isFav,onClick}){
       <div style={{padding:"16px 16px 18px"}}>
         <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,color:"var(--pp-text)",letterSpacing:"-0.03em",marginBottom:10}}>{car.make} {car.model}</div>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-          <span style={{fontSize:15,color:"rgba(255,255,255,0.7)",fontWeight:600}}>{fmt(car.price)}</span>
+          <span style={{fontSize:15,color:"var(--pp-text2)",fontWeight:600}}>{fmt(car.price)}</span>
           <div style={{width:32,height:32,borderRadius:"50%",background:"#fff",display:"flex",alignItems:"center",justifyContent:"center"}}>
             <span style={{color:"#000",fontSize:16,lineHeight:1}}>↗</span>
           </div>
@@ -560,7 +560,7 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
               <div style={{color:"var(--pp-text2)",fontSize:12,fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:8}}>Curated Picks</div>
               <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:32,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>Top Picks</h2>
             </div>
-            <button onClick={()=>setPage("browse")} style={{display:"flex",alignItems:"center",gap:6,padding:"9px 18px",borderRadius:100,border:"1px solid rgba(255,255,255,0.15)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13.5,color:"rgba(255,255,255,0.7)"}}>
+            <button onClick={()=>setPage("browse")} style={{display:"flex",alignItems:"center",gap:6,padding:"9px 18px",borderRadius:100,border:"1px solid rgba(255,255,255,0.15)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13.5,color:"var(--pp-text2)"}}>
               View all <ArrowRight size={14}/>
             </button>
           </div>
@@ -590,7 +590,7 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
               <div style={{color:"var(--pp-text2)",fontSize:12,fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:8}}>From the Blog</div>
               <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:28,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>Expert Reviews & Guides</h2>
             </div>
-            <button onClick={()=>setPage("blog")} style={{display:"flex",alignItems:"center",gap:6,padding:"9px 18px",borderRadius:100,border:"1px solid rgba(255,255,255,0.15)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13.5,color:"rgba(255,255,255,0.7)"}}>
+            <button onClick={()=>setPage("blog")} style={{display:"flex",alignItems:"center",gap:6,padding:"9px 18px",borderRadius:100,border:"1px solid rgba(255,255,255,0.15)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13.5,color:"var(--pp-text2)"}}>
               All articles <ArrowRight size={14}/>
             </button>
           </div>
@@ -648,7 +648,7 @@ function BrowseCarCard({car,onFav,isFav,onClick}){
         <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:20,color:"var(--pp-text)",letterSpacing:"-0.03em",marginBottom:4}}>{car.make} {car.model}</div>
         {car.variant&&<div style={{color:"var(--pp-text2)",fontSize:12,fontWeight:600,marginBottom:10}}>{car.variant}</div>}
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:10}}>
-          <span style={{fontSize:15,color:"rgba(255,255,255,0.7)",fontWeight:600}}>{fmt(car.price)}</span>
+          <span style={{fontSize:15,color:"var(--pp-text2)",fontWeight:600}}>{fmt(car.price)}</span>
           <div style={{width:32,height:32,borderRadius:"50%",background:"#fff",display:"flex",alignItems:"center",justifyContent:"center"}}>
             <span style={{color:"#000",fontSize:16,lineHeight:1}}>↗</span>
           </div>
@@ -773,7 +773,7 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
                             return(
                               <label key={model} style={{display:"flex",alignItems:"center",gap:8,cursor:"pointer"}}>
                                 <input type="checkbox" checked={checked} onChange={()=>toggleIn(selModels,setSelModels,key)} style={{width:14,height:14,accentColor:"#9B2B2B"}}/>
-                                <span style={{fontSize:12.5,color:"rgba(255,255,255,0.7)"}}>{model}</span>
+                                <span style={{fontSize:12.5,color:"var(--pp-text2)"}}>{model}</span>
                               </label>
                             );
                           })}
@@ -835,7 +835,7 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
           <div style={{flex:1}}>
             {isMobile&&(
               <div style={{marginBottom:16}}>
-                <button onClick={()=>setShowMobileFilters(true)} style={{display:"flex",alignItems:"center",gap:8,padding:"10px 18px",borderRadius:100,border:"1px solid rgba(255,255,255,0.15)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13.5,color:"rgba(255,255,255,0.7)"}}>
+                <button onClick={()=>setShowMobileFilters(true)} style={{display:"flex",alignItems:"center",gap:8,padding:"10px 18px",borderRadius:100,border:"1px solid rgba(255,255,255,0.15)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13.5,color:"var(--pp-text2)"}}>
                   <Filter size={14}/> Filters
                 </button>
               </div>
@@ -1163,7 +1163,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
                 {highlights.map((h,i)=>(
                   <div key={i} style={{display:"flex",gap:10,alignItems:"flex-start",padding:"12px 14px",background:"rgba(255,255,255,0.04)",borderRadius:12}}>
                     <CheckCircle size={15} color="#10B981" style={{flexShrink:0,marginTop:2}}/>
-                    <span style={{fontSize:13.5,color:"rgba(255,255,255,0.7)",lineHeight:1.4}}>{h}</span>
+                    <span style={{fontSize:13.5,color:"var(--pp-text2)",lineHeight:1.4}}>{h}</span>
                   </div>
                 ))}
               </div>
@@ -1401,7 +1401,7 @@ function ForumPage({setPage,setThread,user,setShowLogin,threads}){
         {!user&&(
           <div style={{background:"rgba(220,38,38,0.08)",border:"1px solid rgba(220,38,38,0.2)",borderRadius:14,padding:"16px 20px",marginBottom:24,display:"flex",alignItems:"center",gap:12}}>
             <AlertCircle size={16} color="#9B2B2B"/>
-            <span style={{fontSize:13.5,color:"rgba(255,255,255,0.7)"}}>Sign in to participate in discussions.</span>
+            <span style={{fontSize:13.5,color:"var(--pp-text2)"}}>Sign in to participate in discussions.</span>
             <button onClick={()=>setShowLogin(true)} className="btn-red" style={{marginLeft:"auto",padding:"7px 16px",borderRadius:100,fontSize:13}}>Sign In</button>
           </div>
         )}
@@ -1446,7 +1446,7 @@ function ThreadPage({thread:t,setPage,user,setShowLogin}){
     <div style={{paddingTop:56,minHeight:"100vh",background:"var(--pp-bg)"}}>
       <div style={{background:"var(--pp-card)",borderBottom:"1px solid var(--pp-border)",padding:"36px 32px 30px"}}>
         <div style={{maxWidth:820,margin:"0 auto"}}>
-          <button onClick={()=>setPage("forum")} style={{display:"flex",alignItems:"center",gap:6,background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.12)",borderRadius:9,padding:"7px 14px",color:"rgba(255,255,255,0.7)",cursor:"pointer",fontSize:13,fontWeight:600,marginBottom:16}}>
+          <button onClick={()=>setPage("forum")} style={{display:"flex",alignItems:"center",gap:6,background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.12)",borderRadius:9,padding:"7px 14px",color:"var(--pp-text2)",cursor:"pointer",fontSize:13,fontWeight:600,marginBottom:16}}>
             <ChevronLeft size={14}/> Back to Forum
           </button>
           <h1 style={{color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:22,letterSpacing:"-0.03em",lineHeight:1.3}}>{t.title}</h1>
@@ -1463,7 +1463,7 @@ function ThreadPage({thread:t,setPage,user,setShowLogin}){
                 <div style={{color:"var(--pp-text2)",fontSize:11.5}}>{r.time}</div>
               </div>
             </div>
-            <p style={{color:"rgba(255,255,255,0.7)",fontSize:14,lineHeight:1.65,marginBottom:12}}>{r.body}</p>
+            <p style={{color:"var(--pp-text2)",fontSize:14,lineHeight:1.65,marginBottom:12}}>{r.body}</p>
             <button onClick={()=>setLikes(l=>({...l,[r.id]:!l[r.id]}))} style={{display:"flex",alignItems:"center",gap:5,background:"none",border:"1px solid rgba(255,255,255,0.12)",borderRadius:8,padding:"5px 12px",cursor:"pointer",color:likes[r.id]?"#9B2B2B":"rgba(255,255,255,0.5)",fontSize:12.5,fontWeight:600}}>
               <ThumbsUp size={12} fill={likes[r.id]?"#9B2B2B":"none"}/> {r.likes+(likes[r.id]?1:0)}
             </button>
