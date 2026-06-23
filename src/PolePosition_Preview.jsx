@@ -503,7 +503,7 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
   return(
     <div style={{paddingTop:56}}>
       {/* Hero */}
-      <div style={{position:"relative",background:"#0A0A0A",minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden",paddingTop:56}}>
+      <div style={{position:"relative",background:"var(--pp-bg)",minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden",paddingTop:56}}>
         {/* Giant watermark text */}
         <div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",fontSize:"clamp(80px,18vw,220px)",fontWeight:900,color:"rgba(255,255,255,0.04)",letterSpacing:"-0.05em",whiteSpace:"nowrap",fontFamily:"Outfit,sans-serif",userSelect:"none",pointerEvents:"none",lineHeight:1}}>
           POLE POSITION
@@ -529,7 +529,7 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
       </div>
 
       {/* Hot listings */}
-      <div style={{padding:"72px 32px",background:"#0A0A0A"}}>
+      <div style={{padding:"72px 32px",background:"var(--pp-bg)"}}>
         <div style={{maxWidth:1200,margin:"0 auto"}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:32}}>
             <div>
@@ -559,7 +559,7 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
       </div>
 
       {/* Blog preview */}
-      <div style={{padding:"72px 32px",background:"#0A0A0A"}}>
+      <div style={{padding:"72px 32px",background:"var(--pp-bg)"}}>
         <div style={{maxWidth:1100,margin:"0 auto"}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:28}}>
             <div>
@@ -586,7 +586,7 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
       </div>
 
       {/* Footer */}
-      <div style={{background:"#0A0A0A",borderTop:"1px solid rgba(255,255,255,0.07)",padding:"40px 32px",textAlign:"center"}}>
+      <div style={{background:"var(--pp-bg)",borderTop:"1px solid rgba(255,255,255,0.07)",padding:"40px 32px",textAlign:"center"}}>
         <div style={{display:"flex",alignItems:"center",gap:8,justifyContent:"center",marginBottom:12}}>
           <div style={{width:28,height:28,background:"#DC2626",borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center"}}><Car size={14} color="#fff"/></div>
           <span style={{color:"#fff",fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:15}}>Pole<span style={{fontWeight:900}}>Position</span></span>
@@ -716,7 +716,7 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
   const yearPct=v=>((v-floorYear)/((ceilYear-floorYear)||1))*100;
 
   return(
-    <div style={{paddingTop:80,minHeight:"100vh",background:"#0A0A0A"}}>
+    <div style={{paddingTop:80,minHeight:"100vh",background:"var(--pp-bg)"}}>
       <div style={{maxWidth:1280,margin:"0 auto",padding:"0 24px 70px"}}>
 
         <div style={{display:"flex",alignItems:"center",gap:14,marginBottom:28}}>
@@ -1055,14 +1055,14 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
 
   /* ── DESKTOP LAYOUT ── */
   return(
-    <div style={{paddingTop:56,minHeight:"100vh",background:"#0A0A0A",overflowX:"hidden"}}>
+    <div style={{paddingTop:56,minHeight:"100vh",background:"var(--pp-bg)",overflowX:"hidden"}}>
       <div style={{maxWidth:1100,margin:"0 auto",padding:"24px 28px 0"}}>
         <button onClick={()=>setPage("browse")} style={{display:"flex",alignItems:"center",gap:6,background:"none",border:"none",cursor:"pointer",color:"rgba(255,255,255,0.5)",fontSize:13,fontWeight:600,marginBottom:18}}>
           <ChevronLeft size={15}/> Back to results
         </button>
         <div style={{display:"grid",gridTemplateColumns:"1fr 360px",gap:30,alignItems:"flex-start"}}>
           <div>
-            <div style={{position:"relative",overflow:"hidden",maxHeight:600,background:"#0A0A0A"}}>
+            <div style={{position:"relative",overflow:"hidden",maxHeight:600,background:"var(--pp-bg)"}}>
               {gallery[activeImg]?.type==="video"?(
                 <video src={gallery[activeImg].url} controls style={{width:"100%",maxHeight:600,objectFit:"cover"}}/>
               ):(
@@ -1078,7 +1078,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
               )}
             </div>
             {/* Thumbnail strip */}
-            <div style={{display:"flex",gap:10,marginTop:12,overflowX:"auto",paddingBottom:4,background:"#0A0A0A"}}>
+            <div style={{display:"flex",gap:10,marginTop:12,overflowX:"auto",paddingBottom:4,background:"var(--pp-bg)"}}>
               {gallery.map((m,i)=>(
                 <button key={i} onClick={()=>{setActiveImg(i);setErr(false);}} style={{width:80,height:60,borderRadius:8,overflow:"hidden",border:activeImg===i?"2px solid #fff":"2px solid transparent",padding:0,cursor:"pointer",flexShrink:0,opacity:activeImg===i?1:0.5,background:"#111"}}>
                   {m.type==="video"?<div style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center"}}><Play size={15} color="#fff" fill="#fff"/></div>:<img src={m.url} alt="" style={{width:"100%",height:"100%",objectFit:"cover"}}/>}
@@ -1120,7 +1120,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail}){
         </div>
       </div>
       {/* Tab bar */}
-      <div style={{background:"#0A0A0A",borderBottom:"1px solid rgba(255,255,255,0.08)",position:"sticky",top:56,zIndex:100,marginTop:32}}>
+      <div style={{background:"var(--pp-bg)",borderBottom:"1px solid rgba(255,255,255,0.08)",position:"sticky",top:56,zIndex:100,marginTop:32}}>
         <div style={{maxWidth:1100,margin:"0 auto",padding:"0 28px",display:"flex",gap:0}}>
           {TABS.map(([id,label])=>(
             <button key={id} onClick={()=>setTab(id)} style={{padding:"16px 22px",border:"none",background:"transparent",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:600,fontSize:14,color:tab===id?"#fff":"rgba(255,255,255,0.4)",borderBottom:tab===id?"2.5px solid #fff":"2.5px solid transparent",transition:"all 0.15s",whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:6}}>
@@ -1283,7 +1283,7 @@ function QuizPage({setPage,setSelectedCar,cars}){
   };
   const q=QUIZ[step];
   return(
-    <div style={{paddingTop:56,minHeight:"100vh",background:"#0A0A0A",display:"flex",alignItems:"center",justifyContent:"center",padding:"80px 24px"}}>
+    <div style={{paddingTop:56,minHeight:"100vh",background:"var(--pp-bg)",display:"flex",alignItems:"center",justifyContent:"center",padding:"80px 24px"}}>
       <div style={{maxWidth:560,width:"100%"}}>
         <div style={{textAlign:"center",marginBottom:40}}>
           <div style={{color:"#DC2626",fontSize:12,fontWeight:700,letterSpacing:"0.1em",marginBottom:12}}>STEP {step+1} OF {QUIZ.length}</div>
@@ -1314,7 +1314,7 @@ function BlogPage({blog}){
   const featured=blog[0]||{};
   const rest=blog.slice(1).filter(p=>tag==="All"||p.tag===tag);
   return(
-    <div style={{paddingTop:56,minHeight:"100vh",background:"#0A0A0A"}}>
+    <div style={{paddingTop:56,minHeight:"100vh",background:"var(--pp-bg)"}}>
       <div style={{background:"#111",borderBottom:"1px solid rgba(255,255,255,0.08)",padding:"60px 32px 50px",textAlign:"center"}}>
         <div style={{color:"rgba(255,255,255,0.4)",fontSize:12,fontWeight:700,letterSpacing:"0.1em",marginBottom:12}}>POLE POSITION BLOG</div>
         <h1 style={{color:"#fff",fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:38,letterSpacing:"-0.04em",marginBottom:14}}>Expert Reviews & Guides</h1>
@@ -1365,7 +1365,7 @@ function ForumPage({setPage,setThread,user,setShowLogin,threads}){
   const CAT_COLORS={Cars:"#DC2626","Bikes & Scooters":"#7C3AED",EVs:"#059669","Buying Help":"#F59E0B","Ownership Diaries":"#3B82F6"};
   const visible=threads.filter(t=>cat==="All"||t.cat===cat);
   return(
-    <div style={{paddingTop:56,minHeight:"100vh",background:"#0A0A0A"}}>
+    <div style={{paddingTop:56,minHeight:"100vh",background:"var(--pp-bg)"}}>
       <div style={{background:"#111",borderBottom:"1px solid rgba(255,255,255,0.08)",padding:"52px 32px 44px",textAlign:"center"}}>
         <div style={{color:"rgba(255,255,255,0.4)",fontSize:12,fontWeight:700,letterSpacing:"0.1em",marginBottom:12}}>COMMUNITY</div>
         <h1 style={{color:"#fff",fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:36,letterSpacing:"-0.04em",marginBottom:14}}>The Pit Lane Forum</h1>
@@ -1419,7 +1419,7 @@ function ThreadPage({thread:t,setPage,user,setShowLogin}){
     setReply("");
   };
   return(
-    <div style={{paddingTop:56,minHeight:"100vh",background:"#0A0A0A"}}>
+    <div style={{paddingTop:56,minHeight:"100vh",background:"var(--pp-bg)"}}>
       <div style={{background:"#111",borderBottom:"1px solid rgba(255,255,255,0.08)",padding:"36px 32px 30px"}}>
         <div style={{maxWidth:820,margin:"0 auto"}}>
           <button onClick={()=>setPage("forum")} style={{display:"flex",alignItems:"center",gap:6,background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.12)",borderRadius:9,padding:"7px 14px",color:"rgba(255,255,255,0.7)",cursor:"pointer",fontSize:13,fontWeight:600,marginBottom:16}}>
@@ -2295,7 +2295,7 @@ function AdminConsole({cars,setCars,blogs,setBlogs,users,onExit}){
 function FavoritesPage({setPage,setSelectedCar,favs,toggleFav,cars}){
   const saved=cars.filter(c=>favs.includes(c.id));
   return(
-    <div style={{paddingTop:80,minHeight:"100vh",background:"#0A0A0A"}}>
+    <div style={{paddingTop:80,minHeight:"100vh",background:"var(--pp-bg)"}}>
       <div style={{maxWidth:1280,margin:"0 auto",padding:"0 24px 70px"}}>
         <div style={{display:"flex",alignItems:"center",gap:14,marginBottom:28}}>
           <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:32,letterSpacing:"-0.03em",color:"#fff"}}>My Favourites</h1>
