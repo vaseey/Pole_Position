@@ -560,6 +560,81 @@ function CarCard({car,onFav,isFav,onClick}){
 }
 
 
+// ── TestDriveModal ────────────────────────────────────────────────
+function TestDriveModal({car,onClose}){
+  const [form,setForm]=useState({name:"",phone:"",date:"",time:"Morning (9am–12pm)",location:"Showroom"});
+  const [submitting,setSubmitting]=useState(false);
+  const [done,setDone]=useState(false);
+  const set=k=>e=>setForm(f=>({...f,[k]:e.target.value}));
+  const valid=form.name.trim()&&form.phone.trim()&&form.date;
+  const submit=async()=>{
+    setSubmitting(true);
+    try{await supabase.from("test_drive_bookings").insert({car_id:car?.id||null,car_title:car?`${car.make} ${car.model} ${car.year}`:"General",name:form.name,phone:form.phone,preferred_date:form.date,preferred_time:form.time,location_pref:form.location});}catch(e){}
+    const msg=encodeURIComponent(`🚗 Test Drive Booking – Pole Position\n\nName: ${form.name}\nPhone: ${form.phone}\nDate: ${form.date}\nTime: ${form.time}\nLocation: ${form.location}${car?`\nCar: ${car.make} ${car.model} ${car.year}`:""}`);
+    window.open(`https://wa.me/919884257043?text=${msg}`,"_blank");
+    setSubmitting(false);setDone(true);
+  };
+  const inpStyle={width:"100%",padding:"12px 14px",fontSize:14,borderRadius:12,border:"1.5px solid var(--pp-border2)",background:"var(--pp-input)",color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",outline:"none",boxSizing:"border-box"};
+  const lbl={fontSize:11,fontWeight:700,color:"var(--pp-text2)",textTransform:"uppercase",display:"block",marginBottom:5,letterSpacing:"0.06em"};
+  return(
+    <div style={{position:"fixed",inset:0,zIndex:700,background:"rgba(0,0,0,0.75)",display:"flex",alignItems:"center",justifyContent:"center",padding:"16px"}} onClick={onClose}>
+      <div style={{background:"var(--pp-card)",borderRadius:22,padding:"30px 28px",width:"100%",maxWidth:440,border:"1px solid var(--pp-border)",boxShadow:"0 24px 80px rgba(0,0,0,0.5)",animation:"fadeUp 0.25s ease"}} onClick={e=>e.stopPropagation()}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}>
+          <div>
+            <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:22,letterSpacing:"-0.03em",color:"var(--pp-text)",margin:0}}>Book a Test Drive</h2>
+            {car&&<p style={{color:"var(--pp-text2)",fontSize:13,marginTop:4}}>{car.make} {car.model} {car.year}</p>}
+          </div>
+          <button onClick={onClose} style={{width:34,height:34,borderRadius:"50%",border:"1px solid var(--pp-border)",background:"transparent",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--pp-text2)"}}><X size={16}/></button>
+        </div>
+        {done?(
+          <div style={{textAlign:"center",padding:"20px 0"}}>
+            <CheckCircle size={48} color="#22C55E" style={{margin:"0 auto 14px"}}/>
+            <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,color:"var(--pp-text)",marginBottom:8}}>Booking Confirmed!</div>
+            <p style={{color:"var(--pp-text2)",fontSize:13.5}}>We'll reach out to confirm your test drive slot.</p>
+            <button onClick={onClose} style={{marginTop:20,padding:"12px 32px",borderRadius:50,background:"#9B2B2B",color:"#fff",border:"none",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:14}}>Done</button>
+          </div>
+        ):(
+          <>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,marginBottom:14}}>
+              <div style={{gridColumn:"1/-1"}}>
+                <label style={lbl}>Your Name</label>
+                <input value={form.name} onChange={set("name")} placeholder="Rahul Sharma" style={inpStyle}/>
+              </div>
+              <div style={{gridColumn:"1/-1"}}>
+                <label style={lbl}>Phone Number</label>
+                <input value={form.phone} onChange={set("phone")} placeholder="+91 98765 43210" type="tel" style={inpStyle}/>
+              </div>
+              <div>
+                <label style={lbl}>Preferred Date</label>
+                <input value={form.date} onChange={set("date")} type="date" style={inpStyle}/>
+              </div>
+              <div>
+                <label style={lbl}>Preferred Time</label>
+                <select value={form.time} onChange={set("time")} style={{...inpStyle,appearance:"none",backgroundImage:"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E\")",backgroundRepeat:"no-repeat",backgroundPosition:"right 12px center"}}>
+                  {["Morning (9am–12pm)","Afternoon (12pm–3pm)","Evening (3pm–7pm)"].map(t=><option key={t}>{t}</option>)}
+                </select>
+              </div>
+            </div>
+            <div style={{marginBottom:20}}>
+              <label style={lbl}>Location Preference</label>
+              <div style={{display:"flex",gap:10}}>
+                {["Showroom","Home Visit"].map(loc=>(
+                  <button key={loc} onClick={()=>setForm(f=>({...f,location:loc}))} style={{flex:1,padding:"11px",borderRadius:12,border:`1.5px solid ${form.location===loc?"#9B2B2B":"var(--pp-border2)"}`,background:form.location===loc?"rgba(155,43,43,0.1)":"transparent",color:form.location===loc?"#9B2B2B":"var(--pp-text2)",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:13,cursor:"pointer",transition:"all 0.15s"}}>
+                    {loc==="Showroom"?"🏢 Showroom":"🏠 Home Visit"}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <button disabled={!valid||submitting} onClick={submit} style={{width:"100%",padding:"14px",borderRadius:50,background:(!valid||submitting)?"var(--pp-card2)":"#9B2B2B",color:(!valid||submitting)?"var(--pp-text3)":"#fff",border:"none",cursor:(!valid||submitting)?"not-allowed":"pointer",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15}}>
+              {submitting?"Booking…":"Confirm Booking →"}
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ── HomePage ──────────────────────────────────────────────────────
 
 // ── HomePage ─────────────────────────────────────────────────────
