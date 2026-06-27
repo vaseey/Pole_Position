@@ -2300,6 +2300,31 @@ function Listings({cars,setCars}){
             </select>
           </div>
         </div>
+        {specLoading&&(
+          <div style={{marginTop:12,padding:"10px 14px",background:"rgba(96,165,250,0.08)",border:"1px solid rgba(96,165,250,0.2)",borderRadius:9,fontSize:13,color:"#60A5FA",fontWeight:600,display:"flex",alignItems:"center",gap:8}}>
+            <div style={{width:12,height:12,border:"2px solid #60A5FA",borderTopColor:"transparent",borderRadius:"50%",animation:"spin 0.8s linear infinite"}}/>
+            Fetching specs from database…
+          </div>
+        )}
+        {!specLoading&&form.specs&&(
+          <div style={{marginTop:12,background:"rgba(16,185,129,0.07)",border:"1px solid rgba(16,185,129,0.2)",borderRadius:10,padding:"12px 16px"}}>
+            <div style={{fontSize:11,fontWeight:700,color:"#10B981",textTransform:"uppercase",letterSpacing:"0.07em",marginBottom:8}}>Specs auto-filled</div>
+            <div style={{display:"flex",flexWrap:"wrap",gap:"6px 20px"}}>
+              {[
+                form.specs.engine&&["Engine",form.specs.engine],
+                form.specs.maxPower&&["Power",form.specs.maxPower],
+                form.specs.maxTorque&&["Torque",form.specs.maxTorque],
+                form.specs.mileage&&["Mileage",form.specs.mileage],
+                form.specs.topSpeed&&["Top Speed",form.specs.topSpeed+" kmph"],
+                form.specs.frontTyres&&["Tyres",form.specs.frontTyres],
+                form.specs.airbags&&["Airbags",form.specs.airbags],
+                form.specs.ncapRating&&["NCAP",form.specs.ncapRating],
+              ].filter(Boolean).map(([k,v])=>(
+                <span key={k} style={{fontSize:12}}><span style={{color:"var(--pp-text2)"}}>{k}: </span><span style={{fontWeight:700,color:"var(--pp-text1)"}}>{v}</span></span>
+              ))}
+            </div>
+          </div>
+        )}
       </FormSection>
       <FormSection title="History">
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:16}}>
