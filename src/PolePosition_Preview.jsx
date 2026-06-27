@@ -2875,7 +2875,7 @@ function AdminConsole({cars,setCars,blogs,setBlogs,users,onExit}){
           <div className="admin-topbar-pad" style={{padding:"16px 28px",borderBottom:"1px solid var(--pp-border)",background:"#1E293B",display:"flex",alignItems:"center",justifyContent:"space-between",flexShrink:0,gap:10}}>
             <div style={{display:"flex",alignItems:"center",gap:10,minWidth:0}}>
               {/* Hamburger — shown only on mobile via CSS */}
-              <button onClick={()=>setSidebarOpen(true)} style={{display:"none",background:"none",border:"none",cursor:"pointer",color:"#94A3B8",padding:4,flexShrink:0,className:"admin-hamburger"}} className="admin-hamburger">
+              <button className="admin-hamburger" onClick={()=>setSidebarOpen(true)} style={{background:"none",border:"none",cursor:"pointer",color:"#94A3B8",padding:4,flexShrink:0}}>
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect y="3" width="20" height="2" rx="1" fill="currentColor"/><rect y="9" width="20" height="2" rx="1" fill="currentColor"/><rect y="15" width="20" height="2" rx="1" fill="currentColor"/></svg>
               </button>
               <h1 style={{fontWeight:800,fontSize:18,letterSpacing:"-0.03em",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{NAV.find(n=>n.id===tab)?.label}</h1>
