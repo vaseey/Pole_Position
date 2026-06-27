@@ -2818,38 +2818,72 @@ function AdminConsole({cars,setCars,blogs,setBlogs,users,onExit}){
   );
 
   const NAV=[{id:"dashboard",label:"Dashboard",icon:BarChart2},{id:"listings",label:"Listings",icon:Car},{id:"users",label:"Admin Team",icon:Shield},{id:"blog",label:"Blog",icon:BookOpen},{id:"enquiries",label:"Enquiries",icon:MessageSquare}];
+  const [sidebarOpen,setSidebarOpen]=useState(false);
+  const SidebarContent=()=>(
+    <div style={{display:"flex",flexDirection:"column",height:"100%"}}>
+      <div style={{padding:"22px 20px 18px",borderBottom:"1px solid var(--pp-border)",background:"#1E293B"}}>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+          <div style={{display:"flex",alignItems:"center",gap:9}}>
+            <div style={{width:32,height:32,background:"#9B2B2B",borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center"}}><Car size={16} color="#fff"/></div>
+            <div><div style={{fontWeight:800,fontSize:14,letterSpacing:"-0.03em"}}>PolePosition</div><div style={{color:"#9B2B2B",fontSize:9.5,fontWeight:700,letterSpacing:"0.1em"}}>ADMIN</div></div>
+          </div>
+          <button onClick={()=>setSidebarOpen(false)} style={{display:"none",background:"none",border:"none",cursor:"pointer",color:"#94A3B8",padding:4,className:"admin-close-btn"}}><X size={18}/></button>
+        </div>
+      </div>
+      <nav style={{padding:"10px 0",flex:1}}>
+        {NAV.map(n=>{const Icon=n.icon;const a=tab===n.id;return(
+          <button key={n.id} onClick={()=>{setTab(n.id);setSidebarOpen(false);}} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 20px",border:"none",width:"100%",background:a?"rgba(220,38,38,0.1)":"transparent",cursor:"pointer",borderLeft:a?"3px solid #9B2B2B":"3px solid transparent",textAlign:"left",fontFamily:"Outfit,sans-serif"}}>
+            <Icon size={16} color={a?"#9B2B2B":"#64748B"}/><span style={{color:a?"#fff":"#94A3B8",fontWeight:a?600:500,fontSize:13.5}}>{n.label}</span>
+          </button>
+        );})}
+      </nav>
+      <div style={{padding:"14px 20px",borderTop:"1px solid rgba(255,255,255,0.06)",display:"flex",flexDirection:"column",gap:10}}>
+        <button onClick={onExit} style={{display:"flex",alignItems:"center",gap:8,background:"transparent",border:"none",cursor:"pointer",color:"var(--pp-text3)",fontSize:13,fontWeight:600,fontFamily:"Outfit,sans-serif"}}><ChevronLeft size={13}/> Back to site</button>
+        <button onClick={()=>setAuthed(false)} style={{display:"flex",alignItems:"center",gap:8,background:"transparent",border:"none",cursor:"pointer",color:"var(--pp-text2)",fontSize:13,fontWeight:500,fontFamily:"Outfit,sans-serif"}}><LogOut size={13}/> Sign Out</button>
+      </div>
+    </div>
+  );
   return(
     <>
-      <style>{G}</style>
+      <style>{G}{`
+        @media(max-width:640px){
+          .admin-sidebar-desktop{display:none!important;}
+          .admin-sidebar-overlay{display:flex!important;}
+          .admin-close-btn{display:flex!important;}
+          .admin-topbar-pad{padding:12px 16px!important;}
+          .admin-content-pad{padding:16px!important;}
+        }
+        .admin-sidebar-overlay{display:none;position:fixed;inset:0;z-index:200;}
+        .admin-sidebar-drawer{width:220px;background:#1E293B;height:100%;overflow-y:auto;flex-shrink:0;border-right:1px solid rgba(255,255,255,0.06);}
+        .admin-sidebar-backdrop{flex:1;background:rgba(0,0,0,0.5);}
+      `}</style>
       <div className="pp-admin" style={{height:"100vh",display:"flex",overflow:"hidden"}}>
-        <div style={{width:220,background:"#1E293B",borderRight:"1px solid rgba(255,255,255,0.06)",display:"flex",flexDirection:"column",flexShrink:0,overflowY:"auto"}}>
-          <div style={{padding:"22px 20px 18px",borderBottom:"1px solid var(--pp-border)",position:"sticky",top:0,background:"#1E293B",zIndex:1}}>
-            <div style={{display:"flex",alignItems:"center",gap:9}}>
-              <div style={{width:32,height:32,background:"#9B2B2B",borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center"}}><Car size={16} color="#fff"/></div>
-              <div><div style={{fontWeight:800,fontSize:14,letterSpacing:"-0.03em"}}>PolePosition</div><div style={{color:"#9B2B2B",fontSize:9.5,fontWeight:700,letterSpacing:"0.1em"}}>ADMIN</div></div>
-            </div>
-          </div>
-          <nav style={{padding:"10px 0",flex:1}}>
-            {NAV.map(n=>{const Icon=n.icon;const a=tab===n.id;return(
-              <button key={n.id} onClick={()=>setTab(n.id)} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 20px",border:"none",width:"100%",background:a?"rgba(220,38,38,0.1)":"transparent",cursor:"pointer",borderLeft:a?"3px solid #9B2B2B":"3px solid transparent",textAlign:"left",fontFamily:"Outfit,sans-serif"}}>
-                <Icon size={16} color={a?"#9B2B2B":"#64748B"}/><span style={{color:a?"#fff":"#94A3B8",fontWeight:a?600:500,fontSize:13.5}}>{n.label}</span>
-              </button>
-            );})}
-          </nav>
-          <div style={{padding:"14px 20px",borderTop:"1px solid rgba(255,255,255,0.06)",display:"flex",flexDirection:"column",gap:10}}>
-            <button onClick={onExit} style={{display:"flex",alignItems:"center",gap:8,background:"transparent",border:"none",cursor:"pointer",color:"var(--pp-text3)",fontSize:13,fontWeight:600,fontFamily:"Outfit,sans-serif"}}><ChevronLeft size={13}/> Back to site</button>
-            <button onClick={()=>setAuthed(false)} style={{display:"flex",alignItems:"center",gap:8,background:"transparent",border:"none",cursor:"pointer",color:"var(--pp-text2)",fontSize:13,fontWeight:500,fontFamily:"Outfit,sans-serif"}}><LogOut size={13}/> Sign Out</button>
-          </div>
+        {/* Desktop sidebar — hidden on mobile */}
+        <div className="admin-sidebar-desktop" style={{width:220,background:"#1E293B",borderRight:"1px solid rgba(255,255,255,0.06)",display:"flex",flexDirection:"column",flexShrink:0,overflowY:"auto"}}>
+          <SidebarContent/>
         </div>
-        <div style={{flex:1,display:"flex",flexDirection:"column",overflow:"hidden"}}>
-          <div style={{padding:"16px 28px",borderBottom:"1px solid var(--pp-border)",background:"#1E293B",display:"flex",alignItems:"center",justifyContent:"space-between",flexShrink:0}}>
-            <h1 style={{fontWeight:800,fontSize:19,letterSpacing:"-0.03em"}}>{NAV.find(n=>n.id===tab)?.label}</h1>
-            <div style={{display:"flex",alignItems:"center",gap:10}}>
-              <div style={{textAlign:"right"}}><div style={{fontSize:12.5,fontWeight:600}}>Admin</div><div style={{color:"var(--pp-text2)",fontSize:11}}>vaseey@gmail.com</div></div>
-              <div style={{width:34,height:34,background:"#9B2B2B",borderRadius:9,display:"flex",alignItems:"center",justifyContent:"center"}}><Shield size={16} color="#fff"/></div>
+        {/* Mobile overlay sidebar */}
+        {sidebarOpen&&(
+          <div className="admin-sidebar-overlay" onClick={e=>{if(e.target.classList.contains("admin-sidebar-backdrop"))setSidebarOpen(false);}}>
+            <div className="admin-sidebar-drawer"><SidebarContent/></div>
+            <div className="admin-sidebar-backdrop"/>
+          </div>
+        )}
+        <div style={{flex:1,display:"flex",flexDirection:"column",overflow:"hidden",minWidth:0}}>
+          <div className="admin-topbar-pad" style={{padding:"16px 28px",borderBottom:"1px solid var(--pp-border)",background:"#1E293B",display:"flex",alignItems:"center",justifyContent:"space-between",flexShrink:0,gap:10}}>
+            <div style={{display:"flex",alignItems:"center",gap:10,minWidth:0}}>
+              {/* Hamburger — shown only on mobile via CSS */}
+              <button onClick={()=>setSidebarOpen(true)} style={{display:"none",background:"none",border:"none",cursor:"pointer",color:"#94A3B8",padding:4,flexShrink:0,className:"admin-hamburger"}} className="admin-hamburger">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect y="3" width="20" height="2" rx="1" fill="currentColor"/><rect y="9" width="20" height="2" rx="1" fill="currentColor"/><rect y="15" width="20" height="2" rx="1" fill="currentColor"/></svg>
+              </button>
+              <h1 style={{fontWeight:800,fontSize:18,letterSpacing:"-0.03em",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{NAV.find(n=>n.id===tab)?.label}</h1>
+            </div>
+            <div style={{display:"flex",alignItems:"center",gap:8,flexShrink:0}}>
+              <div style={{textAlign:"right",display:"flex",flexDirection:"column"}}><div style={{fontSize:12,fontWeight:600,lineHeight:1.2}}>Admin</div><div style={{color:"var(--pp-text2)",fontSize:10,lineHeight:1.2,maxWidth:120,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>vaseey@gmail.com</div></div>
+              <div style={{width:32,height:32,background:"#9B2B2B",borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}><Shield size={15} color="#fff"/></div>
             </div>
           </div>
-          <div style={{padding:"26px 28px",overflowY:"auto",flex:1}}>
+          <div className="admin-content-pad" style={{padding:"26px 28px",overflowY:"auto",flex:1}}>
             {tab==="dashboard"&&<Dashboard cars={cars} blogs={blogs} users={users}/>}
             {tab==="listings"&&<Listings cars={cars} setCars={setCars}/>}
             {tab==="users"&&<AdminTeam/>}
