@@ -2487,7 +2487,7 @@ function Listings({cars,setCars}){
         </div>
         <p style={{color:"var(--pp-text2)",fontSize:11,textAlign:"center",margin:"0 0 24px"}}>% wear — <span style={{color:"#10B981"}}>green = good</span> · <span style={{color:"#F59E0B"}}>amber = moderate</span> · <span style={{color:"#EF4444"}}>red = worn</span></p>
         {/* Tyre specs */}
-        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(130px,1fr))",gap:12}}>
           <div>
             <Label>Tyre Brand</Label>
             <select value={form.tyreMake||"MRF"} onChange={e=>setForm({...form,tyreMake:e.target.value,tyreModel:""})}>
