@@ -1128,6 +1128,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
   const [showEnquiryModal,setShowEnquiryModal]=useState(false);
   const [enquiryPhone,setEnquiryPhone]=useState("");
   const [enquirySubmitting,setEnquirySubmitting]=useState(false);
+  const [showTestDrive,setShowTestDrive]=useState(false);
   const [isMobile,setIsMobile]=useState(()=>window.innerWidth<=768);
   useEffect(()=>{
     const handler=()=>setIsMobile(window.innerWidth<=768);
