@@ -2185,15 +2185,15 @@ function Listings({cars,setCars}){
 
   if(edit!==null)return(
     <div>
-      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:12,marginBottom:24}}>
-        <div style={{display:"flex",alignItems:"center",gap:12}}>
+      <div style={{display:"flex",flexWrap:"wrap",alignItems:"center",gap:10,marginBottom:24}}>
+        <div style={{display:"flex",alignItems:"center",gap:10,flex:1,minWidth:0}}>
           <Btn onClick={()=>setEdit(null)}><ChevronLeft size={14}/> Back</Btn>
-          <h2 style={{fontWeight:800,fontSize:20,letterSpacing:"-0.03em"}}>{form.id?`Edit — ${form.make} ${form.model}`:"Add New Listing"}</h2>
+          <h2 style={{fontWeight:800,fontSize:18,letterSpacing:"-0.03em",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{form.id?`Edit — ${form.make} ${form.model}`:"Add New Listing"}</h2>
         </div>
         {!form.id&&(
           <div style={{display:"flex",background:"var(--pp-card2)",borderRadius:10,padding:3,gap:2,border:"1px solid var(--pp-border)"}}>
             {["manual","automated"].map(m=>(
-              <button key={m} onClick={()=>setListingMode(m)} style={{padding:"7px 18px",borderRadius:8,border:"none",background:listingMode===m?"#9B2B2B":"transparent",color:listingMode===m?"#fff":"var(--pp-text2)",fontWeight:600,fontSize:13,cursor:"pointer",fontFamily:"Outfit,sans-serif",textTransform:"capitalize",transition:"all 0.15s"}}>{m}</button>
+              <button key={m} onClick={()=>setListingMode(m)} style={{padding:"7px 16px",borderRadius:8,border:"none",background:listingMode===m?"#9B2B2B":"transparent",color:listingMode===m?"#fff":"var(--pp-text2)",fontWeight:600,fontSize:13,cursor:"pointer",fontFamily:"Outfit,sans-serif",textTransform:"capitalize",transition:"all 0.15s"}}>{m}</button>
             ))}
           </div>
         )}
