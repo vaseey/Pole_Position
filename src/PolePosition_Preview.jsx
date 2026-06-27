@@ -2203,7 +2203,7 @@ function Listings({cars,setCars}){
       {listingMode==="automated"&&!form.id&&(
         <div>
           <FormSection title="Select Vehicle" subtitle="Pick make, model, year and variant — all specs load from the database automatically">
-            <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:12}}>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(140px,1fr))",gap:12}}>
               <label style={{display:"flex",flexDirection:"column",gap:5}}>
                 <span style={{fontSize:11.5,fontWeight:600,color:"var(--pp-text2)",textTransform:"uppercase",letterSpacing:"0.06em"}}>Make {autoLoading==="makes"&&<span style={{color:"#60A5FA",fontWeight:400}}>loading…</span>}</span>
                 <select value={autoSel.make} onChange={e=>setAutoSel(s=>({...s,make:e.target.value}))} style={{borderRadius:9,border:"1px solid var(--pp-border2)",padding:"10px 12px",background:"var(--pp-card2)",color:"var(--pp-text1)",fontSize:13.5,fontFamily:"Outfit,sans-serif"}}>
