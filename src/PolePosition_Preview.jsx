@@ -1934,12 +1934,105 @@ function Listings({cars,setCars}){
     </div>
   );
 
+  // Automated tab derived data
+  const autoMakes=[...new Set(CAR_DATABASE.map(r=>r.make))].sort();
+  const autoModels=autoSel.make?[...new Set(CAR_DATABASE.filter(r=>r.make===autoSel.make).map(r=>r.model))].sort():[];
+  const autoVersions=(autoSel.make&&autoSel.model)?CAR_DATABASE.filter(r=>r.make===autoSel.make&&r.model===autoSel.model):[];
+  const autoSelected=autoSel.version?autoVersions.find(r=>r.version===autoSel.version):null;
+
+  const applyAutoSpec=()=>{
+    if(!autoSelected)return;
+    const bodyToCategory={Sedan:"Sedan",Hatchback:"Hatchback",SUV:"Compact SUV","Compact SUV":"Compact SUV",MUV:"MUV",Electric:"Electric"};
+    setForm(f=>({...f,
+      make:autoSel.make,model:autoSel.model,variant:autoSelected.version,
+      year:autoSel.year,fuel:autoSelected.fuel,transmission:autoSelected.transmission,
+      seats:autoSelected.seats||5,
+      category:bodyToCategory[autoSelected.bodyStyle]||"Sedan",
+      carClass:["BMW","Mercedes-Benz","Audi","Volvo","Jaguar","Land Rover","Porsche"].includes(autoSel.make)?"Luxury":["Kia","Volkswagen","Skoda","MG","Jeep","Toyota"].includes(autoSel.make)?"Premium":"Economy",
+      description:(autoSelected.engine&&autoSelected.mileage)?`${autoSelected.engine} engine · ${autoSelected.mileage}${autoSelected.maxPower?" · "+autoSelected.maxPower:""}${autoSelected.maxTorque?" · "+autoSelected.maxTorque+" torque":""}`:f.description,
+    }));
+  };
+
   if(edit!==null)return(
     <div>
-      <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:24}}>
-        <Btn onClick={()=>setEdit(null)}><ChevronLeft size={14}/> Back</Btn>
-        <h2 style={{fontWeight:800,fontSize:20,letterSpacing:"-0.03em"}}>{form.id?`Edit — ${form.make} ${form.model}`:"Add New Listing"}</h2>
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:12,marginBottom:24}}>
+        <div style={{display:"flex",alignItems:"center",gap:12}}>
+          <Btn onClick={()=>setEdit(null)}><ChevronLeft size={14}/> Back</Btn>
+          <h2 style={{fontWeight:800,fontSize:20,letterSpacing:"-0.03em"}}>{form.id?`Edit — ${form.make} ${form.model}`:"Add New Listing"}</h2>
+        </div>
+        {!form.id&&(
+          <div style={{display:"flex",background:"var(--pp-card2)",borderRadius:10,padding:3,gap:2,border:"1px solid var(--pp-border)"}}>
+            {["manual","automated"].map(m=>(
+              <button key={m} onClick={()=>setListingMode(m)} style={{padding:"7px 18px",borderRadius:8,border:"none",background:listingMode===m?"#9B2B2B":"transparent",color:listingMode===m?"#fff":"var(--pp-text2)",fontWeight:600,fontSize:13,cursor:"pointer",fontFamily:"Outfit,sans-serif",textTransform:"capitalize",transition:"all 0.15s"}}>{m}</button>
+            ))}
+          </div>
+        )}
       </div>
+
+      {/* Automated tab */}
+      {listingMode==="automated"&&!form.id&&(
+        <div>
+          <FormSection title="Select Vehicle" subtitle="Pick make, model, year and variant — specs load automatically">
+            <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:12}}>
+              <label style={{display:"flex",flexDirection:"column",gap:5}}>
+                <span style={{fontSize:11.5,fontWeight:600,color:"var(--pp-text2)",textTransform:"uppercase",letterSpacing:"0.06em"}}>Make</span>
+                <select value={autoSel.make} onChange={e=>setAutoSel(s=>({...s,make:e.target.value,model:"",version:""}))} style={{borderRadius:9,border:"1px solid var(--pp-border2)",padding:"10px 12px",background:"var(--pp-card2)",color:"var(--pp-text1)",fontSize:13.5,fontFamily:"Outfit,sans-serif"}}>
+                  <option value="">Select make…</option>
+                  {autoMakes.map(m=><option key={m} value={m}>{m}</option>)}
+                </select>
+              </label>
+              <label style={{display:"flex",flexDirection:"column",gap:5}}>
+                <span style={{fontSize:11.5,fontWeight:600,color:"var(--pp-text2)",textTransform:"uppercase",letterSpacing:"0.06em"}}>Model</span>
+                <select value={autoSel.model} onChange={e=>setAutoSel(s=>({...s,model:e.target.value,version:""}))} disabled={!autoSel.make} style={{borderRadius:9,border:"1px solid var(--pp-border2)",padding:"10px 12px",background:"var(--pp-card2)",color:"var(--pp-text1)",fontSize:13.5,fontFamily:"Outfit,sans-serif",opacity:autoSel.make?1:0.5}}>
+                  <option value="">Select model…</option>
+                  {autoModels.map(m=><option key={m} value={m}>{m}</option>)}
+                </select>
+              </label>
+              <label style={{display:"flex",flexDirection:"column",gap:5}}>
+                <span style={{fontSize:11.5,fontWeight:600,color:"var(--pp-text2)",textTransform:"uppercase",letterSpacing:"0.06em"}}>Year</span>
+                <select value={autoSel.year} onChange={e=>setAutoSel(s=>({...s,year:Number(e.target.value)}))} style={{borderRadius:9,border:"1px solid var(--pp-border2)",padding:"10px 12px",background:"var(--pp-card2)",color:"var(--pp-text1)",fontSize:13.5,fontFamily:"Outfit,sans-serif"}}>
+                  {Array.from({length:19},(_,i)=>2026-i).map(y=><option key={y} value={y}>{y}</option>)}
+                </select>
+              </label>
+              <label style={{display:"flex",flexDirection:"column",gap:5}}>
+                <span style={{fontSize:11.5,fontWeight:600,color:"var(--pp-text2)",textTransform:"uppercase",letterSpacing:"0.06em"}}>Variant</span>
+                <select value={autoSel.version} onChange={e=>setAutoSel(s=>({...s,version:e.target.value}))} disabled={!autoSel.model} style={{borderRadius:9,border:"1px solid var(--pp-border2)",padding:"10px 12px",background:"var(--pp-card2)",color:"var(--pp-text1)",fontSize:13.5,fontFamily:"Outfit,sans-serif",opacity:autoSel.model?1:0.5}}>
+                  <option value="">Select variant…</option>
+                  {autoVersions.map(r=><option key={r.version} value={r.version}>{r.version}</option>)}
+                </select>
+              </label>
+            </div>
+            {autoSelected&&(
+              <div style={{marginTop:16,background:"rgba(155,43,43,0.07)",border:"1px solid rgba(155,43,43,0.2)",borderRadius:10,padding:"14px 16px"}}>
+                <div style={{fontSize:12,fontWeight:700,color:"#9B2B2B",marginBottom:8,textTransform:"uppercase",letterSpacing:"0.06em"}}>Specs loaded from database</div>
+                <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:8}}>
+                  {[
+                    ["Fuel",autoSelected.fuel],
+                    ["Transmission",autoSelected.transmission],
+                    ["Seats",autoSelected.seats],
+                    ["Body Style",autoSelected.bodyStyle],
+                    ["Engine",autoSelected.engine],
+                    ["Mileage",autoSelected.mileage],
+                    ["Max Power",autoSelected.maxPower],
+                    ["Max Torque",autoSelected.maxTorque],
+                  ].filter(([,v])=>v).map(([k,v])=>(
+                    <div key={k} style={{fontSize:12}}>
+                      <span style={{color:"var(--pp-text2)"}}>{k}: </span>
+                      <span style={{fontWeight:600,color:"var(--pp-text1)"}}>{v}</span>
+                    </div>
+                  ))}
+                </div>
+                <button onClick={applyAutoSpec} style={{marginTop:12,padding:"9px 20px",borderRadius:9,background:"#9B2B2B",border:"none",color:"#fff",fontWeight:700,fontSize:13,cursor:"pointer",fontFamily:"Outfit,sans-serif"}}>Apply & Continue Filling Details</button>
+              </div>
+            )}
+          </FormSection>
+          {form.make&&(
+            <div style={{marginTop:6,padding:"10px 14px",background:"rgba(16,185,129,0.08)",border:"1px solid rgba(16,185,129,0.2)",borderRadius:9,fontSize:13,color:"#10B981",fontWeight:600}}>
+              Specs applied — scroll down to add photos, price, km and other details, then save.
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Photos & Video — first thing, most prominent */}
       <FormSection title="Photos & Video">
