@@ -1406,16 +1406,54 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
               </div>
             )}
             {tab==="specs"&&(
-              <div style={{background:"var(--pp-card)",borderRadius:16,border:"1px solid var(--pp-border)",overflow:"hidden"}}>
-                <div style={{padding:"20px 24px",borderBottom:"1px solid var(--pp-border)"}}><h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,color:"var(--pp-text)"}}>Full Specifications</h2></div>
-                <table style={{width:"100%",borderCollapse:"collapse"}}><tbody>
-                  {[["Make",car.make],["Model",car.model],["Year",car.year],["Category",car.category],["Fuel Type",car.fuel],["Transmission",car.transmission],["KM Driven",fmtKm(car.km)],["Seats",car.seats],["Previous Owners",car.owners],["Listed Price",fmt(car.price)],["Insurance",car.insurance||"—"],["PP Score",car.score+"/100"]].map(([label,value],i)=>(
-                    <tr key={label} style={{borderBottom:"1px solid var(--pp-border)",background:i%2===0?"transparent":"var(--pp-card2)"}}>
-                      <td style={{padding:"13px 24px",color:"var(--pp-text2)",fontSize:13.5,fontWeight:600,width:"40%"}}>{label}</td>
-                      <td style={{padding:"13px 24px",color:"var(--pp-text)",fontSize:13.5,fontWeight:700}}>{value}</td>
-                    </tr>
-                  ))}
-                </tbody></table>
+              <div style={{display:"flex",flexDirection:"column",gap:16}}>
+                {/* Listing basics — always shown */}
+                <SpecSection title="This Car" icon="🚗" rows={[
+                  ["Make & Model",`${car.make} ${car.model}${car.variant?" "+car.variant:""}`],
+                  ["Year",car.year],["Category",car.category],
+                  ["Fuel",car.fuel],["Transmission",car.transmission],
+                  ["KM Driven",fmtKm(car.km)],["Seats",car.seats+" seater"],
+                  ["Owners",car.owners],["Listed Price",fmt(car.price)],
+                  car.insurance&&["Insurance",car.insurance],
+                  car.score>0&&["PP Score",car.score+"/100"],
+                ].filter(Boolean)}/>
+
+                {/* Specs from database — shown only when available */}
+                {car.specs&&<>
+                  <SpecSection title="Performance" icon="⚡" rows={[
+                    car.specs.engine&&["Engine",car.specs.engine],
+                    car.specs.maxPower&&["Max Power",car.specs.maxPower],
+                    car.specs.maxTorque&&["Max Torque",car.specs.maxTorque],
+                    car.specs.mileage&&["Mileage (ARAI)",car.specs.mileage],
+                    car.specs.topSpeed&&["Top Speed",car.specs.topSpeed+" kmph"],
+                    car.specs.acceleration&&["0–100 kmph",car.specs.acceleration+"s"],
+                    car.specs.drivetrain&&["Drivetrain",car.specs.drivetrain],
+                    car.specs.emissionStandard&&["Emission Standard",car.specs.emissionStandard],
+                  ].filter(Boolean)}/>
+                  <SpecSection title="Dimensions & Capacity" icon="📐" rows={[
+                    car.specs.length&&["Length",car.specs.length+" mm"],
+                    car.specs.width&&["Width",car.specs.width+" mm"],
+                    car.specs.height&&["Height",car.specs.height+" mm"],
+                    car.specs.wheelbase&&["Wheelbase",car.specs.wheelbase+" mm"],
+                    car.specs.groundClearance&&["Ground Clearance",car.specs.groundClearance+" mm"],
+                    car.specs.bootspace&&["Boot Space",car.specs.bootspace+" L"],
+                    car.specs.fuelTank&&["Fuel Tank",car.specs.fuelTank+" L"],
+                  ].filter(Boolean)}/>
+                  <SpecSection title="Safety" icon="🛡️" rows={[
+                    car.specs.airbags&&["Airbags",car.specs.airbags],
+                    car.specs.abs&&["ABS",car.specs.abs],
+                    car.specs.esp&&["ESP / ESC",car.specs.esp],
+                    car.specs.ncapRating&&["NCAP Rating",car.specs.ncapRating],
+                  ].filter(Boolean)}/>
+                  <SpecSection title="Tyres" icon="🔄" rows={[
+                    car.specs.frontTyres&&["Front Tyres",car.specs.frontTyres],
+                    car.specs.rearTyres&&["Rear Tyres",car.specs.rearTyres],
+                  ].filter(Boolean)}/>
+                  <SpecSection title="Features" icon="✨" rows={[
+                    car.specs.sunroof&&["Sunroof",car.specs.sunroof],
+                    car.specs.cruiseControl&&["Cruise Control",car.specs.cruiseControl],
+                  ].filter(Boolean)}/>
+                </>}
               </div>
             )}
           </>
