@@ -1960,7 +1960,7 @@ function Listings({cars,setCars}){
       score:payload.score,badge:payload.badge||null,img:payload.img,images:payload.images,
       video:payload.video||null,category:payload.category,tagline:payload.tagline,
       owners:payload.owners,insurance:payload.insurance,
-      score_breakdown:payload.scoreBreakdown||null,tyre_wear:payload.tyreWear||null,
+      score_breakdown:payload.scoreBreakdown||null,tyre_wear:payload.tyreWear||null,specs:payload.specs||null,
     };
     if(payload.id && typeof payload.id==="number" && payload.id < 1e12){
       const {error}=await supabase.from("cars").update({...dbPayload,status}).eq("id",payload.id);
