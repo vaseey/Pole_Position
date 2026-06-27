@@ -1832,6 +1832,65 @@ function Listings({cars,setCars}){
     }
     setVariantLoading(false);
   };
+
+  const normTx=t=>{if(!t)return"Automatic";t=String(t);if(t.includes("CVT"))return"CVT";if(t.includes("DCT"))return"DCT";if(t.includes("AMT"))return"AMT";if(/auto/i.test(t))return"Automatic";return"Manual";};
+  const normFuel=f=>{if(!f)return"Petrol";if(/diesel/i.test(f))return"Diesel";if(/electric|ev/i.test(f))return"Electric";if(/cng/i.test(f))return"CNG";if(/hybrid/i.test(f))return"Hybrid";return"Petrol";};
+
+  const fetchAndApplySpecs=async(make,model,year,variant)=>{
+    if(!make||!model||!variant)return;
+    setSpecLoading(true);
+    try{
+      // Try Supabase car_specs first (populated when Excel is imported)
+      const {data:dbSpec}=await supabase.from("car_specs")
+        .select("*").eq("make",make).eq("model",model).eq("version",variant).maybeSingle();
+      if(dbSpec){
+        const specs={
+          engine:dbSpec.key_engine,fuel:normFuel(dbSpec.key_fuel_type),
+          transmission:normTx(dbSpec.key_transmission),seats:parseInt(dbSpec.key_seating_capacity)||5,
+          mileage:dbSpec.key_mileage_arai,maxPower:dbSpec.max_power,maxTorque:dbSpec.max_torque,
+          topSpeed:dbSpec.top_speed,acceleration:dbSpec.acceleration_0_100,
+          length:dbSpec.length_mm,width:dbSpec.width_mm,height:dbSpec.height_mm,
+          wheelbase:dbSpec.wheelbase_mm,groundClearance:dbSpec.ground_clearance,
+          bootspace:dbSpec.bootspace,fuelTank:dbSpec.fuel_tank_capacity,
+          frontTyres:dbSpec.front_tyres,rearTyres:dbSpec.rear_tyres,
+          airbags:dbSpec.airbags,abs:dbSpec.abs,esp:dbSpec.esp,
+          ncapRating:dbSpec.ncap_rating,sunroof:dbSpec.sunroof,
+          cruiseControl:dbSpec.cruise_control,drivetrain:dbSpec.drivetrain,
+          emissionStandard:dbSpec.emission_standard,bodyStyle:dbSpec.body_style,
+        };
+        const bodyToCategory={Sedan:"Sedan",Hatchback:"Hatchback",SUV:"Compact SUV","Compact SUV":"Compact SUV","Full Size SUV":"Full-size SUV",MUV:"MUV",MPV:"MUV",Electric:"Electric"};
+        const luxuryMakes=["BMW","Mercedes-Benz","Audi","Volvo","Jaguar","Land Rover","Porsche","Lexus"];
+        const premiumMakes=["Kia","Volkswagen","Skoda","MG","Jeep","Toyota","Nissan"];
+        setForm(f=>({...f,make,model,variant,year,
+          fuel:specs.fuel,transmission:specs.transmission,seats:specs.seats,
+          tyreSize:specs.frontTyres||f.tyreSize,
+          category:bodyToCategory[specs.bodyStyle]||MODEL_CATEGORY[model]||f.category,
+          carClass:luxuryMakes.includes(make)?"Luxury":premiumMakes.includes(make)?"Premium":"Economy",
+          specs,
+        }));
+        setSpecLoading(false);return;
+      }
+      // Fall back to Claude API
+      const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:1200,messages:[{role:"user",content:`Return ONLY a valid JSON object (no markdown, no explanation) with full specs for the ${year} ${make} ${model} ${variant} sold in India. Use these exact keys: fuel (Petrol/Diesel/Electric/CNG/Hybrid), transmission (Manual/Automatic/AMT/CVT/DCT), seats (integer), engine (e.g. "1498 cc"), maxPower (e.g. "120 bhp @ 6000 rpm"), maxTorque (e.g. "145 Nm @ 4400 rpm"), mileage (e.g. "18.4 kmpl"), topSpeed (integer kmph), acceleration (0-100 seconds as decimal), length (mm integer), width (mm integer), height (mm integer), wheelbase (mm integer), groundClearance (mm integer), bootspace (litres integer), fuelTank (litres integer), frontTyres (e.g. "215/55 R16"), rearTyres, airbags (integer), abs ("Yes"/"No"), esp ("Yes"/"No"), ncapRating (e.g. "5 Star" or null), sunroof ("Yes"/"No"), cruiseControl ("Yes"/"No"), drivetrain ("FWD"/"RWD"/"AWD"/"4WD"), emissionStandard (e.g. "BS6"), bodyStyle (Sedan/Hatchback/SUV/MUV/Coupe).`}]})});
+      const d=await res.json();
+      const text=d.content?.[0]?.text||"{}";
+      const specs=JSON.parse(text.replace(/```json|```/g,"").trim());
+      const bodyToCategory={Sedan:"Sedan",Hatchback:"Hatchback",SUV:"Compact SUV",MUV:"MUV"};
+      const luxuryMakes=["BMW","Mercedes-Benz","Audi","Volvo","Jaguar","Land Rover","Porsche","Lexus"];
+      const premiumMakes=["Kia","Volkswagen","Skoda","MG","Jeep","Toyota","Nissan"];
+      setForm(f=>({...f,make,model,variant,year,
+        fuel:normFuel(specs.fuel)||f.fuel,transmission:normTx(specs.transmission)||f.transmission,
+        seats:specs.seats||f.seats,tyreSize:specs.frontTyres||f.tyreSize,
+        category:bodyToCategory[specs.bodyStyle]||MODEL_CATEGORY[model]||f.category,
+        carClass:luxuryMakes.includes(make)?"Luxury":premiumMakes.includes(make)?"Premium":"Economy",
+        specs,
+      }));
+    }catch(e){
+      // Silent fail — user can still fill manually
+    }
+    setSpecLoading(false);
+  };
+
   const [serviceDoc,setServiceDoc]=useState(null);
   const [previewing,setPreviewing]=useState(false);
   const fileInputRef=useRef(null);
