@@ -2044,10 +2044,12 @@ function Listings({cars,setCars}){
       });
   },[autoSel.model]);
 
-  // Select a specific version
+  // Select a specific version — auto-apply specs immediately
   useEffect(()=>{
-    if(!autoSel.version)return setAutoSelected(null);
-    setAutoSelected(autoVersions.find(r=>r.version===autoSel.version)||null);
+    if(!autoSel.version){setAutoSelected(null);return;}
+    const found=autoVersions.find(r=>r.version===autoSel.version)||null;
+    setAutoSelected(found);
+    if(found) fetchAndApplySpecs(autoSel.make,autoSel.model,autoSel.year,autoSel.version);
   },[autoSel.version,autoVersions]);
 
   const normalizeTransmission=t=>{
