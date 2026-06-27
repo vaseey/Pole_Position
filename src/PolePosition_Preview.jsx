@@ -2257,7 +2257,14 @@ function Listings({cars,setCars}){
           </div>
           <div>
             <Label>Variant {variantLoading&&<span style={{color:"#F59E0B",fontSize:9,fontWeight:700,marginLeft:4}}>LOADING…</span>}</Label>
-            <input value={form.variant||""} onChange={e=>{const v=e.target.value;const specs=VARIANT_SPECS[v]||{};setForm(f=>({...f,variant:v,...(specs.fuel?{fuel:specs.fuel}:{}),...(specs.transmission?{transmission:specs.transmission}:{})}));}} placeholder="e.g. VX"/>
+            {variantOptions.length>0&&!customVariant?(
+              <select value={form.variant||""} onChange={e=>{const v=e.target.value;const sp=VARIANT_SPECS[v]||{};setForm(f=>({...f,variant:v,...(sp.fuel?{fuel:sp.fuel}:{}),...(sp.transmission?{transmission:sp.transmission}:{})}));if(v)fetchAndApplySpecs(form.make,form.model,form.year,v);}}>
+                <option value="">Select variant…</option>
+                {variantOptions.map(o=><option key={o.variant} value={o.variant}>{o.variant}</option>)}
+              </select>
+            ):(
+              <input value={form.variant||""} onChange={e=>{const v=e.target.value;const sp=VARIANT_SPECS[v]||{};setForm(f=>({...f,variant:v,...(sp.fuel?{fuel:sp.fuel}:{}),...(sp.transmission?{transmission:sp.transmission}:{})}));}} onBlur={e=>{if(e.target.value)fetchAndApplySpecs(form.make,form.model,form.year,e.target.value);}} placeholder="e.g. VX"/>
+            )}
           </div>
           <div>
             <Label>Category {MODEL_CATEGORY[form.model]&&<span style={{color:"#10B981",fontSize:9,fontWeight:700,marginLeft:4}}>AUTO</span>}</Label>
