@@ -2827,7 +2827,7 @@ function AdminConsole({cars,setCars,blogs,setBlogs,users,onExit}){
             <div style={{width:32,height:32,background:"#9B2B2B",borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center"}}><Car size={16} color="#fff"/></div>
             <div><div style={{fontWeight:800,fontSize:14,letterSpacing:"-0.03em"}}>PolePosition</div><div style={{color:"#9B2B2B",fontSize:9.5,fontWeight:700,letterSpacing:"0.1em"}}>ADMIN</div></div>
           </div>
-          <button onClick={()=>setSidebarOpen(false)} style={{display:"none",background:"none",border:"none",cursor:"pointer",color:"#94A3B8",padding:4,className:"admin-close-btn"}}><X size={18}/></button>
+          <button className="admin-close-btn" onClick={()=>setSidebarOpen(false)} style={{background:"none",border:"none",cursor:"pointer",color:"#94A3B8",padding:4}}><X size={18}/></button>
         </div>
       </div>
       <nav style={{padding:"10px 0",flex:1}}>
