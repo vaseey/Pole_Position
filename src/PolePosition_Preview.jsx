@@ -2846,16 +2846,18 @@ function AdminConsole({cars,setCars,blogs,setBlogs,users,onExit}){
   return(
     <>
       <style>{G}{`
+        .admin-hamburger{display:none;}
+        .admin-close-btn{display:none;}
+        .admin-sidebar-overlay{display:none;position:fixed;inset:0;z-index:200;}
+        .admin-sidebar-drawer{width:220px;background:#1E293B;height:100%;overflow-y:auto;flex-shrink:0;border-right:1px solid rgba(255,255,255,0.06);}
+        .admin-sidebar-backdrop{flex:1;background:rgba(0,0,0,0.5);}
         @media(max-width:640px){
           .admin-sidebar-desktop{display:none!important;}
-          .admin-sidebar-overlay{display:flex!important;}
+          .admin-hamburger{display:flex!important;}
           .admin-close-btn{display:flex!important;}
           .admin-topbar-pad{padding:12px 16px!important;}
           .admin-content-pad{padding:16px!important;}
         }
-        .admin-sidebar-overlay{display:none;position:fixed;inset:0;z-index:200;}
-        .admin-sidebar-drawer{width:220px;background:#1E293B;height:100%;overflow-y:auto;flex-shrink:0;border-right:1px solid rgba(255,255,255,0.06);}
-        .admin-sidebar-backdrop{flex:1;background:rgba(0,0,0,0.5);}
       `}</style>
       <div className="pp-admin" style={{height:"100vh",display:"flex",overflow:"hidden"}}>
         {/* Desktop sidebar — hidden on mobile */}
