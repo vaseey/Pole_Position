@@ -269,6 +269,26 @@ const FormSection=({title,subtitle,children})=>(
   </div>
 );
 
+const SpecSection=({title,icon,rows})=>{
+  if(!rows||!rows.length)return null;
+  return(
+    <div style={{background:"var(--pp-card)",borderRadius:14,border:"1px solid var(--pp-border)",overflow:"hidden"}}>
+      <div style={{padding:"12px 18px",borderBottom:"1px solid var(--pp-border)",display:"flex",alignItems:"center",gap:8}}>
+        <span style={{fontSize:15}}>{icon}</span>
+        <span style={{fontWeight:700,fontSize:14,color:"var(--pp-text)"}}>{title}</span>
+      </div>
+      <table style={{width:"100%",borderCollapse:"collapse"}}><tbody>
+        {rows.map(([label,value],i)=>(
+          <tr key={label} style={{borderBottom:i<rows.length-1?"1px solid var(--pp-border)":"none",background:i%2===0?"transparent":"var(--pp-card2)"}}>
+            <td style={{padding:"11px 18px",color:"var(--pp-text2)",fontSize:13,fontWeight:600,width:"45%"}}>{label}</td>
+            <td style={{padding:"11px 18px",color:"var(--pp-text)",fontSize:13,fontWeight:700}}>{value}</td>
+          </tr>
+        ))}
+      </tbody></table>
+    </div>
+  );
+};
+
 
 // ── ScoreRing ────────────────────────────────────────────────────
 function ScoreRing({score,size=52,light=false}){
