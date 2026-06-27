@@ -2770,6 +2770,7 @@ function AdminConsole({cars,setCars,blogs,setBlogs,users,onExit}){
   const [loginEmail,setLoginEmail]=useState("");
   const [loginPass,setLoginPass]=useState("");
   const [loginRemember,setLoginRemember]=useState(true);
+  const [sidebarOpen,setSidebarOpen]=useState(false);
 
   const handleLogin=async()=>{
     setLoginErr("");
