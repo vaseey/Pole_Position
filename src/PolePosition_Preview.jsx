@@ -1427,7 +1427,11 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
               <BarChart2 size={14} color="var(--pp-text2)"/>
               <span style={{fontSize:12.5,color:"var(--pp-text2)",fontWeight:600}}>EMI from ₹{emi.toLocaleString("en-IN")}/month</span>
             </div>
-            <button onClick={openEnquiry} style={{width:"100%",padding:"13px",borderRadius:100,fontSize:15,marginBottom:22,background:"#9B2B2B",color:"#fff",border:"none",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:700}}>{enquired?"Enquiry Sent ✓":"Enquire Now →"}</button>
+            <div style={{display:"flex",gap:10,marginBottom:22}}>
+              <button onClick={openEnquiry} style={{flex:1,padding:"13px",borderRadius:100,fontSize:14,background:"#9B2B2B",color:"#fff",border:"none",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:700}}>{enquired?"Sent ✓":"Enquire Now →"}</button>
+              <button onClick={()=>setShowTestDrive(true)} style={{flex:1,padding:"13px",borderRadius:100,fontSize:14,background:"var(--pp-primary)",color:"#fff",border:"none",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:700,display:"flex",alignItems:"center",justifyContent:"center",gap:6}}><Car size={14}/> Test Drive</button>
+            </div>
+            {showTestDrive&&<TestDriveModal car={car} onClose={()=>setShowTestDrive(false)}/>}
             <div style={{fontWeight:700,fontSize:13,marginBottom:11,color:"var(--pp-text)"}}>Inspection Snapshot</div>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:9,marginBottom:12}}>
               {Object.entries(bd).map(([k,v])=>(
