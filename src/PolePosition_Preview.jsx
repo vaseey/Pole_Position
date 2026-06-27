@@ -1199,14 +1199,41 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
             </div>
           </>
         )}
-        {tab==="specs"&&user&&(
-          <div style={{background:"var(--pp-card)",borderRadius:14,overflow:"hidden",border:"1px solid var(--pp-border)"}}>
-            {[["Make",car.make],["Model",car.model],["Year",car.year],["Fuel",car.fuel],["Transmission",car.transmission],["KM Driven",fmtKm(car.km)],["Seats",car.seats],["Owners",car.owners],["Price",fmt(car.price)],["Insurance",car.insurance||"—"]].map(([l,v],i)=>(
-              <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"13px 16px",borderBottom:"1px solid var(--pp-border)",background:i%2?"var(--pp-card2)":"var(--pp-card)"}}>
-                <span style={{color:"var(--pp-text2)",fontSize:13.5}}>{l}</span>
-                <span style={{fontWeight:700,fontSize:13.5,color:"var(--pp-text)"}}>{v}</span>
-              </div>
-            ))}
+        {tab==="specs"&&(
+          <div style={{display:"flex",flexDirection:"column",gap:14}}>
+            <SpecSection title="This Car" icon="🚗" rows={[
+              ["Make & Model",`${car.make} ${car.model}${car.variant?" "+car.variant:""}`],
+              ["Year",car.year],["Fuel",car.fuel],["Transmission",car.transmission],
+              ["KM Driven",fmtKm(car.km)],["Seats",car.seats+" seater"],
+              ["Owners",car.owners],["Price",fmt(car.price)],
+              car.insurance&&["Insurance",car.insurance],
+            ].filter(Boolean)}/>
+            {car.specs&&<>
+              <SpecSection title="Performance" icon="⚡" rows={[
+                car.specs.engine&&["Engine",car.specs.engine],
+                car.specs.maxPower&&["Max Power",car.specs.maxPower],
+                car.specs.maxTorque&&["Torque",car.specs.maxTorque],
+                car.specs.mileage&&["Mileage",car.specs.mileage],
+                car.specs.topSpeed&&["Top Speed",car.specs.topSpeed+" kmph"],
+                car.specs.acceleration&&["0–100 kmph",car.specs.acceleration+"s"],
+              ].filter(Boolean)}/>
+              <SpecSection title="Dimensions" icon="📐" rows={[
+                car.specs.length&&["Length",car.specs.length+" mm"],
+                car.specs.wheelbase&&["Wheelbase",car.specs.wheelbase+" mm"],
+                car.specs.groundClearance&&["Ground Clearance",car.specs.groundClearance+" mm"],
+                car.specs.bootspace&&["Boot Space",car.specs.bootspace+" L"],
+                car.specs.fuelTank&&["Fuel Tank",car.specs.fuelTank+" L"],
+              ].filter(Boolean)}/>
+              <SpecSection title="Safety" icon="🛡️" rows={[
+                car.specs.airbags&&["Airbags",car.specs.airbags],
+                car.specs.abs&&["ABS",car.specs.abs],
+                car.specs.ncapRating&&["NCAP",car.specs.ncapRating],
+              ].filter(Boolean)}/>
+              <SpecSection title="Tyres" icon="🔄" rows={[
+                car.specs.frontTyres&&["Front",car.specs.frontTyres],
+                car.specs.rearTyres&&["Rear",car.specs.rearTyres],
+              ].filter(Boolean)}/>
+            </>}
           </div>
         )}
       </div>
