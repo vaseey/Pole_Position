@@ -2513,7 +2513,7 @@ function Listings({cars,setCars}){
 
       {/* Pricing & highlight */}
       <FormSection title="Pricing & Highlight">
-        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(140px,1fr))",gap:12}}>
           <div>
             <Label>Price (₹)</Label>
             <input
