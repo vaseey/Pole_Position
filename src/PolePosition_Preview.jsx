@@ -1934,22 +1934,105 @@ function Listings({cars,setCars}){
     </div>
   );
 
-  // Automated tab derived data
-  const autoMakes=[...new Set(CAR_DATABASE.map(r=>r.make))].sort();
-  const autoModels=autoSel.make?[...new Set(CAR_DATABASE.filter(r=>r.make===autoSel.make).map(r=>r.model))].sort():[];
-  const autoVersions=(autoSel.make&&autoSel.model)?CAR_DATABASE.filter(r=>r.make===autoSel.make&&r.model===autoSel.model):[];
-  const autoSelected=autoSel.version?autoVersions.find(r=>r.version===autoSel.version):null;
+  // Automated tab — Supabase-backed state
+  const [autoMakes,setAutoMakes]=useState([]);
+  const [autoModels,setAutoModels]=useState([]);
+  const [autoVersions,setAutoVersions]=useState([]);
+  const [autoSelected,setAutoSelected]=useState(null);
+  const [autoLoading,setAutoLoading]=useState("");
+
+  // Load makes once when switching to automated tab
+  useEffect(()=>{
+    if(listingMode!=="automated"||autoMakes.length)return;
+    setAutoLoading("makes");
+    supabase.from("car_specs").select("make").then(({data,error})=>{
+      if(!error&&data){
+        const unique=[...new Set(data.map(r=>r.make))].sort();
+        setAutoMakes(unique);
+      }
+      setAutoLoading("");
+    });
+  },[listingMode]);
+
+  // Load models when make changes
+  useEffect(()=>{
+    if(!autoSel.make)return;
+    setAutoModels([]);setAutoVersions([]);setAutoSelected(null);
+    setAutoSel(s=>({...s,model:"",version:""}));
+    setAutoLoading("models");
+    supabase.from("car_specs").select("model").eq("make",autoSel.make).then(({data,error})=>{
+      if(!error&&data){
+        const unique=[...new Set(data.map(r=>r.model))].sort();
+        setAutoModels(unique);
+      }
+      setAutoLoading("");
+    });
+  },[autoSel.make]);
+
+  // Load versions when model changes
+  useEffect(()=>{
+    if(!autoSel.make||!autoSel.model)return;
+    setAutoVersions([]);setAutoSelected(null);
+    setAutoSel(s=>({...s,version:""}));
+    setAutoLoading("versions");
+    supabase.from("car_specs")
+      .select("version_id,version,key_fuel_type,key_transmission,key_seating_capacity,body_style,key_engine,key_mileage_arai,max_power,max_torque,top_speed,acceleration_0_100,drivetrain,emission_standard,engine_detail,engine_type,front_tyres,rear_tyres,airbags,abs,esp,sunroof,ncap_rating,length_mm,width_mm,height_mm,wheelbase_mm,ground_clearance,kerb_weight,bootspace,fuel_tank_capacity,description,image_url,onroad_hyderabad,ex_showroom_price")
+      .eq("make",autoSel.make).eq("model",autoSel.model)
+      .then(({data,error})=>{
+        if(!error&&data)setAutoVersions(data);
+        setAutoLoading("");
+      });
+  },[autoSel.model]);
+
+  // Select a specific version
+  useEffect(()=>{
+    if(!autoSel.version)return setAutoSelected(null);
+    setAutoSelected(autoVersions.find(r=>r.version===autoSel.version)||null);
+  },[autoSel.version,autoVersions]);
+
+  const normalizeTransmission=t=>{
+    if(!t)return"Automatic";
+    if(t.includes("CVT"))return"CVT";
+    if(t.includes("DCT"))return"DCT";
+    if(t.includes("AMT"))return"AMT";
+    if(t.toLowerCase().includes("auto"))return"Automatic";
+    return"Manual";
+  };
+  const normalizeFuel=f=>{
+    if(!f)return"Petrol";
+    if(f.includes("Diesel"))return"Diesel";
+    if(f.includes("Electric"))return"Electric";
+    if(f.includes("CNG"))return"CNG";
+    if(f.includes("Hybrid"))return"Hybrid";
+    return"Petrol";
+  };
 
   const applyAutoSpec=()=>{
     if(!autoSelected)return;
-    const bodyToCategory={Sedan:"Sedan",Hatchback:"Hatchback",SUV:"Compact SUV","Compact SUV":"Compact SUV",MUV:"MUV",Electric:"Electric"};
+    const bodyToCategory={Sedan:"Sedan",Hatchback:"Hatchback",SUV:"Compact SUV","Compact SUV":"Compact SUV","Full Size SUV":"Full-size SUV",MUV:"MUV",MPV:"MUV",Electric:"Electric",Coupe:"Sedan",Convertible:"Sedan"};
+    const luxuryMakes=["BMW","Mercedes-Benz","Audi","Volvo","Jaguar","Land Rover","Porsche","Lexus","Bentley","Ferrari","Lamborghini"];
+    const premiumMakes=["Kia","Volkswagen","Skoda","MG","Jeep","Toyota","Nissan"];
     setForm(f=>({...f,
-      make:autoSel.make,model:autoSel.model,variant:autoSelected.version,
-      year:autoSel.year,fuel:autoSelected.fuel,transmission:autoSelected.transmission,
-      seats:autoSelected.seats||5,
-      category:bodyToCategory[autoSelected.bodyStyle]||"Sedan",
-      carClass:["BMW","Mercedes-Benz","Audi","Volvo","Jaguar","Land Rover","Porsche"].includes(autoSel.make)?"Luxury":["Kia","Volkswagen","Skoda","MG","Jeep","Toyota"].includes(autoSel.make)?"Premium":"Economy",
-      description:(autoSelected.engine&&autoSelected.mileage)?`${autoSelected.engine} engine · ${autoSelected.mileage}${autoSelected.maxPower?" · "+autoSelected.maxPower:""}${autoSelected.maxTorque?" · "+autoSelected.maxTorque+" torque":""}`:f.description,
+      make:autoSel.make,
+      model:autoSel.model,
+      variant:autoSelected.version||"",
+      year:autoSel.year,
+      fuel:normalizeFuel(autoSelected.key_fuel_type),
+      transmission:normalizeTransmission(autoSelected.key_transmission),
+      seats:parseInt(autoSelected.key_seating_capacity)||5,
+      category:bodyToCategory[autoSelected.body_style]||"Sedan",
+      carClass:luxuryMakes.includes(autoSel.make)?"Luxury":premiumMakes.includes(autoSel.make)?"Premium":"Economy",
+      description:[
+        autoSelected.engine_detail&&`Engine: ${autoSelected.engine_detail}`,
+        autoSelected.key_mileage_arai&&`Mileage: ${autoSelected.key_mileage_arai}`,
+        autoSelected.max_power&&`Max Power: ${autoSelected.max_power}`,
+        autoSelected.max_torque&&`Max Torque: ${autoSelected.max_torque}`,
+        autoSelected.top_speed&&`Top Speed: ${autoSelected.top_speed} kmph`,
+        autoSelected.acceleration_0_100&&`0-100 kmph: ${autoSelected.acceleration_0_100}s`,
+        autoSelected.drivetrain&&`Drivetrain: ${autoSelected.drivetrain}`,
+        autoSelected.airbags&&`Airbags: ${autoSelected.airbags}`,
+        autoSelected.ncap_rating&&`NCAP: ${autoSelected.ncap_rating}`,
+      ].filter(Boolean).join(" · ")||f.description,
     }));
   };
 
