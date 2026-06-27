@@ -2327,7 +2327,7 @@ function Listings({cars,setCars}){
 
       {/* Make & Model — dependent dropdowns */}
       <FormSection title="Car Details">
-        <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12}}>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(140px,1fr))",gap:12}}>
           <div>
             <Label>Make</Label>
             <input value={form.make||""} onChange={e=>setForm({...form,make:e.target.value})} placeholder="e.g. Honda"/>
