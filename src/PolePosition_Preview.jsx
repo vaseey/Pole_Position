@@ -1795,7 +1795,7 @@ function Dashboard({cars,blogs,users}){
 
 // ── Listings (admin) ─────────────────────────────────────────────
 function Listings({cars,setCars}){
-  const empty={make:"",model:"",variant:"",year:2022,fuel:"Petrol",transmission:"Automatic",km:0,seats:5,price:0,score:0,badge:null,img:"",images:[],video:null,category:"Sedan",carClass:"Economy",tagline:"",description:"",owners:1,status:"published",serviceHistory:null,tyreMake:"MRF",tyreModel:"",tyreSize:"",tyreWear:{fl:20,fr:20,rl:20,rr:20},scoreBreakdown:{}};
+  const empty={make:"",model:"",variant:"",year:2022,fuel:"Petrol",transmission:"Automatic",km:0,seats:5,price:0,score:0,badge:null,img:"",images:[],video:null,category:"Sedan",carClass:"Economy",tagline:"",description:"",owners:1,status:"published",serviceHistory:null,tyreMake:"MRF",tyreModel:"",tyreSize:"",tyreWear:{fl:20,fr:20,rl:20,rr:20},scoreBreakdown:{},specs:null};
   const [edit,setEdit]=useState(null);
   const [listingMode,setListingMode]=useState("manual");
   const [autoSel,setAutoSel]=useState({make:"",model:"",year:2022,version:""});
