@@ -2819,7 +2819,6 @@ function AdminConsole({cars,setCars,blogs,setBlogs,users,onExit}){
   );
 
   const NAV=[{id:"dashboard",label:"Dashboard",icon:BarChart2},{id:"listings",label:"Listings",icon:Car},{id:"users",label:"Admin Team",icon:Shield},{id:"blog",label:"Blog",icon:BookOpen},{id:"enquiries",label:"Enquiries",icon:MessageSquare}];
-  const [sidebarOpen,setSidebarOpen]=useState(false);
   const SidebarContent=()=>(
     <div style={{display:"flex",flexDirection:"column",height:"100%"}}>
       <div style={{padding:"22px 20px 18px",borderBottom:"1px solid var(--pp-border)",background:"#1E293B"}}>
