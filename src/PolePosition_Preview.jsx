@@ -1340,12 +1340,16 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
       </div>
 
       {/* Fixed bottom enquire bar */}
-      <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:150,padding:"12px 16px",background:"var(--pp-card)",borderTop:"1px solid var(--pp-border)"}}>
-        <button onClick={openEnquiry} style={{width:"100%",background:"#9B2B2B",color:"#fff",border:"none",borderRadius:50,padding:"15px",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",gap:10}}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+      <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:150,padding:"12px 16px",background:"var(--pp-card)",borderTop:"1px solid var(--pp-border)",display:"flex",gap:10}}>
+        <button onClick={()=>setShowTestDrive(true)} style={{flex:1,background:"var(--pp-primary)",color:"#fff",border:"none",borderRadius:50,padding:"15px",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:14,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",gap:8}}>
+          <Car size={16}/> Test Drive
+        </button>
+        <button onClick={openEnquiry} style={{flex:1,background:"#9B2B2B",color:"#fff",border:"none",borderRadius:50,padding:"15px",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:14,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",gap:8}}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
           Enquire Now
         </button>
       </div>
+      {showTestDrive&&<TestDriveModal car={car} onClose={()=>setShowTestDrive(false)}/>}
 
       {/* Enquiry modal */}
       {showEnquiryModal&&(
