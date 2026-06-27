@@ -2414,7 +2414,7 @@ function Listings({cars,setCars}){
         )}
       </FormSection>
       <FormSection title="History">
-        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:16}}>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(140px,1fr))",gap:12,marginBottom:16}}>
           <div>
             <Label>KM Driven</Label>
             <input
