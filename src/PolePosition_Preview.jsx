@@ -2237,7 +2237,7 @@ function Listings({cars,setCars}){
               <div style={{marginTop:16,background:"rgba(155,43,43,0.07)",border:"1px solid rgba(155,43,43,0.2)",borderRadius:12,padding:"16px 18px"}}>
                 <div style={{fontSize:11.5,fontWeight:700,color:"#9B2B2B",marginBottom:12,textTransform:"uppercase",letterSpacing:"0.07em"}}>Full specs loaded from database</div>
 
-                <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"8px 16px",marginBottom:12}}>
+                <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(130px,1fr))",gap:"8px 16px",marginBottom:12}}>
                   {[
                     ["Fuel",autoSelected.key_fuel_type],
                     ["Transmission",autoSelected.key_transmission],
