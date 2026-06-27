@@ -1812,6 +1812,7 @@ function Listings({cars,setCars}){
   const [customVariant,setCustomVariant]=useState(false);
   const [variantOptions,setVariantOptions]=useState([]);
   const [variantLoading,setVariantLoading]=useState(false);
+  const [specLoading,setSpecLoading]=useState(false);
 
   const fetchVariants=async(make,model,year)=>{
     if(!make||!model||!year)return;
