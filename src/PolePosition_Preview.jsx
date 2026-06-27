@@ -2055,18 +2055,18 @@ function Listings({cars,setCars}){
       {/* Automated tab */}
       {listingMode==="automated"&&!form.id&&(
         <div>
-          <FormSection title="Select Vehicle" subtitle="Pick make, model, year and variant — specs load automatically">
+          <FormSection title="Select Vehicle" subtitle="Pick make, model, year and variant — all specs load from the database automatically">
             <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:12}}>
               <label style={{display:"flex",flexDirection:"column",gap:5}}>
-                <span style={{fontSize:11.5,fontWeight:600,color:"var(--pp-text2)",textTransform:"uppercase",letterSpacing:"0.06em"}}>Make</span>
-                <select value={autoSel.make} onChange={e=>setAutoSel(s=>({...s,make:e.target.value,model:"",version:""}))} style={{borderRadius:9,border:"1px solid var(--pp-border2)",padding:"10px 12px",background:"var(--pp-card2)",color:"var(--pp-text1)",fontSize:13.5,fontFamily:"Outfit,sans-serif"}}>
+                <span style={{fontSize:11.5,fontWeight:600,color:"var(--pp-text2)",textTransform:"uppercase",letterSpacing:"0.06em"}}>Make {autoLoading==="makes"&&<span style={{color:"#60A5FA",fontWeight:400}}>loading…</span>}</span>
+                <select value={autoSel.make} onChange={e=>setAutoSel(s=>({...s,make:e.target.value}))} style={{borderRadius:9,border:"1px solid var(--pp-border2)",padding:"10px 12px",background:"var(--pp-card2)",color:"var(--pp-text1)",fontSize:13.5,fontFamily:"Outfit,sans-serif"}}>
                   <option value="">Select make…</option>
                   {autoMakes.map(m=><option key={m} value={m}>{m}</option>)}
                 </select>
               </label>
               <label style={{display:"flex",flexDirection:"column",gap:5}}>
-                <span style={{fontSize:11.5,fontWeight:600,color:"var(--pp-text2)",textTransform:"uppercase",letterSpacing:"0.06em"}}>Model</span>
-                <select value={autoSel.model} onChange={e=>setAutoSel(s=>({...s,model:e.target.value,version:""}))} disabled={!autoSel.make} style={{borderRadius:9,border:"1px solid var(--pp-border2)",padding:"10px 12px",background:"var(--pp-card2)",color:"var(--pp-text1)",fontSize:13.5,fontFamily:"Outfit,sans-serif",opacity:autoSel.make?1:0.5}}>
+                <span style={{fontSize:11.5,fontWeight:600,color:"var(--pp-text2)",textTransform:"uppercase",letterSpacing:"0.06em"}}>Model {autoLoading==="models"&&<span style={{color:"#60A5FA",fontWeight:400}}>loading…</span>}</span>
+                <select value={autoSel.model} onChange={e=>setAutoSel(s=>({...s,model:e.target.value}))} disabled={!autoSel.make||autoLoading==="models"} style={{borderRadius:9,border:"1px solid var(--pp-border2)",padding:"10px 12px",background:"var(--pp-card2)",color:"var(--pp-text1)",fontSize:13.5,fontFamily:"Outfit,sans-serif",opacity:autoSel.make?1:0.5}}>
                   <option value="">Select model…</option>
                   {autoModels.map(m=><option key={m} value={m}>{m}</option>)}
                 </select>
@@ -2078,26 +2078,46 @@ function Listings({cars,setCars}){
                 </select>
               </label>
               <label style={{display:"flex",flexDirection:"column",gap:5}}>
-                <span style={{fontSize:11.5,fontWeight:600,color:"var(--pp-text2)",textTransform:"uppercase",letterSpacing:"0.06em"}}>Variant</span>
-                <select value={autoSel.version} onChange={e=>setAutoSel(s=>({...s,version:e.target.value}))} disabled={!autoSel.model} style={{borderRadius:9,border:"1px solid var(--pp-border2)",padding:"10px 12px",background:"var(--pp-card2)",color:"var(--pp-text1)",fontSize:13.5,fontFamily:"Outfit,sans-serif",opacity:autoSel.model?1:0.5}}>
+                <span style={{fontSize:11.5,fontWeight:600,color:"var(--pp-text2)",textTransform:"uppercase",letterSpacing:"0.06em"}}>Variant {autoLoading==="versions"&&<span style={{color:"#60A5FA",fontWeight:400}}>loading…</span>}</span>
+                <select value={autoSel.version} onChange={e=>setAutoSel(s=>({...s,version:e.target.value}))} disabled={!autoSel.model||autoLoading==="versions"} style={{borderRadius:9,border:"1px solid var(--pp-border2)",padding:"10px 12px",background:"var(--pp-card2)",color:"var(--pp-text1)",fontSize:13.5,fontFamily:"Outfit,sans-serif",opacity:autoSel.model?1:0.5}}>
                   <option value="">Select variant…</option>
-                  {autoVersions.map(r=><option key={r.version} value={r.version}>{r.version}</option>)}
+                  {autoVersions.map(r=><option key={r.version_id} value={r.version}>{r.version}</option>)}
                 </select>
               </label>
             </div>
+
             {autoSelected&&(
-              <div style={{marginTop:16,background:"rgba(155,43,43,0.07)",border:"1px solid rgba(155,43,43,0.2)",borderRadius:10,padding:"14px 16px"}}>
-                <div style={{fontSize:12,fontWeight:700,color:"#9B2B2B",marginBottom:8,textTransform:"uppercase",letterSpacing:"0.06em"}}>Specs loaded from database</div>
-                <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:8}}>
+              <div style={{marginTop:16,background:"rgba(155,43,43,0.07)",border:"1px solid rgba(155,43,43,0.2)",borderRadius:12,padding:"16px 18px"}}>
+                <div style={{fontSize:11.5,fontWeight:700,color:"#9B2B2B",marginBottom:12,textTransform:"uppercase",letterSpacing:"0.07em"}}>Full specs loaded from database</div>
+
+                <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"8px 16px",marginBottom:12}}>
                   {[
-                    ["Fuel",autoSelected.fuel],
-                    ["Transmission",autoSelected.transmission],
-                    ["Seats",autoSelected.seats],
-                    ["Body Style",autoSelected.bodyStyle],
-                    ["Engine",autoSelected.engine],
-                    ["Mileage",autoSelected.mileage],
-                    ["Max Power",autoSelected.maxPower],
-                    ["Max Torque",autoSelected.maxTorque],
+                    ["Fuel",autoSelected.key_fuel_type],
+                    ["Transmission",autoSelected.key_transmission],
+                    ["Seats",autoSelected.key_seating_capacity],
+                    ["Body Style",autoSelected.body_style],
+                    ["Engine",autoSelected.key_engine],
+                    ["Mileage (ARAI)",autoSelected.key_mileage_arai],
+                    ["Max Power",autoSelected.max_power],
+                    ["Max Torque",autoSelected.max_torque],
+                    ["Top Speed",autoSelected.top_speed&&autoSelected.top_speed+" kmph"],
+                    ["0–100 kmph",autoSelected.acceleration_0_100&&autoSelected.acceleration_0_100+"s"],
+                    ["Drivetrain",autoSelected.drivetrain],
+                    ["Emission",autoSelected.emission_standard],
+                    ["Airbags",autoSelected.airbags],
+                    ["ABS",autoSelected.abs],
+                    ["ESP",autoSelected.esp],
+                    ["NCAP Rating",autoSelected.ncap_rating],
+                    ["Front Tyres",autoSelected.front_tyres],
+                    ["Rear Tyres",autoSelected.rear_tyres],
+                    ["Length",autoSelected.length_mm],
+                    ["Wheelbase",autoSelected.wheelbase_mm],
+                    ["Ground Clearance",autoSelected.ground_clearance],
+                    ["Kerb Weight",autoSelected.kerb_weight],
+                    ["Bootspace",autoSelected.bootspace],
+                    ["Fuel Tank",autoSelected.fuel_tank_capacity],
+                    ["Sunroof",autoSelected.sunroof],
+                    ["On-road Hyderabad",autoSelected.onroad_hyderabad],
                   ].filter(([,v])=>v).map(([k,v])=>(
                     <div key={k} style={{fontSize:12}}>
                       <span style={{color:"var(--pp-text2)"}}>{k}: </span>
@@ -2105,13 +2125,17 @@ function Listings({cars,setCars}){
                     </div>
                   ))}
                 </div>
-                <button onClick={applyAutoSpec} style={{marginTop:12,padding:"9px 20px",borderRadius:9,background:"#9B2B2B",border:"none",color:"#fff",fontWeight:700,fontSize:13,cursor:"pointer",fontFamily:"Outfit,sans-serif"}}>Apply & Continue Filling Details</button>
+
+                <button onClick={applyAutoSpec} style={{padding:"10px 22px",borderRadius:9,background:"#9B2B2B",border:"none",color:"#fff",fontWeight:700,fontSize:13,cursor:"pointer",fontFamily:"Outfit,sans-serif",display:"flex",alignItems:"center",gap:7}}>
+                  Apply & Continue Filling Details →
+                </button>
               </div>
             )}
           </FormSection>
+
           {form.make&&(
-            <div style={{marginTop:6,padding:"10px 14px",background:"rgba(16,185,129,0.08)",border:"1px solid rgba(16,185,129,0.2)",borderRadius:9,fontSize:13,color:"#10B981",fontWeight:600}}>
-              Specs applied — scroll down to add photos, price, km and other details, then save.
+            <div style={{marginTop:6,padding:"11px 16px",background:"rgba(16,185,129,0.08)",border:"1px solid rgba(16,185,129,0.2)",borderRadius:9,fontSize:13,color:"#10B981",fontWeight:600}}>
+              ✓ Specs applied for {form.make} {form.model} {form.variant} — scroll down to add photos, price, km, owners, then save.
             </div>
           )}
         </div>
