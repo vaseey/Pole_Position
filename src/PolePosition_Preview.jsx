@@ -3213,7 +3213,7 @@ function FavoritesPage({setPage,setSelectedCar,favs,toggleFav,cars}){
 }
 
 // ── PublicSite + top-level switcher ──────────────────────────────
-function PublicSite({cars,blog,threads,onGoAdmin}){
+function PublicSite({cars,blog,threads,testimonials,onGoAdmin}){
   const [page,setPage]=useState("home");
   const [car,setCar]=useState(null);
   const [thread,setThread]=useState(null);
