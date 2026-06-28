@@ -3311,6 +3311,7 @@ export default function App(){
   const [cars,setCars]=useState(CARS_SEED);
   const [blogs,setBlogs]=useState(BLOG_SEED);
   const [threads,setThreads]=useState(THREADS_SEED);
+  const [testimonials,setTestimonials]=useState(TESTIMONIALS_SEED);
   const [users]=useState(USERS_SEED);
   const [loading,setLoading]=useState(true);
 
