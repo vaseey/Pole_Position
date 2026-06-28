@@ -3050,6 +3050,67 @@ function EnquiriesPanel(){
   );
 }
 
+// ── TestimonialsAdmin ─────────────────────────────────────────────
+function TestimonialsAdmin({testimonials,setTestimonials}){
+  const empty={name:"",title:"",quote:"",avatar:""};
+  const [form,setForm]=useState(empty);
+  const [editing,setEditing]=useState(null);
+  const set=k=>e=>setForm(f=>({...f,[k]:e.target.value}));
+  const startEdit=t=>{setEditing(t.id);setForm({name:t.name,title:t.title,quote:t.quote,avatar:t.avatar||""});};
+  const cancel=()=>{setEditing(null);setForm(empty);};
+  const save=()=>{
+    if(!form.name||!form.quote)return;
+    if(editing){
+      setTestimonials(ts=>ts.map(t=>t.id===editing?{...t,...form}:t));
+    } else {
+      setTestimonials(ts=>[...ts,{...form,id:Date.now()}]);
+    }
+    cancel();
+  };
+  const del=id=>setTestimonials(ts=>ts.filter(t=>t.id!==id));
+  const inp={width:"100%",padding:"10px 14px",fontSize:14,borderRadius:10,border:"1.5px solid rgba(255,255,255,0.1)",background:"rgba(255,255,255,0.05)",color:"#fff",fontFamily:"Outfit,sans-serif",outline:"none",boxSizing:"border-box"};
+  return(
+    <div>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:24}}>
+        <h2 style={{fontWeight:800,fontSize:20,color:"#fff",margin:0}}>Testimonials</h2>
+        {!editing&&<button onClick={()=>setEditing("new")} style={{padding:"9px 20px",borderRadius:10,background:"#9B2B2B",color:"#fff",border:"none",cursor:"pointer",fontWeight:700,fontSize:13,fontFamily:"Outfit,sans-serif",display:"flex",alignItems:"center",gap:7}}><Plus size={14}/> Add Testimonial</button>}
+      </div>
+      {(editing==="new"||editing)&&(
+        <div style={{background:"#1E293B",borderRadius:16,padding:24,marginBottom:24,border:"1px solid rgba(255,255,255,0.1)"}}>
+          <div style={{fontWeight:700,fontSize:15,color:"#fff",marginBottom:16}}>{editing==="new"?"New Testimonial":"Edit Testimonial"}</div>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,marginBottom:14}}>
+            <div><label style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.5)",display:"block",marginBottom:5,textTransform:"uppercase"}}>Name</label><input value={form.name} onChange={set("name")} placeholder="Customer name" style={inp}/></div>
+            <div><label style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.5)",display:"block",marginBottom:5,textTransform:"uppercase"}}>Title / Location</label><input value={form.title} onChange={set("title")} placeholder="e.g. Software Engineer, Gachibowli" style={inp}/></div>
+          </div>
+          <div style={{marginBottom:14}}><label style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.5)",display:"block",marginBottom:5,textTransform:"uppercase"}}>Quote</label><textarea value={form.quote} onChange={set("quote")} placeholder="What the customer said…" rows={3} style={{...inp,resize:"vertical",lineHeight:1.6}}/></div>
+          <div style={{marginBottom:20}}><label style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.5)",display:"block",marginBottom:5,textTransform:"uppercase"}}>Avatar URL (optional)</label><input value={form.avatar} onChange={set("avatar")} placeholder="https://…" style={inp}/></div>
+          <div style={{display:"flex",gap:10}}>
+            <button onClick={save} disabled={!form.name||!form.quote} style={{padding:"10px 24px",borderRadius:10,background:(!form.name||!form.quote)?"#334155":"#9B2B2B",color:"#fff",border:"none",cursor:(!form.name||!form.quote)?"not-allowed":"pointer",fontWeight:700,fontSize:14,fontFamily:"Outfit,sans-serif"}}>{editing==="new"?"Add":"Save Changes"}</button>
+            <button onClick={cancel} style={{padding:"10px 20px",borderRadius:10,background:"rgba(255,255,255,0.07)",color:"#fff",border:"none",cursor:"pointer",fontWeight:600,fontSize:14,fontFamily:"Outfit,sans-serif"}}>Cancel</button>
+          </div>
+        </div>
+      )}
+      <div style={{display:"flex",flexDirection:"column",gap:12}}>
+        {testimonials.map(t=>(
+          <div key={t.id} style={{background:"#1E293B",borderRadius:14,padding:"18px 20px",border:"1px solid rgba(255,255,255,0.08)",display:"flex",gap:16,alignItems:"flex-start"}}>
+            {t.avatar?<img src={t.avatar} alt="" style={{width:44,height:44,borderRadius:"50%",objectFit:"cover",flexShrink:0}}/>:<div style={{width:44,height:44,borderRadius:"50%",background:"#9B2B2B33",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,fontWeight:800,fontSize:16,color:"#9B2B2B"}}>{t.name?.[0]}</div>}
+            <div style={{flex:1,minWidth:0}}>
+              <div style={{fontWeight:700,fontSize:14,color:"#fff"}}>{t.name}</div>
+              <div style={{fontSize:12,color:"rgba(255,255,255,0.4)",marginBottom:8}}>{t.title}</div>
+              <p style={{fontSize:13.5,color:"rgba(255,255,255,0.6)",lineHeight:1.6,margin:0}}>"{t.quote}"</p>
+            </div>
+            <div style={{display:"flex",gap:8,flexShrink:0}}>
+              <button onClick={()=>startEdit(t)} style={{width:32,height:32,borderRadius:8,border:"1px solid rgba(255,255,255,0.12)",background:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><Edit2 size={13} color="#94A3B8"/></button>
+              <button onClick={()=>del(t.id)} style={{width:32,height:32,borderRadius:8,border:"1px solid rgba(220,38,38,0.2)",background:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><Trash2 size={13} color="#EF4444"/></button>
+            </div>
+          </div>
+        ))}
+        {testimonials.length===0&&<div style={{textAlign:"center",padding:40,color:"rgba(255,255,255,0.3)",fontSize:14}}>No testimonials yet. Add your first one above.</div>}
+      </div>
+    </div>
+  );
+}
+
 // ── AdminConsole ─────────────────────────────────────────────────
 function AdminConsole({cars,setCars,blogs,setBlogs,testimonials,setTestimonials,users,onExit}){
   const [tab,setTab]=useState("dashboard");
