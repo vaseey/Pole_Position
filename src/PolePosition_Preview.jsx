@@ -3357,6 +3357,6 @@ export default function App(){
   if(view==="admin"){
     return <AdminConsole cars={cars} setCars={setCars} blogs={blogs} setBlogs={setBlogs} testimonials={testimonials} setTestimonials={setTestimonials} users={users} onExit={()=>setView("public")}/>;
   }
-  return <PublicSite cars={cars.filter(c=>c.status!=="draft")} blog={blogs} threads={threads} onGoAdmin={()=>setView("admin")}/>;
+  return <PublicSite cars={cars.filter(c=>c.status!=="draft")} blog={blogs} threads={threads} testimonials={testimonials} onGoAdmin={()=>setView("admin")}/>;
 }
 // cache-bust: 1782134876
