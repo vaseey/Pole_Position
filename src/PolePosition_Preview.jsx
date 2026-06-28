@@ -3063,11 +3063,11 @@ function EnquiriesPanel(){
 
 // ── TestimonialsAdmin ─────────────────────────────────────────────
 function TestimonialsAdmin({testimonials,setTestimonials}){
-  const empty={name:"",title:"",quote:"",avatar:""};
+  const empty={name:"",designation:"",car:"",rating:5,quote:"",avatar:""};
   const [form,setForm]=useState(empty);
   const [editing,setEditing]=useState(null);
   const set=k=>e=>setForm(f=>({...f,[k]:e.target.value}));
-  const startEdit=t=>{setEditing(t.id);setForm({name:t.name,title:t.title,quote:t.quote,avatar:t.avatar||""});};
+  const startEdit=t=>{setEditing(t.id);setForm({name:t.name,designation:t.designation||"",car:t.car||"",rating:t.rating||5,quote:t.quote,avatar:t.avatar||""});};
   const cancel=()=>{setEditing(null);setForm(empty);};
   const save=()=>{
     if(!form.name||!form.quote)return;
