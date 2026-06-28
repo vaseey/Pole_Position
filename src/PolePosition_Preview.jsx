@@ -3178,7 +3178,7 @@ export default function App(){
         supabase.from("forum_threads").select("*").order("pinned",{ascending:false}).order("id"),
       ]);
       if(carsRes.data?.length) setCars(carsRes.data.map(c=>({...c,scoreBreakdown:c.score_breakdown,tyreWear:c.tyre_wear})));
-      if(blogsRes.data?.length) setBlogs(blogsRes.data.map(b=>({...b,readTime:b.read_time})));
+      // Blog content is managed in BLOG_SEED (code) — Supabase table is not yet seeded with new posts
       if(threadsRes.data?.length) setThreads(threadsRes.data);
       setLoading(false);
     }
