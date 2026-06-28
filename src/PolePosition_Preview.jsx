@@ -862,7 +862,7 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
           </div>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))",gap:20}}>
             {blog.slice(0,3).map(p=>(
-              <div key={p.id} style={{background:"var(--pp-card)",borderRadius:16,overflow:"hidden",border:"1px solid var(--pp-border)",cursor:"pointer"}} onClick={()=>setPage("blog")}>
+              <div key={p.id} style={{background:"var(--pp-card)",borderRadius:16,overflow:"hidden",border:"1px solid var(--pp-border)",cursor:"pointer"}} onClick={()=>{setSelectedPost(p);setPage("post");}}>
                 <img src={p.img} alt="" style={{width:"100%",height:180,objectFit:"cover"}} onError={e=>e.target.style.display="none"}/>
                 <div style={{padding:"16px 18px"}}>
                   <span style={{background:TAG_COLORS[p.tag]+"22",color:TAG_COLORS[p.tag],fontSize:10.5,fontWeight:700,padding:"3px 9px",borderRadius:20}}>{p.tag}</span>
