@@ -419,6 +419,7 @@ function Navbar({page,setPage,user,setUser,setShowLogin,isAdmin,onGoAdmin,darkMo
             </button>
           ))}
           <div style={{borderTop:"1px solid var(--pp-border)",marginTop:8,paddingTop:8}}>
+            <button onClick={()=>{setPage("faq");setMenuOpen(false);}} style={{width:"100%",padding:"12px 16px",borderRadius:10,border:"none",background:"none",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:600,color:"var(--pp-text)",display:"flex",alignItems:"center",gap:9,fontFamily:"Outfit,sans-serif"}}>❓ FAQs</button>
             <button onClick={()=>setDarkMode(d=>!d)} style={{width:"100%",padding:"12px 16px",borderRadius:10,border:"1px solid var(--pp-border)",background:"var(--pp-card2)",cursor:"pointer",textAlign:"left",fontSize:15,fontWeight:600,color:"var(--pp-text)",display:"flex",alignItems:"center",gap:9,fontFamily:"Outfit,sans-serif",marginBottom:8}}>{darkMode?"☀ Switch to Light Mode":"🌙 Switch to Dark Mode"}</button>
             {user?(
               <>
