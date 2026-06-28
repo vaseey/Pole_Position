@@ -3355,7 +3355,7 @@ export default function App(){
   if(loading) return <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100vh",fontFamily:"Outfit,sans-serif",fontSize:18,color:"var(--pp-text2)"}}>Loading…</div>;
 
   if(view==="admin"){
-    return <AdminConsole cars={cars} setCars={setCars} blogs={blogs} setBlogs={setBlogs} users={users} onExit={()=>setView("public")}/>;
+    return <AdminConsole cars={cars} setCars={setCars} blogs={blogs} setBlogs={setBlogs} testimonials={testimonials} setTestimonials={setTestimonials} users={users} onExit={()=>setView("public")}/>;
   }
   return <PublicSite cars={cars.filter(c=>c.status!=="draft")} blog={blogs} threads={threads} onGoAdmin={()=>setView("admin")}/>;
 }
