@@ -3051,7 +3051,7 @@ function EnquiriesPanel(){
 }
 
 // ── AdminConsole ─────────────────────────────────────────────────
-function AdminConsole({cars,setCars,blogs,setBlogs,users,onExit}){
+function AdminConsole({cars,setCars,blogs,setBlogs,testimonials,setTestimonials,users,onExit}){
   const [tab,setTab]=useState("dashboard");
   const [authed,setAuthed]=useState(false);
   const [loginErr,setLoginErr]=useState("");
