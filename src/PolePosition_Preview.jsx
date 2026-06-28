@@ -3251,7 +3251,7 @@ function PublicSite({cars,blog,threads,onGoAdmin}){
         if(email&&email.toLowerCase()==="vaseey@gmail.com"){setShowLogin(false);onGoAdmin();return;}
         setUser(name);setUserEmail(email);setIsAdmin(false);setShowLogin(false);
       }}/>}
-      {page==="home"&&<HomePage setPage={p=>navTo(p)} setSelectedCar={c=>navTo("detail",c)} favs={favs} toggleFav={toggleFav} cars={cars} blog={blog}/>}
+      {page==="home"&&<HomePage setPage={p=>navTo(p)} setSelectedCar={c=>navTo("detail",c)} setSelectedPost={p=>{setPost(p);navTo("post");}} favs={favs} toggleFav={toggleFav} cars={cars} blog={blog}/>}
       {page==="browse"&&<BrowsePage setPage={p=>navTo(p)} setSelectedCar={c=>navTo("detail",c)} favs={favs} toggleFav={toggleFav} cars={cars}/>}
       {page==="favorites"&&<FavoritesPage setPage={p=>navTo(p)} setSelectedCar={c=>navTo("detail",c)} favs={favs} toggleFav={toggleFav} cars={cars}/>}
       {page==="detail"&&<CarDetailPage car={car} setPage={p=>navTo(p)} isFav={favs.includes(car?.id)} onFav={toggleFav} user={user} setShowLogin={setShowLogin} userEmail={userEmail} darkMode={darkMode} setDarkMode={setDarkMode}/>}
