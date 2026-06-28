@@ -723,14 +723,10 @@ function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
               <button onClick={()=>setPage("browse")} style={{padding:"13px 28px",borderRadius:100,fontSize:14,fontWeight:700,background:"#9B2B2B",color:"#fff",border:"none",cursor:"pointer",fontFamily:"Outfit,sans-serif",display:"flex",alignItems:"center",gap:6}}>
                 Buy Car <ArrowRight size={15}/>
               </button>
-              <button onClick={()=>setShowTD(true)} style={{padding:"13px 28px",borderRadius:100,fontSize:14,fontWeight:700,background:"var(--pp-primary)",color:"#fff",border:"none",cursor:"pointer",fontFamily:"Outfit,sans-serif",display:"flex",alignItems:"center",gap:6}}>
-                <Car size={15}/> Book Test Drive
-              </button>
               <button onClick={()=>setPage("quiz")} style={{padding:"13px 28px",borderRadius:100,fontSize:14,fontWeight:700,background:"transparent",color:"var(--pp-text)",border:"1.5px solid var(--pp-border2)",cursor:"pointer",fontFamily:"Outfit,sans-serif"}}>
                 Find My Match
               </button>
             </div>
-            {showTD&&<TestDriveModal onClose={()=>setShowTD(false)}/>}
             <div style={{display:"flex",gap:32,marginTop:40,paddingTop:32,borderTop:"1px solid var(--pp-border)"}}>
               {[[cars.length+"+","Cars in showroom"],["100%","Inspected"],["5★","Customer rating"]].map(([n,l])=>(
                 <div key={l}>
