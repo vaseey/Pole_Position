@@ -2711,7 +2711,7 @@ function Listings({cars,setCars}){
             </div>
           </div>
         )}
-      </FormSection>
+      </FormSection>}
       <FormSection title="History">
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(140px,1fr))",gap:12,marginBottom:16}}>
           <div>
