@@ -3178,6 +3178,7 @@ function AdminConsole({cars,setCars,blogs,setBlogs,testimonials,setTestimonials,
             {tab==="listings"&&<Listings cars={cars} setCars={setCars}/>}
             {tab==="users"&&<AdminTeam/>}
             {tab==="blog"&&<Blog blogs={blogs} setBlogs={setBlogs}/>}
+            {tab==="testimonials"&&<TestimonialsAdmin testimonials={testimonials} setTestimonials={setTestimonials}/>}
             {tab==="enquiries"&&<EnquiriesPanel/>}
           </div>
         </div>
