@@ -1861,7 +1861,7 @@ function BlogPage({blog,setPost,setPage}){
         </div>
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(300px,1fr))",gap:20}}>
           {rest.map(p=>(
-            <div key={p.id} style={{background:"var(--pp-card)",borderRadius:16,overflow:"hidden",border:"1px solid var(--pp-border)",cursor:"pointer"}}>
+            <div key={p.id} onClick={()=>{setPost(p);setPage("post");}} style={{background:"var(--pp-card)",borderRadius:16,overflow:"hidden",border:"1px solid var(--pp-border)",cursor:"pointer"}}>
               <div style={{position:"relative"}}>
                 <img src={p.img} alt="" style={{width:"100%",height:190,objectFit:"cover"}} onError={e=>e.target.style.display="none"}/>
                 <span style={{position:"absolute",top:12,left:12,background:TAG_COLORS[p.tag],color:"var(--pp-text)",fontSize:10.5,fontWeight:700,padding:"3px 10px",borderRadius:20}}>{p.tag}</span>
