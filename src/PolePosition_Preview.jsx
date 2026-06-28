@@ -865,24 +865,35 @@ function HomePage({setPage,setSelectedCar,setSelectedPost,favs,toggleFav,cars,bl
               <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:"clamp(24px,4vw,38px)",letterSpacing:"-0.04em",color:"var(--pp-text)",lineHeight:1.15}}>Don't take our word for it.<br/>Hear it from our customers.</h2>
             </div>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:20}}>
-              {testimonials.map((t,i)=>(
-                <div key={t.id||i} style={{background:"var(--pp-bg)",borderRadius:18,padding:"28px 24px",border:"1px solid var(--pp-border)",display:"flex",flexDirection:"column",gap:20}}>
+              {testimonials.map((t,i)=>{
+                const initials=(t.name||"").split(" ").map(w=>w[0]).slice(0,2).join("").toUpperCase();
+                const avatarColors=["#1E3A6E","#9B2B2B","#059669","#7C3AED","#D97706"];
+                const bg=avatarColors[i%avatarColors.length];
+                return(
+                <div key={t.id||i} style={{background:"var(--pp-bg)",borderRadius:18,padding:"24px",border:"1px solid var(--pp-border)",display:"flex",flexDirection:"column",gap:16}}>
+                  {/* Stars */}
+                  <div style={{display:"flex",gap:2}}>
+                    {[1,2,3,4,5].map(s=><span key={s} style={{color:s<=(t.rating||5)?"#F59E0B":"var(--pp-border2)",fontSize:15}}>★</span>)}
+                  </div>
+                  {/* Quote */}
+                  <p style={{fontSize:14,color:"var(--pp-text2)",lineHeight:1.75,margin:0,flex:1}}>"{t.quote}"</p>
+                  {/* Divider */}
+                  <div style={{borderTop:"1px solid var(--pp-border)"}}/>
+                  {/* Person */}
                   <div style={{display:"flex",alignItems:"center",gap:12}}>
                     {t.avatar
-                      ?<img src={t.avatar} alt={t.name} style={{width:44,height:44,borderRadius:"50%",objectFit:"cover",flexShrink:0}}/>
-                      :<div style={{width:44,height:44,borderRadius:"50%",background:"#9B2B2B22",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:16,color:"#9B2B2B"}}>{t.name?.[0]}</div>
+                      ?<img src={t.avatar} alt={t.name} style={{width:42,height:42,borderRadius:"50%",objectFit:"cover",flexShrink:0}}/>
+                      :<div style={{width:42,height:42,borderRadius:"50%",background:bg,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:14,color:"#fff",letterSpacing:"0.02em"}}>{initials}</div>
                     }
-                    <div>
-                      <div style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:14,color:"var(--pp-text)"}}>{t.name}</div>
-                      <div style={{fontSize:12,color:"var(--pp-text3)",marginTop:2}}>{t.title}</div>
+                    <div style={{minWidth:0}}>
+                      <div style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:14,color:"var(--pp-text)",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{t.name}</div>
+                      <div style={{fontSize:12,color:"var(--pp-text3)",marginTop:1}}>{t.designation}</div>
+                      {t.car&&<div style={{fontSize:11,color:"#9B2B2B",fontWeight:600,marginTop:2,display:"flex",alignItems:"center",gap:4}}><Car size={10}/>{t.car}</div>}
                     </div>
                   </div>
-                  <div style={{display:"flex",gap:2,marginBottom:4}}>
-                    {[1,2,3,4,5].map(s=><span key={s} style={{color:"#F59E0B",fontSize:14}}>★</span>)}
-                  </div>
-                  <p style={{fontSize:14,color:"var(--pp-text2)",lineHeight:1.7,margin:0,flex:1}}>"{t.quote}"</p>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
