@@ -3159,6 +3159,7 @@ function PublicSite({cars,blog,threads,onGoAdmin}){
       {page==="detail"&&<CarDetailPage car={car} setPage={p=>navTo(p)} isFav={favs.includes(car?.id)} onFav={toggleFav} user={user} setShowLogin={setShowLogin} userEmail={userEmail} darkMode={darkMode} setDarkMode={setDarkMode}/>}
       {page==="quiz"&&<QuizPage setPage={p=>navTo(p)} setSelectedCar={c=>navTo("detail",c)} cars={cars}/>}
       {page==="blog"&&<BlogPage blog={blog}/>}
+      {page==="faq"&&<FaqPage/>}
       {page==="forum"&&<ForumPage setPage={p=>navTo(p)} setThread={setThread} user={user} setShowLogin={setShowLogin} threads={threads}/>}
       {page==="thread"&&<ThreadPage thread={thread} setPage={p=>navTo(p)} user={user} setShowLogin={setShowLogin}/>}
     </>
