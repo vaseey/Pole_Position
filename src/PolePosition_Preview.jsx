@@ -407,7 +407,7 @@ function Navbar({page,setPage,user,setUser,setShowLogin,isAdmin,onGoAdmin,darkMo
     window.addEventListener("resize",handler);
     return()=>window.removeEventListener("resize",handler);
   },[]);
-  const links=[["home","Home"],["browse","Browse"],["blog","Blog"],["forum","Community"]];
+  const links=[["home","Home"],["browse","Browse"],["blog","Blog"]];
   return(
     <>
     <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:200,background:"var(--pp-nav)",backdropFilter:"blur(12px)",borderBottom:"1px solid var(--pp-border)",height:56,display:"flex",alignItems:"center",padding:"0 20px",gap:0}}>
