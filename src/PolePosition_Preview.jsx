@@ -1794,10 +1794,44 @@ function QuizPage({setPage,setSelectedCar,cars}){
   );
 }
 
+// ── BlogPostPage ──────────────────────────────────────────────────
+function BlogPostPage({post,setPage}){
+  if(!post)return null;
+  return(
+    <div style={{paddingTop:56,minHeight:"100vh",background:"var(--pp-bg)"}}>
+      <div style={{maxWidth:740,margin:"0 auto",padding:"40px 24px 80px"}}>
+        <button onClick={()=>setPage("blog")} style={{display:"flex",alignItems:"center",gap:6,background:"none",border:"none",cursor:"pointer",color:"var(--pp-text2)",fontSize:13,fontWeight:600,marginBottom:28,fontFamily:"Outfit,sans-serif"}}>
+          <ChevronLeft size={15}/> Back to Blog
+        </button>
+        <div style={{display:"flex",gap:8,marginBottom:16,flexWrap:"wrap",alignItems:"center"}}>
+          <span style={{background:(TAG_COLORS[post.tag]||"#9B2B2B")+"22",color:TAG_COLORS[post.tag]||"#9B2B2B",fontSize:11,fontWeight:700,padding:"4px 12px",borderRadius:20}}>{post.tag}</span>
+          <span style={{color:"var(--pp-text3)",fontSize:12}}>{post.date} · {post.readTime} read · {post.views?.toLocaleString()} views</span>
+        </div>
+        <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:"clamp(24px,5vw,36px)",letterSpacing:"-0.04em",lineHeight:1.15,color:"var(--pp-text)",marginBottom:12}}>{post.title}</h1>
+        <div style={{fontSize:13,color:"var(--pp-text2)",marginBottom:28,fontWeight:600}}>By {post.author}</div>
+        <img src={post.img} alt={post.title} style={{width:"100%",borderRadius:16,objectFit:"cover",maxHeight:360,marginBottom:36}} onError={e=>e.target.style.display="none"}/>
+        <div style={{fontSize:16,lineHeight:1.8,color:"var(--pp-text2)"}}>
+          {(post.body||[]).map((block,i)=>(
+            <div key={i} style={{marginBottom:22}}>
+              {block.h&&<div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,color:"var(--pp-text)",marginBottom:8,letterSpacing:"-0.02em"}}>{block.h}</div>}
+              <p style={{margin:0,color:"var(--pp-text2)",lineHeight:1.8,fontSize:15.5}}>{block.p}</p>
+            </div>
+          ))}
+        </div>
+        <div style={{marginTop:48,padding:"24px",background:"var(--pp-card)",borderRadius:16,border:"1px solid var(--pp-border)",textAlign:"center"}}>
+          <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:16,color:"var(--pp-text)",marginBottom:6}}>Ready to find your car?</div>
+          <p style={{color:"var(--pp-text2)",fontSize:13.5,marginBottom:16}}>Browse our inspected and scored inventory in Hyderabad.</p>
+          <button onClick={()=>setPage("browse")} style={{padding:"11px 28px",borderRadius:50,background:"#9B2B2B",color:"#fff",border:"none",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:14}}>Browse Cars →</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── BlogPage ──────────────────────────────────────────────────────
 
 // ── BlogPage ─────────────────────────────────────────────────────
-function BlogPage({blog}){
+function BlogPage({blog,setPost,setPage}){
   const [tag,setTag]=useState("All");
   const tags=["All","Cars","EV","Bikes","Guide"];
   const featured=blog[0]||{};
