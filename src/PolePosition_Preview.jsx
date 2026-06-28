@@ -3177,6 +3177,7 @@ function PublicSite({cars,blog,threads,onGoAdmin}){
   const [page,setPage]=useState("home");
   const [car,setCar]=useState(null);
   const [thread,setThread]=useState(null);
+  const [post,setPost]=useState(null);
   const [user,setUser]=useState(null);
   const [userEmail,setUserEmail]=useState(null);
   const [isAdmin,setIsAdmin]=useState(false);
