@@ -125,11 +125,11 @@ const BLOG_SEED = [
 ];
 
 const TESTIMONIALS_SEED = [
-  {id:1,quote:"Bought a Hyundai Creta through Pole Position. The inspection report gave me full confidence — no surprises after purchase. The team handled the RC transfer too. Couldn't have been easier.",name:"Arjun Mehta",title:"Software Engineer, Gachibowli",avatar:"https://i.pravatar.cc/80?img=11"},
-  {id:2,quote:"I was sceptical about buying a used car online but the PP Score and the detailed breakdown made it simple. The car was exactly as described. Great experience.",name:"Priya Nair",title:"Marketing Manager, Jubilee Hills",avatar:"https://i.pravatar.cc/80?img=47"},
-  {id:3,quote:"Sold my Swift in three days. The valuation was fair, the process was transparent, and I didn't have to deal with random calls from strangers. Highly recommend.",name:"Rohan Kapoor",title:"Business Owner, Kondapur",avatar:"https://i.pravatar.cc/80?img=32"},
-  {id:4,quote:"The test drive was arranged at my home — I didn't even have to go to a showroom. That alone made me choose Pole Position over everyone else.",name:"Sneha Reddy",title:"Doctor, Banjara Hills",avatar:"https://i.pravatar.cc/80?img=5"},
-  {id:5,quote:"Their finance team connected me with a loan at a better rate than my bank offered. Bought my first car stress-free. The whole team was very responsive on WhatsApp.",name:"Karthik Rao",title:"Teacher, Kukatpally",avatar:"https://i.pravatar.cc/80?img=15"},
+  {id:1,quote:"The inspection report gave me full confidence — no surprises after purchase. The team handled the RC transfer too. Couldn't have been easier.",name:"Arjun Mehta",designation:"Software Engineer",car:"Hyundai Creta 2022",rating:5,avatar:"https://i.pravatar.cc/80?img=11"},
+  {id:2,quote:"I was sceptical about buying a used car online but the PP Score and the detailed breakdown made it simple. The car was exactly as described. Great experience.",name:"Priya Nair",designation:"Marketing Manager",car:"Maruti Swift 2021",rating:5,avatar:"https://i.pravatar.cc/80?img=47"},
+  {id:3,quote:"Sold my Swift in three days. The valuation was fair, the process was transparent, and I didn't have to deal with random calls from strangers. Highly recommend.",name:"Rohan Kapoor",designation:"Business Owner",car:"Sold: Maruti Swift",rating:5,avatar:""},
+  {id:4,quote:"The test drive was arranged at my home — I didn't even have to go to a showroom. That alone made me choose Pole Position over everyone else.",name:"Sneha Reddy",designation:"Doctor",car:"Toyota Fortuner 2021",rating:5,avatar:"https://i.pravatar.cc/80?img=5"},
+  {id:5,quote:"Their finance team connected me with a loan at a better rate than my bank offered. Bought my first car stress-free. The team was very responsive on WhatsApp.",name:"Karthik Rao",designation:"Teacher",car:"Tata Nexon EV 2022",rating:4,avatar:""},
 ];
 
 const FAQ_DATA = [
