@@ -3091,7 +3091,17 @@ function TestimonialsAdmin({testimonials,setTestimonials}){
           <div style={{fontWeight:700,fontSize:15,color:"#fff",marginBottom:16}}>{editing==="new"?"New Testimonial":"Edit Testimonial"}</div>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,marginBottom:14}}>
             <div><label style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.5)",display:"block",marginBottom:5,textTransform:"uppercase"}}>Name</label><input value={form.name} onChange={set("name")} placeholder="Customer name" style={inp}/></div>
-            <div><label style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.5)",display:"block",marginBottom:5,textTransform:"uppercase"}}>Title / Location</label><input value={form.title} onChange={set("title")} placeholder="e.g. Software Engineer, Gachibowli" style={inp}/></div>
+            <div><label style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.5)",display:"block",marginBottom:5,textTransform:"uppercase"}}>Designation</label><input value={form.designation} onChange={set("designation")} placeholder="e.g. Software Engineer" style={inp}/></div>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,marginBottom:14}}>
+            <div><label style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.5)",display:"block",marginBottom:5,textTransform:"uppercase"}}>Car</label><input value={form.car} onChange={set("car")} placeholder="e.g. Hyundai Creta 2022" style={inp}/></div>
+            <div><label style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.5)",display:"block",marginBottom:5,textTransform:"uppercase"}}>Rating (1–5)</label>
+              <div style={{display:"flex",gap:6,paddingTop:8}}>
+                {[1,2,3,4,5].map(s=>(
+                  <button key={s} type="button" onClick={()=>setForm(f=>({...f,rating:s}))} style={{background:"none",border:"none",cursor:"pointer",fontSize:22,color:s<=form.rating?"#F59E0B":"rgba(255,255,255,0.2)",padding:0,lineHeight:1}}>★</button>
+                ))}
+              </div>
+            </div>
           </div>
           <div style={{marginBottom:14}}><label style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.5)",display:"block",marginBottom:5,textTransform:"uppercase"}}>Quote</label><textarea value={form.quote} onChange={set("quote")} placeholder="What the customer said…" rows={3} style={{...inp,resize:"vertical",lineHeight:1.6}}/></div>
           <div style={{marginBottom:20}}><label style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.5)",display:"block",marginBottom:5,textTransform:"uppercase"}}>Avatar URL (optional)</label><input value={form.avatar} onChange={set("avatar")} placeholder="https://…" style={inp}/></div>
