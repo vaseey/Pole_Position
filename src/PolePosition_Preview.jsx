@@ -2624,8 +2624,8 @@ function Listings({cars,setCars}){
         )}
       </FormSection>
 
-      {/* Make & Model — dependent dropdowns */}
-      <FormSection title="Car Details">
+      {/* Make & Model — dependent dropdowns; hidden in automated mode (already selected above) */}
+      <FormSection title="Car Details" style={listingMode==="automated"&&!form.id?{display:"none"}:{}}>
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(140px,1fr))",gap:12}}>
           <div>
             <Label>Make</Label>
