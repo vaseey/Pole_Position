@@ -856,6 +856,38 @@ function HomePage({setPage,setSelectedCar,setSelectedPost,favs,toggleFav,cars,bl
         </div>
       </div>
 
+      {/* Testimonials */}
+      {testimonials.length>0&&(
+        <div style={{padding:"72px 32px",background:"var(--pp-card)",borderTop:"1px solid var(--pp-border)"}}>
+          <div style={{maxWidth:1200,margin:"0 auto"}}>
+            <div style={{marginBottom:40}}>
+              <div style={{fontSize:11,fontWeight:700,letterSpacing:"0.15em",color:"#9B2B2B",marginBottom:10,textTransform:"uppercase"}}>Testimonials</div>
+              <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:"clamp(24px,4vw,38px)",letterSpacing:"-0.04em",color:"var(--pp-text)",lineHeight:1.15}}>Don't take our word for it.<br/>Hear it from our customers.</h2>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:20}}>
+              {testimonials.map((t,i)=>(
+                <div key={t.id||i} style={{background:"var(--pp-bg)",borderRadius:18,padding:"28px 24px",border:"1px solid var(--pp-border)",display:"flex",flexDirection:"column",gap:20}}>
+                  <div style={{display:"flex",alignItems:"center",gap:12}}>
+                    {t.avatar
+                      ?<img src={t.avatar} alt={t.name} style={{width:44,height:44,borderRadius:"50%",objectFit:"cover",flexShrink:0}}/>
+                      :<div style={{width:44,height:44,borderRadius:"50%",background:"#9B2B2B22",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:16,color:"#9B2B2B"}}>{t.name?.[0]}</div>
+                    }
+                    <div>
+                      <div style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:14,color:"var(--pp-text)"}}>{t.name}</div>
+                      <div style={{fontSize:12,color:"var(--pp-text3)",marginTop:2}}>{t.title}</div>
+                    </div>
+                  </div>
+                  <div style={{display:"flex",gap:2,marginBottom:4}}>
+                    {[1,2,3,4,5].map(s=><span key={s} style={{color:"#F59E0B",fontSize:14}}>★</span>)}
+                  </div>
+                  <p style={{fontSize:14,color:"var(--pp-text2)",lineHeight:1.7,margin:0,flex:1}}>"{t.quote}"</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Blog preview */}
       <div style={{padding:"72px 32px",background:"var(--pp-bg)"}}>
         <div style={{maxWidth:1100,margin:"0 auto"}}>
