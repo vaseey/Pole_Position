@@ -703,7 +703,6 @@ function TestDriveModal({car,onClose}){
 function HomePage({setPage,setSelectedCar,favs,toggleFav,cars,blog}){
   const hot=useMemo(()=>cars.filter(c=>c.score>=86).slice(0,6),[cars]);
   const [isMobile,setIsMobile]=useState(()=>window.innerWidth<=768);
-  const [showTD,setShowTD]=useState(false);
   useEffect(()=>{const h=()=>setIsMobile(window.innerWidth<=768);window.addEventListener("resize",h);return()=>window.removeEventListener("resize",h);},[]);
   const heroImg=hot[0]?.img||"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=800&q=80";
   return(
