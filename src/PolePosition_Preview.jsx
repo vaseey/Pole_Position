@@ -3116,8 +3116,14 @@ function TestimonialsAdmin({testimonials,setTestimonials}){
           <div key={t.id} style={{background:"#1E293B",borderRadius:14,padding:"18px 20px",border:"1px solid rgba(255,255,255,0.08)",display:"flex",gap:16,alignItems:"flex-start"}}>
             {t.avatar?<img src={t.avatar} alt="" style={{width:44,height:44,borderRadius:"50%",objectFit:"cover",flexShrink:0}}/>:<div style={{width:44,height:44,borderRadius:"50%",background:"#9B2B2B33",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,fontWeight:800,fontSize:16,color:"#9B2B2B"}}>{t.name?.[0]}</div>}
             <div style={{flex:1,minWidth:0}}>
-              <div style={{fontWeight:700,fontSize:14,color:"#fff"}}>{t.name}</div>
-              <div style={{fontSize:12,color:"rgba(255,255,255,0.4)",marginBottom:8}}>{t.title}</div>
+              <div style={{display:"flex",alignItems:"center",gap:8}}>
+                <span style={{fontWeight:700,fontSize:14,color:"#fff"}}>{t.name}</span>
+                {t.designation&&<span style={{fontSize:11,color:"rgba(255,255,255,0.4)"}}>· {t.designation}</span>}
+              </div>
+              <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:6}}>
+                {t.car&&<span style={{fontSize:11,color:"rgba(255,255,255,0.35)"}}>{t.car}</span>}
+                <span style={{fontSize:11,color:"#F59E0B",letterSpacing:1}}>{"★".repeat(t.rating||5)}</span>
+              </div>
               <p style={{fontSize:13.5,color:"rgba(255,255,255,0.6)",lineHeight:1.6,margin:0}}>"{t.quote}"</p>
             </div>
             <div style={{display:"flex",gap:8,flexShrink:0}}>
