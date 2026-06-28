@@ -1847,7 +1847,7 @@ function BlogPage({blog,setPost,setPage}){
       </div>
       <div style={{maxWidth:1100,margin:"0 auto",padding:"40px 24px"}}>
         {/* Featured */}
-        <div style={{background:"var(--pp-card)",borderRadius:16,overflow:"hidden",border:"1px solid var(--pp-border)",display:"grid",gridTemplateColumns:"1.2fr 1fr",marginBottom:36,cursor:"pointer"}}>
+        <div onClick={()=>{setPost(featured);setPage("post");}} style={{background:"var(--pp-card)",borderRadius:16,overflow:"hidden",border:"1px solid var(--pp-border)",display:"grid",gridTemplateColumns:"1.2fr 1fr",marginBottom:36,cursor:"pointer"}}>
           <img src={featured.img} alt="" style={{width:"100%",height:340,objectFit:"cover"}} onError={e=>e.target.style.display="none"}/>
           <div style={{padding:"32px"}}>
             <div style={{display:"flex",gap:8,marginBottom:16}}>
