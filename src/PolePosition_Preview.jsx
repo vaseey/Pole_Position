@@ -124,6 +124,14 @@ const BLOG_SEED = [
   ]},
 ];
 
+const TESTIMONIALS_SEED = [
+  {id:1,quote:"Bought a Hyundai Creta through Pole Position. The inspection report gave me full confidence — no surprises after purchase. The team handled the RC transfer too. Couldn't have been easier.",name:"Arjun Mehta",title:"Software Engineer, Gachibowli",avatar:"https://i.pravatar.cc/80?img=11"},
+  {id:2,quote:"I was sceptical about buying a used car online but the PP Score and the detailed breakdown made it simple. The car was exactly as described. Great experience.",name:"Priya Nair",title:"Marketing Manager, Jubilee Hills",avatar:"https://i.pravatar.cc/80?img=47"},
+  {id:3,quote:"Sold my Swift in three days. The valuation was fair, the process was transparent, and I didn't have to deal with random calls from strangers. Highly recommend.",name:"Rohan Kapoor",title:"Business Owner, Kondapur",avatar:"https://i.pravatar.cc/80?img=32"},
+  {id:4,quote:"The test drive was arranged at my home — I didn't even have to go to a showroom. That alone made me choose Pole Position over everyone else.",name:"Sneha Reddy",title:"Doctor, Banjara Hills",avatar:"https://i.pravatar.cc/80?img=5"},
+  {id:5,quote:"Their finance team connected me with a loan at a better rate than my bank offered. Bought my first car stress-free. The whole team was very responsive on WhatsApp.",name:"Karthik Rao",title:"Teacher, Kukatpally",avatar:"https://i.pravatar.cc/80?img=15"},
+];
+
 const FAQ_DATA = [
   {q:"Is Pole Position only for a particular budget or car segment?",a:"No. Pole Position is budget and brand agnostic. Whether you are looking at an entry level hatchback or a well maintained sedan or SUV, every car goes through the same inspection and pricing process."},
   {q:"What is checked during the inspection process?",a:"Every car is checked across engine and transmission, electricals, body and structure, tyres, brakes, suspension, and documentation, including RC, insurance, and pending challans. Only cars that clear this process are listed."},
