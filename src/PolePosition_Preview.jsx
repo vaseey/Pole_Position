@@ -776,7 +776,7 @@ function TestDriveModal({car,onClose}){
 // ── HomePage ──────────────────────────────────────────────────────
 
 // ── HomePage ─────────────────────────────────────────────────────
-function HomePage({setPage,setSelectedCar,setSelectedPost,favs,toggleFav,cars,blog}){
+function HomePage({setPage,setSelectedCar,setSelectedPost,favs,toggleFav,cars,blog,testimonials}){
   const hot=useMemo(()=>cars.filter(c=>c.score>=86).slice(0,6),[cars]);
   const [isMobile,setIsMobile]=useState(()=>window.innerWidth<=768);
   useEffect(()=>{const h=()=>setIsMobile(window.innerWidth<=768);window.addEventListener("resize",h);return()=>window.removeEventListener("resize",h);},[]);
