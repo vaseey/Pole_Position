@@ -3256,7 +3256,8 @@ function PublicSite({cars,blog,threads,onGoAdmin}){
       {page==="favorites"&&<FavoritesPage setPage={p=>navTo(p)} setSelectedCar={c=>navTo("detail",c)} favs={favs} toggleFav={toggleFav} cars={cars}/>}
       {page==="detail"&&<CarDetailPage car={car} setPage={p=>navTo(p)} isFav={favs.includes(car?.id)} onFav={toggleFav} user={user} setShowLogin={setShowLogin} userEmail={userEmail} darkMode={darkMode} setDarkMode={setDarkMode}/>}
       {page==="quiz"&&<QuizPage setPage={p=>navTo(p)} setSelectedCar={c=>navTo("detail",c)} cars={cars}/>}
-      {page==="blog"&&<BlogPage blog={blog}/>}
+      {page==="blog"&&<BlogPage blog={blog} setPost={setPost} setPage={p=>navTo(p)}/>}
+      {page==="post"&&<BlogPostPage post={post} setPage={p=>navTo(p)}/>}
       {page==="faq"&&<FaqPage/>}
       {page==="forum"&&<ForumPage setPage={p=>navTo(p)} setThread={setThread} user={user} setShowLogin={setShowLogin} threads={threads}/>}
       {page==="thread"&&<ThreadPage thread={thread} setPage={p=>navTo(p)} user={user} setShowLogin={setShowLogin}/>}
