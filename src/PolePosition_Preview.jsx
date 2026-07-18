@@ -482,7 +482,7 @@ function Navbar({page,setPage,user,setUser,setShowLogin,isAdmin,onGoAdmin,darkMo
         </>
       )}
       {isMobile&&(
-        <button onClick={()=>setMenuOpen(m=>!m)} style={{background:"none",border:"none",cursor:"pointer",padding:"8px",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,color:"var(--pp-text)"}}>
+        <button onClick={()=>setMenuOpen(m=>!m)} aria-label={menuOpen?"Close menu":"Open menu"} aria-expanded={menuOpen} style={{background:"none",border:"none",cursor:"pointer",padding:"8px",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,color:"var(--pp-text)"}}>
           {menuOpen?"✕":"☰"}
         </button>
       )}
