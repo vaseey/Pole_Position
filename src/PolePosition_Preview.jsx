@@ -2012,6 +2012,8 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
             )}
           </>
         )}
+        {/* Full Features & Specifications (from Excel) — always visible */}
+        <FeaturesSpecs car={car}/>
       </div>
       {showEnquiryModal&&(
         <div style={{position:"fixed",inset:0,zIndex:600,background:"rgba(0,0,0,0.8)",backdropFilter:"blur(6px)",display:"flex",alignItems:"center",justifyContent:"center",padding:"0 20px"}} onClick={()=>setShowEnquiryModal(false)}>
