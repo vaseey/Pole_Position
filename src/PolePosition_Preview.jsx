@@ -1626,7 +1626,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:10,marginBottom:6}}>
               <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:22,letterSpacing:"-0.03em",lineHeight:1.15,color:"var(--pp-text)"}}>{car.make} {car.model}{car.variant&&<span style={{color:"var(--pp-text2)",fontWeight:700}}> {car.variant}</span>}</h1>
               <div style={{display:"flex",gap:6,flexShrink:0}}>
-                <button onClick={()=>onFav(car.id)} style={{width:34,height:34,borderRadius:10,border:"1px solid var(--pp-border)",background:"transparent",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><Heart size={15} fill={isFav?"#9B2B2B":"none"} color={isFav?"#9B2B2B":"var(--pp-text2)"}/></button>
+                <button onClick={()=>onFav(car.id)} aria-label={isFav?"Remove from favourites":"Add to favourites"} aria-pressed={isFav} style={{width:34,height:34,borderRadius:10,border:"1px solid var(--pp-border)",background:"transparent",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><Heart size={15} fill={isFav?"#9B2B2B":"none"} color={isFav?"#9B2B2B":"var(--pp-text2)"}/></button>
                 <button style={{width:34,height:34,borderRadius:10,border:"1px solid var(--pp-border)",background:"transparent",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><Share2 size={14} color="var(--pp-text2)"/></button>
               </div>
             </div>
