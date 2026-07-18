@@ -741,7 +741,7 @@ function TestDriveModal({car,onClose}){
           <div style={{textAlign:"center",padding:"20px 0"}}>
             <CheckCircle size={48} color="#22C55E" style={{margin:"0 auto 14px"}}/>
             <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,color:"var(--pp-text)",marginBottom:8}}>Booking Confirmed!</div>
-            <p style={{color:"var(--pp-text2)",fontSize:13.5}}>We'll reach out to confirm your test drive slot.</p>
+            <p style={{color:"var(--pp-text2)",fontSize:13.5}}>We've recorded your request and we'll reach out to confirm your test drive slot. If WhatsApp didn't open, you can call us at <a href="tel:+919884257043" style={{color:"#9B2B2B",fontWeight:700,textDecoration:"none"}}>+91 98842 57043</a>.</p>
             <button onClick={onClose} style={{marginTop:20,padding:"12px 32px",borderRadius:50,background:"#9B2B2B",color:"#fff",border:"none",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:14}}>Done</button>
           </div>
         ):(
