@@ -3479,16 +3479,37 @@ function PublicSite({cars,blog,threads,testimonials,onGoAdmin}){
         if(email&&email.toLowerCase()==="vaseey@gmail.com"){setShowLogin(false);onGoAdmin();return;}
         setUser(name);setUserEmail(email);setIsAdmin(false);setShowLogin(false);
       }}/>}
-      {page==="home"&&<HomePage setPage={p=>navTo(p)} setSelectedCar={c=>navTo("detail",c)} setSelectedPost={p=>{setPost(p);navTo("post");}} favs={favs} toggleFav={toggleFav} cars={cars} blog={blog} testimonials={testimonials}/>}
-      {page==="browse"&&<BrowsePage setPage={p=>navTo(p)} setSelectedCar={c=>navTo("detail",c)} favs={favs} toggleFav={toggleFav} cars={cars}/>}
-      {page==="favorites"&&<FavoritesPage setPage={p=>navTo(p)} setSelectedCar={c=>navTo("detail",c)} favs={favs} toggleFav={toggleFav} cars={cars}/>}
+      {page==="home"&&<HomePage setPage={p=>navTo(p)} setSelectedCar={c=>navTo("detail",c)} setSelectedPost={p=>{setPost(p);navTo("post");}} favs={favs} toggleFav={toggleFav} cars={cars} blog={blog} testimonials={testimonials} compare={compare} toggleCompare={toggleCompare}/>}
+      {page==="browse"&&<BrowsePage setPage={p=>navTo(p)} setSelectedCar={c=>navTo("detail",c)} favs={favs} toggleFav={toggleFav} cars={cars} compare={compare} toggleCompare={toggleCompare}/>}
+      {page==="favorites"&&<FavoritesPage setPage={p=>navTo(p)} setSelectedCar={c=>navTo("detail",c)} favs={favs} toggleFav={toggleFav} cars={cars} compare={compare} toggleCompare={toggleCompare}/>}
       {page==="detail"&&<CarDetailPage car={car} setPage={p=>navTo(p)} isFav={favs.includes(car?.id)} onFav={toggleFav} user={user} setShowLogin={setShowLogin} userEmail={userEmail} darkMode={darkMode} setDarkMode={setDarkMode}/>}
       {page==="quiz"&&<QuizPage setPage={p=>navTo(p)} setSelectedCar={c=>navTo("detail",c)} cars={cars}/>}
+      {page==="compare"&&<ComparePage cars={compareCars} setPage={p=>navTo(p)} setSelectedCar={c=>navTo("detail",c)} toggleCompare={toggleCompare}/>}
       {page==="blog"&&<BlogPage blog={blog} setPost={setPost} setPage={p=>navTo(p)}/>}
       {page==="post"&&<BlogPostPage post={post} setPage={p=>navTo(p)}/>}
       {page==="faq"&&<FaqPage/>}
       {page==="forum"&&<ForumPage setPage={p=>navTo(p)} setThread={setThread} user={user} setShowLogin={setShowLogin} threads={threads}/>}
       {page==="thread"&&<ThreadPage thread={thread} setPage={p=>navTo(p)} user={user} setShowLogin={setShowLogin}/>}
+      {/* Sticky compare bar */}
+      {compareCars.length>0&&page!=="compare"&&(
+        <div style={{position:"fixed",left:0,right:0,bottom:0,zIndex:500,background:"var(--pp-card)",borderTop:"1px solid var(--pp-border2)",boxShadow:"0 -6px 24px rgba(0,0,0,0.18)",padding:"12px 16px"}}>
+          <div style={{maxWidth:1100,margin:"0 auto",display:"flex",alignItems:"center",justifyContent:"space-between",gap:12}}>
+            <div style={{display:"flex",alignItems:"center",gap:10,minWidth:0,overflowX:"auto"}}>
+              <span style={{fontWeight:700,fontSize:13,color:"var(--pp-text)",whiteSpace:"nowrap",flexShrink:0}}>Compare ({compareCars.length}/3)</span>
+              {compareCars.map(c=>(
+                <span key={c.id} style={{display:"inline-flex",alignItems:"center",gap:5,padding:"5px 8px 5px 10px",borderRadius:20,background:"var(--pp-card2)",border:"1px solid var(--pp-border)",fontSize:11.5,fontWeight:600,color:"var(--pp-text2)",whiteSpace:"nowrap",flexShrink:0}}>
+                  {c.make} {c.model}
+                  <button onClick={()=>toggleCompare(c.id)} aria-label={`Remove ${c.make} ${c.model} from compare`} style={{background:"none",border:"none",cursor:"pointer",color:"var(--pp-text3)",display:"flex",padding:0}}><X size={12}/></button>
+                </span>
+              ))}
+            </div>
+            <div style={{display:"flex",gap:8,flexShrink:0}}>
+              <button onClick={()=>setCompare([])} style={{padding:"9px 14px",borderRadius:50,border:"1px solid var(--pp-border2)",background:"transparent",color:"var(--pp-text2)",cursor:"pointer",fontWeight:600,fontSize:12.5,fontFamily:"Outfit,sans-serif"}}>Clear</button>
+              <button onClick={()=>navTo("compare")} disabled={compareCars.length<2} style={{padding:"9px 20px",borderRadius:50,border:"none",background:compareCars.length<2?"var(--pp-card2)":"#9B2B2B",color:compareCars.length<2?"var(--pp-text3)":"#fff",cursor:compareCars.length<2?"not-allowed":"pointer",fontWeight:700,fontSize:13,fontFamily:"Outfit,sans-serif",whiteSpace:"nowrap"}}>Compare →</button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
