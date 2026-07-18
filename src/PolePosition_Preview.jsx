@@ -1378,7 +1378,7 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars,compare,toggleCo
                   {finalFiltered.map(c=><HorizontalCarCard key={c.id} car={c} onFav={toggleFav} isFav={favs.includes(c.id)} onClick={()=>{setSelectedCar(c);}} onCompare={toggleCompare} inCompare={compare?.includes(c.id)}/>)}
                 </div>
               :<div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:20}}>
-                  {finalFiltered.map(c=><BrowseCarCard key={c.id} car={c} onFav={toggleFav} isFav={favs.includes(c.id)} onClick={()=>{setSelectedCar(c);}}/>)}
+                  {finalFiltered.map(c=><BrowseCarCard key={c.id} car={c} onFav={toggleFav} isFav={favs.includes(c.id)} onClick={()=>{setSelectedCar(c);}} onCompare={toggleCompare} inCompare={compare?.includes(c.id)}/>)}
                 </div>
             }
             {finalFiltered.length===0&&(
