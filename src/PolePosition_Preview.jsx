@@ -801,6 +801,7 @@ function CarCard({car,onFav,isFav,onClick,layout="grid",onCompare,inCompare}){
           <MapPin size={12} color="#9B2B2B"/><span>Hyderabad, TG</span>
         </div>
         {car.tagline&&<p style={{fontSize:12.5,color:"var(--pp-text2)",lineHeight:1.5,marginBottom:14,overflow:"hidden",display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical"}}>{car.tagline}</p>}
+        {compareBtn&&<div style={{marginBottom:12}}>{compareBtn}</div>}
         {/* Price + CTA */}
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginTop:"auto"}}>
           <div>
