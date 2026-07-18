@@ -3378,7 +3378,7 @@ function AdminConsole({cars,setCars,blogs,setBlogs,testimonials,setTestimonials,
 }
 
 // ── FavoritesPage ─────────────────────────────────────────────────
-function FavoritesPage({setPage,setSelectedCar,favs,toggleFav,cars}){
+function FavoritesPage({setPage,setSelectedCar,favs,toggleFav,cars,compare,toggleCompare}){
   const saved=cars.filter(c=>favs.includes(c.id));
   return(
     <div style={{paddingTop:80,minHeight:"100vh",background:"var(--pp-bg)"}}>
