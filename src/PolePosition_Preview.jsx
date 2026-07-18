@@ -3439,6 +3439,10 @@ function PublicSite({cars,blog,threads,testimonials,onGoAdmin}){
     setFavs(f=>f.includes(id)?f.filter(x=>x!==id):[...f,id]);
   };
 
+  const [compare,setCompare]=useState([]);
+  const toggleCompare=(id)=>setCompare(c=>c.includes(id)?c.filter(x=>x!==id):(c.length>=3?c:[...c,id]));
+  const compareCars=compare.map(id=>cars.find(c=>c.id===id)).filter(Boolean);
+
   const carSlug=(c)=>`${c.make}-${c.model}`.toLowerCase().replace(/\s+/g,"-").replace(/[^a-z0-9-]/g,"")+`-${c.id}`;
 
   // Hash-based routing for shareable car URLs
