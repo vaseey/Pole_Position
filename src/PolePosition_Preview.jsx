@@ -1160,6 +1160,12 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
   const CAT_TABS=[["all","All"],["Hatchback","Hatchback"],["Sedan","Sedan"],["SUV","SUV"],["Electric","Electric"],["Luxury","Luxury"]];
   const [activeCat,setActiveCat]=useState("all");
   const [listView,setListView]=useState(false);
+  const clearFilters=()=>{
+    setSelModels([]);setSelTrans([]);setSelFuel([]);setSelCat([]);setActiveCat("all");setOpenMake(null);
+    setPriceMin(floorPrice);setPriceMax(ceilPrice);
+    setKmMin(floorKm);setKmMax(ceilKm);
+    setYearMin(floorYear);setYearMax(ceilYear);
+  };
   const finalFiltered=activeCat==="all"?filtered:filtered.filter(c=>{
     if(activeCat==="Electric")return c.fuel==="Electric"||c.category?.toLowerCase().includes("ev");
     if(activeCat==="Luxury")return c.price>=2000000;
