@@ -1056,6 +1056,8 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
   const [selTrans,setSelTrans]=useState([]);
   const [selFuel,setSelFuel]=useState([]);
   const [selCat,setSelCat]=useState([]);
+  const [search,setSearch]=useState("");
+  const [sortBy,setSortBy]=useState("score");
   const [showMobileFilters,setShowMobileFilters]=useState(false);
   const [isMobile,setIsMobile]=useState(()=>window.innerWidth<=768);
   useEffect(()=>{
