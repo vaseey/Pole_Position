@@ -1596,8 +1596,8 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
         <button onClick={()=>setDarkMode&&setDarkMode(d=>!d)} aria-label={darkMode?"Switch to light mode":"Switch to dark mode"} style={{width:34,height:34,borderRadius:"50%",border:"1.5px solid var(--pp-border2)",background:"none",cursor:"pointer",fontSize:15,display:"flex",alignItems:"center",justifyContent:"center",color:"var(--pp-text)",flexShrink:0}}>{darkMode?"☀":"🌙"}</button>
       </div>
 
-      {/* Hero image — full width, edge to edge */}
-      <div style={{position:"relative",width:"100%",aspectRatio:"4/3",background:"#0F172A",overflow:"hidden"}}>
+      {/* Hero image — full width, edge to edge (16/10 keeps highlights closer to the fold) */}
+      <div style={{position:"relative",width:"100%",aspectRatio:"16/10",background:"#0F172A",overflow:"hidden"}}>
         {gallery[activeImg]?.type==="video"?(
           <video src={gallery[activeImg].url} controls style={{width:"100%",height:"100%",objectFit:"cover"}}/>
         ):(
@@ -1799,11 +1799,11 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
         </button>
         <div style={{display:"grid",gridTemplateColumns:"1fr 360px",gap:30,alignItems:"flex-start"}}>
           <div>
-            <div style={{position:"relative",overflow:"hidden",maxHeight:600,background:"var(--pp-bg)"}}>
+            <div style={{position:"relative",overflow:"hidden",maxHeight:430,background:"var(--pp-bg)"}}>
               {gallery[activeImg]?.type==="video"?(
-                <video src={gallery[activeImg].url} controls style={{width:"100%",maxHeight:600,objectFit:"cover"}}/>
+                <video src={gallery[activeImg].url} controls style={{width:"100%",maxHeight:430,objectFit:"cover"}}/>
               ):(
-                <img src={err?FB:(gallery[activeImg]?.url||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model} style={{width:"100%",maxHeight:600,objectFit:"cover"}}/>
+                <img src={err?FB:(gallery[activeImg]?.url||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model} style={{width:"100%",maxHeight:430,objectFit:"cover"}}/>
               )}
               {car.badge&&<div style={{position:"absolute",top:16,left:16,background:BADGE[car.badge]?.bg||"#9B2B2B",padding:"5px 14px",borderRadius:100,fontSize:12,fontWeight:700,color:"var(--pp-text)"}}>{BADGE[car.badge]?.label||car.badge}</div>}
               {gallery.length>1&&(
