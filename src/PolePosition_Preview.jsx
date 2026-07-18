@@ -796,10 +796,13 @@ function CarCard({car,onFav,isFav,onClick,layout="grid"}){
         </div>
         {car.tagline&&<p style={{fontSize:12.5,color:"var(--pp-text2)",lineHeight:1.5,marginBottom:14,overflow:"hidden",display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical"}}>{car.tagline}</p>}
         {/* Price + CTA */}
-        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:"auto"}}>
-          <span style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:21,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>{fmtL(car.price)}</span>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginTop:"auto"}}>
+          <div>
+            <div style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:21,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>{fmtL(car.price)}</div>
+            <div style={{fontSize:10.5,color:"var(--pp-text3)",fontWeight:600,marginTop:1}}>EMI from ₹{calcEmi(Math.round(car.price*0.8),10.5,60).toLocaleString("en-IN")}/mo</div>
+          </div>
           <button onClick={e=>{e.stopPropagation();onClick();}}
-            style={{padding:"9px 18px",borderRadius:100,border:"none",background:"#9B2B2B",fontSize:12.5,fontWeight:700,color:"#fff",cursor:"pointer",fontFamily:"Outfit,sans-serif"}}>
+            style={{padding:"9px 18px",borderRadius:100,border:"none",background:"#9B2B2B",fontSize:12.5,fontWeight:700,color:"#fff",cursor:"pointer",fontFamily:"Outfit,sans-serif",flexShrink:0}}>
             Enquire Now
           </button>
         </div>
