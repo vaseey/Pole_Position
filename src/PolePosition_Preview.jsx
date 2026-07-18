@@ -297,7 +297,7 @@ function FeaturesSpecs({car}){
   const s=car.specs||{};
   const [tab,setTab]=useState("specs");
   const [query,setQuery]=useState("");
-  const [showAll,setShowAll]=useState(false);
+  const [modalOpen,setModalOpen]=useState(false);
   // Fallback spec pairs from the curated subset when no full Excel row is stored.
   const fallbackSpecs=[
     ["Engine",s.engine],["Max Power",s.maxPower],["Max Torque",s.maxTorque],["Mileage (ARAI)",s.mileage],
