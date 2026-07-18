@@ -1552,7 +1552,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
   if(!car)return null;
   const FB="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=1200&q=80";
   const bd=car.scoreBreakdown||{};
-  const TABS=[["overview","Overview"],["inspection","Inspection"],["who","Who's Pro"],["specs","Specs"]];
+  const TABS=[["overview","Overview"],["inspection","Inspection"],["who","Who's Pro"]];
   const highlights=[
     car.owners===1?"Single owner — no fleet history":"Previously "+car.owners+" owners",
     car.km<20000?"Low mileage — "+fmtKm(car.km)+" driven":fmtKm(car.km)+" on the odometer",
