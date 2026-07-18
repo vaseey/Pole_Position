@@ -1017,7 +1017,7 @@ function HomePage({setPage,setSelectedCar,setSelectedPost,favs,toggleFav,cars,bl
             </div>
           </div>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))",gap:20}}>
-            {hot.map(c=><CarCard key={c.id} car={c} onFav={toggleFav} isFav={favs.includes(c.id)} onClick={()=>{setSelectedCar(c);}}/>)}
+            {hot.map(c=><CarCard key={c.id} car={c} onFav={toggleFav} isFav={favs.includes(c.id)} onClick={()=>{setSelectedCar(c);}} onCompare={toggleCompare} inCompare={compare?.includes(c.id)}/>)}
           </div>
         </div>
       </div>
