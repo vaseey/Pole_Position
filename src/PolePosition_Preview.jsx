@@ -331,54 +331,80 @@ function FeaturesSpecs({car}){
 
   const active=tab==="specs"?specGroups:featureGroups;
   const totalRows=active.reduce((n,g)=>n+g.rows.length,0);
-  // Collapse long lists until "View all".
-  let budget=showAll?Infinity:10;
   const hasFeatures=featureGroups.length>0;
+
+  // Render grouped rows; `limit` caps the total shown (for the collapsed inline card).
+  const renderGroups=(groups,limit)=>{
+    let budget=limit??Infinity;
+    if(groups.length===0)return <div style={{color:"var(--pp-text3)",fontSize:13.5,padding:"10px 0"}}>No matches.</div>;
+    return groups.map(g=>{
+      if(budget<=0)return null;
+      const rowsToShow=g.rows.slice(0,Math.max(0,budget));
+      budget-=g.rows.length;
+      if(rowsToShow.length===0)return null;
+      return(
+        <div key={g.group} style={{marginBottom:20}}>
+          <div style={{fontSize:11,fontWeight:800,color:"var(--pp-text2)",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:12}}>{g.group}</div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(220px,1fr))",gap:"14px 24px"}}>
+            {rowsToShow.map(r=>tab==="specs"?(
+              <div key={r.label}>
+                <div style={{fontSize:11.5,color:"var(--pp-text3)",marginBottom:2}}>{r.label}</div>
+                <div style={{fontSize:14,fontWeight:700,color:"var(--pp-text)"}}>{r.value}</div>
+              </div>
+            ):(
+              <div key={r.label} style={{display:"flex",alignItems:"center",gap:9}}>
+                <CheckCircle size={15} color="#10B981" style={{flexShrink:0}}/>
+                <span style={{fontSize:13.5,color:"var(--pp-text)"}}>{r.label}{r.extra?<span style={{color:"var(--pp-text3)"}}> · {r.extra}</span>:""}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    });
+  };
+
+  const Tabs=({onPick})=>hasFeatures?(
+    <div style={{display:"flex",gap:0,borderBottom:"1px solid var(--pp-border)",marginBottom:18}}>
+      {[["specs","Specifications"],["features","Features"]].map(([k,l])=>(
+        <button key={k} onClick={()=>{setTab(k);onPick&&onPick();}} style={{padding:"10px 18px",border:"none",background:"transparent",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:14,color:tab===k?"#9B2B2B":"var(--pp-text2)",borderBottom:tab===k?"2.5px solid #9B2B2B":"2.5px solid transparent",marginBottom:-1}}>{l}</button>
+      ))}
+    </div>
+  ):null;
+  const SearchBox=({autoFocus})=>(
+    <div style={{position:"relative",marginBottom:16}}>
+      <Search size={16} color="var(--pp-text3)" style={{position:"absolute",left:14,top:"50%",transform:"translateY(-50%)",pointerEvents:"none"}}/>
+      <input value={query} autoFocus={autoFocus} onChange={e=>setQuery(e.target.value)} placeholder="Search features & specifications" aria-label="Search features and specifications"
+        style={{width:"100%",padding:"11px 14px 11px 40px",fontSize:13.5,borderRadius:10,border:"1.5px solid var(--pp-border2)",background:"var(--pp-input)",color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",outline:"none",boxSizing:"border-box"}}/>
+    </div>
+  );
 
   return(
     <div style={{background:"var(--pp-card)",borderRadius:16,border:"1px solid var(--pp-border)",padding:"22px 22px 24px",marginTop:24}}>
       <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:19,color:"var(--pp-text)",marginBottom:16,letterSpacing:"-0.02em"}}>Features & Specifications</h2>
-      {/* Search */}
-      <div style={{position:"relative",marginBottom:16}}>
-        <Search size={16} color="var(--pp-text3)" style={{position:"absolute",left:14,top:"50%",transform:"translateY(-50%)",pointerEvents:"none"}}/>
-        <input value={query} onChange={e=>{setQuery(e.target.value);setShowAll(true);}} placeholder="Search features & specifications" aria-label="Search features and specifications"
-          style={{width:"100%",padding:"11px 14px 11px 40px",fontSize:13.5,borderRadius:10,border:"1.5px solid var(--pp-border2)",background:"var(--pp-input)",color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",outline:"none",boxSizing:"border-box"}}/>
-      </div>
-      {/* Tabs */}
-      {hasFeatures&&(
-        <div style={{display:"flex",gap:0,borderBottom:"1px solid var(--pp-border)",marginBottom:18}}>
-          {[["specs","Specifications"],["features","Features"]].map(([k,l])=>(
-            <button key={k} onClick={()=>{setTab(k);setShowAll(false);}} style={{padding:"10px 18px",border:"none",background:"transparent",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:14,color:tab===k?"#9B2B2B":"var(--pp-text2)",borderBottom:tab===k?"2.5px solid #9B2B2B":"2.5px solid transparent",marginBottom:-1}}>{l}</button>
-          ))}
-        </div>
+      <SearchBox/>
+      <Tabs/>
+      {renderGroups(active,q===""?8:Infinity)}
+      {totalRows>8&&q===""&&(
+        <button onClick={()=>setModalOpen(true)} style={{marginTop:4,padding:"11px 22px",borderRadius:50,border:"1px solid var(--pp-border2)",background:"transparent",color:"#9B2B2B",cursor:"pointer",fontWeight:700,fontSize:13.5,fontFamily:"Outfit,sans-serif"}}>View all {tab==="specs"?"specifications":"features"} ({totalRows})</button>
       )}
-      {active.length===0&&<div style={{color:"var(--pp-text3)",fontSize:13.5,padding:"10px 0"}}>No matches.</div>}
-      {active.map(g=>{
-        if(budget<=0)return null;
-        const rowsToShow=g.rows.slice(0,Math.max(0,budget));
-        budget-=g.rows.length;
-        if(rowsToShow.length===0)return null;
-        return(
-          <div key={g.group} style={{marginBottom:20}}>
-            <div style={{fontSize:11,fontWeight:800,color:"var(--pp-text2)",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:12}}>{g.group}</div>
-            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(220px,1fr))",gap:"14px 24px"}}>
-              {rowsToShow.map(r=>tab==="specs"?(
-                <div key={r.label}>
-                  <div style={{fontSize:11.5,color:"var(--pp-text3)",marginBottom:2}}>{r.label}</div>
-                  <div style={{fontSize:14,fontWeight:700,color:"var(--pp-text)"}}>{r.value}</div>
-                </div>
-              ):(
-                <div key={r.label} style={{display:"flex",alignItems:"center",gap:9}}>
-                  <CheckCircle size={15} color="#10B981" style={{flexShrink:0}}/>
-                  <span style={{fontSize:13.5,color:"var(--pp-text)"}}>{r.label}{r.extra?<span style={{color:"var(--pp-text3)"}}> · {r.extra}</span>:""}</span>
-                </div>
-              ))}
+
+      {/* View-all modal — full list, own scroll */}
+      {modalOpen&&(
+        <div style={{position:"fixed",inset:0,zIndex:800,background:"rgba(0,0,0,0.6)",display:"flex",alignItems:"center",justifyContent:"center",padding:16}} onClick={()=>setModalOpen(false)}>
+          <div onClick={e=>e.stopPropagation()} style={{background:"var(--pp-card)",borderRadius:18,border:"1px solid var(--pp-border)",width:"100%",maxWidth:760,maxHeight:"88vh",display:"flex",flexDirection:"column",boxShadow:"0 24px 80px rgba(0,0,0,0.5)"}}>
+            <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"20px 22px 14px",borderBottom:"1px solid var(--pp-border)"}}>
+              <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,color:"var(--pp-text)",margin:0}}>Features & Specifications</h2>
+              <button onClick={()=>setModalOpen(false)} aria-label="Close" style={{width:32,height:32,borderRadius:"50%",border:"1px solid var(--pp-border)",background:"transparent",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--pp-text2)"}}><X size={16}/></button>
+            </div>
+            <div style={{padding:"16px 22px 6px"}}>
+              <SearchBox autoFocus/>
+              <Tabs/>
+            </div>
+            <div style={{overflowY:"auto",padding:"0 22px 24px"}}>
+              {renderGroups(active)}
             </div>
           </div>
-        );
-      })}
-      {!showAll&&totalRows>10&&q===""&&(
-        <button onClick={()=>setShowAll(true)} style={{marginTop:4,padding:"11px 22px",borderRadius:50,border:"1px solid var(--pp-border2)",background:"transparent",color:"#9B2B2B",cursor:"pointer",fontWeight:700,fontSize:13.5,fontFamily:"Outfit,sans-serif"}}>View all {tab==="specs"?"specifications":"features"} ({totalRows})</button>
+        </div>
       )}
     </div>
   );
