@@ -1637,10 +1637,8 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
               <div style={{textAlign:"center"}}><ScoreRing score={car.score} size={52}/><div style={{color:"var(--pp-text2)",fontSize:9,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.05em",marginTop:3}}>PP Score</div></div>
             </div>
             <div style={{display:"flex",alignItems:"center",gap:5,color:"var(--pp-text2)",fontSize:12,marginBottom:16}}><Eye size={13}/> {viewsToday} views today</div>
-            <div style={{background:"var(--pp-card2)",borderRadius:12,padding:"11px 14px",marginBottom:18,display:"flex",alignItems:"center",gap:9,border:"1px solid var(--pp-border)"}}>
-              <BarChart2 size={14} color="var(--pp-text2)"/>
-              <span style={{fontSize:12.5,color:"var(--pp-text2)",fontWeight:600}}>EMI from ₹{emi.toLocaleString("en-IN")}/month</span>
-            </div>
+            {carBadges(car).length>0&&<div style={{marginBottom:16}}><TrustBadges car={car}/></div>}
+            <EmiCalculator price={car.price}/>
             <div style={{display:"flex",gap:10,marginBottom:22}}>
               <button onClick={openEnquiry} style={{flex:1,padding:"13px",borderRadius:100,fontSize:14,background:"#9B2B2B",color:"#fff",border:"none",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:700}}>{enquired?"Sent ✓":"Enquire Now →"}</button>
               <button onClick={()=>setShowTestDrive(true)} style={{flex:1,padding:"13px",borderRadius:100,fontSize:14,background:"var(--pp-primary)",color:"#fff",border:"none",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:700,display:"flex",alignItems:"center",justifyContent:"center",gap:6}}><Car size={14}/> Test Drive</button>
