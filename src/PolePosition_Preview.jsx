@@ -776,9 +776,12 @@ function TestDriveModal({car,onClose}){
                 ))}
               </div>
             </div>
+            {form.phone.trim()&&!phoneValid&&<p style={{color:"#F59E0B",fontSize:12,marginBottom:10,marginTop:-8}}>Please enter a valid 10-digit mobile number.</p>}
+            {err&&<div style={{background:"rgba(220,38,38,0.1)",border:"1px solid rgba(220,38,38,0.3)",borderRadius:12,padding:"12px 14px",marginBottom:12,fontSize:12.5,color:"#F87171",lineHeight:1.5}}>{err}</div>}
             <button disabled={!valid||submitting} onClick={submit} style={{width:"100%",padding:"14px",borderRadius:50,background:(!valid||submitting)?"var(--pp-card2)":"#9B2B2B",color:(!valid||submitting)?"var(--pp-text3)":"#fff",border:"none",cursor:(!valid||submitting)?"not-allowed":"pointer",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:15}}>
               {submitting?"Booking…":"Confirm Booking →"}
             </button>
+            <a href="tel:+919884257043" style={{display:"block",textAlign:"center",marginTop:12,fontSize:12.5,color:"var(--pp-text2)",textDecoration:"none"}}>Prefer to talk? Call us at <span style={{color:"#9B2B2B",fontWeight:700}}>+91 98842 57043</span></a>
           </>
         )}
       </div>
