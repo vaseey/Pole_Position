@@ -689,7 +689,7 @@ const fmtL = p => `₹ ${(p/100000).toFixed(1)} Lakh`;
 // layout="grid" (Home, Browse, Favorites) or layout="list" (Browse list view).
 // Title/subtitle are computed once here, so the make/model/variant format can
 // never again drift between pages (was the root cause of the Home-vs-Browse bug).
-function CarCard({car,onFav,isFav,onClick,layout="grid"}){
+function CarCard({car,onFav,isFav,onClick,layout="grid",onCompare,inCompare}){
   const [hov,setHov]=useState(false);
   const [err,setErr]=useState(false);
   const b=car.badge?BADGE[car.badge]:null;
@@ -697,6 +697,12 @@ function CarCard({car,onFav,isFav,onClick,layout="grid"}){
   const title=`${car.make} ${car.model}${car.variant?` ${car.variant}`:""}`;
   const subtitle=`${car.year} · ${car.category||car.fuel} · ${car.fuel}`;
   const transLabel=car.transmission==="Automatic"?"Auto":car.transmission==="Manual"?"Manual":car.transmission;
+  const compareBtn=onCompare?(
+    <button onClick={e=>{e.stopPropagation();onCompare(car.id);}} aria-label={inCompare?"Remove from compare":"Add to compare"} aria-pressed={inCompare}
+      style={{display:"inline-flex",alignItems:"center",gap:5,padding:"5px 11px",borderRadius:8,border:`1px solid ${inCompare?"#9B2B2B":"var(--pp-border2)"}`,background:inCompare?"rgba(155,43,43,0.1)":"transparent",color:inCompare?"#9B2B2B":"var(--pp-text2)",cursor:"pointer",fontSize:11.5,fontWeight:700,fontFamily:"Outfit,sans-serif"}}>
+      {inCompare?<Check size={12}/>:<Plus size={12}/>} Compare
+    </button>
+  ):null;
   const favBtn=(size,pos)=>(
     <button onClick={e=>{e.stopPropagation();onFav(car.id);}} aria-label={isFav?"Remove from favourites":"Add to favourites"} aria-pressed={isFav}
       style={{position:"absolute",...pos,width:size,height:size,borderRadius:"50%",background:"rgba(0,0,0,0.45)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
