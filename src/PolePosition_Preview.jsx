@@ -2507,11 +2507,8 @@ function Listings({cars,setCars}){
   useEffect(()=>{
     if(listingMode!=="automated"||autoMakes.length)return;
     setAutoLoading("makes");
-    supabase.from("car_specs").select("make").then(({data,error})=>{
-      if(!error&&data){
-        const unique=[...new Set(data.map(r=>r.make))].sort();
-        setAutoMakes(unique);
-      }
+    fetchDistinctSpec("make").then(unique=>{
+      if(unique.length)setAutoMakes(unique);
       setAutoLoading("");
     });
   },[listingMode]);
