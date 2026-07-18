@@ -723,7 +723,8 @@ function CarCard({car,onFav,isFav,onClick,layout="grid"}){
       {/* Body */}
       <div style={{padding:"16px 16px 18px",display:"flex",flexDirection:"column",flex:1}}>
         <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:17,color:"var(--pp-text)",letterSpacing:"-0.02em",marginBottom:2}}>{title}</div>
-        <div style={{fontSize:12,color:"var(--pp-text3)",marginBottom:14}}>{subtitle}</div>
+        <div style={{fontSize:12,color:"var(--pp-text3)",marginBottom:carBadges(car).length?10:14}}>{subtitle}</div>
+        {carBadges(car).length>0&&<div style={{marginBottom:14}}><TrustBadges car={car} max={3}/></div>}
         {/* Spec grid */}
         <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",border:"1px solid var(--pp-border)",borderRadius:12,overflow:"hidden",marginBottom:14}}>
           {specs.map((s,i)=>(
