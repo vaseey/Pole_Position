@@ -1640,7 +1640,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
         <div style={{maxWidth:1100,margin:"0 auto",padding:"0 28px",display:"flex",gap:0}}>
           {TABS.map(([id,label])=>(
             <button key={id} onClick={()=>setTab(id)} style={{padding:"16px 22px",border:"none",background:"transparent",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:600,fontSize:14,color:tab===id?"var(--pp-text)":"var(--pp-text3)",borderBottom:tab===id?"2.5px solid var(--pp-text)":"2.5px solid transparent",transition:"all 0.15s",whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:6}}>
-              {label}{id!=="overview"&&!user&&<Lock size={11} color="var(--pp-text3)"/>}
+              {label}{id!=="overview"&&id!=="inspection"&&!user&&<Lock size={11} color="var(--pp-text3)"/>}
             </button>
           ))}
         </div>
