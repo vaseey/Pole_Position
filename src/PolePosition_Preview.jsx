@@ -1112,15 +1112,25 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
   const [activeCat,setActiveCat]=useState("all");
   const [listView,setListView]=useState(false);
   const clearFilters=()=>{
-    setSelModels([]);setSelTrans([]);setSelFuel([]);setSelCat([]);setActiveCat("all");setOpenMake(null);
+    setSelModels([]);setSelTrans([]);setSelFuel([]);setSelCat([]);setActiveCat("all");setOpenMake(null);setSearch("");
     setPriceMin(floorPrice);setPriceMax(ceilPrice);
     setKmMin(floorKm);setKmMax(ceilKm);
     setYearMin(floorYear);setYearMax(ceilYear);
   };
-  const finalFiltered=activeCat==="all"?filtered:filtered.filter(c=>{
+  const catFiltered=activeCat==="all"?filtered:filtered.filter(c=>{
     if(activeCat==="Electric")return c.fuel==="Electric"||c.category?.toLowerCase().includes("ev");
     if(activeCat==="Luxury")return c.price>=2000000;
     return c.category===activeCat||c.category?.includes(activeCat);
+  });
+  const SORTS=[["score","Best PP Score"],["priceLow","Price: Low to High"],["priceHigh","Price: High to Low"],["yearNew","Year: Newest"],["kmLow","KM: Lowest"]];
+  const finalFiltered=[...catFiltered].sort((a,b)=>{
+    switch(sortBy){
+      case "priceLow":return a.price-b.price;
+      case "priceHigh":return b.price-a.price;
+      case "yearNew":return b.year-a.year;
+      case "kmLow":return a.km-b.km;
+      default:return (b.score||0)-(a.score||0);
+    }
   });
 
   return(
