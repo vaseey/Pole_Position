@@ -1139,7 +1139,14 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
       <div style={{position:"relative",paddingTop:56,background:"var(--pp-bg)",overflow:"hidden",borderBottom:"1px solid var(--pp-border)"}}>
         <div style={{maxWidth:1280,margin:"0 auto",padding:"40px 24px 32px",position:"relative",zIndex:1}}>
           <div style={{fontSize:11,fontWeight:700,letterSpacing:"0.15em",color:"#9B2B2B",marginBottom:10,textTransform:"uppercase"}}>Browse · {cars.length} Cars Available</div>
-          <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:"clamp(28px,5vw,52px)",letterSpacing:"-0.04em",color:"var(--pp-text)",marginBottom:0,lineHeight:1.1}}>Our Collection</h1>
+          <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:"clamp(28px,5vw,52px)",letterSpacing:"-0.04em",color:"var(--pp-text)",marginBottom:20,lineHeight:1.1}}>Our Collection</h1>
+          {/* Search */}
+          <div style={{position:"relative",maxWidth:440}}>
+            <Search size={17} color="var(--pp-text3)" style={{position:"absolute",left:15,top:"50%",transform:"translateY(-50%)",pointerEvents:"none"}}/>
+            <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search make, model or variant…" aria-label="Search cars"
+              style={{width:"100%",padding:"13px 40px 13px 42px",fontSize:14.5,borderRadius:50,border:"1.5px solid var(--pp-border2)",background:"var(--pp-card)",color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",outline:"none",boxSizing:"border-box"}}/>
+            {search&&<button onClick={()=>setSearch("")} aria-label="Clear search" style={{position:"absolute",right:12,top:"50%",transform:"translateY(-50%)",background:"var(--pp-chip)",border:"none",borderRadius:"50%",width:22,height:22,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--pp-text2)"}}><X size={13}/></button>}
+          </div>
         </div>
         {/* Giant watermark */}
         <div style={{position:"absolute",top:"50%",right:-20,transform:"translateY(-50%)",fontSize:"clamp(60px,14vw,160px)",fontWeight:900,color:"rgba(255,255,255,0.025)",letterSpacing:"-0.05em",whiteSpace:"nowrap",fontFamily:"Outfit,sans-serif",userSelect:"none",pointerEvents:"none",lineHeight:1}}>OUR COLLECTION</div>
