@@ -1144,7 +1144,7 @@ function ChipFilter({options,selected,onToggle}){
   );
 }
 
-function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
+function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars,compare,toggleCompare}){
   const [openMake,setOpenMake]=useState(null);
   const [selModels,setSelModels]=useState([]);
   const [selTrans,setSelTrans]=useState([]);
