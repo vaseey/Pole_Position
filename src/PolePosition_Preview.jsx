@@ -1215,7 +1215,7 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
         <div style={{display:"flex",gap:26,alignItems:"flex-start"}}>
           {/* ── Filter sidebar ── */}
           {(!isMobile||showMobileFilters)&&(<div style={{width:268,flexShrink:0,display:"flex",flexDirection:"column",gap:16,...(isMobile?{position:"fixed",top:0,left:0,bottom:0,zIndex:400,width:300,background:"var(--pp-card)",overflowY:"auto",padding:"70px 16px 20px",boxShadow:"0 0 40px rgba(0,0,0,0.8)"}:{position:"sticky",top:100,maxHeight:"calc(100vh - 120px)",overflowY:"auto",paddingRight:4})}}>
-          {isMobile&&showMobileFilters&&<button onClick={()=>setShowMobileFilters(false)} style={{position:"fixed",top:20,right:20,zIndex:401,background:"var(--pp-chip)",border:"none",borderRadius:"50%",width:34,height:34,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--pp-text)"}}><X size={16}/></button>}
+          {isMobile&&showMobileFilters&&<button onClick={()=>setShowMobileFilters(false)} aria-label="Close filters" style={{position:"fixed",top:20,right:20,zIndex:401,background:"var(--pp-chip)",border:"none",borderRadius:"50%",width:34,height:34,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--pp-text)"}}><X size={16}/></button>}
 
             <FilterCard title="Make & Model" onReset={selModels.length>0?()=>setSelModels([]):null}>
               <div style={{display:"flex",flexDirection:"column",gap:6}}>
