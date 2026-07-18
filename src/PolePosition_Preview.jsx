@@ -1293,6 +1293,16 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
               <ChipFilter options={allCats} selected={selCat} onToggle={v=>toggleIn(selCat,setSelCat,v)}/>
             </FilterCard>
 
+            {/* Mobile-only sticky footer: live result count + apply, so users don't have to close the panel to see what filtered */}
+            {isMobile&&showMobileFilters&&(
+              <div style={{position:"sticky",bottom:0,marginTop:"auto",paddingTop:12,display:"flex",gap:10,background:"var(--pp-card)"}}>
+                <button onClick={clearFilters} style={{padding:"13px 16px",borderRadius:50,border:"1px solid var(--pp-border2)",background:"transparent",color:"var(--pp-text2)",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:13.5,flexShrink:0}}>Clear</button>
+                <button onClick={()=>setShowMobileFilters(false)} style={{flex:1,padding:"13px",borderRadius:50,border:"none",background:"#9B2B2B",color:"#fff",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:14}}>
+                  {finalFiltered.length===0?"No cars match":`Show ${finalFiltered.length} ${finalFiltered.length===1?"car":"cars"}`}
+                </button>
+              </div>
+            )}
+
           </div>)}
 
           {/* ── Results ── */}
