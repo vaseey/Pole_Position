@@ -287,7 +287,7 @@ const FEATURE_GROUPS=[
   {group:"Instrumentation",rows:[["instrument_cluster","Instrument Cluster"],["trip_meter","Trip Meter"],["avg_fuel_consumption","Avg Fuel Consumption"],["distance_to_empty","Distance to Empty"],["low_fuel_warning","Low Fuel Warning"],["tachometer","Tachometer"],["gear_indicator","Gear Indicator"],["hud","Heads-Up Display"]]},
   {group:"Entertainment",rows:[["smart_connectivity","Smart Connectivity (CarPlay/Android Auto)"],["music_system","Music System"],["display","Touchscreen Display"],["head_unit_size","Screen Size"],["gps_navigation","GPS Navigation"],["speakers","Speakers"],["usb","USB Ports"],["aux","AUX"],["bluetooth","Bluetooth"],["am_fm_radio","AM/FM Radio"],["steering_controls","Steering Mounted Controls"],["voice_command","Voice Command"],["wireless_charger","Wireless Charger"]]},
 ];
-const NEG_VALS=new Set(["","no","none","na","n/a","not available","nil","-","–","false","0","0 airbags"]);
+const NEG_VALS=new Set(["","no","none","na","n/a","not available","nil","-","–","—","false","0","0 airbags"]);
 const isPresent=v=>{if(v==null)return false;const s=String(v).trim().toLowerCase();return !NEG_VALS.has(s);};
 // A feature value worth showing in brackets (i.e. not just a generic "yes/standard/available").
 const featureExtra=v=>{const s=String(v).trim();return /^(yes|standard|available|std)$/i.test(s)?"":s;};
