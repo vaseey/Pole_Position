@@ -3630,18 +3630,29 @@ export default function App(){
   const [loading,setLoading]=useState(true);
 
   useEffect(()=>{
+    let done=false;
+    const finish=()=>{if(!done){done=true;setLoading(false);}};
+    // Safety net: never leave the visitor stuck on "Loading…" if Supabase is
+    // slow or unreachable — fall back to the seeded content after 6s.
+    const safety=setTimeout(finish,6000);
     async function fetchData(){
-      const [carsRes,blogsRes,threadsRes]=await Promise.all([
-        supabase.from("cars").select("*").order("id"),
-        supabase.from("blog_posts").select("*").order("id"),
-        supabase.from("forum_threads").select("*").order("pinned",{ascending:false}).order("id"),
-      ]);
-      if(carsRes.data?.length) setCars(carsRes.data.map(c=>({...c,scoreBreakdown:c.score_breakdown,tyreWear:c.tyre_wear})));
-      // Blog content is managed in BLOG_SEED (code) — Supabase table is not yet seeded with new posts
-      if(threadsRes.data?.length) setThreads(threadsRes.data);
-      setLoading(false);
+      try{
+        const [carsRes,blogsRes,threadsRes]=await Promise.all([
+          supabase.from("cars").select("*").order("id"),
+          supabase.from("blog_posts").select("*").order("id"),
+          supabase.from("forum_threads").select("*").order("pinned",{ascending:false}).order("id"),
+        ]);
+        if(carsRes.data?.length) setCars(carsRes.data.map(c=>({...c,scoreBreakdown:c.score_breakdown,tyreWear:c.tyre_wear})));
+        // Blog content is managed in BLOG_SEED (code) — Supabase table is not yet seeded with new posts
+        if(threadsRes.data?.length) setThreads(threadsRes.data);
+      }catch(e){
+        console.warn("Initial data fetch failed, using seeded content:",e);
+      }finally{
+        clearTimeout(safety);finish();
+      }
     }
     fetchData();
+    return()=>clearTimeout(safety);
   },[]);
 
   // Detect Supabase email confirmation redirect
