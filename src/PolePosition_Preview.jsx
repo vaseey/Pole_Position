@@ -457,8 +457,8 @@ function Navbar({page,setPage,user,setUser,setShowLogin,isAdmin,onGoAdmin,darkMo
           ))}
         </div>
         <div style={{display:"flex",alignItems:"center",gap:8}}>
-          <button onClick={()=>setPage("faq")} title="FAQ" style={{width:36,height:36,borderRadius:"50%",border:"1.5px solid var(--pp-border2)",background:"none",cursor:"pointer",fontSize:15,fontWeight:800,display:"flex",alignItems:"center",justifyContent:"center",color:"var(--pp-text2)",fontFamily:"Outfit,sans-serif",flexShrink:0}}>?</button>
-          <button onClick={()=>setDarkMode(d=>!d)} title={darkMode?"Switch to Light":"Switch to Dark"} style={{width:36,height:36,borderRadius:"50%",border:"1.5px solid var(--pp-border2)",background:"none",cursor:"pointer",fontSize:16,display:"flex",alignItems:"center",justifyContent:"center",color:"var(--pp-text)",flexShrink:0}}>{darkMode?"☀":"🌙"}</button>
+          <button onClick={()=>setPage("faq")} title="FAQ" aria-label="Frequently asked questions" style={{width:36,height:36,borderRadius:"50%",border:"1.5px solid var(--pp-border2)",background:"none",cursor:"pointer",fontSize:15,fontWeight:800,display:"flex",alignItems:"center",justifyContent:"center",color:"var(--pp-text2)",fontFamily:"Outfit,sans-serif",flexShrink:0}}>?</button>
+          <button onClick={()=>setDarkMode(d=>!d)} title={darkMode?"Switch to Light":"Switch to Dark"} aria-label={darkMode?"Switch to light mode":"Switch to dark mode"} style={{width:36,height:36,borderRadius:"50%",border:"1.5px solid var(--pp-border2)",background:"none",cursor:"pointer",fontSize:16,display:"flex",alignItems:"center",justifyContent:"center",color:"var(--pp-text)",flexShrink:0}}>{darkMode?"☀":"🌙"}</button>
           {user
             ?<div style={{position:"relative"}}>
                 <button onClick={()=>setUserMenuOpen(m=>!m)} style={{display:"flex",alignItems:"center",gap:6,background:"none",border:"none",cursor:"pointer",padding:"6px 10px",borderRadius:9}}>
