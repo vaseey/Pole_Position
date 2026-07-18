@@ -1754,6 +1754,11 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
         )}
       </div>
 
+      {/* Full Features & Specifications (from Excel) */}
+      <div style={{padding:"0 16px 90px"}}>
+        <FeaturesSpecs car={car}/>
+      </div>
+
       {/* Fixed bottom enquire bar */}
       <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:150,padding:"12px 16px",background:"var(--pp-card)",borderTop:"1px solid var(--pp-border)",display:"flex",gap:10}}>
         <button onClick={()=>setShowTestDrive(true)} style={{flex:1,background:"var(--pp-primary)",color:"#fff",border:"none",borderRadius:50,padding:"15px",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:14,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",gap:8}}>
