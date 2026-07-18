@@ -166,6 +166,33 @@ const ADMIN_TEAM_SEED = [
 ];
 
 const BADGE = {Hot:{bg:"linear-gradient(135deg,#EF4444,#9B2B2B)",label:"Hot"},"Steal Deal":{bg:"linear-gradient(135deg,#10B981,#059669)",label:"Steal Deal"},"Most Viewed":{bg:"linear-gradient(135deg,#F59E0B,#D97706)",label:"Most Viewed"}};
+
+// Trust badges derived purely from existing car fields — a badge only appears
+// when the underlying data is present, so nothing is faked.
+function carBadges(car){
+  const out=[];
+  if(car.scoreBreakdown&&Object.keys(car.scoreBreakdown).length>0||car.score>0) out.push({label:"PP Inspected",icon:"shield"});
+  if(car.owners) out.push({label:`${car.owners===1?"1st":car.owners===2?"2nd":car.owners===3?"3rd":car.owners+"th"} Owner`,icon:"user"});
+  if(typeof car.km==="number"&&car.km>0&&car.km<30000) out.push({label:"Low KM",icon:"gauge"});
+  if(car.serviceHistory) out.push({label:"Service Records",icon:"file"});
+  if(car.insurance) out.push({label:"Insured",icon:"check"});
+  return out;
+}
+function TrustBadges({car,max}){
+  const badges=carBadges(car);
+  if(badges.length===0)return null;
+  const shown=max?badges.slice(0,max):badges;
+  const ic={shield:Shield,user:User,gauge:Gauge,file:FileText,check:CheckCircle};
+  return(
+    <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
+      {shown.map(b=>{const I=ic[b.icon]||CheckCircle;return(
+        <span key={b.label} style={{display:"inline-flex",alignItems:"center",gap:4,padding:"4px 9px",borderRadius:8,background:"rgba(16,185,129,0.1)",border:"1px solid rgba(16,185,129,0.22)",fontSize:10.5,fontWeight:700,color:"#10B981",whiteSpace:"nowrap"}}>
+          <I size={11}/>{b.label}
+        </span>
+      );})}
+    </div>
+  );
+}
 const TAG_COLORS = {Cars:"#9B2B2B",EV:"#059669",Bikes:"#7C3AED",Guide:"#D97706"};
 const QUIZ = [
   {id:1,q:"What is your budget?",key:"budget",opts:[{l:"Under ₹8L",v:"low"},{l:"₹8L–15L",v:"mid"},{l:"₹15L–25L",v:"high"},{l:"Above ₹25L",v:"luxury"}]},
