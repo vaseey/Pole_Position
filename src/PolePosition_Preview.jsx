@@ -528,13 +528,11 @@ function LoginCard({mode="user",onClose,onSubmit,error}){
   const [name,setName]=useState("");
   const [remember,setRemember]=useState(true);
   const [loading,setLoading]=useState(false);
-  const submit=()=>{
+  const submit=async()=>{
     if(!email||!pass||loading)return;
     setLoading(true);
-    setTimeout(()=>{
-      onSubmit({tab,email,pass,name,remember});
-      setLoading(false);
-    },800);
+    // Call the real auth request directly — no artificial delay stacked on top of network latency.
+    try{await onSubmit({tab,email,pass,name,remember});}finally{setLoading(false);}
   };
   const inp={width:"100%",padding:"11px 14px",fontSize:14,borderRadius:12,border:"1.5px solid var(--pp-border2)",background:"var(--pp-input)",color:"var(--pp-text)"};
   return(
