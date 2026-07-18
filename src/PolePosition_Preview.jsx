@@ -621,7 +621,7 @@ function CarCard({car,onFav,isFav,onClick}){
         <img src={err?FB:(car.img||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model}
           style={{width:"100%",height:"100%",objectFit:"cover",transition:"transform 0.5s",transform:hov?"scale(1.05)":"scale(1)"}}/>
         {b&&<span style={{position:"absolute",top:12,left:12,background:b.bg,padding:"4px 11px",borderRadius:100,fontSize:10,fontWeight:700,color:"#fff",letterSpacing:"0.04em"}}>{b.label}</span>}
-        <button onClick={e=>{e.stopPropagation();onFav(car.id);}}
+        <button onClick={e=>{e.stopPropagation();onFav(car.id);}} aria-label={isFav?"Remove from favourites":"Add to favourites"} aria-pressed={isFav}
           style={{position:"absolute",top:12,right:12,width:32,height:32,borderRadius:"50%",background:"rgba(0,0,0,0.45)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
           <Heart size={14} fill={isFav?"#E74C3C":"none"} color={isFav?"#E74C3C":"#fff"} strokeWidth={2}/>
         </button>
@@ -974,7 +974,7 @@ function BrowseCarCard({car,onFav,isFav,onClick}){
         <img src={err?FB:(car.img||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model}
           style={{width:"100%",height:"100%",objectFit:"cover",transition:"transform 0.5s",transform:hov?"scale(1.05)":"scale(1)"}}/>
         {b&&<span style={{position:"absolute",top:12,left:12,background:b.bg,padding:"4px 11px",borderRadius:100,fontSize:10,fontWeight:700,color:"#fff",letterSpacing:"0.04em"}}>{b.label}</span>}
-        <button onClick={e=>{e.stopPropagation();onFav(car.id);}}
+        <button onClick={e=>{e.stopPropagation();onFav(car.id);}} aria-label={isFav?"Remove from favourites":"Add to favourites"} aria-pressed={isFav}
           style={{position:"absolute",top:12,right:12,width:32,height:32,borderRadius:"50%",background:"rgba(0,0,0,0.45)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
           <Heart size={14} fill={isFav?"#E74C3C":"none"} color={isFav?"#E74C3C":"#fff"} strokeWidth={2}/>
         </button>
@@ -1058,7 +1058,7 @@ function HorizontalCarCard({car,onFav,isFav,onClick}){
         <img src={err?FB:(car.img||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model}
           style={{width:"100%",height:"100%",objectFit:"cover",transition:"transform 0.5s",transform:hov?"scale(1.04)":"scale(1)"}}/>
         {b&&<span style={{position:"absolute",top:10,left:10,background:b.bg,padding:"3px 10px",borderRadius:100,fontSize:9.5,fontWeight:700,color:"#fff"}}>{b.label}</span>}
-        <button onClick={e=>{e.stopPropagation();onFav(car.id);}}
+        <button onClick={e=>{e.stopPropagation();onFav(car.id);}} aria-label={isFav?"Remove from favourites":"Add to favourites"} aria-pressed={isFav}
           style={{position:"absolute",top:10,right:10,width:30,height:30,borderRadius:"50%",background:"rgba(0,0,0,0.45)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
           <Heart size={13} fill={isFav?"#E74C3C":"none"} color={isFav?"#E74C3C":"#fff"} strokeWidth={2}/>
         </button>
