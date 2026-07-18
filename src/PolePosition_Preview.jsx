@@ -1554,7 +1554,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
             <input value={enquiryPhone} onChange={e=>setEnquiryPhone(e.target.value)} placeholder="+91 98765 43210" type="tel" style={{width:"100%",padding:"13px 14px",fontSize:15,borderRadius:12,border:"1.5px solid var(--pp-border2)",background:"var(--pp-input)",color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",outline:"none",boxSizing:"border-box",marginBottom:16}}/>
             <button disabled={enquirySubmitting||!enquiryPhone} onClick={async()=>{
               setEnquirySubmitting(true);
-              try{await supabase.from("enquiries").insert({car_id:car.id,name:user,email:userEmail||"",phone:enquiryPhone,listing_url:window.location.href,car_title:`${car.make} ${car.model} ${car.year}`});}catch(e){}
+              try{const {error}=await supabase.from("enquiries").insert({car_id:car.id,name:user,email:userEmail||"",phone:enquiryPhone,listing_url:window.location.href,car_title:`${car.make} ${car.model} ${car.year}`});if(error)console.warn("Enquiry insert failed:",error.message);}catch(e){console.warn("Enquiry insert failed:",e);}
               const msg=encodeURIComponent(`New Enquiry from Pole Position\n\nName: ${user}\nEmail: ${userEmail||""}\nPhone: ${enquiryPhone}\nListing: ${window.location.href}\nCar: ${car.make} ${car.model} ${car.year}`);
               window.open(`https://wa.me/919884257043?text=${msg}`,"_blank");
               setEnquirySubmitting(false);setShowEnquiryModal(false);setEnquired(true);setTimeout(()=>setEnquired(false),3000);
@@ -1797,7 +1797,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
             <input value={enquiryPhone} onChange={e=>setEnquiryPhone(e.target.value)} placeholder="+91 98765 43210" type="tel" style={{width:"100%",padding:"11px 14px",fontSize:14,borderRadius:12,border:"1px solid var(--pp-border)",background:"var(--pp-card2)",color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",outline:"none",marginBottom:16}}/>
             <button disabled={enquirySubmitting||!enquiryPhone} onClick={async()=>{
               setEnquirySubmitting(true);
-              try{await supabase.from("enquiries").insert({car_id:car.id,name:user,email:userEmail||"",phone:enquiryPhone,listing_url:window.location.href,car_title:`${car.make} ${car.model} ${car.year}`});}catch(e){}
+              try{const {error}=await supabase.from("enquiries").insert({car_id:car.id,name:user,email:userEmail||"",phone:enquiryPhone,listing_url:window.location.href,car_title:`${car.make} ${car.model} ${car.year}`});if(error)console.warn("Enquiry insert failed:",error.message);}catch(e){console.warn("Enquiry insert failed:",e);}
               const msg=encodeURIComponent(`New Enquiry from Pole Position\n\nName: ${user}\nEmail: ${userEmail||""}\nPhone: ${enquiryPhone}\nListing: ${window.location.href}\nCar: ${car.make} ${car.model} ${car.year}`);
               window.open(`https://wa.me/919884257043?text=${msg}`,"_blank");
               setEnquirySubmitting(false);setShowEnquiryModal(false);setEnquired(true);setTimeout(()=>setEnquired(false),3000);
