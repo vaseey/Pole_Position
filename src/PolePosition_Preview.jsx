@@ -704,11 +704,23 @@ function TestDriveModal({car,onClose}){
   const [form,setForm]=useState({name:"",phone:"",date:"",time:"Morning (9am–12pm)",location:"Showroom"});
   const [submitting,setSubmitting]=useState(false);
   const [done,setDone]=useState(false);
+  const [err,setErr]=useState("");
   const set=k=>e=>setForm(f=>({...f,[k]:e.target.value}));
-  const valid=form.name.trim()&&form.phone.trim()&&form.date;
+  // A valid Indian mobile number: 10 digits (optionally +91/0 prefixed).
+  const phoneDigits=form.phone.replace(/\D/g,"");
+  const phoneValid=/^(91)?[6-9]\d{9}$/.test(phoneDigits)||/^0?[6-9]\d{9}$/.test(phoneDigits);
+  const valid=form.name.trim()&&phoneValid&&form.date;
   const submit=async()=>{
-    setSubmitting(true);
-    try{await supabase.from("test_drive_bookings").insert({car_id:car?.id||null,car_title:car?`${car.make} ${car.model} ${car.year}`:"General",name:form.name,phone:form.phone,preferred_date:form.date,preferred_time:form.time,location_pref:form.location});}catch(e){}
+    setSubmitting(true);setErr("");
+    try{
+      const {error}=await supabase.from("test_drive_bookings").insert({car_id:car?.id||null,car_title:car?`${car.make} ${car.model} ${car.year}`:"General",name:form.name,phone:form.phone,preferred_date:form.date,preferred_time:form.time,location_pref:form.location});
+      if(error)throw error;
+    }catch(e){
+      // Don't show a false "confirmed" if we failed to record the lead.
+      setSubmitting(false);
+      setErr("We couldn't save your booking just now. Please try again, or reach us directly on WhatsApp / call +91 98842 57043.");
+      return;
+    }
     const msg=encodeURIComponent(`🚗 Test Drive Booking – Pole Position\n\nName: ${form.name}\nPhone: ${form.phone}\nDate: ${form.date}\nTime: ${form.time}\nLocation: ${form.location}${car?`\nCar: ${car.make} ${car.model} ${car.year}`:""}`);
     window.open(`https://wa.me/919884257043?text=${msg}`,"_blank");
     setSubmitting(false);setDone(true);
