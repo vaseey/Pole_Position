@@ -2494,6 +2494,9 @@ function Listings({cars,setCars}){
           ncapRating:dbSpec.ncap_rating,sunroof:dbSpec.sunroof,
           cruiseControl:dbSpec.cruise_control,drivetrain:dbSpec.drivetrain,
           emissionStandard:dbSpec.emission_standard,bodyStyle:dbSpec.body_style,
+          // Keep the full Excel row so the detail page can show the complete
+          // Features & Specifications list (one query already returns everything).
+          _raw:dbSpec,
         };
         const bodyToCategory={Sedan:"Sedan",Hatchback:"Hatchback",SUV:"Compact SUV","Compact SUV":"Compact SUV","Full Size SUV":"Full-size SUV",MUV:"MUV",MPV:"MUV",Electric:"Electric"};
         const luxuryMakes=["BMW","Mercedes-Benz","Audi","Volvo","Jaguar","Land Rover","Porsche","Lexus"];
