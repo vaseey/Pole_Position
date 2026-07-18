@@ -2279,6 +2279,22 @@ function Dashboard({cars,blogs,users}){
 
 // ── Listings ─────────────────────────────────────────────────────
 
+// Fetch every distinct value of a car_specs column, paginating past Supabase's
+// default 1000-row cap so no make/model is silently dropped from the dropdowns.
+async function fetchDistinctSpec(column,eqFilters={}){
+  const pageSize=1000;
+  const set=new Set();
+  for(let from=0;;from+=pageSize){
+    let q=supabase.from("car_specs").select(column).range(from,from+pageSize-1);
+    for(const [k,v] of Object.entries(eqFilters)) q=q.eq(k,v);
+    const {data,error}=await q;
+    if(error||!data||data.length===0) break;
+    data.forEach(r=>{if(r[column]!=null&&r[column]!=="") set.add(r[column]);});
+    if(data.length<pageSize) break;
+  }
+  return [...set].sort();
+}
+
 // ── Listings (admin) ─────────────────────────────────────────────
 function Listings({cars,setCars}){
   const empty={make:"",model:"",variant:"",year:2022,fuel:"Petrol",transmission:"Automatic",km:0,seats:5,price:0,score:0,badge:null,img:"",images:[],video:null,category:"Sedan",carClass:"Economy",tagline:"",description:"",owners:1,status:"published",serviceHistory:null,tyreMake:"MRF",tyreModel:"",tyreSize:"",tyreWear:{fl:20,fr:20,rl:20,rr:20},scoreBreakdown:{},specs:null};
