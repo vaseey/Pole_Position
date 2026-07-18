@@ -314,10 +314,11 @@ function FeaturesSpecs({car}){
 
   // Build displayed groups from the full Excel row.
   const specGroups=raw?SPEC_GROUPS.map(g=>{
-    const seen=new Set();
-    const rows=g.rows.filter(([col])=>isPresent(raw[col])&&!seen.has(g.rows.find(r=>r[1])&&r=>0)).reduce((acc,[col,label,unit])=>{
+    const rows=g.rows.reduce((acc,[col,label,unit])=>{
+      if(!isPresent(raw[col]))return acc;
       if(acc.some(a=>a.label===label))return acc; // de-dupe label collisions (key_* vs *)
-      if(isPresent(raw[col])) acc.push({label,value:String(raw[col])+(unit&&!String(raw[col]).includes(unit)?" "+unit:"")});
+      const val=String(raw[col]);
+      acc.push({label,value:unit&&!val.toLowerCase().includes(unit.toLowerCase())?`${val} ${unit}`:val});
       return acc;
     },[]).filter(r=>match(r.label)||match(r.value));
     return {group:g.group,rows};
