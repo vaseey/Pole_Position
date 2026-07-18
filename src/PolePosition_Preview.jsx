@@ -1406,7 +1406,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
         {gallery.length>1&&(
           <>
             <button aria-label="Previous image" onClick={()=>setActiveImg(i=>(i-1+gallery.length)%gallery.length)} style={{position:"absolute",left:12,top:"50%",transform:"translateY(-50%)",width:32,height:32,borderRadius:"50%",background:"rgba(0,0,0,0.45)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><ChevronLeft size={16} color="#fff"/></button>
-            <button onClick={()=>setActiveImg(i=>(i+1)%gallery.length)} style={{position:"absolute",right:12,top:"50%",transform:"translateY(-50%)",width:32,height:32,borderRadius:"50%",background:"rgba(0,0,0,0.45)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><ChevronRight size={16} color="#fff"/></button>
+            <button aria-label="Next image" onClick={()=>setActiveImg(i=>(i+1)%gallery.length)} style={{position:"absolute",right:12,top:"50%",transform:"translateY(-50%)",width:32,height:32,borderRadius:"50%",background:"rgba(0,0,0,0.45)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><ChevronRight size={16} color="#fff"/></button>
             <div style={{position:"absolute",bottom:12,right:12,background:"rgba(0,0,0,0.55)",borderRadius:20,padding:"3px 10px",fontSize:12,fontWeight:700,color:"var(--pp-text)"}}>{activeImg+1} / {gallery.length}</div>
           </>
         )}
@@ -1607,7 +1607,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
               {gallery.length>1&&(
                 <>
                   <button aria-label="Previous image" onClick={()=>setActiveImg(i=>(i-1+gallery.length)%gallery.length)} style={{position:"absolute",left:14,top:"50%",transform:"translateY(-50%)",width:36,height:36,borderRadius:"50%",background:"rgba(0,0,0,0.55)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><ChevronLeft size={18} color="#fff"/></button>
-                  <button onClick={()=>setActiveImg(i=>(i+1)%gallery.length)} style={{position:"absolute",right:14,top:"50%",transform:"translateY(-50%)",width:36,height:36,borderRadius:"50%",background:"rgba(0,0,0,0.55)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><ChevronRight size={18} color="#fff"/></button>
+                  <button aria-label="Next image" onClick={()=>setActiveImg(i=>(i+1)%gallery.length)} style={{position:"absolute",right:14,top:"50%",transform:"translateY(-50%)",width:36,height:36,borderRadius:"50%",background:"rgba(0,0,0,0.55)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><ChevronRight size={18} color="#fff"/></button>
                   <div style={{position:"absolute",bottom:14,right:14,background:"rgba(0,0,0,0.7)",borderRadius:20,padding:"4px 12px",fontSize:12,fontWeight:700,color:"var(--pp-text)"}}>{activeImg+1} / {gallery.length}</div>
                 </>
               )}
