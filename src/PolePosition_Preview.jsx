@@ -3404,6 +3404,104 @@ function FavoritesPage({setPage,setSelectedCar,favs,toggleFav,cars,compare,toggl
 }
 
 // ── PublicSite + top-level switcher ──────────────────────────────
+// ── ComparePage — side-by-side comparison of 2–3 cars ────────────
+function ComparePage({cars,setPage,setSelectedCar,toggleCompare}){
+  if(!cars||cars.length===0)return(
+    <div style={{paddingTop:120,minHeight:"100vh",background:"var(--pp-bg)",textAlign:"center"}}>
+      <BarChart2 size={34} color="var(--pp-text3)" style={{marginBottom:14}}/>
+      <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,color:"var(--pp-text)",marginBottom:8}}>Nothing to compare yet</div>
+      <p style={{color:"var(--pp-text2)",fontSize:14,marginBottom:20}}>Add 2 or 3 cars using the “Compare” button on any car.</p>
+      <button onClick={()=>setPage("browse")} style={{padding:"12px 26px",borderRadius:50,background:"#9B2B2B",color:"#fff",border:"none",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:14}}>Browse Cars</button>
+    </div>
+  );
+  const best=(vals,dir)=>{ // dir=1 → higher is better, -1 → lower is better
+    const nums=vals.map(v=>typeof v==="number"?v:null).filter(v=>v!==null);
+    if(nums.length===0)return null;
+    return dir===1?Math.max(...nums):Math.min(...nums);
+  };
+  const rows=[
+    {label:"Price",get:c=>c.price,fmt:v=>fmt(v),best:-1},
+    {label:"EMI (est.)",get:c=>calcEmi(Math.round(c.price*0.8),10.5,60),fmt:v=>`₹${v.toLocaleString("en-IN")}/mo`,best:-1},
+    {label:"PP Score",get:c=>c.score||0,fmt:v=>v?`${v}/100`:"—",best:1},
+    {label:"Year",get:c=>c.year,fmt:v=>v,best:1},
+    {label:"KM Driven",get:c=>c.km,fmt:v=>fmtKm(v),best:-1},
+    {label:"Fuel",get:c=>c.fuel,fmt:v=>v||"—"},
+    {label:"Transmission",get:c=>c.transmission,fmt:v=>v||"—"},
+    {label:"Seats",get:c=>c.seats,fmt:v=>v?`${v} seater`:"—"},
+    {label:"Owners",get:c=>c.owners,fmt:v=>v?(v===1?"1st owner":v===2?"2nd owner":v+" owners"):"—"},
+    {label:"Category",get:c=>c.category,fmt:v=>v||"—"},
+  ];
+  const insp=["Engine","Body","Interior","Electrical","Tyres","Docs"];
+  return(
+    <div style={{paddingTop:70,minHeight:"100vh",background:"var(--pp-bg)"}}>
+      <div style={{maxWidth:1100,margin:"0 auto",padding:"20px 20px 80px"}}>
+        <button onClick={()=>setPage("browse")} style={{display:"inline-flex",alignItems:"center",gap:6,background:"none",border:"none",color:"#9B2B2B",fontSize:13,fontWeight:700,cursor:"pointer",padding:0,marginBottom:16,fontFamily:"Outfit,sans-serif"}}><ChevronLeft size={15}/> Back to Browse</button>
+        <h1 style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:"clamp(24px,4vw,34px)",letterSpacing:"-0.03em",color:"var(--pp-text)",marginBottom:6}}>Compare Cars</h1>
+        <p style={{color:"var(--pp-text2)",fontSize:14,marginBottom:24}}>Best value in each row is highlighted.</p>
+        <div style={{overflowX:"auto"}}>
+          <table style={{borderCollapse:"separate",borderSpacing:0,width:"100%",minWidth:cars.length*180+140}}>
+            <thead>
+              <tr>
+                <th style={{position:"sticky",left:0,background:"var(--pp-bg)",zIndex:1,width:140,minWidth:140}}></th>
+                {cars.map(c=>(
+                  <th key={c.id} style={{padding:10,verticalAlign:"top",textAlign:"left"}}>
+                    <div style={{background:"var(--pp-card)",borderRadius:14,border:"1px solid var(--pp-border)",overflow:"hidden"}}>
+                      <div style={{position:"relative",aspectRatio:"16/10",background:"var(--pp-card2)"}}>
+                        <img src={c.img} alt={`${c.make} ${c.model}`} style={{width:"100%",height:"100%",objectFit:"cover"}}/>
+                        <button onClick={()=>toggleCompare(c.id)} aria-label="Remove from compare" style={{position:"absolute",top:8,right:8,width:26,height:26,borderRadius:"50%",background:"rgba(0,0,0,0.55)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff"}}><X size={14}/></button>
+                      </div>
+                      <div style={{padding:"10px 12px"}}>
+                        <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:14,color:"var(--pp-text)",letterSpacing:"-0.02em"}}>{c.make} {c.model}{c.variant?` ${c.variant}`:""}</div>
+                        <button onClick={()=>setSelectedCar(c)} style={{marginTop:8,width:"100%",padding:"8px",borderRadius:50,border:"none",background:"#9B2B2B",color:"#fff",cursor:"pointer",fontSize:12,fontWeight:700,fontFamily:"Outfit,sans-serif"}}>View →</button>
+                      </div>
+                    </div>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((r,ri)=>{
+                const vals=cars.map(r.get);
+                const bestVal=r.best?best(vals,r.best):null;
+                return(
+                  <tr key={r.label} style={{background:ri%2?"var(--pp-card)":"transparent"}}>
+                    <td style={{position:"sticky",left:0,background:ri%2?"var(--pp-card)":"var(--pp-bg)",zIndex:1,padding:"12px 14px",fontSize:12.5,fontWeight:700,color:"var(--pp-text2)",whiteSpace:"nowrap"}}>{r.label}</td>
+                    {cars.map((c,i)=>{
+                      const v=vals[i];
+                      const isBest=bestVal!==null&&typeof v==="number"&&v===bestVal&&cars.length>1;
+                      return(
+                        <td key={c.id} style={{padding:"12px 14px",fontSize:13.5,fontWeight:isBest?800:600,color:isBest?"#10B981":"var(--pp-text)",textAlign:"left"}}>
+                          {r.fmt(v)}{isBest&&<Check size={13} style={{marginLeft:5,verticalAlign:"-2px"}}/>}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+              {/* Inspection sub-scores */}
+              <tr><td colSpan={cars.length+1} style={{padding:"18px 14px 6px",fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:13,color:"var(--pp-text)"}}>Inspection breakdown</td></tr>
+              {insp.map((k,ri)=>{
+                const vals=cars.map(c=>c.scoreBreakdown?.[k]??null);
+                const bestVal=best(vals,1);
+                return(
+                  <tr key={k} style={{background:ri%2?"var(--pp-card)":"transparent"}}>
+                    <td style={{position:"sticky",left:0,background:ri%2?"var(--pp-card)":"var(--pp-bg)",zIndex:1,padding:"12px 14px",fontSize:12.5,fontWeight:700,color:"var(--pp-text2)",whiteSpace:"nowrap"}}>{k}</td>
+                    {cars.map((c,i)=>{
+                      const v=vals[i];
+                      const isBest=bestVal!==null&&v===bestVal&&cars.length>1;
+                      return(<td key={c.id} style={{padding:"12px 14px",fontSize:13.5,fontWeight:isBest?800:600,color:isBest?"#10B981":"var(--pp-text)"}}>{v!==null?`${v}/100`:"—"}{isBest&&<Check size={13} style={{marginLeft:5,verticalAlign:"-2px"}}/>}</td>);
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function PublicSite({cars,blog,threads,testimonials,onGoAdmin}){
   const [page,setPage]=useState("home");
   const [car,setCar]=useState(null);
