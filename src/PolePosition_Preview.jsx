@@ -1454,7 +1454,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
             </div>
           </>
         )}
-        {tab!=="overview"&&!user&&(
+        {tab!=="overview"&&tab!=="inspection"&&!user&&(
           <div style={{background:"var(--pp-card)",borderRadius:14,padding:"40px 20px",textAlign:"center",border:"1px solid var(--pp-border)"}}>
             <Lock size={28} color="var(--pp-text3)" style={{margin:"0 auto 14px"}}/>
             <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:17,marginBottom:8,color:"var(--pp-text)"}}>Sign in to unlock</div>
@@ -1462,7 +1462,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
             <button onClick={()=>setShowLogin(true)} style={{background:"#9B2B2B",color:"#fff",border:"none",borderRadius:50,padding:"12px 28px",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:14,cursor:"pointer"}}>Sign In</button>
           </div>
         )}
-        {tab==="inspection"&&user&&(
+        {tab==="inspection"&&(
           <div style={{background:"var(--pp-card)",borderRadius:14,padding:"18px 16px",border:"1px solid var(--pp-border)"}}>
             <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:16,marginBottom:16,color:"var(--pp-text)"}}>Inspection Report</div>
             {Object.entries(bd).map(([k,v])=>(
