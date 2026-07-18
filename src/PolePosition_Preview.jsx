@@ -2519,11 +2519,8 @@ function Listings({cars,setCars}){
     setAutoModels([]);setAutoVersions([]);setAutoSelected(null);
     setAutoSel(s=>({...s,model:"",version:""}));
     setAutoLoading("models");
-    supabase.from("car_specs").select("model").eq("make",autoSel.make).then(({data,error})=>{
-      if(!error&&data){
-        const unique=[...new Set(data.map(r=>r.model))].sort();
-        setAutoModels(unique);
-      }
+    fetchDistinctSpec("model",{make:autoSel.make}).then(unique=>{
+      setAutoModels(unique);
       setAutoLoading("");
     });
   },[autoSel.make]);
