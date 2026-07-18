@@ -1092,7 +1092,9 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
 
   const toggleIn=(arr,setArr,v)=>setArr(arr.includes(v)?arr.filter(x=>x!==v):[...arr,v]);
 
+  const q=search.trim().toLowerCase();
   const filtered=cars.filter(c=>{
+    const matchSearch=q===""||`${c.make} ${c.model} ${c.variant||""} ${c.category||""} ${c.fuel||""}`.toLowerCase().includes(q);
     const matchModel=selModels.length===0||selModels.includes(c.make+"|"+c.model);
     const matchTrans=selTrans.length===0||selTrans.includes(c.transmission);
     const matchFuel=selFuel.length===0||selFuel.includes(c.fuel);
@@ -1100,7 +1102,7 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
     const matchPrice=c.price>=priceMin&&c.price<=priceMax;
     const matchKm=c.km>=kmMin&&c.km<=kmMax;
     const matchYear=c.year>=yearMin&&c.year<=yearMax;
-    return matchModel&&matchTrans&&matchFuel&&matchCat&&matchPrice&&matchKm&&matchYear;
+    return matchSearch&&matchModel&&matchTrans&&matchFuel&&matchCat&&matchPrice&&matchKm&&matchYear;
   });
 
   const histBars=[30,45,60,80,95,70,85,100,75,55,65,40,50,35,25];
