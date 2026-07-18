@@ -602,34 +602,101 @@ function LoginModal({onClose,onLogin}){
 
 // ── CarCard (vertical spec-grid style) ───────────────────────────
 const fmtL = p => `₹ ${(p/100000).toFixed(1)} Lakh`;
-function CarCard({car,onFav,isFav,onClick}){
+// ── CarCard — single source of truth for every car card on the site ──
+// layout="grid" (Home, Browse, Favorites) or layout="list" (Browse list view).
+// Title/subtitle are computed once here, so the make/model/variant format can
+// never again drift between pages (was the root cause of the Home-vs-Browse bug).
+function CarCard({car,onFav,isFav,onClick,layout="grid"}){
   const [hov,setHov]=useState(false);
   const [err,setErr]=useState(false);
   const b=car.badge?BADGE[car.badge]:null;
   const FB="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=800&q=80";
+  const title=`${car.make} ${car.model}${car.variant?` ${car.variant}`:""}`;
+  const subtitle=`${car.year} · ${car.category||car.fuel} · ${car.fuel}`;
+  const transLabel=car.transmission==="Automatic"?"Auto":car.transmission==="Manual"?"Manual":car.transmission;
+  const favBtn=(size,pos)=>(
+    <button onClick={e=>{e.stopPropagation();onFav(car.id);}} aria-label={isFav?"Remove from favourites":"Add to favourites"} aria-pressed={isFav}
+      style={{position:"absolute",...pos,width:size,height:size,borderRadius:"50%",background:"rgba(0,0,0,0.45)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
+      <Heart size={size===30?13:14} fill={isFav?"#E74C3C":"none"} color={isFav?"#E74C3C":"#fff"} strokeWidth={2}/>
+    </button>
+  );
+
+  if(layout==="list"){
+    const specs=[
+      {val:fmtKm(car.km),lbl:"km"},
+      {val:car.year,lbl:"Year"},
+      {val:transLabel,lbl:"Gearbox"},
+      {val:car.fuel,lbl:"Fuel"},
+      {val:car.seats+" Seats",lbl:"Capacity"},
+    ];
+    return(
+      <div onClick={onClick} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
+        style={{background:"var(--pp-card)",borderRadius:20,border:"1px solid var(--pp-border)",overflow:"hidden",cursor:"pointer",display:"flex",transition:"all 0.25s",boxShadow:hov?"0 12px 32px rgba(0,0,0,0.12)":"0 2px 8px rgba(0,0,0,0.04)",transform:hov?"translateY(-2px)":"none"}}>
+        {/* Image — left side */}
+        <div style={{position:"relative",width:220,flexShrink:0,background:"var(--pp-card2)"}}>
+          <img src={err?FB:(car.img||FB)} onError={()=>setErr(true)} alt={title}
+            style={{width:"100%",height:"100%",objectFit:"cover",transition:"transform 0.5s",transform:hov?"scale(1.04)":"scale(1)"}}/>
+          {b&&<span style={{position:"absolute",top:10,left:10,background:b.bg,padding:"3px 10px",borderRadius:100,fontSize:9.5,fontWeight:700,color:"#fff"}}>{b.label}</span>}
+          {favBtn(30,{top:10,right:10})}
+        </div>
+        {/* Content — right side */}
+        <div style={{flex:1,padding:"20px 22px",display:"flex",flexDirection:"column",justifyContent:"space-between",minWidth:0}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:12,marginBottom:4}}>
+            <div>
+              <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,color:"var(--pp-text)",letterSpacing:"-0.02em",marginBottom:2}}>{title}</div>
+              <div style={{fontSize:12,color:"var(--pp-text3)"}}>{subtitle}</div>
+            </div>
+            <div style={{textAlign:"right",flexShrink:0}}>
+              <div style={{fontFamily:"Outfit,sans-serif",fontWeight:900,fontSize:22,letterSpacing:"-0.03em",color:"var(--pp-text)"}}>{fmtL(car.price)}</div>
+              <div style={{fontSize:11,color:"var(--pp-text3)"}}>Fixed price</div>
+            </div>
+          </div>
+          <div style={{display:"flex",gap:8,flexWrap:"wrap",margin:"14px 0"}}>
+            {specs.map(s=>(
+              <div key={s.lbl} style={{padding:"7px 12px",borderRadius:10,border:"1px solid var(--pp-border)",background:"var(--pp-card2)",textAlign:"center"}}>
+                <div style={{fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:12,color:"var(--pp-text)"}}>{s.val}</div>
+                <div style={{fontSize:10,color:"var(--pp-text3)",marginTop:1}}>{s.lbl}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:12}}>
+            <div style={{flex:1,minWidth:0}}>
+              <div style={{display:"flex",alignItems:"center",gap:4,color:"#9B2B2B",fontSize:12,fontWeight:600,marginBottom:car.tagline?4:0}}>
+                <MapPin size={12} color="#9B2B2B"/><span>Hyderabad, TG</span>
+              </div>
+              {car.tagline&&<p style={{fontSize:12.5,color:"var(--pp-text2)",lineHeight:1.4,margin:0,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{car.tagline}</p>}
+            </div>
+            <button onClick={e=>{e.stopPropagation();onClick();}}
+              style={{padding:"10px 20px",borderRadius:100,border:"none",background:"#9B2B2B",fontSize:13,fontWeight:700,color:"#fff",cursor:"pointer",fontFamily:"Outfit,sans-serif",flexShrink:0,whiteSpace:"nowrap"}}>
+              Enquire Now
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Default: grid layout
   const specs=[
     {val:fmtKm(car.km),lbl:"Driven"},
     {val:car.year,lbl:"Year"},
     {val:car.seats+" Seats",lbl:"Capacity"},
-    {val:car.transmission==="Automatic"?"Auto":car.transmission==="Manual"?"Manual":car.transmission,lbl:"Gearbox"},
+    {val:transLabel,lbl:"Gearbox"},
   ];
   return(
     <div onClick={onClick} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
       style={{borderRadius:22,overflow:"hidden",cursor:"pointer",background:"var(--pp-card)",border:"1px solid var(--pp-border)",transition:"all 0.3s",transform:hov?"translateY(-5px)":"none",boxShadow:hov?"0 20px 48px rgba(0,0,0,0.14)":"0 2px 12px rgba(0,0,0,0.05)",display:"flex",flexDirection:"column"}}>
       {/* Image */}
       <div style={{position:"relative",aspectRatio:"16/9",overflow:"hidden",background:"var(--pp-card2)",flexShrink:0}}>
-        <img src={err?FB:(car.img||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model}
+        <img src={err?FB:(car.img||FB)} onError={()=>setErr(true)} alt={title}
           style={{width:"100%",height:"100%",objectFit:"cover",transition:"transform 0.5s",transform:hov?"scale(1.05)":"scale(1)"}}/>
         {b&&<span style={{position:"absolute",top:12,left:12,background:b.bg,padding:"4px 11px",borderRadius:100,fontSize:10,fontWeight:700,color:"#fff",letterSpacing:"0.04em"}}>{b.label}</span>}
-        <button onClick={e=>{e.stopPropagation();onFav(car.id);}} aria-label={isFav?"Remove from favourites":"Add to favourites"} aria-pressed={isFav}
-          style={{position:"absolute",top:12,right:12,width:32,height:32,borderRadius:"50%",background:"rgba(0,0,0,0.45)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}>
-          <Heart size={14} fill={isFav?"#E74C3C":"none"} color={isFav?"#E74C3C":"#fff"} strokeWidth={2}/>
-        </button>
+        {favBtn(32,{top:12,right:12})}
       </div>
       {/* Body */}
       <div style={{padding:"16px 16px 18px",display:"flex",flexDirection:"column",flex:1}}>
-        <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:17,color:"var(--pp-text)",letterSpacing:"-0.02em",marginBottom:2}}>{car.make} {car.model}</div>
-        <div style={{fontSize:12,color:"var(--pp-text3)",marginBottom:14}}>{car.year} · {car.category||car.fuel} · {car.fuel}</div>
+        <div style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:17,color:"var(--pp-text)",letterSpacing:"-0.02em",marginBottom:2}}>{title}</div>
+        <div style={{fontSize:12,color:"var(--pp-text3)",marginBottom:14}}>{subtitle}</div>
         {/* Spec grid */}
         <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",border:"1px solid var(--pp-border)",borderRadius:12,overflow:"hidden",marginBottom:14}}>
           {specs.map((s,i)=>(
@@ -656,6 +723,9 @@ function CarCard({car,onFav,isFav,onClick}){
     </div>
   );
 }
+// Backwards-compatible aliases — every page now renders the same component.
+const BrowseCarCard=CarCard;
+const HorizontalCarCard=(props)=><CarCard {...props} layout="list"/>;
 
 
 // ── FaqPage ───────────────────────────────────────────────────────
