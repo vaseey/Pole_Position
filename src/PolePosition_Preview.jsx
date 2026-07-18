@@ -193,6 +193,62 @@ function TrustBadges({car,max}){
     </div>
   );
 }
+
+// Compute a flat-reducing EMI. All client-side — no backend, sane Indian defaults.
+function calcEmi(principal,annualRate,months){
+  const r=annualRate/12/100;
+  if(r===0)return Math.round(principal/months);
+  const n=months;
+  return Math.round(principal*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1));
+}
+function EmiCalculator({price}){
+  const [downPct,setDownPct]=useState(20);
+  const [months,setMonths]=useState(60);
+  const [rate,setRate]=useState(10.5);
+  const [open,setOpen]=useState(false);
+  const down=Math.round(price*downPct/100);
+  const principal=Math.max(price-down,0);
+  const emi=calcEmi(principal,rate,months);
+  const inrShort=v=>v>=100000?`₹${(v/100000).toFixed(2)}L`:`₹${v.toLocaleString("en-IN")}`;
+  const row=(label,val,min,max,step,setter,fmt)=>(
+    <div style={{marginBottom:14}}>
+      <div style={{display:"flex",justifyContent:"space-between",fontSize:12,marginBottom:6}}>
+        <span style={{color:"var(--pp-text2)",fontWeight:600}}>{label}</span>
+        <span style={{color:"var(--pp-text)",fontWeight:700}}>{fmt(val)}</span>
+      </div>
+      <input type="range" min={min} max={max} step={step} value={val} onChange={e=>setter(Number(e.target.value))} aria-label={label}
+        style={{width:"100%",accentColor:"#9B2B2B",cursor:"pointer"}}/>
+    </div>
+  );
+  return(
+    <div style={{background:"var(--pp-card2)",borderRadius:14,padding:"14px 16px",marginBottom:18,border:"1px solid var(--pp-border)"}}>
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",cursor:"pointer"}} onClick={()=>setOpen(o=>!o)}>
+        <div style={{display:"flex",alignItems:"center",gap:9,minWidth:0}}>
+          <BarChart2 size={15} color="#9B2B2B"/>
+          <div>
+            <div style={{fontSize:11,color:"var(--pp-text2)",fontWeight:600}}>EMI starts at</div>
+            <div style={{fontSize:17,fontWeight:800,color:"var(--pp-text)",fontFamily:"Outfit,sans-serif"}}>₹{emi.toLocaleString("en-IN")}<span style={{fontSize:11,fontWeight:600,color:"var(--pp-text2)"}}>/mo</span></div>
+          </div>
+        </div>
+        <button aria-label={open?"Hide EMI calculator":"Customise EMI"} style={{background:"none",border:"none",cursor:"pointer",color:"#9B2B2B",fontSize:12,fontWeight:700,display:"flex",alignItems:"center",gap:3,fontFamily:"Outfit,sans-serif"}}>
+          {open?"Hide":"Customise"} <ChevronDown size={13} style={{transform:open?"rotate(180deg)":"none",transition:"transform 0.2s"}}/>
+        </button>
+      </div>
+      {open&&(
+        <div style={{marginTop:16,paddingTop:16,borderTop:"1px solid var(--pp-border)"}}>
+          {row("Down payment",downPct,0,60,5,setDownPct,v=>`${v}% · ${inrShort(down)}`)}
+          {row("Tenure",months,12,84,12,setMonths,v=>`${v} mo`)}
+          {row("Interest rate",rate,7,18,0.5,setRate,v=>`${v}% p.a.`)}
+          <div style={{display:"flex",justifyContent:"space-between",fontSize:11.5,color:"var(--pp-text2)",marginTop:4}}>
+            <span>Loan amount: <b style={{color:"var(--pp-text)"}}>{inrShort(principal)}</b></span>
+            <span>Total: <b style={{color:"var(--pp-text)"}}>{inrShort(emi*months)}</b></span>
+          </div>
+          <p style={{fontSize:10.5,color:"var(--pp-text3)",marginTop:10,lineHeight:1.5}}>Indicative only. Final EMI depends on lender, credit profile and processing fees.</p>
+        </div>
+      )}
+    </div>
+  );
+}
 const TAG_COLORS = {Cars:"#9B2B2B",EV:"#059669",Bikes:"#7C3AED",Guide:"#D97706"};
 const QUIZ = [
   {id:1,q:"What is your budget?",key:"budget",opts:[{l:"Under ₹8L",v:"low"},{l:"₹8L–15L",v:"mid"},{l:"₹15L–25L",v:"high"},{l:"Above ₹25L",v:"luxury"}]},
