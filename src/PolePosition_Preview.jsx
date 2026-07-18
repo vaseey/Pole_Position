@@ -249,6 +249,140 @@ function EmiCalculator({price}){
     </div>
   );
 }
+
+// ── Features & Specifications (from car_specs / Excel) ────────────
+// Specifications: measured values shown as label → value.
+const SPEC_GROUPS=[
+  {group:"Engine & Transmission",rows:[
+    ["engine_detail","Engine"],["key_engine","Displacement"],["engine_type","Engine Type"],
+    ["max_power","Max Power"],["max_torque","Max Torque"],["key_mileage_arai","Mileage (ARAI)"],
+    ["mileage_arai","Mileage (ARAI)"],["driving_range","Driving Range"],["top_speed","Top Speed","kmph"],
+    ["acceleration_0_100","0–100 kmph","s"],["drivetrain","Drivetrain"],["transmission","Transmission"],
+    ["key_transmission","Transmission"],["key_fuel_type","Fuel Type"],["fuel_type","Fuel Type"],
+    ["emission_standard","Emission Standard"],["turbocharger","Turbocharger"],["battery","Battery"],
+  ]},
+  {group:"Dimensions & Weight",rows:[
+    ["length_mm","Length","mm"],["width_mm","Width","mm"],["height_mm","Height","mm"],
+    ["wheelbase_mm","Wheelbase","mm"],["ground_clearance","Ground Clearance","mm"],
+    ["kerb_weight","Kerb Weight"],["min_turning_radius","Turning Radius"],
+  ]},
+  {group:"Capacity",rows:[
+    ["doors","Doors"],["key_seating_capacity","Seating Capacity"],["seating_capacity","Seating Capacity"],
+    ["seating_rows","Seating Rows"],["bootspace","Boot Space","L"],["fuel_tank_capacity","Fuel Tank","L"],
+  ]},
+  {group:"Suspension, Brakes & Tyres",rows:[
+    ["front_suspension","Front Suspension"],["rear_suspension","Rear Suspension"],
+    ["front_brake_type","Front Brakes"],["rear_brake_type","Rear Brakes"],["steering_type","Steering Type"],
+    ["wheels","Wheels"],["front_tyres","Front Tyres"],["rear_tyres","Rear Tyres"],["spare_wheel","Spare Wheel"],
+  ]},
+];
+// Features: equipment shown as a checked item (with the value in brackets when it's not a plain Yes).
+const FEATURE_GROUPS=[
+  {group:"Safety",rows:[["airbags","Airbags"],["abs","ABS"],["ebd","EBD"],["brake_assist","Brake Assist"],["esp","ESP / ESC"],["ncap_rating","NCAP Rating"],["tpms","Tyre Pressure Monitor"],["hill_hold_control","Hill Hold Control"],["traction_control","Traction Control"],["hill_descent_control","Hill Descent Control"],["child_seat_anchors","ISOFIX Child Seat Anchors"],["seatbelt_warning","Seatbelt Warning"],["overspeed_warning","Overspeed Warning"],["lane_departure_warning","Lane Departure Warning"],["forward_collision_warning","Forward Collision Warning"],["auto_emergency_braking","Auto Emergency Braking"],["blind_spot_detection","Blind Spot Detection"]]},
+  {group:"Locks & Security",rows:[["engine_immobilizer","Engine Immobilizer"],["central_locking","Central Locking"],["speed_sensing_doorlock","Speed Sensing Door Lock"],["child_safety_lock","Child Safety Lock"]]},
+  {group:"Comfort & Convenience",rows:[["air_conditioner","Air Conditioner"],["front_ac","Front AC"],["rear_ac","Rear AC"],["keyless_start","Keyless Start / Push Button"],["cruise_control","Cruise Control"],["parking_sensors","Parking Sensors"],["parking_assist","Parking Assist / Camera"],["steering_adjustment","Steering Adjustment"],["power_outlets_12v","12V Power Outlet"],["third_row_ac","Third Row AC"]]},
+  {group:"Seats & Upholstery",rows:[["seat_upholstery","Upholstery"],["leather_steering_wheel","Leather Steering Wheel"],["driver_armrest","Driver Armrest"],["rear_armrest","Rear Armrest"],["ventilated_seats","Ventilated Seats"],["folding_rear_seat","Folding Rear Seat"],["split_rear_seat","Split Rear Seat"],["driver_seat_adjustment","Driver Seat Adjustment"]]},
+  {group:"Doors, Windows & Mirrors",rows:[["power_windows","Power Windows"],["one_touch_up","One-Touch Up"],["one_touch_down","One-Touch Down"],["adjustable_orvm","Electrically Adjustable ORVM"],["turn_indicators_orvm","Turn Indicators on ORVM"],["rear_defogger","Rear Defogger"],["rear_wiper","Rear Wiper"],["rain_sensing_wipers","Rain-Sensing Wipers"]]},
+  {group:"Exterior & Lighting",rows:[["sunroof","Sunroof"],["fog_lights","Fog Lights"],["daytime_running_lights","DRL — Daytime Running Lights"],["headlights","Headlights"],["auto_headlamps","Automatic Headlamps"],["follow_me_home","Follow-Me-Home Headlamps"],["roof_antenna","Roof Antenna"],["body_coloured_bumpers","Body-Coloured Bumpers"],["cornering_headlights","Cornering Headlights"],["ambient_lighting","Ambient Lighting"]]},
+  {group:"Instrumentation",rows:[["instrument_cluster","Instrument Cluster"],["trip_meter","Trip Meter"],["avg_fuel_consumption","Avg Fuel Consumption"],["distance_to_empty","Distance to Empty"],["low_fuel_warning","Low Fuel Warning"],["tachometer","Tachometer"],["gear_indicator","Gear Indicator"],["hud","Heads-Up Display"]]},
+  {group:"Entertainment",rows:[["smart_connectivity","Smart Connectivity (CarPlay/Android Auto)"],["music_system","Music System"],["display","Touchscreen Display"],["head_unit_size","Screen Size"],["gps_navigation","GPS Navigation"],["speakers","Speakers"],["usb","USB Ports"],["aux","AUX"],["bluetooth","Bluetooth"],["am_fm_radio","AM/FM Radio"],["steering_controls","Steering Mounted Controls"],["voice_command","Voice Command"],["wireless_charger","Wireless Charger"]]},
+];
+const NEG_VALS=new Set(["","no","none","na","n/a","not available","nil","-","–","false","0","0 airbags"]);
+const isPresent=v=>{if(v==null)return false;const s=String(v).trim().toLowerCase();return !NEG_VALS.has(s);};
+// A feature value worth showing in brackets (i.e. not just a generic "yes/standard/available").
+const featureExtra=v=>{const s=String(v).trim();return /^(yes|standard|available|std)$/i.test(s)?"":s;};
+
+function FeaturesSpecs({car}){
+  const raw=car.specs?._raw||null;
+  const s=car.specs||{};
+  const [tab,setTab]=useState("specs");
+  const [query,setQuery]=useState("");
+  const [showAll,setShowAll]=useState(false);
+  // Fallback spec pairs from the curated subset when no full Excel row is stored.
+  const fallbackSpecs=[
+    ["Engine",s.engine],["Max Power",s.maxPower],["Max Torque",s.maxTorque],["Mileage (ARAI)",s.mileage],
+    ["Top Speed",s.topSpeed&&s.topSpeed+" kmph"],["0–100 kmph",s.acceleration&&s.acceleration+"s"],
+    ["Transmission",s.transmission],["Fuel",s.fuel],["Drivetrain",s.drivetrain],["Emission Standard",s.emissionStandard],
+    ["Length",s.length&&s.length+" mm"],["Width",s.width&&s.width+" mm"],["Height",s.height&&s.height+" mm"],
+    ["Wheelbase",s.wheelbase&&s.wheelbase+" mm"],["Ground Clearance",s.groundClearance&&s.groundClearance+" mm"],
+    ["Boot Space",s.bootspace&&s.bootspace+" L"],["Fuel Tank",s.fuelTank&&s.fuelTank+" L"],["Seats",s.seats&&s.seats+" seater"],
+    ["Front Tyres",s.frontTyres],["Rear Tyres",s.rearTyres],["Airbags",s.airbags],["ABS",s.abs],["NCAP",s.ncapRating],
+  ].filter(([,v])=>isPresent(v));
+  if(!raw&&fallbackSpecs.length===0)return null;
+  const q=query.trim().toLowerCase();
+  const match=t=>q===""||t.toLowerCase().includes(q);
+
+  // Build displayed groups from the full Excel row.
+  const specGroups=raw?SPEC_GROUPS.map(g=>{
+    const seen=new Set();
+    const rows=g.rows.filter(([col])=>isPresent(raw[col])&&!seen.has(g.rows.find(r=>r[1])&&r=>0)).reduce((acc,[col,label,unit])=>{
+      if(acc.some(a=>a.label===label))return acc; // de-dupe label collisions (key_* vs *)
+      if(isPresent(raw[col])) acc.push({label,value:String(raw[col])+(unit&&!String(raw[col]).includes(unit)?" "+unit:"")});
+      return acc;
+    },[]).filter(r=>match(r.label)||match(r.value));
+    return {group:g.group,rows};
+  }).filter(g=>g.rows.length):[{group:"Specifications",rows:fallbackSpecs.map(([label,value])=>({label,value:String(value)})).filter(r=>match(r.label)||match(r.value))}];
+
+  const featureGroups=raw?FEATURE_GROUPS.map(g=>{
+    const rows=g.rows.filter(([col])=>isPresent(raw[col])).map(([col,label])=>({label,extra:featureExtra(raw[col])})).filter(r=>match(r.label)||match(r.extra));
+    return {group:g.group,rows};
+  }).filter(g=>g.rows.length):[];
+
+  const active=tab==="specs"?specGroups:featureGroups;
+  const totalRows=active.reduce((n,g)=>n+g.rows.length,0);
+  // Collapse long lists until "View all".
+  let budget=showAll?Infinity:10;
+  const hasFeatures=featureGroups.length>0;
+
+  return(
+    <div style={{background:"var(--pp-card)",borderRadius:16,border:"1px solid var(--pp-border)",padding:"22px 22px 24px",marginTop:24}}>
+      <h2 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:19,color:"var(--pp-text)",marginBottom:16,letterSpacing:"-0.02em"}}>Features & Specifications</h2>
+      {/* Search */}
+      <div style={{position:"relative",marginBottom:16}}>
+        <Search size={16} color="var(--pp-text3)" style={{position:"absolute",left:14,top:"50%",transform:"translateY(-50%)",pointerEvents:"none"}}/>
+        <input value={query} onChange={e=>{setQuery(e.target.value);setShowAll(true);}} placeholder="Search features & specifications" aria-label="Search features and specifications"
+          style={{width:"100%",padding:"11px 14px 11px 40px",fontSize:13.5,borderRadius:10,border:"1.5px solid var(--pp-border2)",background:"var(--pp-input)",color:"var(--pp-text)",fontFamily:"Outfit,sans-serif",outline:"none",boxSizing:"border-box"}}/>
+      </div>
+      {/* Tabs */}
+      {hasFeatures&&(
+        <div style={{display:"flex",gap:0,borderBottom:"1px solid var(--pp-border)",marginBottom:18}}>
+          {[["specs","Specifications"],["features","Features"]].map(([k,l])=>(
+            <button key={k} onClick={()=>{setTab(k);setShowAll(false);}} style={{padding:"10px 18px",border:"none",background:"transparent",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:14,color:tab===k?"#9B2B2B":"var(--pp-text2)",borderBottom:tab===k?"2.5px solid #9B2B2B":"2.5px solid transparent",marginBottom:-1}}>{l}</button>
+          ))}
+        </div>
+      )}
+      {active.length===0&&<div style={{color:"var(--pp-text3)",fontSize:13.5,padding:"10px 0"}}>No matches.</div>}
+      {active.map(g=>{
+        if(budget<=0)return null;
+        const rowsToShow=g.rows.slice(0,Math.max(0,budget));
+        budget-=g.rows.length;
+        if(rowsToShow.length===0)return null;
+        return(
+          <div key={g.group} style={{marginBottom:20}}>
+            <div style={{fontSize:11,fontWeight:800,color:"var(--pp-text2)",textTransform:"uppercase",letterSpacing:"0.06em",marginBottom:12}}>{g.group}</div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(220px,1fr))",gap:"14px 24px"}}>
+              {rowsToShow.map(r=>tab==="specs"?(
+                <div key={r.label}>
+                  <div style={{fontSize:11.5,color:"var(--pp-text3)",marginBottom:2}}>{r.label}</div>
+                  <div style={{fontSize:14,fontWeight:700,color:"var(--pp-text)"}}>{r.value}</div>
+                </div>
+              ):(
+                <div key={r.label} style={{display:"flex",alignItems:"center",gap:9}}>
+                  <CheckCircle size={15} color="#10B981" style={{flexShrink:0}}/>
+                  <span style={{fontSize:13.5,color:"var(--pp-text)"}}>{r.label}{r.extra?<span style={{color:"var(--pp-text3)"}}> · {r.extra}</span>:""}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+      {!showAll&&totalRows>10&&q===""&&(
+        <button onClick={()=>setShowAll(true)} style={{marginTop:4,padding:"11px 22px",borderRadius:50,border:"1px solid var(--pp-border2)",background:"transparent",color:"#9B2B2B",cursor:"pointer",fontWeight:700,fontSize:13.5,fontFamily:"Outfit,sans-serif"}}>View all {tab==="specs"?"specifications":"features"} ({totalRows})</button>
+      )}
+    </div>
+  );
+}
+
 const TAG_COLORS = {Cars:"#9B2B2B",EV:"#059669",Bikes:"#7C3AED",Guide:"#D97706"};
 const QUIZ = [
   {id:1,q:"What is your budget?",key:"budget",opts:[{l:"Under ₹8L",v:"low"},{l:"₹8L–15L",v:"mid"},{l:"₹15L–25L",v:"high"},{l:"Above ₹25L",v:"luxury"}]},
