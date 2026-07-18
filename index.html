@@ -4,10 +4,38 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pole-position</title>
+    <meta name="theme-color" content="#0A0A0A" />
+
+    <title>Pole Position — Inspected Used Cars in Hyderabad</title>
+    <meta name="description" content="Buy quality used cars in Hyderabad with confidence. Every car is independently inspected and scored across engine, body, interior, electricals, tyres and documents. Book a test drive at your home." />
+
+    <!-- Open Graph / social sharing -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Pole Position" />
+    <meta property="og:title" content="Pole Position — Inspected Used Cars in Hyderabad" />
+    <meta property="og:description" content="Every car independently inspected and scored. Browse, compare and book a test drive at your home." />
+    <meta property="og:url" content="https://poleposition.co.in" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Pole Position — Inspected Used Cars in Hyderabad" />
+    <meta name="twitter:description" content="Every car independently inspected and scored. Browse, compare and book a test drive at your home." />
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80" />
+
+    <style>
+      /* Loading shell — shown until the React app boots, so the tab never looks blank */
+      #pp-boot{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:#0A0A0A;color:#fff;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;z-index:9999}
+      #pp-boot .pp-boot-mark{font-weight:800;font-size:22px;letter-spacing:-.02em}
+      #pp-boot .pp-boot-mark span{color:#9B2B2B}
+      #pp-boot .pp-boot-spin{width:26px;height:26px;border:3px solid rgba(255,255,255,.15);border-top-color:#9B2B2B;border-radius:50%;animation:pp-boot-spin .8s linear infinite}
+      @keyframes pp-boot-spin{to{transform:rotate(360deg)}}
+    </style>
   </head>
   <body>
     <div id="root"></div>
+    <div id="pp-boot" aria-hidden="true">
+      <div class="pp-boot-mark">Pole<span>Position</span></div>
+      <div class="pp-boot-spin"></div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

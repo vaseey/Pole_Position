@@ -7,3 +7,11 @@ createRoot(document.getElementById('root')).render(
     <App />
   </StrictMode>,
 )
+
+// Remove the static loading shell once React has taken over.
+const boot = document.getElementById('pp-boot')
+if (boot) {
+  boot.style.opacity = '0'
+  boot.style.transition = 'opacity .25s ease'
+  setTimeout(() => boot.remove(), 300)
+}
