@@ -1168,6 +1168,10 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
           <span style={{color:"var(--pp-text2)",fontSize:13.5,fontWeight:600}}>{finalFiltered.length} cars found</span>
           <div style={{display:"flex",alignItems:"center",gap:8}}>
             {isMobile&&<button onClick={()=>setShowMobileFilters(true)} style={{display:"flex",alignItems:"center",gap:8,padding:"9px 16px",borderRadius:100,border:"1px solid var(--pp-border)",background:"transparent",cursor:"pointer",fontWeight:600,fontSize:13,color:"var(--pp-text2)"}}><Filter size={13}/> Filters</button>}
+            {/* Sort */}
+            <select value={sortBy} onChange={e=>setSortBy(e.target.value)} aria-label="Sort cars" style={{padding:"8px 30px 8px 12px",borderRadius:10,border:"1px solid var(--pp-border)",background:"var(--pp-card)",color:"var(--pp-text)",fontSize:13,fontWeight:600,fontFamily:"Outfit,sans-serif",cursor:"pointer",outline:"none",appearance:"none",backgroundImage:"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E\")",backgroundRepeat:"no-repeat",backgroundPosition:"right 10px center"}}>
+              {SORTS.map(([k,l])=><option key={k} value={k}>{l}</option>)}
+            </select>
             {/* Grid / List toggle */}
             <div style={{display:"flex",border:"1px solid var(--pp-border)",borderRadius:10,overflow:"hidden"}}>
               <button onClick={()=>setListView(false)} title="Grid view" style={{padding:"7px 12px",border:"none",cursor:"pointer",background:!listView?"var(--pp-chip)":"transparent",color:!listView?"var(--pp-text)":"var(--pp-text3)",display:"flex",alignItems:"center",justifyContent:"center",transition:"all 0.15s"}}>
