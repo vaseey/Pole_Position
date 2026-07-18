@@ -1673,7 +1673,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
             </div>
           </>
         )}
-        {tab!=="overview"&&!user&&(
+        {tab!=="overview"&&tab!=="inspection"&&!user&&(
           <div style={{background:"var(--pp-card)",borderRadius:16,padding:"56px 24px",border:"1px solid var(--pp-border)",textAlign:"center"}}>
             <Shield size={22} color="var(--pp-text3)" style={{margin:"0 auto 18px"}}/>
             <h3 style={{fontFamily:"Outfit,sans-serif",fontWeight:800,fontSize:18,marginBottom:8,color:"var(--pp-text)"}}>Sign in to see the full report</h3>
@@ -1681,7 +1681,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
             <button onClick={()=>setShowLogin(true)} className="btn-red" style={{padding:"12px 28px",borderRadius:100,fontSize:14}}>Join Now</button>
           </div>
         )}
-        {tab!=="overview"&&user&&(
+        {tab!=="overview"&&(user||tab==="inspection")&&(
           <>
             {tab==="inspection"&&(
               <div style={{background:"var(--pp-card)",borderRadius:16,padding:"28px",border:"1px solid var(--pp-border)"}}>
