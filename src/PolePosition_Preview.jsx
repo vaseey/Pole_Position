@@ -3395,7 +3395,7 @@ function FavoritesPage({setPage,setSelectedCar,favs,toggleFav,cars,compare,toggl
           </div>
         ):(
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:20}}>
-            {saved.map(c=><BrowseCarCard key={c.id} car={c} onFav={toggleFav} isFav={true} onClick={()=>{setSelectedCar(c);}}/>)}
+            {saved.map(c=><BrowseCarCard key={c.id} car={c} onFav={toggleFav} isFav={true} onClick={()=>{setSelectedCar(c);}} onCompare={toggleCompare} inCompare={compare?.includes(c.id)}/>)}
           </div>
         )}
       </div>
