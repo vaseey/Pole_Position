@@ -1305,7 +1305,14 @@ function BrowsePage({setPage,setSelectedCar,favs,toggleFav,cars}){
                   {finalFiltered.map(c=><BrowseCarCard key={c.id} car={c} onFav={toggleFav} isFav={favs.includes(c.id)} onClick={()=>{setSelectedCar(c);}}/>)}
                 </div>
             }
-            {finalFiltered.length===0&&<div style={{textAlign:"center",padding:"80px 0",color:"var(--pp-text3)"}}>No cars match your filters.</div>}
+            {finalFiltered.length===0&&(
+              <div style={{textAlign:"center",padding:"80px 20px",color:"var(--pp-text3)"}}>
+                <Filter size={26} style={{margin:"0 auto 14px",opacity:0.5}}/>
+                <div style={{fontSize:15,fontWeight:600,color:"var(--pp-text2)",marginBottom:6}}>No cars match your filters</div>
+                <p style={{fontSize:13,marginBottom:20}}>Try widening your price, year or km range, or clear everything to start over.</p>
+                <button onClick={clearFilters} style={{display:"inline-flex",alignItems:"center",gap:8,padding:"11px 22px",borderRadius:50,background:"#9B2B2B",color:"#fff",border:"none",cursor:"pointer",fontFamily:"Outfit,sans-serif",fontWeight:700,fontSize:13.5}}><RotateCcw size={14}/> Clear all filters</button>
+              </div>
+            )}
           </div>
         </div>
       </div>
