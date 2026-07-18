@@ -1435,6 +1435,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
           <span style={{color:"var(--pp-text3)"}}>·</span>
           <span>₹{emi.toLocaleString("en-IN")}/month</span>
         </div>
+        {carBadges(car).length>0&&<div style={{marginBottom:14}}><TrustBadges car={car}/></div>}
       </div>
 
       {/* Tabs */}
