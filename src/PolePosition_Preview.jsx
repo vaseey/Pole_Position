@@ -422,7 +422,8 @@ const QUIZ = [
 
 const fmt = p => "₹" + (p/100000).toFixed(1) + "L";
 const fmtKm = k => k>=1000?(k/1000).toFixed(0)+"k km":k+" km";
-const sc = s => s>=88?"#10B981":s>=75?"#F59E0B":"#EF4444";
+// Score → color, 5-tier scale: 90+ dark green, 80-89 light green, 75-79 yellow-green, 60-74 orange, <60 red.
+const sc = s => s>=90?"#059669":s>=80?"#22C55E":s>=75?"#A3E635":s>=60?"#F59E0B":"#EF4444";
 
 const MAKE_MODELS = {
   "Maruti Suzuki":["Swift","Baleno","Dzire","WagonR","Alto","Ertiga","Brezza","Ciaz","Celerio","Eeco"],
