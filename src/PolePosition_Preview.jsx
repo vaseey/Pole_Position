@@ -2756,6 +2756,22 @@ function Listings({cars,setCars}){
     }));
   };
 
+  // Early returns for the score editor / preview overlay — placed here,
+  // after every hook above has been declared, so hook order stays stable.
+  if(scoring)return <ScoreEditor car={form} initBd={form.scoreBreakdown} onBack={()=>setScoring(false)} onSave={(bd,cum)=>{setForm(f=>({...f,score:cum,scoreBreakdown:bd}));setScoring(false);}}/>;
+
+  if(previewing)return(
+    <div style={{position:"fixed",inset:0,zIndex:700,background:"#F8FAFC",overflowY:"auto"}}>
+      <div style={{position:"sticky",top:0,zIndex:10,background:"#0F172A",padding:"14px 24px",display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid rgba(255,255,255,0.08)"}}>
+        <button onClick={()=>setPreviewing(false)} style={{display:"flex",alignItems:"center",gap:7,background:"var(--pp-chip)",border:"none",borderRadius:9,padding:"9px 16px",color:"#fff",cursor:"pointer",fontWeight:600,fontSize:13.5,fontFamily:"Outfit,sans-serif"}}>
+          <ChevronLeft size={14}/> Back to Editing
+        </button>
+        <span style={{color:"var(--pp-text2)",fontSize:12.5}}>Preview — exactly what buyers will see</span>
+      </div>
+      <CarDetailPage car={buildPreviewCar()} setPage={()=>{}} isFav={false} onFav={()=>{}} user="Preview" setShowLogin={()=>{}}/>
+    </div>
+  );
+
   if(edit!==null)return(
     <div>
       <div style={{display:"flex",flexWrap:"wrap",alignItems:"center",gap:10,marginBottom:24}}>
