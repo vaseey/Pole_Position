@@ -3262,7 +3262,7 @@ function Blog({blogs,setBlogs}){
             <div style={{fontWeight:700,fontSize:14,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",marginBottom:4}}>{p.title}</div>
             <div style={{color:"var(--pp-text2)",fontSize:12}}>{p.author} · {p.date} · {p.readTime} {p.featured&&<span style={{marginLeft:6,background:"rgba(245,158,11,0.15)",color:"#F59E0B",fontSize:10,fontWeight:700,padding:"2px 8px",borderRadius:20}}>Featured</span>}</div>
           </div>
-          <div style={{display:"flex",gap:6,flexShrink:0}}><Btn small onClick={()=>setEdit(p)}><Edit2 size={11}/> Edit</Btn><Btn small danger onClick={()=>setBlogs(blogs.filter(x=>x.id!==p.id))}><Trash2 size={11}/> Del</Btn></div>
+          <div style={{display:"flex",gap:6,flexShrink:0}}><Btn small onClick={()=>setEdit(p)}><Edit2 size={11}/> Edit</Btn><Btn small danger onClick={()=>{if(window.confirm(`Delete "${p.title}"? This can't be undone.`))setBlogs(blogs.filter(x=>x.id!==p.id));}}><Trash2 size={11}/> Del</Btn></div>
         </Card>)}
       </div>
     </div>
