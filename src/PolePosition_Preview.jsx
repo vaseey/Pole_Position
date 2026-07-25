@@ -1864,21 +1864,22 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
         </button>
         <div style={{display:"grid",gridTemplateColumns:"1fr 360px",gap:30,alignItems:"flex-start"}}>
           <div>
-            <div style={{position:"relative",overflow:"hidden",maxHeight:430,background:"var(--pp-bg)"}}>
+            <div style={{position:"relative",overflow:"hidden",height:430,background:"#000",cursor:"pointer",borderRadius:14}} onClick={()=>setLightboxOpen(true)}>
               {gallery[activeImg]?.type==="video"?(
-                <video src={gallery[activeImg].url} controls style={{width:"100%",maxHeight:430,objectFit:"cover"}}/>
+                <video src={gallery[activeImg].url} controls style={{width:"100%",height:"100%",objectFit:"contain"}} onClick={e=>e.stopPropagation()}/>
               ):(
-                <img src={err?FB:(gallery[activeImg]?.url||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model} style={{width:"100%",maxHeight:430,objectFit:"cover"}}/>
+                <img src={err?FB:(gallery[activeImg]?.url||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model} style={{width:"100%",height:"100%",objectFit:"contain"}}/>
               )}
               {car.badge&&<div style={{position:"absolute",top:16,left:16,background:BADGE[car.badge]?.bg||"#9B2B2B",padding:"5px 14px",borderRadius:100,fontSize:12,fontWeight:700,color:"var(--pp-text)"}}>{BADGE[car.badge]?.label||car.badge}</div>}
               {gallery.length>1&&(
                 <>
-                  <button aria-label="Previous image" onClick={()=>setActiveImg(i=>(i-1+gallery.length)%gallery.length)} style={{position:"absolute",left:14,top:"50%",transform:"translateY(-50%)",width:36,height:36,borderRadius:"50%",background:"rgba(0,0,0,0.55)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><ChevronLeft size={18} color="#fff"/></button>
-                  <button aria-label="Next image" onClick={()=>setActiveImg(i=>(i+1)%gallery.length)} style={{position:"absolute",right:14,top:"50%",transform:"translateY(-50%)",width:36,height:36,borderRadius:"50%",background:"rgba(0,0,0,0.55)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><ChevronRight size={18} color="#fff"/></button>
+                  <button aria-label="Previous image" onClick={e=>{e.stopPropagation();setActiveImg(i=>(i-1+gallery.length)%gallery.length);}} style={{position:"absolute",left:14,top:"50%",transform:"translateY(-50%)",width:36,height:36,borderRadius:"50%",background:"rgba(0,0,0,0.55)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><ChevronLeft size={18} color="#fff"/></button>
+                  <button aria-label="Next image" onClick={e=>{e.stopPropagation();setActiveImg(i=>(i+1)%gallery.length);}} style={{position:"absolute",right:14,top:"50%",transform:"translateY(-50%)",width:36,height:36,borderRadius:"50%",background:"rgba(0,0,0,0.55)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><ChevronRight size={18} color="#fff"/></button>
                   <div style={{position:"absolute",bottom:14,right:14,background:"rgba(0,0,0,0.7)",borderRadius:20,padding:"4px 12px",fontSize:12,fontWeight:700,color:"var(--pp-text)"}}>{activeImg+1} / {gallery.length}</div>
                 </>
               )}
             </div>
+            {lightbox}
             {/* Thumbnail strip */}
             <div style={{display:"flex",gap:10,marginTop:12,overflowX:"auto",paddingBottom:4,background:"var(--pp-bg)"}}>
               {gallery.map((m,i)=>(
