@@ -1566,6 +1566,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
   const [tab,setTab]=useState("overview");
   const [err,setErr]=useState(false);
   const [activeImg,setActiveImg]=useState(0);
+  const [lightboxOpen,setLightboxOpen]=useState(false);
   const [enquired,setEnquired]=useState(false);
   const [showEnquiryModal,setShowEnquiryModal]=useState(false);
   const [enquiryPhone,setEnquiryPhone]=useState("");
