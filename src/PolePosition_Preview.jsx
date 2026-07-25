@@ -588,7 +588,8 @@ const SCORE_CATS = [
 
 
 
-const rc = s => s>=80?"#10B981":s>=65?"#F59E0B":"#EF4444";
+// Same 5-tier scale as sc() — kept as a separate name since it's used throughout the admin console.
+const rc = s => s>=90?"#059669":s>=80?"#22C55E":s>=75?"#A3E635":s>=60?"#F59E0B":"#EF4444";
 const rl = s => s>=90?"Excellent":s>=80?"Very Good":s>=70?"Good":s>=55?"Fair":"Poor";
 const calcScore = bd => Math.round(SCORE_CATS.reduce((s,c)=>s+(bd[c.key]||0)*(c.weight/100),0));
 const tyreColor = pct => pct>=70?"#EF4444":pct>=40?"#F59E0B":"#10B981";
