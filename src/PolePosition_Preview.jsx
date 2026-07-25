@@ -1656,11 +1656,11 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
       </div>
 
       {/* Hero image — full width, edge to edge (16/10 keeps highlights closer to the fold) */}
-      <div style={{position:"relative",width:"100%",aspectRatio:"16/10",background:"#0F172A",overflow:"hidden"}}>
+      <div style={{position:"relative",width:"100%",aspectRatio:"16/10",background:"#000",overflow:"hidden",cursor:"pointer"}} onClick={()=>setLightboxOpen(true)}>
         {gallery[activeImg]?.type==="video"?(
-          <video src={gallery[activeImg].url} controls style={{width:"100%",height:"100%",objectFit:"cover"}}/>
+          <video src={gallery[activeImg].url} controls style={{width:"100%",height:"100%",objectFit:"contain"}} onClick={e=>e.stopPropagation()}/>
         ):(
-          <img src={err?FB:(gallery[activeImg]?.url||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model} style={{width:"100%",height:"100%",objectFit:"cover"}}/>
+          <img src={err?FB:(gallery[activeImg]?.url||FB)} onError={()=>setErr(true)} alt={car.make+" "+car.model} style={{width:"100%",height:"100%",objectFit:"contain"}}/>
         )}
         {car.badge&&<div style={{position:"absolute",top:14,left:14,background:"#E87722",padding:"5px 14px",borderRadius:100,fontSize:12,fontWeight:700,color:"var(--pp-text)"}}>{BADGE[car.badge]?.label||car.badge}</div>}
         {gallery.length>1&&(
