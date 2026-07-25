@@ -3204,13 +3204,14 @@ function Listings({cars,setCars}){
       </div>
       <Card>
         <table style={{width:"100%",borderCollapse:"collapse"}}>
-          <thead><tr style={{borderBottom:"1px solid var(--pp-border)"}}>{["Car","Category","Year","Price","Score","Actions"].map(h=><th key={h} style={{padding:"12px 16px",textAlign:"left",color:"var(--pp-text2)",fontSize:11,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.07em"}}>{h}</th>)}</tr></thead>
+          <thead><tr style={{borderBottom:"1px solid var(--pp-border)"}}>{["Car","Category","Year","Price","Score","Test Drive","Actions"].map(h=><th key={h} style={{padding:"12px 16px",textAlign:"left",color:"var(--pp-text2)",fontSize:11,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.07em"}}>{h}</th>)}</tr></thead>
           <tbody>{cars.map(c=><tr key={c.id} style={{borderBottom:"1px solid var(--pp-border)"}}>
             <td style={{padding:"11px 16px"}}><div style={{display:"flex",alignItems:"center",gap:10}}><img src={c.img} alt="" style={{width:52,height:36,objectFit:"cover",borderRadius:8,flexShrink:0}} onError={e=>e.target.style.display="none"}/><div><div style={{fontWeight:600,fontSize:13.5,display:"flex",alignItems:"center",gap:7}}>{c.make} {c.model}{c.status==="draft"&&<span style={{background:"#F59E0B22",color:"#F59E0B",fontSize:9.5,fontWeight:700,padding:"2px 7px",borderRadius:20}}>DRAFT</span>}</div><div style={{color:"var(--pp-text2)",fontSize:11.5}}>{c.fuel} · {c.transmission}</div></div></div></td>
             <td style={{padding:"11px 16px",color:"var(--pp-text3)",fontSize:13}}>{c.category}</td>
             <td style={{padding:"11px 16px",color:"var(--pp-text3)",fontSize:13}}>{c.year}</td>
             <td style={{padding:"11px 16px",fontWeight:600,fontSize:13}}>{fmt(c.price)}</td>
             <td style={{padding:"11px 16px"}}>{c.score>0?<span style={{background:`${rc(c.score)}22`,color:rc(c.score),fontWeight:700,fontSize:12,padding:"3px 10px",borderRadius:20}}>{c.score}</span>:<span style={{color:"#334155",fontSize:12}}>—</span>}</td>
+            <td style={{padding:"11px 16px"}}>{bookedCarIds.has(c.id)?<span style={{background:"#10B98122",color:"#10B981",fontWeight:700,fontSize:12,padding:"3px 10px",borderRadius:20}}>Booked</span>:<span style={{background:"var(--pp-card2)",color:"var(--pp-text3)",fontWeight:600,fontSize:12,padding:"3px 10px",borderRadius:20}}>NA</span>}</td>
             <td style={{padding:"11px 16px"}}><div style={{display:"flex",gap:6}}><Btn small onClick={()=>setEdit(c)}><Edit2 size={11}/> Edit</Btn><Btn small danger onClick={async()=>{
               const {error}=await supabase.from("cars").delete().eq("id",c.id);
               if(error){alert("Delete failed: "+error.message);return;}
