@@ -3416,7 +3416,7 @@ function TestimonialsAdmin({testimonials,setTestimonials}){
     }
     cancel();
   };
-  const del=id=>setTestimonials(ts=>ts.filter(t=>t.id!==id));
+  const del=id=>{if(window.confirm("Delete this testimonial? This can't be undone."))setTestimonials(ts=>ts.filter(t=>t.id!==id));};
   const inp={width:"100%",padding:"10px 14px",fontSize:14,borderRadius:10,border:"1.5px solid rgba(255,255,255,0.1)",background:"rgba(255,255,255,0.05)",color:"#fff",fontFamily:"Outfit,sans-serif",outline:"none",boxSizing:"border-box"};
   return(
     <div>
