@@ -2658,6 +2658,7 @@ function Listings({cars,setCars}){
 
   const save=async(status="published")=>{
     if(!form.make)return;
+    if(status==="published"&&(!form.price||form.price<=0)){alert("Please enter a price before publishing this listing.");return;}
     const images=media.filter(m=>m.type==="image").map(m=>m.url);
     const video=media.find(m=>m.type==="video")?.url||null;
     const coverUrl=media.find(m=>m.id===coverId)?.url||images[0]||form.img||"";
