@@ -1611,6 +1611,36 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
 
   const openEnquiry=()=>{if(!user){setShowLogin(true);return;}setShowEnquiryModal(true);};
 
+  // Full-screen lightbox — shows the whole photo (never cropped), with its own nav.
+  const lightbox=lightboxOpen&&(
+    <div role="dialog" aria-modal="true" aria-label="Photo gallery" onClick={()=>setLightboxOpen(false)}
+      style={{position:"fixed",inset:0,zIndex:1000,background:"rgba(0,0,0,0.94)",display:"flex",flexDirection:"column"}}>
+      <button onClick={()=>setLightboxOpen(false)} aria-label="Close gallery" style={{position:"absolute",top:16,right:16,width:40,height:40,borderRadius:"50%",background:"rgba(255,255,255,0.1)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",zIndex:2}}><X size={20}/></button>
+      <div style={{flex:1,position:"relative",display:"flex",alignItems:"center",justifyContent:"center",minHeight:0}} onClick={e=>e.stopPropagation()}>
+        {gallery[activeImg]?.type==="video"?(
+          <video src={gallery[activeImg].url} controls autoPlay style={{maxWidth:"92%",maxHeight:"88%",objectFit:"contain"}}/>
+        ):(
+          <img src={err?FB:(gallery[activeImg]?.url||FB)} alt={car.make+" "+car.model} style={{maxWidth:"92%",maxHeight:"88%",objectFit:"contain"}}/>
+        )}
+        {gallery.length>1&&(
+          <>
+            <button aria-label="Previous image" onClick={()=>setActiveImg(i=>(i-1+gallery.length)%gallery.length)} style={{position:"absolute",left:20,top:"50%",transform:"translateY(-50%)",width:44,height:44,borderRadius:"50%",background:"rgba(255,255,255,0.1)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><ChevronLeft size={22} color="#fff"/></button>
+            <button aria-label="Next image" onClick={()=>setActiveImg(i=>(i+1)%gallery.length)} style={{position:"absolute",right:20,top:"50%",transform:"translateY(-50%)",width:44,height:44,borderRadius:"50%",background:"rgba(255,255,255,0.1)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center"}}><ChevronRight size={22} color="#fff"/></button>
+          </>
+        )}
+      </div>
+      {gallery.length>1&&(
+        <div style={{display:"flex",gap:8,padding:"14px 16px",overflowX:"auto",justifyContent:"center"}} onClick={e=>e.stopPropagation()}>
+          {gallery.map((m,i)=>(
+            <button key={i} onClick={()=>setActiveImg(i)} style={{width:60,height:44,borderRadius:6,overflow:"hidden",border:activeImg===i?"2px solid #fff":"2px solid transparent",padding:0,cursor:"pointer",flexShrink:0,opacity:activeImg===i?1:0.5,background:"#111"}}>
+              {m.type==="video"?<div style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center"}}><Play size={13} color="#fff" fill="#fff"/></div>:<img src={m.url} alt="" style={{width:"100%",height:"100%",objectFit:"cover"}}/>}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+
   /* ── MOBILE LAYOUT ── */
   if(isMobile) return(
     <div style={{background:"var(--pp-bg)",minHeight:"100vh",paddingTop:56,paddingBottom:80,overflowX:"hidden"}}>
