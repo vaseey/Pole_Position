@@ -1671,6 +1671,7 @@ function CarDetailPage({car,setPage,isFav,onFav,user,setShowLogin,userEmail,dark
           </>
         )}
       </div>
+      {lightbox}
 
       {/* Thumbnail strip */}
       <div style={{display:"flex",gap:8,padding:"10px 12px",overflowX:"auto",scrollbarWidth:"none",background:"var(--pp-card)"}}>
