@@ -2653,19 +2653,10 @@ function Listings({cars,setCars}){
     return {...form,images,video,img:images[0]||form.img||"",id:form.id||"preview",serviceHistory:serviceDoc};
   };
 
-  if(scoring)return <ScoreEditor car={form} initBd={form.scoreBreakdown} onBack={()=>setScoring(false)} onSave={(bd,cum)=>{setForm(f=>({...f,score:cum,scoreBreakdown:bd}));setScoring(false);}}/>;
-
-  if(previewing)return(
-    <div style={{position:"fixed",inset:0,zIndex:700,background:"#F8FAFC",overflowY:"auto"}}>
-      <div style={{position:"sticky",top:0,zIndex:10,background:"#0F172A",padding:"14px 24px",display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid rgba(255,255,255,0.08)"}}>
-        <button onClick={()=>setPreviewing(false)} style={{display:"flex",alignItems:"center",gap:7,background:"var(--pp-chip)",border:"none",borderRadius:9,padding:"9px 16px",color:"#fff",cursor:"pointer",fontWeight:600,fontSize:13.5,fontFamily:"Outfit,sans-serif"}}>
-          <ChevronLeft size={14}/> Back to Editing
-        </button>
-        <span style={{color:"var(--pp-text2)",fontSize:12.5}}>Preview — exactly what buyers will see</span>
-      </div>
-      <CarDetailPage car={buildPreviewCar()} setPage={()=>{}} isFav={false} onFav={()=>{}} user="Preview" setShowLogin={()=>{}}/>
-    </div>
-  );
+  // NOTE: scoring/previewing early-returns live further down, after every
+  // hook in this component has been declared — an early return placed
+  // before a hook changes the hook count between renders and crashes with
+  // React error #300 ("Rendered fewer hooks than expected").
 
   // Automated tab — Supabase-backed state
   const [autoMakes,setAutoMakes]=useState([]);
